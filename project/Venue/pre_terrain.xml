@@ -1,0 +1,1617 @@
+<?xml version="1.0"?>
+<venue version="0.5.0">
+  <BackgroundImages count="0" />
+  <rFactor_VenueName>BobsTrackBuilder</rFactor_VenueName>
+  <rFactor_TrackName>Track01</rFactor_TrackName>
+  <rFactor_OffsetType>None</rFactor_OffsetType>
+  <RBR_TyreChoice>Gravel</RBR_TyreChoice>
+  <RBR_DisableRBRInstancing>False</RBR_DisableRBRInstancing>
+  <RBR_TrackFolder>BobsTrackBuilder</RBR_TrackFolder>
+  <RBR_TrackDescription>Your BTB Built Track</RBR_TrackDescription>
+  <Export_rFactor_CreateFolder>True</Export_rFactor_CreateFolder>
+  <Export_rFactor_Overwrite_TDF>True</Export_rFactor_Overwrite_TDF>
+  <Export_rFactor_Overwrite_GDB>True</Export_rFactor_Overwrite_GDB>
+  <Export_rFactor_Overwrite_SCN>True</Export_rFactor_Overwrite_SCN>
+  <Export_rFactor_Overwrite_AIW>True</Export_rFactor_Overwrite_AIW>
+  <Export_rFactor_Overwrite_CAM>True</Export_rFactor_Overwrite_CAM>
+  <Racer_TrackName>BobsTrackBuilder</Racer_TrackName>
+  <Racer_TrackFolder>BobsTrackBuilder</Racer_TrackFolder>
+  <xpacks>
+    <xpack>
+      <Name>Default</Name>
+    </xpack>
+    <xpack>
+      <Name>Common</Name>
+    </xpack>
+    <xpack>
+      <Name>WP</Name>
+    </xpack>
+  </xpacks>
+  <tracks count="1" ActiveTrack="0">
+    <track Visible="True" RandomSeed="1118946147">
+      <Name>Track 09/07/2009 23:25:10</Name>
+      <Driveable>True</Driveable>
+      <Collisions>True</Collisions>
+      <Renderable>True</Renderable>
+      <ShadowReceiver>True</ShadowReceiver>
+      <ReceiveLighting>True</ReceiveLighting>
+      <ActAsGround>True</ActAsGround>
+      <HeightAdjustment>0</HeightAdjustment>
+      <Longitude>0</Longitude>
+      <Latitude>0</Latitude>
+      <TrackType>Open</TrackType>
+      <PanelSpacingType>NonLinear</PanelSpacingType>
+      <nodes count="377">
+        <OnlyOneNodeSelected>1</OnlyOneNodeSelected>
+        <LineType>BezierSpline</LineType>
+        <node NodeId="0">
+          <Position x="-407.000707" y="0.000000" z="1162.189090" />
+          <ControlPoints AngleXZ="0.222876" AngleY="-0.000000" EntryDistance="0.000000" ExitDistance="12.324447" />
+        </node>
+        <node NodeId="1">
+          <Position x="-420.516894" y="0.000000" z="1128.854953" />
+          <ControlPoints AngleXZ="0.517996" AngleY="-0.000000" EntryDistance="11.977458" ExitDistance="1.330829" />
+        </node>
+        <node NodeId="2">
+          <Position x="-422.531862" y="0.000000" z="1125.403993" />
+          <ControlPoints AngleXZ="0.538535" AngleY="-0.000000" EntryDistance="1.333406" ExitDistance="2.666813" />
+        </node>
+        <node NodeId="3">
+          <Position x="-426.607725" y="0.000000" z="1118.506247" />
+          <ControlPoints AngleXZ="0.504861" AngleY="-0.000000" EntryDistance="2.674112" ExitDistance="2.674112" />
+        </node>
+        <node NodeId="4">
+          <Position x="-430.194534" y="0.000000" z="1111.319005" />
+          <ControlPoints AngleXZ="0.431722" AngleY="-0.000000" EntryDistance="2.679509" ExitDistance="8.038527" />
+        </node>
+        <node NodeId="5">
+          <Position x="-438.450541" y="0.000000" z="1088.804438" />
+          <ControlPoints AngleXZ="0.251751" AngleY="-0.000000" EntryDistance="7.979096" ExitDistance="7.979096" />
+        </node>
+        <node NodeId="6">
+          <Position x="-442.752964" y="0.000000" z="1065.185457" />
+          <ControlPoints AngleXZ="0.155811" AngleY="-0.000000" EntryDistance="8.019417" ExitDistance="10.692557" />
+        </node>
+        <node NodeId="7">
+          <Position x="-449.048901" y="0.000000" z="1033.817965" />
+          <ControlPoints AngleXZ="0.252865" AngleY="-0.000000" EntryDistance="10.663861" ExitDistance="1.332983" />
+        </node>
+        <node NodeId="8">
+          <Position x="-450.081836" y="0.000000" z="1029.954120" />
+          <ControlPoints AngleXZ="0.269556" AngleY="-0.000000" EntryDistance="1.333225" ExitDistance="9.332573" />
+        </node>
+        <node NodeId="9">
+          <Position x="-458.490635" y="0.000000" z="1003.246181" />
+          <ControlPoints AngleXZ="0.317788" AngleY="-0.000000" EntryDistance="9.335712" ExitDistance="6.668366" />
+        </node>
+        <node NodeId="10">
+          <Position x="-464.624913" y="0.000000" z="984.210401" />
+          <ControlPoints AngleXZ="0.306719" AngleY="-0.000000" EntryDistance="6.665600" ExitDistance="6.665600" />
+        </node>
+        <node NodeId="11">
+          <Position x="-470.489999" y="0.000000" z="965.094222" />
+          <ControlPoints AngleXZ="0.283645" AngleY="-0.000000" EntryDistance="6.665794" ExitDistance="2.666318" />
+        </node>
+        <node NodeId="12">
+          <Position x="-472.682071" y="0.000000" z="957.400438" />
+          <ControlPoints AngleXZ="0.273020" AngleY="-0.000000" EntryDistance="2.667063" ExitDistance="13.335317" />
+        </node>
+        <node NodeId="13">
+          <Position x="-482.839034" y="0.000000" z="918.675835" />
+          <ControlPoints AngleXZ="0.238485" AngleY="-0.000000" EntryDistance="13.356144" ExitDistance="22.705445" />
+        </node>
+        <node NodeId="14">
+          <Position x="-494.575454" y="0.000000" z="851.729977" />
+          <ControlPoints AngleXZ="0.076555" AngleY="-0.000000" EntryDistance="22.675567" ExitDistance="12.004712" />
+        </node>
+        <node NodeId="15">
+          <Position x="-494.338964" y="0.000000" z="815.779031" />
+          <ControlPoints AngleXZ="-0.105229" AngleY="-0.000000" EntryDistance="11.984168" ExitDistance="10.652594" />
+        </node>
+        <node NodeId="16">
+          <Position x="-488.367555" y="0.000000" z="784.364174" />
+          <ControlPoints AngleXZ="-0.251441" AngleY="-0.000000" EntryDistance="10.678372" ExitDistance="6.673982" />
+        </node>
+        <node NodeId="17">
+          <Position x="-482.640949" y="0.000000" z="765.206647" />
+          <ControlPoints AngleXZ="-0.340456" AngleY="-0.000000" EntryDistance="6.664971" ExitDistance="2.665988" />
+        </node>
+        <node NodeId="18">
+          <Position x="-479.825115" y="0.000000" z="757.716335" />
+          <ControlPoints AngleXZ="-0.373487" AngleY="-0.000000" EntryDistance="2.668944" ExitDistance="25.354966" />
+        </node>
+        <node NodeId="19">
+          <Position x="-444.765948" y="0.000000" z="690.416548" />
+          <ControlPoints AngleXZ="-0.612084" AngleY="-0.000000" EntryDistance="25.362286" ExitDistance="2.669714" />
+        </node>
+        <node NodeId="20">
+          <Position x="-440.010148" y="0.000000" z="683.987468" />
+          <ControlPoints AngleXZ="-0.670164" AngleY="-0.000000" EntryDistance="2.658009" ExitDistance="25.251085" />
+        </node>
+        <node NodeId="21">
+          <Position x="-378.152233" y="0.000000" z="641.352195" />
+          <ControlPoints AngleXZ="-1.162202" AngleY="-0.000000" EntryDistance="25.357426" ExitDistance="1.334601" />
+        </node>
+        <node NodeId="22">
+          <Position x="-374.475637" y="0.000000" z="639.776768" />
+          <ControlPoints AngleXZ="-1.168048" AngleY="-0.000000" EntryDistance="1.332745" ExitDistance="9.329212" />
+        </node>
+        <node NodeId="23">
+          <Position x="-348.648583" y="0.000000" z="628.964601" />
+          <ControlPoints AngleXZ="-1.184070" AngleY="-0.000000" EntryDistance="9.333299" ExitDistance="5.333313" />
+        </node>
+        <node NodeId="24">
+          <Position x="-333.782518" y="0.000000" z="623.049867" />
+          <ControlPoints AngleXZ="-1.200695" AngleY="-0.000000" EntryDistance="5.334063" ExitDistance="2.667031" />
+        </node>
+        <node NodeId="25">
+          <Position x="-326.299188" y="0.000000" z="620.218751" />
+          <ControlPoints AngleXZ="-1.221424" AngleY="-0.000000" EntryDistance="2.666745" ExitDistance="8.000236" />
+        </node>
+        <node NodeId="26">
+          <Position x="-303.450462" y="0.000000" z="612.875865" />
+          <ControlPoints AngleXZ="-1.288105" AngleY="-0.000000" EntryDistance="8.002928" ExitDistance="8.002928" />
+        </node>
+        <node NodeId="27">
+          <Position x="-280.253695" y="0.000000" z="606.722996" />
+          <ControlPoints AngleXZ="-1.340255" AngleY="-0.000000" EntryDistance="7.999093" ExitDistance="3.999546" />
+        </node>
+        <node NodeId="28">
+          <Position x="-268.537766" y="0.000000" z="604.127852" />
+          <ControlPoints AngleXZ="-1.360897" AngleY="-0.000000" EntryDistance="4.000414" ExitDistance="13.334713" />
+        </node>
+        <node NodeId="29">
+          <Position x="-229.280339" y="0.000000" z="596.470919" />
+          <ControlPoints AngleXZ="-1.400652" AngleY="-0.000000" EntryDistance="13.332237" ExitDistance="6.666119" />
+        </node>
+        <node NodeId="30">
+          <Position x="-209.544751" y="0.000000" z="593.229746" />
+          <ControlPoints AngleXZ="-1.408912" AngleY="-0.000000" EntryDistance="6.667017" ExitDistance="2.666807" />
+        </node>
+        <node NodeId="31">
+          <Position x="-201.652341" y="0.000000" z="591.922247" />
+          <ControlPoints AngleXZ="-1.404275" AngleY="-0.000000" EntryDistance="2.666380" ExitDistance="3.999570" />
+        </node>
+        <node NodeId="32">
+          <Position x="-189.838192" y="0.000000" z="589.832380" />
+          <ControlPoints AngleXZ="-1.382196" AngleY="-0.000000" EntryDistance="3.999911" ExitDistance="1.333304" />
+        </node>
+        <node NodeId="33">
+          <Position x="-185.915039" y="0.000000" z="589.049575" />
+          <ControlPoints AngleXZ="-1.363309" AngleY="-0.000000" EntryDistance="1.333765" ExitDistance="13.337648" />
+        </node>
+        <node NodeId="34">
+          <Position x="-148.169629" y="0.000000" z="576.062926" />
+          <ControlPoints AngleXZ="-1.117690" AngleY="-0.000000" EntryDistance="13.302258" ExitDistance="26.604515" />
+        </node>
+        <node NodeId="35">
+          <Position x="-84.339994" y="0.000000" z="528.456911" />
+          <ControlPoints AngleXZ="-0.796033" AngleY="-0.000000" EntryDistance="26.708557" ExitDistance="8.012567" />
+        </node>
+        <node NodeId="36">
+          <Position x="-67.368895" y="0.000000" z="511.487374" />
+          <ControlPoints AngleXZ="-0.789268" AngleY="-0.000000" EntryDistance="7.996513" ExitDistance="7.996513" />
+        </node>
+        <node NodeId="37">
+          <Position x="-50.156196" y="0.000000" z="494.762475" />
+          <ControlPoints AngleXZ="-0.802530" AngleY="-0.000000" EntryDistance="8.000406" ExitDistance="1.333401" />
+        </node>
+        <node NodeId="38">
+          <Position x="-47.281384" y="0.000000" z="491.981224" />
+          <ControlPoints AngleXZ="-0.801585" AngleY="-0.000000" EntryDistance="1.333276" ExitDistance="6.666382" />
+        </node>
+        <node NodeId="39">
+          <Position x="-32.954302" y="0.000000" z="478.027799" />
+          <ControlPoints AngleXZ="-0.793232" AngleY="-0.000000" EntryDistance="6.667317" ExitDistance="1.333463" />
+        </node>
+        <node NodeId="40">
+          <Position x="-30.110977" y="0.000000" z="475.213843" />
+          <ControlPoints AngleXZ="-0.786859" AngleY="-0.000000" EntryDistance="1.333362" ExitDistance="2.666725" />
+        </node>
+        <node NodeId="41">
+          <Position x="-24.522892" y="0.000000" z="469.490348" />
+          <ControlPoints AngleXZ="-0.756207" AngleY="-0.000000" EntryDistance="2.666816" ExitDistance="5.333633" />
+        </node>
+        <node NodeId="42">
+          <Position x="-13.974738" y="0.000000" z="457.449833" />
+          <ControlPoints AngleXZ="-0.687849" AngleY="-0.000000" EntryDistance="5.336902" ExitDistance="9.339579" />
+        </node>
+        <node NodeId="43">
+          <Position x="2.785272" y="0.000000" z="435.032936" />
+          <ControlPoints AngleXZ="-0.596559" AngleY="-0.000000" EntryDistance="9.333506" ExitDistance="2.666716" />
+        </node>
+        <node NodeId="44">
+          <Position x="7.216795" y="0.000000" z="428.371164" />
+          <ControlPoints AngleXZ="-0.580728" AngleY="-0.000000" EntryDistance="2.667062" ExitDistance="5.334124" />
+        </node>
+        <node NodeId="45">
+          <Position x="15.883138" y="0.000000" z="414.922506" />
+          <ControlPoints AngleXZ="-0.561799" AngleY="-0.000000" EntryDistance="5.333023" ExitDistance="5.333023" />
+        </node>
+        <node NodeId="46">
+          <Position x="24.387540" y="0.000000" z="401.370095" />
+          <ControlPoints AngleXZ="-0.570590" AngleY="-0.000000" EntryDistance="5.332920" ExitDistance="1.333230" />
+        </node>
+        <node NodeId="47">
+          <Position x="26.562378" y="0.000000" z="398.013209" />
+          <ControlPoints AngleXZ="-0.578017" AngleY="-0.000000" EntryDistance="1.333383" ExitDistance="18.667363" />
+        </node>
+        <node NodeId="48">
+          <Position x="59.523214" y="0.000000" z="352.799190" />
+          <ControlPoints AngleXZ="-0.706065" AngleY="-0.000000" EntryDistance="18.665441" ExitDistance="3.999737" />
+        </node>
+        <node NodeId="49">
+          <Position x="67.484483" y="0.000000" z="343.817679" />
+          <ControlPoints AngleXZ="-0.742146" AngleY="-0.000000" EntryDistance="4.000464" ExitDistance="24.002786" />
+        </node>
+        <node NodeId="50">
+          <Position x="119.513032" y="0.000000" z="294.111674" />
+          <ControlPoints AngleXZ="-0.852571" AngleY="-0.000000" EntryDistance="24.021713" ExitDistance="1.334540" />
+        </node>
+        <node NodeId="51">
+          <Position x="122.511459" y="0.000000" z="291.462746" />
+          <ControlPoints AngleXZ="-0.835194" AngleY="-0.000000" EntryDistance="1.331941" ExitDistance="18.647168" />
+        </node>
+        <node NodeId="52">
+          <Position x="157.043954" y="0.000000" z="247.639079" />
+          <ControlPoints AngleXZ="-0.595534" AngleY="-0.000000" EntryDistance="18.724485" ExitDistance="4.012390" />
+        </node>
+        <node NodeId="53">
+          <Position x="163.991881" y="0.000000" z="237.861710" />
+          <ControlPoints AngleXZ="-0.657872" AngleY="-0.000000" EntryDistance="3.978586" ExitDistance="25.197712" />
+        </node>
+        <node NodeId="54">
+          <Position x="222.405427" y="0.000000" z="189.921730" />
+          <ControlPoints AngleXZ="-0.964916" AngleY="-0.000000" EntryDistance="25.373274" ExitDistance="2.670871" />
+        </node>
+        <node NodeId="55">
+          <Position x="228.931948" y="0.000000" z="185.296282" />
+          <ControlPoints AngleXZ="-0.939006" AngleY="-0.000000" EntryDistance="2.664196" ExitDistance="11.988882" />
+        </node>
+        <node NodeId="56">
+          <Position x="256.625133" y="0.000000" z="162.295149" />
+          <ControlPoints AngleXZ="-0.844047" AngleY="-0.000000" EntryDistance="12.010121" ExitDistance="9.341205" />
+        </node>
+        <node NodeId="57">
+          <Position x="277.529901" y="0.000000" z="143.667506" />
+          <ControlPoints AngleXZ="-0.845523" AngleY="-0.000000" EntryDistance="9.332088" ExitDistance="3.999466" />
+        </node>
+        <node NodeId="58">
+          <Position x="286.568833" y="0.000000" z="135.775731" />
+          <ControlPoints AngleXZ="-0.865414" AngleY="-0.000000" EntryDistance="3.999776" ExitDistance="1.333259" />
+        </node>
+        <node NodeId="59">
+          <Position x="289.627184" y="0.000000" z="133.197024" />
+          <ControlPoints AngleXZ="-0.874281" AngleY="-0.000000" EntryDistance="1.333907" ExitDistance="24.010323" />
+        </node>
+        <node NodeId="60">
+          <Position x="349.289493" y="0.000000" z="93.453252" />
+          <ControlPoints AngleXZ="-1.146757" AngleY="-0.000000" EntryDistance="23.915681" ExitDistance="9.300543" />
+        </node>
+        <node NodeId="61">
+          <Position x="375.435581" y="0.000000" z="83.453188" />
+          <ControlPoints AngleXZ="-1.238305" AngleY="-0.000000" EntryDistance="9.348928" ExitDistance="9.348928" />
+        </node>
+        <node NodeId="62">
+          <Position x="402.105698" y="0.000000" z="74.937863" />
+          <ControlPoints AngleXZ="-1.301390" AngleY="-0.000000" EntryDistance="9.328221" ExitDistance="5.330412" />
+        </node>
+        <node NodeId="63">
+          <Position x="417.627358" y="0.000000" z="71.054945" />
+          <ControlPoints AngleXZ="-1.342356" AngleY="-0.000000" EntryDistance="5.334909" ExitDistance="6.668636" />
+        </node>
+        <node NodeId="64">
+          <Position x="437.205474" y="0.000000" z="66.990830" />
+          <ControlPoints AngleXZ="-1.402228" AngleY="-0.000000" EntryDistance="6.667619" ExitDistance="4.000571" />
+        </node>
+        <node NodeId="65">
+          <Position x="449.086066" y="0.000000" z="65.269835" />
+          <ControlPoints AngleXZ="-1.447337" AngleY="-0.000000" EntryDistance="4.000447" ExitDistance="2.666964" />
+        </node>
+        <node NodeId="66">
+          <Position x="457.038313" y="0.000000" z="64.411125" />
+          <ControlPoints AngleXZ="-1.484260" AngleY="-0.000000" EntryDistance="2.667445" ExitDistance="1.333722" />
+        </node>
+        <node NodeId="67">
+          <Position x="461.029443" y="0.000000" z="64.108041" />
+          <ControlPoints AngleXZ="-1.503417" AngleY="-0.000000" EntryDistance="1.334358" ExitDistance="13.343584" />
+        </node>
+        <node NodeId="68">
+          <Position x="501.011338" y="0.000000" z="63.541265" />
+          <ControlPoints AngleXZ="-1.602063" AngleY="-0.000000" EntryDistance="13.335534" ExitDistance="13.335534" />
+        </node>
+        <node NodeId="69">
+          <Position x="540.925984" y="0.000000" z="66.147401" />
+          <ControlPoints AngleXZ="-1.666244" AngleY="-0.000000" EntryDistance="13.327838" ExitDistance="14.660622" />
+        </node>
+        <node NodeId="70">
+          <Position x="584.691250" y="0.000000" z="70.666905" />
+          <ControlPoints AngleXZ="-1.659382" AngleY="-0.000000" EntryDistance="14.697165" ExitDistance="4.008318" />
+        </node>
+        <node NodeId="71">
+          <Position x="596.672901" y="0.000000" z="71.406928" />
+          <ControlPoints AngleXZ="-1.588247" AngleY="-0.000000" EntryDistance="3.989047" ExitDistance="22.604598" />
+        </node>
+        <node NodeId="72">
+          <Position x="660.972691" y="0.000000" z="52.684227" />
+          <ControlPoints AngleXZ="-1.033663" AngleY="-0.000000" EntryDistance="22.682488" ExitDistance="4.002792" />
+        </node>
+        <node NodeId="73">
+          <Position x="671.117251" y="0.000000" z="46.276732" />
+          <ControlPoints AngleXZ="-0.993267" AngleY="-0.000000" EntryDistance="3.999807" ExitDistance="1.333269" />
+        </node>
+        <node NodeId="74">
+          <Position x="674.469057" y="0.000000" z="44.093554" />
+          <ControlPoints AngleXZ="-0.994607" AngleY="-0.000000" EntryDistance="1.333386" ExitDistance="8.000314" />
+        </node>
+        <node NodeId="75">
+          <Position x="694.833518" y="0.000000" z="31.403640" />
+          <ControlPoints AngleXZ="-1.039089" AngleY="-0.000000" EntryDistance="8.000103" ExitDistance="2.666701" />
+        </node>
+        <node NodeId="76">
+          <Position x="701.756013" y="0.000000" z="27.391982" />
+          <ControlPoints AngleXZ="-1.047838" AngleY="-0.000000" EntryDistance="2.666789" ExitDistance="1.333394" />
+        </node>
+        <node NodeId="77">
+          <Position x="705.224679" y="0.000000" z="25.400829" />
+          <ControlPoints AngleXZ="-1.054362" AngleY="-0.000000" EntryDistance="1.332949" ExitDistance="13.329488" />
+        </node>
+        <node NodeId="78">
+          <Position x="740.883813" y="0.000000" z="7.304789" />
+          <ControlPoints AngleXZ="-1.119690" AngleY="-0.000000" EntryDistance="13.337043" ExitDistance="18.671860" />
+        </node>
+        <node NodeId="79">
+          <Position x="791.117917" y="0.000000" z="-17.442830" />
+          <ControlPoints AngleXZ="-1.113455" AngleY="-0.000000" EntryDistance="18.666405" ExitDistance="1.333315" />
+        </node>
+        <node NodeId="80">
+          <Position x="794.706823" y="0.000000" z="-19.209060" />
+          <ControlPoints AngleXZ="-1.112935" AngleY="-0.000000" EntryDistance="1.333321" ExitDistance="13.333215" />
+        </node>
+        <node NodeId="81">
+          <Position x="830.409686" y="0.000000" z="-37.237805" />
+          <ControlPoints AngleXZ="-1.094207" AngleY="-0.000000" EntryDistance="13.332506" ExitDistance="13.332506" />
+        </node>
+        <node NodeId="82">
+          <Position x="865.850076" y="0.000000" z="-55.784436" />
+          <ControlPoints AngleXZ="-1.085792" AngleY="-0.000000" EntryDistance="13.333958" ExitDistance="13.333958" />
+        </node>
+        <node NodeId="83">
+          <Position x="901.321594" y="0.000000" z="-74.270854" />
+          <ControlPoints AngleXZ="-1.099721" AngleY="-0.000000" EntryDistance="13.332531" ExitDistance="22.665302" />
+        </node>
+        <node NodeId="84">
+          <Position x="962.358893" y="0.000000" z="-104.244248" />
+          <ControlPoints AngleXZ="-1.119475" AngleY="-0.000000" EntryDistance="22.666901" ExitDistance="2.666694" />
+        </node>
+        <node NodeId="85">
+          <Position x="969.552235" y="0.000000" z="-107.744947" />
+          <ControlPoints AngleXZ="-1.115192" AngleY="-0.000000" EntryDistance="2.666624" ExitDistance="7.999871" />
+        </node>
+        <node NodeId="86">
+          <Position x="991.062232" y="0.000000" z="-118.390107" />
+          <ControlPoints AngleXZ="-1.114678" AngleY="-0.000000" EntryDistance="8.000016" ExitDistance="1.333336" />
+        </node>
+        <node NodeId="87">
+          <Position x="994.656444" y="0.000000" z="-120.145577" />
+          <ControlPoints AngleXZ="-1.118216" AngleY="-0.000000" EntryDistance="1.333333" ExitDistance="7.999995" />
+        </node>
+        <node NodeId="88">
+          <Position x="1016.295378" y="0.000000" z="-130.526128" />
+          <ControlPoints AngleXZ="-1.123683" AngleY="-0.000000" EntryDistance="7.999962" ExitDistance="1.333327" />
+        </node>
+        <node NodeId="89">
+          <Position x="1019.900089" y="0.000000" z="-132.259783" />
+          <ControlPoints AngleXZ="-1.120991" AngleY="-0.000000" EntryDistance="1.333291" ExitDistance="13.332906" />
+        </node>
+        <node NodeId="90">
+          <Position x="1055.767513" y="0.000000" z="-149.966403" />
+          <ControlPoints AngleXZ="-1.113383" AngleY="-0.000000" EntryDistance="13.335934" ExitDistance="21.337494" />
+        </node>
+        <node NodeId="91">
+          <Position x="1113.019789" y="0.000000" z="-178.572800" />
+          <ControlPoints AngleXZ="-1.077768" AngleY="-0.000000" EntryDistance="21.327151" ExitDistance="13.329470" />
+        </node>
+        <node NodeId="92">
+          <Position x="1147.858964" y="0.000000" z="-198.224324" />
+          <ControlPoints AngleXZ="-1.049468" AngleY="-0.000000" EntryDistance="13.335289" ExitDistance="13.335289" />
+        </node>
+        <node NodeId="93">
+          <Position x="1182.541752" y="0.000000" z="-218.150246" />
+          <ControlPoints AngleXZ="-1.043999" AngleY="-0.000000" EntryDistance="13.332318" ExitDistance="13.332318" />
+        </node>
+        <node NodeId="94">
+          <Position x="1217.005187" y="0.000000" z="-238.454638" />
+          <ControlPoints AngleXZ="-1.037668" AngleY="-0.000000" EntryDistance="13.333895" ExitDistance="18.667453" />
+        </node>
+        <node NodeId="95">
+          <Position x="1265.215589" y="0.000000" z="-266.945648" />
+          <ControlPoints AngleXZ="-1.029948" AngleY="-0.000000" EntryDistance="18.665673" ExitDistance="2.666525" />
+        </node>
+        <node NodeId="96">
+          <Position x="1272.065296" y="0.000000" z="-271.077419" />
+          <ControlPoints AngleXZ="-1.026114" AngleY="-0.000000" EntryDistance="2.666335" ExitDistance="5.332670" />
+        </node>
+        <node NodeId="97">
+          <Position x="1285.657123" y="0.000000" z="-279.521145" />
+          <ControlPoints AngleXZ="-0.996310" AngleY="-0.000000" EntryDistance="5.337841" ExitDistance="6.672302" />
+        </node>
+        <node NodeId="98">
+          <Position x="1301.919077" y="0.000000" z="-291.166398" />
+          <ControlPoints AngleXZ="-0.887668" AngleY="-0.000000" EntryDistance="6.662193" ExitDistance="3.997316" />
+        </node>
+        <node NodeId="99">
+          <Position x="1310.951148" y="0.000000" z="-299.061372" />
+          <ControlPoints AngleXZ="-0.827999" AngleY="-0.000000" EntryDistance="4.003500" ExitDistance="12.010501" />
+        </node>
+        <node NodeId="100">
+          <Position x="1335.614024" y="0.000000" z="-325.220965" />
+          <ControlPoints AngleXZ="-0.652562" AngleY="-0.000000" EntryDistance="11.980822" ExitDistance="9.318417" />
+        </node>
+        <node NodeId="101">
+          <Position x="1350.613809" y="0.000000" z="-348.844151" />
+          <ControlPoints AngleXZ="-0.496623" AngleY="-0.000000" EntryDistance="9.337527" ExitDistance="1.333932" />
+        </node>
+        <node NodeId="102">
+          <Position x="1352.486347" y="0.000000" z="-352.377692" />
+          <ControlPoints AngleXZ="-0.476081" AngleY="-0.000000" EntryDistance="1.332011" ExitDistance="22.644189" />
+        </node>
+        <node NodeId="103">
+          <Position x="1372.731813" y="0.000000" z="-416.962514" />
+          <ControlPoints AngleXZ="-0.183069" AngleY="-0.000000" EntryDistance="22.681228" ExitDistance="4.002570" />
+        </node>
+        <node NodeId="104">
+          <Position x="1374.805637" y="0.000000" z="-428.781749" />
+          <ControlPoints AngleXZ="-0.167468" AngleY="-0.000000" EntryDistance="3.999277" ExitDistance="5.332369" />
+        </node>
+        <node NodeId="105">
+          <Position x="1377.349758" y="0.000000" z="-444.577743" />
+          <ControlPoints AngleXZ="-0.148220" AngleY="-0.000000" EntryDistance="5.333419" ExitDistance="5.333419" />
+        </node>
+        <node NodeId="106">
+          <Position x="1379.573089" y="0.000000" z="-460.422776" />
+          <ControlPoints AngleXZ="-0.136944" AngleY="-0.000000" EntryDistance="5.333431" ExitDistance="2.666715" />
+        </node>
+        <node NodeId="107">
+          <Position x="1380.681385" y="0.000000" z="-468.345641" />
+          <ControlPoints AngleXZ="-0.141119" AngleY="-0.000000" EntryDistance="2.666650" ExitDistance="3.999974" />
+        </node>
+        <node NodeId="108">
+          <Position x="1382.408568" y="0.000000" z="-480.220597" />
+          <ControlPoints AngleXZ="-0.147719" AngleY="-0.000000" EntryDistance="3.999972" ExitDistance="6.666621" />
+        </node>
+        <node NodeId="109">
+          <Position x="1385.374975" y="0.000000" z="-499.999193" />
+          <ControlPoints AngleXZ="-0.145752" AngleY="-0.000000" EntryDistance="6.666596" ExitDistance="7.999915" />
+        </node>
+        <node NodeId="110">
+          <Position x="1388.915148" y="0.000000" z="-523.735568" />
+          <ControlPoints AngleXZ="-0.161527" AngleY="-0.000000" EntryDistance="7.999901" ExitDistance="1.333317" />
+        </node>
+        <node NodeId="111">
+          <Position x="1389.573895" y="0.000000" z="-527.681004" />
+          <ControlPoints AngleXZ="-0.169155" AngleY="-0.000000" EntryDistance="1.333371" ExitDistance="14.667083" />
+        </node>
+        <node NodeId="112">
+          <Position x="1398.990200" y="0.000000" z="-570.639934" />
+          <ControlPoints AngleXZ="-0.270311" AngleY="-0.000000" EntryDistance="14.672274" ExitDistance="2.667686" />
+        </node>
+        <node NodeId="113">
+          <Position x="1401.211289" y="0.000000" z="-578.329431" />
+          <ControlPoints AngleXZ="-0.291612" AngleY="-0.000000" EntryDistance="2.667841" ExitDistance="6.669602" />
+        </node>
+        <node NodeId="114">
+          <Position x="1407.426350" y="0.000000" z="-597.338453" />
+          <ControlPoints AngleXZ="-0.339878" AngleY="-0.000000" EntryDistance="6.665937" ExitDistance="9.332311" />
+        </node>
+        <node NodeId="115">
+          <Position x="1417.449316" y="0.000000" z="-623.480731" />
+          <ControlPoints AngleXZ="-0.385883" AngleY="-0.000000" EntryDistance="9.333130" ExitDistance="1.333304" />
+        </node>
+        <node NodeId="116">
+          <Position x="1418.964070" y="0.000000" z="-627.182581" />
+          <ControlPoints AngleXZ="-0.391539" AngleY="-0.000000" EntryDistance="1.333247" ExitDistance="5.332987" />
+        </node>
+        <node NodeId="117">
+          <Position x="1425.243937" y="0.000000" z="-641.899030" />
+          <ControlPoints AngleXZ="-0.411898" AngleY="-0.000000" EntryDistance="5.333961" ExitDistance="25.336313" />
+        </node>
+        <node NodeId="118">
+          <Position x="1457.973596" y="0.000000" z="-710.466565" />
+          <ControlPoints AngleXZ="-0.486885" AngleY="-0.000000" EntryDistance="25.333264" ExitDistance="2.666659" />
+        </node>
+        <node NodeId="119">
+          <Position x="1461.718112" y="0.000000" z="-717.536586" />
+          <ControlPoints AngleXZ="-0.482225" AngleY="-0.000000" EntryDistance="2.666916" ExitDistance="20.001867" />
+        </node>
+        <node NodeId="120">
+          <Position x="1485.490170" y="0.000000" z="-772.576799" />
+          <ControlPoints AngleXZ="-0.332595" AngleY="-0.000000" EntryDistance="19.999697" ExitDistance="2.666626" />
+        </node>
+        <node NodeId="121">
+          <Position x="1488.019327" y="0.000000" z="-780.165730" />
+          <ControlPoints AngleXZ="-0.310001" AngleY="-0.000000" EntryDistance="2.666370" ExitDistance="6.665926" />
+        </node>
+        <node NodeId="122">
+          <Position x="1493.742427" y="0.000000" z="-799.329169" />
+          <ControlPoints AngleXZ="-0.281843" AngleY="-0.000000" EntryDistance="6.666963" ExitDistance="1.333393" />
+        </node>
+        <node NodeId="123">
+          <Position x="1494.857239" y="0.000000" z="-803.170705" />
+          <ControlPoints AngleXZ="-0.283031" AngleY="-0.000000" EntryDistance="1.333315" ExitDistance="22.666349" />
+        </node>
+        <node NodeId="124">
+          <Position x="1514.248484" y="0.000000" z="-868.345820" />
+          <ControlPoints AngleXZ="-0.291607" AngleY="-0.000000" EntryDistance="22.666416" ExitDistance="5.333274" />
+        </node>
+        <node NodeId="125">
+          <Position x="1518.833168" y="0.000000" z="-883.674777" />
+          <ControlPoints AngleXZ="-0.288950" AngleY="-0.000000" EntryDistance="5.333351" ExitDistance="1.333338" />
+        </node>
+        <node NodeId="126">
+          <Position x="1519.974178" y="0.000000" z="-887.508601" />
+          <ControlPoints AngleXZ="-0.290494" AngleY="-0.000000" EntryDistance="1.333334" ExitDistance="13.333341" />
+        </node>
+        <node NodeId="127">
+          <Position x="1531.760959" y="0.000000" z="-925.732370" />
+          <ControlPoints AngleXZ="-0.295034" AngleY="-0.000000" EntryDistance="13.332455" ExitDistance="25.331665" />
+        </node>
+        <node NodeId="128">
+          <Position x="1552.554290" y="0.000000" z="-998.830676" />
+          <ControlPoints AngleXZ="-0.273210" AngleY="-0.000000" EntryDistance="25.333639" ExitDistance="4.000048" />
+        </node>
+        <node NodeId="129">
+          <Position x="1555.810341" y="0.000000" z="-1010.380451" />
+          <ControlPoints AngleXZ="-0.276344" AngleY="-0.000000" EntryDistance="3.999991" ExitDistance="2.666661" />
+        </node>
+        <node NodeId="130">
+          <Position x="1557.990796" y="0.000000" z="-1018.077574" />
+          <ControlPoints AngleXZ="-0.274426" AngleY="-0.000000" EntryDistance="2.666662" ExitDistance="9.333316" />
+        </node>
+        <node NodeId="131">
+          <Position x="1565.546135" y="0.000000" z="-1045.038411" />
+          <ControlPoints AngleXZ="-0.281152" AngleY="-0.000000" EntryDistance="9.333212" ExitDistance="2.666632" />
+        </node>
+        <node NodeId="132">
+          <Position x="1567.783975" y="0.000000" z="-1052.719103" />
+          <ControlPoints AngleXZ="-0.283355" AngleY="-0.000000" EntryDistance="2.666703" ExitDistance="22.666972" />
+        </node>
+        <node NodeId="133">
+          <Position x="1586.084739" y="0.000000" z="-1118.209743" />
+          <ControlPoints AngleXZ="-0.273448" AngleY="-0.000000" EntryDistance="22.664815" ExitDistance="2.666449" />
+        </node>
+        <node NodeId="134">
+          <Position x="1588.237445" y="0.000000" z="-1125.914321" />
+          <ControlPoints AngleXZ="-0.268974" AngleY="-0.000000" EntryDistance="2.666848" ExitDistance="2.666848" />
+        </node>
+        <node NodeId="135">
+          <Position x="1590.294329" y="0.000000" z="-1133.645923" />
+          <ControlPoints AngleXZ="-0.248066" AngleY="-0.000000" EntryDistance="2.666595" ExitDistance="2.666595" />
+        </node>
+        <node NodeId="136">
+          <Position x="1592.151675" y="0.000000" z="-1141.426483" />
+          <ControlPoints AngleXZ="-0.221799" AngleY="-0.000000" EntryDistance="2.666656" ExitDistance="1.333328" />
+        </node>
+        <node NodeId="137">
+          <Position x="1593.020080" y="0.000000" z="-1145.331210" />
+          <ControlPoints AngleXZ="-0.218574" AngleY="-0.000000" EntryDistance="1.333351" ExitDistance="2.666703" />
+        </node>
+        <node NodeId="138">
+          <Position x="1594.729843" y="0.000000" z="-1153.146054" />
+          <ControlPoints AngleXZ="-0.204147" AngleY="-0.000000" EntryDistance="2.666936" ExitDistance="1.333468" />
+        </node>
+        <node NodeId="139">
+          <Position x="1595.519904" y="0.000000" z="-1157.066244" />
+          <ControlPoints AngleXZ="-0.197970" AngleY="-0.000000" EntryDistance="1.331766" ExitDistance="1.331766" />
+        </node>
+        <node NodeId="140">
+          <Position x="1596.233561" y="0.000000" z="-1161.006002" />
+          <ControlPoints AngleXZ="-0.138576" AngleY="-0.000000" EntryDistance="1.344038" ExitDistance="9.408265" />
+        </node>
+        <node NodeId="141">
+          <Position x="1588.227409" y="0.000000" z="-1186.614267" />
+          <ControlPoints AngleXZ="0.873317" AngleY="-0.000000" EntryDistance="8.695874" ExitDistance="8.695874" />
+        </node>
+        <node NodeId="142">
+          <Position x="1561.375969" y="0.000000" z="-1191.427691" />
+          <ControlPoints AngleXZ="1.700362" AngleY="-0.000000" EntryDistance="9.577177" ExitDistance="4.104504" />
+        </node>
+        <node NodeId="143">
+          <Position x="1549.574879" y="0.000000" z="-1189.257528" />
+          <ControlPoints AngleXZ="1.773331" AngleY="-0.000000" EntryDistance="3.960891" ExitDistance="13.202971" />
+        </node>
+        <node NodeId="144">
+          <Position x="1510.132555" y="0.000000" z="-1182.614180" />
+          <ControlPoints AngleXZ="1.709234" AngleY="-0.000000" EntryDistance="13.383366" ExitDistance="22.751722" />
+        </node>
+        <node NodeId="145">
+          <Position x="1442.824332" y="0.000000" z="-1172.973618" />
+          <ControlPoints AngleXZ="1.757932" AngleY="-0.000000" EntryDistance="22.631115" ExitDistance="13.312421" />
+        </node>
+        <node NodeId="146">
+          <Position x="1403.758063" y="0.000000" z="-1164.391177" />
+          <ControlPoints AngleXZ="1.794834" AngleY="-0.000000" EntryDistance="13.344319" ExitDistance="22.685342" />
+        </node>
+        <node NodeId="147">
+          <Position x="1336.998957" y="0.000000" z="-1151.523895" />
+          <ControlPoints AngleXZ="1.716807" AngleY="-0.000000" EntryDistance="22.661199" ExitDistance="7.998070" />
+        </node>
+        <node NodeId="148">
+          <Position x="1313.220510" y="0.000000" z="-1148.272249" />
+          <ControlPoints AngleXZ="1.705941" AngleY="-0.000000" EntryDistance="8.000623" ExitDistance="24.001869" />
+        </node>
+        <node NodeId="149">
+          <Position x="1242.051879" y="0.000000" z="-1137.368716" />
+          <ControlPoints AngleXZ="1.730830" AngleY="-0.000000" EntryDistance="24.000515" ExitDistance="5.333448" />
+        </node>
+        <node NodeId="150">
+          <Position x="1226.271963" y="0.000000" z="-1134.726494" />
+          <ControlPoints AngleXZ="1.748630" AngleY="-0.000000" EntryDistance="5.333333" ExitDistance="2.666666" />
+        </node>
+        <node NodeId="151">
+          <Position x="1218.402246" y="0.000000" z="-1133.287267" />
+          <ControlPoints AngleXZ="1.748781" AngleY="-0.000000" EntryDistance="2.666666" ExitDistance="9.333332" />
+        </node>
+        <node NodeId="152">
+          <Position x="1190.783887" y="0.000000" z="-1128.683910" />
+          <ControlPoints AngleXZ="1.741261" AngleY="-0.000000" EntryDistance="9.333192" ExitDistance="3.999940" />
+        </node>
+        <node NodeId="153">
+          <Position x="1178.962378" y="0.000000" z="-1126.622344" />
+          <ControlPoints AngleXZ="1.737787" AngleY="-0.000000" EntryDistance="3.999950" ExitDistance="3.999950" />
+        </node>
+        <node NodeId="154">
+          <Position x="1167.118130" y="0.000000" z="-1124.694423" />
+          <ControlPoints AngleXZ="1.734406" AngleY="-0.000000" EntryDistance="3.999976" ExitDistance="7.999953" />
+        </node>
+        <node NodeId="155">
+          <Position x="1143.477401" y="0.000000" z="-1120.557985" />
+          <ControlPoints AngleXZ="1.742955" AngleY="-0.000000" EntryDistance="8.000036" ExitDistance="2.666679" />
+        </node>
+        <node NodeId="156">
+          <Position x="1135.592196" y="0.000000" z="-1119.207536" />
+          <ControlPoints AngleXZ="1.739240" AngleY="-0.000000" EntryDistance="2.666661" ExitDistance="18.666625" />
+        </node>
+        <node NodeId="157">
+          <Position x="1080.309457" y="0.000000" z="-1110.305262" />
+          <ControlPoints AngleXZ="1.711540" AngleY="-0.000000" EntryDistance="18.667827" ExitDistance="2.666832" />
+        </node>
+        <node NodeId="158">
+          <Position x="1072.396054" y="0.000000" z="-1109.139634" />
+          <ControlPoints AngleXZ="1.732206" AngleY="-0.000000" EntryDistance="2.665365" ExitDistance="1.332682" />
+        </node>
+        <node NodeId="159">
+          <Position x="1068.454551" y="0.000000" z="-1108.457532" />
+          <ControlPoints AngleXZ="1.749626" AngleY="-0.000000" EntryDistance="1.334948" ExitDistance="2.669895" />
+        </node>
+        <node NodeId="160">
+          <Position x="1060.643257" y="0.000000" z="-1106.769064" />
+          <ControlPoints AngleXZ="1.842398" AngleY="-0.000000" EntryDistance="2.649071" ExitDistance="13.245356" />
+        </node>
+        <node NodeId="161">
+          <Position x="1028.287349" y="0.000000" z="-1084.426960" />
+          <ControlPoints AngleXZ="2.419812" AngleY="-0.000000" EntryDistance="13.375639" ExitDistance="4.012692" />
+        </node>
+        <node NodeId="162">
+          <Position x="1020.637635" y="0.000000" z="-1075.181472" />
+          <ControlPoints AngleXZ="2.459837" AngleY="-0.000000" EntryDistance="3.999071" ExitDistance="3.999071" />
+        </node>
+        <node NodeId="163">
+          <Position x="1012.800518" y="0.000000" z="-1066.094900" />
+          <ControlPoints AngleXZ="2.381662" AngleY="-0.000000" EntryDistance="3.999841" ExitDistance="11.999523" />
+        </node>
+        <node NodeId="164">
+          <Position x="983.190939" y="0.000000" z="-1046.244615" />
+          <ControlPoints AngleXZ="1.917656" AngleY="-0.000000" EntryDistance="12.051981" ExitDistance="1.339109" />
+        </node>
+        <node NodeId="165">
+          <Position x="979.374727" y="0.000000" z="-1044.984567" />
+          <ControlPoints AngleXZ="1.863523" AngleY="-0.000000" EntryDistance="1.338058" ExitDistance="21.408928" />
+        </node>
+        <node NodeId="166">
+          <Position x="915.729739" y="0.000000" z="-1043.067065" />
+          <ControlPoints AngleXZ="1.472598" AngleY="-0.000000" EntryDistance="21.363448" ExitDistance="1.335216" />
+        </node>
+        <node NodeId="167">
+          <Position x="911.751623" y="0.000000" z="-1043.479792" />
+          <ControlPoints AngleXZ="1.457007" AngleY="-0.000000" EntryDistance="1.331605" ExitDistance="13.316052" />
+        </node>
+        <node NodeId="168">
+          <Position x="872.693604" y="0.000000" z="-1051.881108" />
+          <ControlPoints AngleXZ="1.319476" AngleY="-0.000000" EntryDistance="13.352112" ExitDistance="14.687324" />
+        </node>
+        <node NodeId="169">
+          <Position x="829.702180" y="0.000000" z="-1061.083539" />
+          <ControlPoints AngleXZ="1.420291" AngleY="-0.000000" EntryDistance="14.660261" ExitDistance="5.331004" />
+        </node>
+        <node NodeId="170">
+          <Position x="813.820008" y="0.000000" z="-1063.038421" />
+          <ControlPoints AngleXZ="1.475290" AngleY="-0.000000" EntryDistance="5.335446" ExitDistance="5.335446" />
+        </node>
+        <node NodeId="171">
+          <Position x="797.856694" y="0.000000" z="-1064.003269" />
+          <ControlPoints AngleXZ="1.554808" AngleY="-0.000000" EntryDistance="5.330904" ExitDistance="5.330904" />
+        </node>
+        <node NodeId="172">
+          <Position x="781.864767" y="0.000000" z="-1063.511690" />
+          <ControlPoints AngleXZ="1.641395" AngleY="-0.000000" EntryDistance="5.336512" ExitDistance="4.002384" />
+        </node>
+        <node NodeId="173">
+          <Position x="769.922450" y="0.000000" z="-1062.319261" />
+          <ControlPoints AngleXZ="1.703330" AngleY="-0.000000" EntryDistance="4.001165" ExitDistance="5.334887" />
+        </node>
+        <node NodeId="174">
+          <Position x="754.180932" y="0.000000" z="-1059.442115" />
+          <ControlPoints AngleXZ="1.798672" AngleY="-0.000000" EntryDistance="5.334785" ExitDistance="8.002178" />
+        </node>
+        <node NodeId="175">
+          <Position x="731.187320" y="0.000000" z="-1052.598225" />
+          <ControlPoints AngleXZ="1.913886" AngleY="-0.000000" EntryDistance="8.003714" ExitDistance="2.667905" />
+        </node>
+        <node NodeId="176">
+          <Position x="723.698879" y="0.000000" z="-1049.779392" />
+          <ControlPoints AngleXZ="1.949276" AngleY="-0.000000" EntryDistance="2.666041" ExitDistance="1.333020" />
+        </node>
+        <node NodeId="177">
+          <Position x="719.996081" y="0.000000" z="-1048.270719" />
+          <ControlPoints AngleXZ="1.964552" AngleY="-0.000000" EntryDistance="1.332757" ExitDistance="7.996540" />
+        </node>
+        <node NodeId="178">
+          <Position x="697.990663" y="0.000000" z="-1038.692187" />
+          <ControlPoints AngleXZ="1.983284" AngleY="-0.000000" EntryDistance="8.000311" ExitDistance="2.666770" />
+        </node>
+        <node NodeId="179">
+          <Position x="690.645420" y="0.000000" z="-1035.522146" />
+          <ControlPoints AngleXZ="1.972408" AngleY="-0.000000" EntryDistance="2.667060" ExitDistance="5.334120" />
+        </node>
+        <node NodeId="180">
+          <Position x="675.781465" y="0.000000" z="-1029.601486" />
+          <ControlPoints AngleXZ="1.917871" AngleY="-0.000000" EntryDistance="5.332318" ExitDistance="5.332318" />
+        </node>
+        <node NodeId="181">
+          <Position x="660.584797" y="0.000000" z="-1024.594852" />
+          <ControlPoints AngleXZ="1.872847" AngleY="-0.000000" EntryDistance="5.335008" ExitDistance="8.002511" />
+        </node>
+        <node NodeId="182">
+          <Position x="637.540904" y="0.000000" z="-1017.905700" />
+          <ControlPoints AngleXZ="1.819651" AngleY="-0.000000" EntryDistance="7.999375" ExitDistance="3.999687" />
+        </node>
+        <node NodeId="183">
+          <Position x="625.851085" y="0.000000" z="-1015.182740" />
+          <ControlPoints AngleXZ="1.783519" AngleY="-0.000000" EntryDistance="4.001498" ExitDistance="6.669163" />
+        </node>
+        <node NodeId="184">
+          <Position x="606.195148" y="0.000000" z="-1011.519193" />
+          <ControlPoints AngleXZ="1.718603" AngleY="-0.000000" EntryDistance="6.665197" ExitDistance="1.333039" />
+        </node>
+        <node NodeId="185">
+          <Position x="602.235481" y="0.000000" z="-1010.955777" />
+          <ControlPoints AngleXZ="1.708093" AngleY="-0.000000" EntryDistance="1.333287" ExitDistance="13.332868" />
+        </node>
+        <node NodeId="186">
+          <Position x="562.591868" y="0.000000" z="-1005.628363" />
+          <ControlPoints AngleXZ="1.713162" AngleY="-0.000000" EntryDistance="13.331934" ExitDistance="25.330674" />
+        </node>
+        <node NodeId="187">
+          <Position x="487.553320" y="0.000000" z="-993.592672" />
+          <ControlPoints AngleXZ="1.722742" AngleY="-0.000000" EntryDistance="25.333611" ExitDistance="5.333392" />
+        </node>
+        <node NodeId="188">
+          <Position x="471.719251" y="0.000000" z="-991.294821" />
+          <ControlPoints AngleXZ="1.705744" AngleY="-0.000000" EntryDistance="5.333385" ExitDistance="4.000039" />
+        </node>
+        <node NodeId="189">
+          <Position x="459.826108" y="0.000000" z="-989.696461" />
+          <ControlPoints AngleXZ="1.709557" AngleY="-0.000000" EntryDistance="3.999934" ExitDistance="2.666623" />
+        </node>
+        <node NodeId="190">
+          <Position x="451.908580" y="0.000000" z="-988.551088" />
+          <ControlPoints AngleXZ="1.716479" AngleY="-0.000000" EntryDistance="2.666680" ExitDistance="13.333402" />
+        </node>
+        <node NodeId="191">
+          <Position x="412.344574" y="0.000000" z="-982.662148" />
+          <ControlPoints AngleXZ="1.727072" AngleY="-0.000000" EntryDistance="13.333967" ExitDistance="13.333967" />
+        </node>
+        <node NodeId="192">
+          <Position x="372.960205" y="0.000000" z="-975.675822" />
+          <ControlPoints AngleXZ="1.769986" AngleY="-0.000000" EntryDistance="13.333958" ExitDistance="13.333958" />
+        </node>
+        <node NodeId="193">
+          <Position x="334.021704" y="0.000000" z="-966.552645" />
+          <ControlPoints AngleXZ="1.834902" AngleY="-0.000000" EntryDistance="13.332440" ExitDistance="14.665684" />
+        </node>
+        <node NodeId="194">
+          <Position x="292.015714" y="0.000000" z="-953.482630" />
+          <ControlPoints AngleXZ="1.906889" AngleY="-0.000000" EntryDistance="14.666988" ExitDistance="1.333363" />
+        </node>
+        <node NodeId="195">
+          <Position x="288.241653" y="0.000000" z="-952.157274" />
+          <ControlPoints AngleXZ="1.908923" AngleY="-0.000000" EntryDistance="1.333324" ExitDistance="13.333242" />
+        </node>
+        <node NodeId="196">
+          <Position x="250.522849" y="0.000000" z="-938.843018" />
+          <ControlPoints AngleXZ="1.920717" AngleY="-0.000000" EntryDistance="13.334665" ExitDistance="22.668930" />
+        </node>
+        <node NodeId="197">
+          <Position x="186.378379" y="0.000000" z="-916.325025" />
+          <ControlPoints AngleXZ="1.849848" AngleY="-0.000000" EntryDistance="22.684041" ExitDistance="8.006132" />
+        </node>
+        <node NodeId="198">
+          <Position x="162.952936" y="0.000000" z="-911.177228" />
+          <ControlPoints AngleXZ="1.698305" AngleY="-0.000000" EntryDistance="8.002397" ExitDistance="4.001199" />
+        </node>
+        <node NodeId="199">
+          <Position x="150.976372" y="0.000000" z="-910.331608" />
+          <ControlPoints AngleXZ="1.584497" AngleY="-0.000000" EntryDistance="4.003044" ExitDistance="8.006089" />
+        </node>
+        <node NodeId="200">
+          <Position x="127.089869" y="0.000000" z="-912.391954" />
+          <ControlPoints AngleXZ="1.398637" AngleY="-0.000000" EntryDistance="8.004195" ExitDistance="1.334032" />
+        </node>
+        <node NodeId="201">
+          <Position x="123.153964" y="0.000000" z="-913.114520" />
+          <ControlPoints AngleXZ="1.382564" AngleY="-0.000000" EntryDistance="1.333883" ExitDistance="24.009890" />
+        </node>
+        <node NodeId="202">
+          <Position x="52.469152" y="0.000000" z="-926.438184" />
+          <ControlPoints AngleXZ="1.459424" AngleY="-0.000000" EntryDistance="23.969575" ExitDistance="6.658215" />
+        </node>
+        <node NodeId="203">
+          <Position x="32.543870" y="0.000000" z="-928.156588" />
+          <ControlPoints AngleXZ="1.494447" AngleY="-0.000000" EntryDistance="6.668873" ExitDistance="4.001324" />
+        </node>
+        <node NodeId="204">
+          <Position x="20.580538" y="0.000000" z="-929.093719" />
+          <ControlPoints AngleXZ="1.492533" AngleY="-0.000000" EntryDistance="3.999635" ExitDistance="3.999635" />
+        </node>
+        <node NodeId="205">
+          <Position x="8.616461" y="0.000000" z="-930.021547" />
+          <ControlPoints AngleXZ="1.493490" AngleY="-0.000000" EntryDistance="4.000122" ExitDistance="9.333618" />
+        </node>
+        <node NodeId="206">
+          <Position x="-19.298109" y="0.000000" z="-932.207089" />
+          <ControlPoints AngleXZ="1.492612" AngleY="-0.000000" EntryDistance="9.333426" ExitDistance="1.333347" />
+        </node>
+        <node NodeId="207">
+          <Position x="-23.285888" y="0.000000" z="-932.519526" />
+          <ControlPoints AngleXZ="1.492494" AngleY="-0.000000" EntryDistance="1.333297" ExitDistance="2.666594" />
+        </node>
+        <node NodeId="208">
+          <Position x="-31.262777" y="0.000000" z="-933.121989" />
+          <ControlPoints AngleXZ="1.501695" AngleY="-0.000000" EntryDistance="2.666734" ExitDistance="5.333467" />
+        </node>
+        <node NodeId="209">
+          <Position x="-47.244546" y="0.000000" z="-933.927104" />
+          <ControlPoints AngleXZ="1.538718" AngleY="-0.000000" EntryDistance="5.333944" ExitDistance="5.333944" />
+        </node>
+        <node NodeId="210">
+          <Position x="-63.241525" y="0.000000" z="-934.164826" />
+          <ControlPoints AngleXZ="1.572617" AngleY="-0.000000" EntryDistance="5.333219" ExitDistance="1.333305" />
+        </node>
+        <node NodeId="211">
+          <Position x="-67.241488" y="0.000000" z="-934.143669" />
+          <ControlPoints AngleXZ="1.578988" AngleY="-0.000000" EntryDistance="1.333363" ExitDistance="4.000090" />
+        </node>
+        <node NodeId="212">
+          <Position x="-79.240539" y="0.000000" z="-933.974014" />
+          <ControlPoints AngleXZ="1.589818" AngleY="-0.000000" EntryDistance="4.000077" ExitDistance="5.333436" />
+        </node>
+        <node NodeId="213">
+          <Position x="-95.236630" y="0.000000" z="-933.620692" />
+          <ControlPoints AngleXZ="1.593912" AngleY="-0.000000" EntryDistance="5.333264" ExitDistance="17.333109" />
+        </node>
+        <node NodeId="214">
+          <Position x="-147.225383" y="0.000000" z="-932.540646" />
+          <ControlPoints AngleXZ="1.590130" AngleY="-0.000000" EntryDistance="17.334419" ExitDistance="4.000250" />
+        </node>
+        <node NodeId="215">
+          <Position x="-159.223807" y="0.000000" z="-932.349016" />
+          <ControlPoints AngleXZ="1.580161" AngleY="-0.000000" EntryDistance="3.999482" ExitDistance="13.331607" />
+        </node>
+        <node NodeId="216">
+          <Position x="-199.220516" y="0.000000" z="-932.015478" />
+          <ControlPoints AngleXZ="1.609878" AngleY="-0.000000" EntryDistance="13.348268" ExitDistance="17.352748" />
+        </node>
+        <node NodeId="217">
+          <Position x="-250.444554" y="0.000000" z="-924.062879" />
+          <ControlPoints AngleXZ="1.874876" AngleY="-0.000000" EntryDistance="17.322045" ExitDistance="2.664930" />
+        </node>
+        <node NodeId="218">
+          <Position x="-258.021558" y="0.000000" z="-921.492966" />
+          <ControlPoints AngleXZ="1.915177" AngleY="-0.000000" EntryDistance="2.667952" ExitDistance="13.339760" />
+        </node>
+        <node NodeId="219">
+          <Position x="-295.087234" y="0.000000" z="-906.471231" />
+          <ControlPoints AngleXZ="1.977694" AngleY="-0.000000" EntryDistance="13.334560" ExitDistance="26.669121" />
+        </node>
+        <node NodeId="220">
+          <Position x="-368.503913" y="0.000000" z="-874.692184" />
+          <ControlPoints AngleXZ="1.976449" AngleY="-0.000000" EntryDistance="26.667515" ExitDistance="2.666752" />
+        </node>
+        <node NodeId="221">
+          <Position x="-375.847493" y="0.000000" z="-871.518372" />
+          <ControlPoints AngleXZ="1.984056" AngleY="-0.000000" EntryDistance="2.666581" ExitDistance="3.999872" />
+        </node>
+        <node NodeId="222">
+          <Position x="-386.793082" y="0.000000" z="-866.600075" />
+          <ControlPoints AngleXZ="1.998683" AngleY="-0.000000" EntryDistance="4.000296" ExitDistance="8.000592" />
+        </node>
+        <node NodeId="223">
+          <Position x="-408.510434" y="0.000000" z="-856.384520" />
+          <ControlPoints AngleXZ="2.029826" AngleY="-0.000000" EntryDistance="7.999418" ExitDistance="6.666182" />
+        </node>
+        <node NodeId="224">
+          <Position x="-426.294380" y="0.000000" z="-847.234291" />
+          <ControlPoints AngleXZ="2.055901" AngleY="-0.000000" EntryDistance="6.667160" ExitDistance="8.000591" />
+        </node>
+        <node NodeId="225">
+          <Position x="-447.363814" y="0.000000" z="-835.746964" />
+          <ControlPoints AngleXZ="2.093687" AngleY="-0.000000" EntryDistance="8.000616" ExitDistance="1.333436" />
+        </node>
+        <node NodeId="226">
+          <Position x="-450.817749" y="0.000000" z="-833.728513" />
+          <ControlPoints AngleXZ="2.106040" AngleY="-0.000000" EntryDistance="1.333486" ExitDistance="25.336226" />
+        </node>
+        <node NodeId="227">
+          <Position x="-510.138821" y="0.000000" z="-786.713942" />
+          <ControlPoints AngleXZ="2.382574" AngleY="-0.000000" EntryDistance="25.326595" ExitDistance="1.332979" />
+        </node>
+        <node NodeId="228">
+          <Position x="-512.876851" y="0.000000" z="-783.797985" />
+          <ControlPoints AngleXZ="2.389988" AngleY="-0.000000" EntryDistance="1.333725" ExitDistance="22.673320" />
+        </node>
+        <node NodeId="229">
+          <Position x="-562.767534" y="0.000000" z="-737.904265" />
+          <ControlPoints AngleXZ="2.169575" AngleY="-0.000000" EntryDistance="22.667079" ExitDistance="2.666715" />
+        </node>
+        <node NodeId="230">
+          <Position x="-569.489480" y="0.000000" z="-733.552409" />
+          <ControlPoints AngleXZ="2.121950" AngleY="-0.000000" EntryDistance="2.669674" ExitDistance="22.692226" />
+        </node>
+        <node NodeId="231">
+          <Position x="-632.364193" y="0.000000" z="-708.470069" />
+          <ControlPoints AngleXZ="1.798974" AngleY="-0.000000" EntryDistance="22.664744" ExitDistance="3.999661" />
+        </node>
+        <node NodeId="232">
+          <Position x="-644.074115" y="0.000000" z="-705.851991" />
+          <ControlPoints AngleXZ="1.797739" AngleY="-0.000000" EntryDistance="4.001491" ExitDistance="8.002982" />
+        </node>
+        <node NodeId="233">
+          <Position x="-667.029590" y="0.000000" z="-698.911978" />
+          <ControlPoints AngleXZ="1.953574" AngleY="-0.000000" EntryDistance="8.003764" ExitDistance="6.669803" />
+        </node>
+        <node NodeId="234">
+          <Position x="-684.740885" y="0.000000" z="-689.641576" />
+          <ControlPoints AngleXZ="2.159325" AngleY="-0.000000" EntryDistance="6.674274" ExitDistance="5.339419" />
+        </node>
+        <node NodeId="235">
+          <Position x="-697.284851" y="0.000000" z="-679.711619" />
+          <ControlPoints AngleXZ="2.311917" AngleY="-0.000000" EntryDistance="5.329256" ExitDistance="1.332314" />
+        </node>
+        <node NodeId="236">
+          <Position x="-700.171914" y="0.000000" z="-676.950122" />
+          <ControlPoints AngleXZ="2.362492" AngleY="-0.000000" EntryDistance="1.332589" ExitDistance="1.332589" />
+        </node>
+        <node NodeId="237">
+          <Position x="-702.910572" y="0.000000" z="-674.031490" />
+          <ControlPoints AngleXZ="2.404069" AngleY="-0.000000" EntryDistance="1.334712" ExitDistance="6.673559" />
+        </node>
+        <node NodeId="238">
+          <Position x="-716.121340" y="0.000000" z="-659.022135" />
+          <ControlPoints AngleXZ="2.417860" AngleY="-0.000000" EntryDistance="6.669999" ExitDistance="4.001999" />
+        </node>
+        <node NodeId="239">
+          <Position x="-724.329675" y="0.000000" z="-650.281368" />
+          <ControlPoints AngleXZ="2.338676" AngleY="-0.000000" EntryDistance="3.987322" ExitDistance="13.291073" />
+        </node>
+        <node NodeId="240">
+          <Position x="-757.433637" y="0.000000" z="-628.111175" />
+          <ControlPoints AngleXZ="2.031703" AngleY="-0.000000" EntryDistance="13.394714" ExitDistance="25.449957" />
+        </node>
+        <node NodeId="241">
+          <Position x="-825.842755" y="0.000000" z="-595.273003" />
+          <ControlPoints AngleXZ="2.151120" AngleY="-0.000000" EntryDistance="25.339632" ExitDistance="1.333665" />
+        </node>
+        <node NodeId="242">
+          <Position x="-829.155885" y="0.000000" z="-593.023811" />
+          <ControlPoints AngleXZ="2.184800" AngleY="-0.000000" EntryDistance="1.335338" ExitDistance="8.012026" />
+        </node>
+        <node NodeId="243">
+          <Position x="-846.966006" y="0.000000" z="-576.998855" />
+          <ControlPoints AngleXZ="2.426495" AngleY="-0.000000" EntryDistance="8.007657" ExitDistance="4.003828" />
+        </node>
+        <node NodeId="244">
+          <Position x="-854.373561" y="0.000000" z="-567.545692" />
+          <ControlPoints AngleXZ="2.514131" AngleY="-0.000000" EntryDistance="3.997865" ExitDistance="1.332622" />
+        </node>
+        <node NodeId="245">
+          <Position x="-856.678908" y="0.000000" z="-564.282047" />
+          <ControlPoints AngleXZ="2.543502" AngleY="-0.000000" EntryDistance="1.332685" ExitDistance="1.332685" />
+        </node>
+        <node NodeId="246">
+          <Position x="-858.874363" y="0.000000" z="-560.936051" />
+          <ControlPoints AngleXZ="2.574442" AngleY="-0.000000" EntryDistance="1.334386" ExitDistance="13.343865" />
+        </node>
+        <node NodeId="247">
+          <Position x="-878.198326" y="0.000000" z="-525.928561" />
+          <ControlPoints AngleXZ="2.665646" AngleY="-0.000000" EntryDistance="13.353471" ExitDistance="22.700901" />
+        </node>
+        <node NodeId="248">
+          <Position x="-913.360421" y="0.000000" z="-467.915331" />
+          <ControlPoints AngleXZ="2.468015" AngleY="-0.000000" EntryDistance="22.643597" ExitDistance="3.995929" />
+        </node>
+        <node NodeId="249">
+          <Position x="-921.138812" y="0.000000" z="-458.775237" />
+          <ControlPoints AngleXZ="2.406577" AngleY="-0.000000" EntryDistance="4.003200" ExitDistance="13.344001" />
+        </node>
+        <node NodeId="250">
+          <Position x="-950.648825" y="0.000000" z="-431.832873" />
+          <ControlPoints AngleXZ="2.213759" AngleY="-0.000000" EntryDistance="13.354088" ExitDistance="18.695723" />
+        </node>
+        <node NodeId="251">
+          <Position x="-1000.208954" y="0.000000" z="-406.245423" />
+          <ControlPoints AngleXZ="1.850803" AngleY="-0.000000" EntryDistance="18.771301" ExitDistance="1.340807" />
+        </node>
+        <node NodeId="252">
+          <Position x="-1004.093758" y="0.000000" z="-405.208373" />
+          <ControlPoints AngleXZ="1.809509" AngleY="-0.000000" EntryDistance="1.338006" ExitDistance="13.380056" />
+        </node>
+        <node NodeId="253">
+          <Position x="-1043.886809" y="0.000000" z="-402.802764" />
+          <ControlPoints AngleXZ="1.530028" AngleY="-0.000000" EntryDistance="13.411862" ExitDistance="17.435421" />
+        </node>
+        <node NodeId="254">
+          <Position x="-1095.687538" y="0.000000" z="-401.376252" />
+          <ControlPoints AngleXZ="1.769633" AngleY="-0.000000" EntryDistance="17.284161" ExitDistance="2.659102" />
+        </node>
+        <node NodeId="255">
+          <Position x="-1103.461618" y="0.000000" z="-399.502997" />
+          <ControlPoints AngleXZ="1.840729" AngleY="-0.000000" EntryDistance="2.668966" ExitDistance="18.682762" />
+        </node>
+        <node NodeId="256">
+          <Position x="-1152.757863" y="0.000000" z="-373.988007" />
+          <ControlPoints AngleXZ="2.259614" AngleY="-0.000000" EntryDistance="18.649775" ExitDistance="5.328507" />
+        </node>
+        <node NodeId="257">
+          <Position x="-1164.827911" y="0.000000" z="-363.485068" />
+          <ControlPoints AngleXZ="2.279623" AngleY="-0.000000" EntryDistance="5.330486" ExitDistance="2.665243" />
+        </node>
+        <node NodeId="258">
+          <Position x="-1170.966552" y="0.000000" z="-358.358872" />
+          <ControlPoints AngleXZ="2.261345" AngleY="-0.000000" EntryDistance="2.669601" ExitDistance="1.334800" />
+        </node>
+        <node NodeId="259">
+          <Position x="-1174.079623" y="0.000000" z="-355.842164" />
+          <ControlPoints AngleXZ="2.227914" AngleY="-0.000000" EntryDistance="1.332403" ExitDistance="14.656435" />
+        </node>
+        <node NodeId="260">
+          <Position x="-1215.071774" y="0.000000" z="-342.633010" />
+          <ControlPoints AngleXZ="1.570118" AngleY="-0.000000" EntryDistance="14.661890" ExitDistance="3.998697" />
+        </node>
+        <node NodeId="261">
+          <Position x="-1227.064388" y="0.000000" z="-343.003963" />
+          <ControlPoints AngleXZ="1.558935" AngleY="-0.000000" EntryDistance="4.000267" ExitDistance="2.666845" />
+        </node>
+        <node NodeId="262">
+          <Position x="-1235.060116" y="0.000000" z="-342.719427" />
+          <ControlPoints AngleXZ="1.655682" AngleY="-0.000000" EntryDistance="2.669334" ExitDistance="2.669334" />
+        </node>
+        <node NodeId="263">
+          <Position x="-1242.984458" y="0.000000" z="-341.643878" />
+          <ControlPoints AngleXZ="1.754750" AngleY="-0.000000" EntryDistance="2.659391" ExitDistance="25.264213" />
+        </node>
+        <node NodeId="264">
+          <Position x="-1313.839148" y="0.000000" z="-314.637628" />
+          <ControlPoints AngleXZ="1.835177" AngleY="-0.000000" EntryDistance="25.267369" ExitDistance="6.649308" />
+        </node>
+        <node NodeId="265">
+          <Position x="-1333.511568" y="0.000000" z="-311.039913" />
+          <ControlPoints AngleXZ="1.684434" AngleY="-0.000000" EntryDistance="6.687721" ExitDistance="1.337544" />
+        </node>
+        <node NodeId="266">
+          <Position x="-1337.501699" y="0.000000" z="-310.635884" />
+          <ControlPoints AngleXZ="1.656566" AngleY="-0.000000" EntryDistance="1.335806" ExitDistance="13.358063" />
+        </node>
+        <node NodeId="267">
+          <Position x="-1377.315047" y="0.000000" z="-313.085342" />
+          <ControlPoints AngleXZ="1.390977" AngleY="-0.000000" EntryDistance="13.352984" ExitDistance="17.358879" />
+        </node>
+        <node NodeId="268">
+          <Position x="-1428.282287" y="0.000000" z="-323.333432" />
+          <ControlPoints AngleXZ="1.452713" AngleY="-0.000000" EntryDistance="17.316916" ExitDistance="2.664141" />
+        </node>
+        <node NodeId="269">
+          <Position x="-1436.250711" y="0.000000" z="-323.881517" />
+          <ControlPoints AngleXZ="1.573473" AngleY="-0.000000" EntryDistance="2.665319" ExitDistance="3.997978" />
+        </node>
+        <node NodeId="270">
+          <Position x="-1448.192859" y="0.000000" z="-322.525026" />
+          <ControlPoints AngleXZ="1.765800" AngleY="-0.000000" EntryDistance="4.004609" ExitDistance="1.334870" />
+        </node>
+        <node NodeId="271">
+          <Position x="-1452.094736" y="0.000000" z="-321.670796" />
+          <ControlPoints AngleXZ="1.809146" AngleY="-0.000000" EntryDistance="1.329978" ExitDistance="15.959735" />
+        </node>
+        <node NodeId="272">
+          <Position x="-1492.612169" y="0.000000" z="-297.625756" />
+          <ControlPoints AngleXZ="2.411861" AngleY="-0.000000" EntryDistance="15.881477" ExitDistance="11.911108" />
+        </node>
+        <node NodeId="273">
+          <Position x="-1512.647404" y="0.000000" z="-267.734841" />
+          <ControlPoints AngleXZ="2.588627" AngleY="-0.000000" EntryDistance="12.014233" ExitDistance="1.334915" />
+        </node>
+        <node NodeId="274">
+          <Position x="-1514.762770" y="0.000000" z="-264.339969" />
+          <ControlPoints AngleXZ="2.582702" AngleY="-0.000000" EntryDistance="1.332680" ExitDistance="2.665361" />
+        </node>
+        <node NodeId="275">
+          <Position x="-1518.998274" y="0.000000" z="-257.553265" />
+          <ControlPoints AngleXZ="2.583601" AngleY="-0.000000" EntryDistance="2.668137" ExitDistance="14.674756" />
+        </node>
+        <node NodeId="276">
+          <Position x="-1540.558347" y="0.000000" z="-219.278342" />
+          <ControlPoints AngleXZ="2.724891" AngleY="-0.000000" EntryDistance="14.629735" ExitDistance="7.979856" />
+        </node>
+        <node NodeId="277">
+          <Position x="-1549.138827" y="0.000000" z="-196.868589" />
+          <ControlPoints AngleXZ="2.797667" AngleY="-0.000000" EntryDistance="8.008105" ExitDistance="6.673421" />
+        </node>
+        <node NodeId="278">
+          <Position x="-1555.984830" y="0.000000" z="-178.076690" />
+          <ControlPoints AngleXZ="2.787444" AngleY="-0.000000" EntryDistance="6.664173" ExitDistance="17.326850" />
+        </node>
+        <node NodeId="279">
+          <Position x="-1574.327292" y="0.000000" z="-129.419898" />
+          <ControlPoints AngleXZ="2.779111" AngleY="-0.000000" EntryDistance="17.334584" ExitDistance="4.000289" />
+        </node>
+        <node NodeId="280">
+          <Position x="-1578.564043" y="0.000000" z="-118.192950" />
+          <ControlPoints AngleXZ="2.783455" AngleY="-0.000000" EntryDistance="3.999415" ExitDistance="1.333138" />
+        </node>
+        <node NodeId="281">
+          <Position x="-1579.957752" y="0.000000" z="-114.443477" />
+          <ControlPoints AngleXZ="2.788959" AngleY="-0.000000" EntryDistance="1.333927" ExitDistance="26.678532" />
+        </node>
+        <node NodeId="282">
+          <Position x="-1596.418502" y="0.000000" z="-36.673508" />
+          <ControlPoints AngleXZ="3.140302" AngleY="-0.000000" EntryDistance="26.588454" ExitDistance="7.976536" />
+        </node>
+        <node NodeId="283">
+          <Position x="-1595.000971" y="0.000000" z="-12.716581" />
+          <ControlPoints AngleXZ="-3.042458" AngleY="-0.000000" EntryDistance="8.003220" ExitDistance="1.333870" />
+        </node>
+        <node NodeId="284">
+          <Position x="-1594.592871" y="0.000000" z="-8.737765" />
+          <ControlPoints AngleXZ="-3.036578" AngleY="-0.000000" EntryDistance="1.332977" ExitDistance="13.329766" />
+        </node>
+        <node NodeId="285">
+          <Position x="-1589.260341" y="0.000000" z="30.900153" />
+          <ControlPoints AngleXZ="-2.975703" AngleY="-0.000000" EntryDistance="13.331087" ExitDistance="26.662173" />
+        </node>
+        <node NodeId="286">
+          <Position x="-1570.369885" y="0.000000" z="108.518516" />
+          <ControlPoints AngleXZ="-2.828409" AngleY="-0.000000" EntryDistance="26.664861" ExitDistance="2.666486" />
+        </node>
+        <node NodeId="287">
+          <Position x="-1567.840415" y="0.000000" z="116.108305" />
+          <ControlPoints AngleXZ="-2.810481" AngleY="-0.000000" EntryDistance="2.666956" ExitDistance="4.000435" />
+        </node>
+        <node NodeId="288">
+          <Position x="-1563.740806" y="0.000000" z="127.386616" />
+          <ControlPoints AngleXZ="-2.773353" AngleY="-0.000000" EntryDistance="4.000044" ExitDistance="1.333348" />
+        </node>
+        <node NodeId="289">
+          <Position x="-1562.279652" y="0.000000" z="131.110137" />
+          <ControlPoints AngleXZ="-2.763447" AngleY="-0.000000" EntryDistance="1.333277" ExitDistance="1.333277" />
+        </node>
+        <node NodeId="290">
+          <Position x="-1560.794309" y="0.000000" z="134.823847" />
+          <ControlPoints AngleXZ="-2.759152" AngleY="-0.000000" EntryDistance="1.333259" ExitDistance="1.333259" />
+        </node>
+        <node NodeId="291">
+          <Position x="-1559.296975" y="0.000000" z="138.532910" />
+          <ControlPoints AngleXZ="-2.757013" AngleY="-0.000000" EntryDistance="1.333322" ExitDistance="10.666575" />
+        </node>
+        <node NodeId="292">
+          <Position x="-1547.068517" y="0.000000" z="168.103337" />
+          <ControlPoints AngleXZ="-2.738662" AngleY="-0.000000" EntryDistance="10.666473" ExitDistance="2.666618" />
+        </node>
+        <node NodeId="293">
+          <Position x="-1543.928401" y="0.000000" z="175.461161" />
+          <ControlPoints AngleXZ="-2.740860" AngleY="-0.000000" EntryDistance="2.666610" ExitDistance="7.999830" />
+        </node>
+        <node NodeId="294">
+          <Position x="-1534.663699" y="0.000000" z="197.600279" />
+          <ControlPoints AngleXZ="-2.736910" AngleY="-0.000000" EntryDistance="7.999738" ExitDistance="3.999869" />
+        </node>
+        <node NodeId="295">
+          <Position x="-1529.875401" y="0.000000" z="208.603557" />
+          <ControlPoints AngleXZ="-2.730150" AngleY="-0.000000" EntryDistance="4.000002" ExitDistance="4.000002" />
+        </node>
+        <node NodeId="296">
+          <Position x="-1525.107107" y="0.000000" z="219.615394" />
+          <ControlPoints AngleXZ="-2.734768" AngleY="-0.000000" EntryDistance="4.000085" ExitDistance="2.666723" />
+        </node>
+        <node NodeId="297">
+          <Position x="-1521.925024" y="0.000000" z="226.955417" />
+          <ControlPoints AngleXZ="-2.727482" AngleY="-0.000000" EntryDistance="2.666585" ExitDistance="1.333293" />
+        </node>
+        <node NodeId="298">
+          <Position x="-1520.298170" y="0.000000" z="230.609379" />
+          <ControlPoints AngleXZ="-2.717093" AngleY="-0.000000" EntryDistance="1.333247" ExitDistance="5.332987" />
+        </node>
+        <node NodeId="299">
+          <Position x="-1513.438839" y="0.000000" z="245.065859" />
+          <ControlPoints AngleXZ="-2.687396" AngleY="-0.000000" EntryDistance="5.334643" ExitDistance="10.669285" />
+        </node>
+        <node NodeId="300">
+          <Position x="-1498.871282" y="0.000000" z="273.552354" />
+          <ControlPoints AngleXZ="-2.639479" AngleY="-0.000000" EntryDistance="10.664756" ExitDistance="6.665473" />
+        </node>
+        <node NodeId="301">
+          <Position x="-1488.836395" y="0.000000" z="290.853183" />
+          <ControlPoints AngleXZ="-2.594185" AngleY="-0.000000" EntryDistance="6.668804" ExitDistance="1.333761" />
+        </node>
+        <node NodeId="302">
+          <Position x="-1486.736900" y="0.000000" z="294.259176" />
+          <ControlPoints AngleXZ="-2.583236" AngleY="-0.000000" EntryDistance="1.333570" ExitDistance="13.335696" />
+        </node>
+        <node NodeId="303">
+          <Position x="-1463.475340" y="0.000000" z="326.768018" />
+          <ControlPoints AngleXZ="-2.464289" AngleY="-0.000000" EntryDistance="13.337520" ExitDistance="13.337520" />
+        </node>
+        <node NodeId="304">
+          <Position x="-1436.728522" y="0.000000" z="356.472870" />
+          <ControlPoints AngleXZ="-2.346663" AngleY="-0.000000" EntryDistance="13.321436" ExitDistance="15.985723" />
+        </node>
+        <node NodeId="305">
+          <Position x="-1400.553929" y="0.000000" z="387.980781" />
+          <ControlPoints AngleXZ="-2.250414" AngleY="-0.000000" EntryDistance="16.001275" ExitDistance="1.333440" />
+        </node>
+        <node NodeId="306">
+          <Position x="-1397.440709" y="0.000000" z="390.492322" />
+          <ControlPoints AngleXZ="-2.249288" AngleY="-0.000000" EntryDistance="1.333294" ExitDistance="3.999882" />
+        </node>
+        <node NodeId="307">
+          <Position x="-1388.101749" y="0.000000" z="398.027823" />
+          <ControlPoints AngleXZ="-2.250291" AngleY="-0.000000" EntryDistance="3.999969" ExitDistance="1.333323" />
+        </node>
+        <node NodeId="308">
+          <Position x="-1384.996491" y="0.000000" z="400.548990" />
+          <ControlPoints AngleXZ="-2.257443" AngleY="-0.000000" EntryDistance="1.333259" ExitDistance="3.999778" />
+        </node>
+        <node NodeId="309">
+          <Position x="-1375.845086" y="0.000000" z="408.311303" />
+          <ControlPoints AngleXZ="-2.287108" AngleY="-0.000000" EntryDistance="4.000687" ExitDistance="2.667125" />
+        </node>
+        <node NodeId="310">
+          <Position x="-1369.846502" y="0.000000" z="413.606320" />
+          <ControlPoints AngleXZ="-2.301774" AngleY="-0.000000" EntryDistance="2.666973" ExitDistance="10.667891" />
+        </node>
+        <node NodeId="311">
+          <Position x="-1346.693248" y="0.000000" z="435.693039" />
+          <ControlPoints AngleXZ="-2.359422" AngleY="-0.000000" EntryDistance="10.668871" ExitDistance="5.334436" />
+        </node>
+        <node NodeId="312">
+          <Position x="-1335.647734" y="0.000000" z="447.268531" />
+          <ControlPoints AngleXZ="-2.408644" AngleY="-0.000000" EntryDistance="5.333927" ExitDistance="1.333482" />
+        </node>
+        <node NodeId="313">
+          <Position x="-1332.994094" y="0.000000" z="450.262247" />
+          <ControlPoints AngleXZ="-2.422274" AngleY="-0.000000" EntryDistance="1.333390" ExitDistance="2.666780" />
+        </node>
+        <node NodeId="314">
+          <Position x="-1327.767273" y="0.000000" z="456.317319" />
+          <ControlPoints AngleXZ="-2.435539" AngleY="-0.000000" EntryDistance="2.666676" ExitDistance="1.333338" />
+        </node>
+        <node NodeId="315">
+          <Position x="-1325.176710" y="0.000000" z="459.365677" />
+          <ControlPoints AngleXZ="-2.438068" AngleY="-0.000000" EntryDistance="1.333492" ExitDistance="5.333969" />
+        </node>
+        <node NodeId="316">
+          <Position x="-1314.905884" y="0.000000" z="471.634006" />
+          <ControlPoints AngleXZ="-2.457338" AngleY="-0.000000" EntryDistance="5.334659" ExitDistance="13.336647" />
+        </node>
+        <node NodeId="317">
+          <Position x="-1290.300283" y="0.000000" z="503.169658" />
+          <ControlPoints AngleXZ="-2.474953" AngleY="-0.000000" EntryDistance="13.296400" ExitDistance="1.329640" />
+        </node>
+        <node NodeId="318">
+          <Position x="-1287.808674" y="0.000000" z="506.298620" />
+          <ControlPoints AngleXZ="-2.460487" AngleY="-0.000000" EntryDistance="1.341321" ExitDistance="13.413211" />
+        </node>
+        <node NodeId="319">
+          <Position x="-1256.073970" y="0.000000" z="529.090489" />
+          <ControlPoints AngleXZ="-1.720522" AngleY="-0.000000" EntryDistance="13.018647" ExitDistance="3.905594" />
+        </node>
+        <node NodeId="320">
+          <Position x="-1244.135154" y="0.000000" z="528.981094" />
+          <ControlPoints AngleXZ="-1.443619" AngleY="-0.000000" EntryDistance="4.026413" ExitDistance="18.789926" />
+        </node>
+        <node NodeId="321">
+          <Position x="-1190.850178" y="0.000000" z="511.976921" />
+          <ControlPoints AngleXZ="-1.295808" AngleY="-0.000000" EntryDistance="18.650359" ExitDistance="7.993011" />
+        </node>
+        <node NodeId="322">
+          <Position x="-1167.307902" y="0.000000" z="507.327851" />
+          <ControlPoints AngleXZ="-1.428770" AngleY="-0.000000" EntryDistance="8.007454" ExitDistance="2.669151" />
+        </node>
+        <node NodeId="323">
+          <Position x="-1159.375408" y="0.000000" z="506.279808" />
+          <ControlPoints AngleXZ="-1.452021" AngleY="-0.000000" EntryDistance="2.666273" ExitDistance="3.999410" />
+        </node>
+        <node NodeId="324">
+          <Position x="-1147.436133" y="0.000000" z="505.076696" />
+          <ControlPoints AngleXZ="-1.485319" AngleY="-0.000000" EntryDistance="4.000711" ExitDistance="10.668563" />
+        </node>
+        <node NodeId="325">
+          <Position x="-1115.482747" y="0.000000" z="503.929467" />
+          <ControlPoints AngleXZ="-1.603290" AngleY="-0.000000" EntryDistance="10.670170" ExitDistance="8.002628" />
+        </node>
+        <node NodeId="326">
+          <Position x="-1091.662580" y="0.000000" z="506.740281" />
+          <ControlPoints AngleXZ="-1.793118" AngleY="-0.000000" EntryDistance="8.017708" ExitDistance="4.008854" />
+        </node>
+        <node NodeId="327">
+          <Position x="-1080.166989" y="0.000000" z="510.238924" />
+          <ControlPoints AngleXZ="-1.950461" AngleY="-0.000000" EntryDistance="4.005717" ExitDistance="5.340957" />
+        </node>
+        <node NodeId="328">
+          <Position x="-1066.148249" y="0.000000" z="517.933524" />
+          <ControlPoints AngleXZ="-2.190360" AngleY="-0.000000" EntryDistance="5.348444" ExitDistance="10.696888" />
+        </node>
+        <node NodeId="329">
+          <Position x="-1045.771814" y="0.000000" z="542.123999" />
+          <ControlPoints AngleXZ="-2.722590" AngleY="-0.000000" EntryDistance="10.708769" ExitDistance="1.338596" />
+        </node>
+        <node NodeId="330">
+          <Position x="-1044.262855" y="0.000000" z="545.849044" />
+          <ControlPoints AngleXZ="-2.786040" AngleY="-0.000000" EntryDistance="1.338375" ExitDistance="26.767508" />
+        </node>
+        <node NodeId="331">
+          <Position x="-1045.764952" y="0.000000" z="624.689045" />
+          <ControlPoints AngleXZ="2.872591" AngleY="-0.000000" EntryDistance="26.781991" ExitDistance="4.017299" />
+        </node>
+        <node NodeId="332">
+          <Position x="-1049.310380" y="0.000000" z="636.151518" />
+          <ControlPoints AngleXZ="2.801199" AngleY="-0.000000" EntryDistance="3.993408" ExitDistance="5.324544" />
+        </node>
+        <node NodeId="333">
+          <Position x="-1055.312982" y="0.000000" z="650.984313" />
+          <ControlPoints AngleXZ="2.734908" AngleY="-0.000000" EntryDistance="5.338764" ExitDistance="6.673455" />
+        </node>
+        <node NodeId="334">
+          <Position x="-1063.442956" y="0.000000" z="669.255508" />
+          <ControlPoints AngleXZ="2.699367" AngleY="-0.000000" EntryDistance="6.665199" ExitDistance="2.666080" />
+        </node>
+        <node NodeId="335">
+          <Position x="-1066.929518" y="0.000000" z="676.455777" />
+          <ControlPoints AngleXZ="2.687247" AngleY="-0.000000" EntryDistance="2.666633" ExitDistance="5.333267" />
+        </node>
+        <node NodeId="336">
+          <Position x="-1073.902642" y="0.000000" z="690.856317" />
+          <ControlPoints AngleXZ="2.693576" AngleY="-0.000000" EntryDistance="5.336695" ExitDistance="5.336695" />
+        </node>
+        <node NodeId="337">
+          <Position x="-1080.641581" y="0.000000" z="705.366582" />
+          <ControlPoints AngleXZ="2.730893" AngleY="-0.000000" EntryDistance="5.321081" ExitDistance="5.321081" />
+        </node>
+        <node NodeId="338">
+          <Position x="-1086.689797" y="0.000000" z="720.179894" />
+          <ControlPoints AngleXZ="2.764897" AngleY="-0.000000" EntryDistance="5.376165" ExitDistance="24.192742" />
+        </node>
+        <node NodeId="339">
+          <Position x="-1099.476650" y="0.000000" z="789.857160" />
+          <ControlPoints AngleXZ="-2.904656" AngleY="-0.000000" EntryDistance="24.066564" ExitDistance="1.337031" />
+        </node>
+        <node NodeId="340">
+          <Position x="-1098.394059" y="0.000000" z="793.727031" />
+          <ControlPoints AngleXZ="-2.831108" AngleY="-0.000000" EntryDistance="1.335589" ExitDistance="21.369429" />
+        </node>
+        <node NodeId="341">
+          <Position x="-1057.276000" y="0.000000" z="841.848754" />
+          <ControlPoints AngleXZ="-2.300996" AngleY="-0.000000" EntryDistance="21.395198" ExitDistance="1.337200" />
+        </node>
+        <node NodeId="342">
+          <Position x="-1054.312069" y="0.000000" z="844.534855" />
+          <ControlPoints AngleXZ="-2.312237" AngleY="-0.000000" EntryDistance="1.331496" ExitDistance="13.314959" />
+        </node>
+        <node NodeId="343">
+          <Position x="-1025.754296" y="0.000000" z="872.527641" />
+          <ControlPoints AngleXZ="-2.371536" AngleY="-0.000000" EntryDistance="13.343964" ExitDistance="18.681549" />
+        </node>
+        <node NodeId="344">
+          <Position x="-988.484037" y="0.000000" z="914.307595" />
+          <ControlPoints AngleXZ="-2.473085" AngleY="-0.000000" EntryDistance="18.666403" ExitDistance="2.666629" />
+        </node>
+        <node NodeId="345">
+          <Position x="-983.643793" y="0.000000" z="920.674596" />
+          <ControlPoints AngleXZ="-2.517462" AngleY="-0.000000" EntryDistance="2.665286" ExitDistance="13.326429" />
+        </node>
+        <node NodeId="346">
+          <Position x="-965.341148" y="0.000000" z="956.115851" />
+          <ControlPoints AngleXZ="-2.794457" AngleY="-0.000000" EntryDistance="13.327249" ExitDistance="18.658149" />
+        </node>
+        <node NodeId="347">
+          <Position x="-951.715203" y="0.000000" z="1010.347625" />
+          <ControlPoints AngleXZ="-2.938440" AngleY="-0.000000" EntryDistance="18.668046" ExitDistance="1.333432" />
+        </node>
+        <node NodeId="348">
+          <Position x="-950.899274" y="0.000000" z="1014.263213" />
+          <ControlPoints AngleXZ="-2.932624" AngleY="-0.000000" EntryDistance="1.333174" ExitDistance="5.332696" />
+        </node>
+        <node NodeId="349">
+          <Position x="-947.524450" y="0.000000" z="1029.902530" />
+          <ControlPoints AngleXZ="-2.941012" AngleY="-0.000000" EntryDistance="5.332625" ExitDistance="3.999469" />
+        </node>
+        <node NodeId="350">
+          <Position x="-945.293671" y="0.000000" z="1041.693364" />
+          <ControlPoints AngleXZ="-2.961194" AngleY="-0.000000" EntryDistance="4.001000" ExitDistance="14.670334" />
+        </node>
+        <node NodeId="351">
+          <Position x="-936.879998" y="0.000000" z="1084.880080" />
+          <ControlPoints AngleXZ="-2.926648" AngleY="-0.000000" EntryDistance="14.651347" ExitDistance="1.331941" />
+        </node>
+        <node NodeId="352">
+          <Position x="-935.989134" y="0.000000" z="1088.777937" />
+          <ControlPoints AngleXZ="-2.900448" AngleY="-0.000000" EntryDistance="1.334945" ExitDistance="17.354285" />
+        </node>
+        <node NodeId="353">
+          <Position x="-907.638183" y="0.000000" z="1130.568264" />
+          <ControlPoints AngleXZ="-2.103249" AngleY="-0.000000" EntryDistance="17.236686" ExitDistance="2.651798" />
+        </node>
+        <node NodeId="354">
+          <Position x="-900.513855" y="0.000000" z="1134.221576" />
+          <ControlPoints AngleXZ="-2.009245" AngleY="-0.000000" EntryDistance="2.678217" ExitDistance="13.391085" />
+        </node>
+        <node NodeId="355">
+          <Position x="-863.695300" y="0.000000" z="1149.835184" />
+          <ControlPoints AngleXZ="-1.961452" AngleY="-0.000000" EntryDistance="13.319590" ExitDistance="15.983508" />
+        </node>
+        <node NodeId="356">
+          <Position x="-819.353579" y="0.000000" z="1168.213962" />
+          <ControlPoints AngleXZ="-1.948211" AngleY="-0.000000" EntryDistance="15.998267" ExitDistance="1.333189" />
+        </node>
+        <node NodeId="357">
+          <Position x="-815.627351" y="0.000000" z="1169.666623" />
+          <ControlPoints AngleXZ="-1.933915" AngleY="-0.000000" EntryDistance="1.333175" ExitDistance="3.999524" />
+        </node>
+        <node NodeId="358">
+          <Position x="-804.373288" y="0.000000" z="1173.832311" />
+          <ControlPoints AngleXZ="-1.942649" AngleY="-0.000000" EntryDistance="3.999373" ExitDistance="6.665622" />
+        </node>
+        <node NodeId="359">
+          <Position x="-785.956968" y="0.000000" z="1181.625903" />
+          <ControlPoints AngleXZ="-1.955946" AngleY="-0.000000" EntryDistance="6.659769" ExitDistance="1.331954" />
+        </node>
+        <node NodeId="360">
+          <Position x="-782.232517" y="0.000000" z="1183.085563" />
+          <ControlPoints AngleXZ="-1.932869" AngleY="-0.000000" EntryDistance="1.336872" ExitDistance="24.063689" />
+        </node>
+        <node NodeId="361">
+          <Position x="-712.237524" y="0.000000" z="1185.999165" />
+          <ControlPoints AngleXZ="-1.130794" AngleY="-0.000000" EntryDistance="23.924398" ExitDistance="2.658266" />
+        </node>
+        <node NodeId="362">
+          <Position x="-705.186517" y="0.000000" z="1182.159849" />
+          <ControlPoints AngleXZ="-1.025009" AngleY="-0.000000" EntryDistance="2.682433" ExitDistance="22.800682" />
+        </node>
+        <node NodeId="363">
+          <Position x="-651.843471" y="0.000000" z="1140.118324" />
+          <ControlPoints AngleXZ="-0.973344" AngleY="-0.000000" EntryDistance="22.662766" ExitDistance="2.666208" />
+        </node>
+        <node NodeId="364">
+          <Position x="-645.098059" y="0.000000" z="1135.802494" />
+          <ControlPoints AngleXZ="-1.027381" AngleY="-0.000000" EntryDistance="2.671465" ExitDistance="5.342929" />
+        </node>
+        <node NodeId="365">
+          <Position x="-630.906132" y="0.000000" z="1128.413471" />
+          <ControlPoints AngleXZ="-1.171053" AngleY="-0.000000" EntryDistance="5.337381" ExitDistance="2.668690" />
+        </node>
+        <node NodeId="366">
+          <Position x="-623.421780" y="0.000000" z="1125.564427" />
+          <ControlPoints AngleXZ="-1.230625" AngleY="-0.000000" EntryDistance="2.666959" ExitDistance="2.666959" />
+        </node>
+        <node NodeId="367">
+          <Position x="-615.863664" y="0.000000" z="1122.984717" />
+          <ControlPoints AngleXZ="-1.253218" AngleY="-0.000000" EntryDistance="2.660678" ExitDistance="3.991017" />
+        </node>
+        <node NodeId="368">
+          <Position x="-604.426764" y="0.000000" z="1119.372302" />
+          <ControlPoints AngleXZ="-1.271032" AngleY="-0.000000" EntryDistance="4.007333" ExitDistance="6.678888" />
+        </node>
+        <node NodeId="369">
+          <Position x="-585.207856" y="0.000000" z="1113.663507" />
+          <ControlPoints AngleXZ="-1.302977" AngleY="-0.000000" EntryDistance="6.661491" ExitDistance="1.332298" />
+        </node>
+        <node NodeId="370">
+          <Position x="-581.345973" y="0.000000" z="1112.621314" />
+          <ControlPoints AngleXZ="-1.309472" AngleY="-0.000000" EntryDistance="1.337275" ExitDistance="24.070948" />
+        </node>
+        <node NodeId="371">
+          <Position x="-509.879984" y="0.000000" z="1108.423815" />
+          <ControlPoints AngleXZ="-1.934730" AngleY="-0.000000" EntryDistance="24.397431" ExitDistance="1.355413" />
+        </node>
+        <node NodeId="372">
+          <Position x="-506.123378" y="0.000000" z="1110.005293" />
+          <ControlPoints AngleXZ="-2.003772" AngleY="-0.000000" EntryDistance="1.356578" ExitDistance="16.278939" />
+        </node>
+        <node NodeId="373">
+          <Position x="-470.223388" y="0.000000" z="1141.704535" />
+          <ControlPoints AngleXZ="-2.449227" AngleY="-0.000000" EntryDistance="16.072716" ExitDistance="4.018179" />
+        </node>
+        <node NodeId="374">
+          <Position x="-462.622595" y="0.000000" z="1150.986161" />
+          <ControlPoints AngleXZ="-2.461858" AngleY="-0.000000" EntryDistance="3.990511" ExitDistance="15.962045" />
+        </node>
+        <node NodeId="375">
+          <Position x="-433.717202" y="0.000000" z="1189.292524" />
+          <ControlPoints AngleXZ="-2.535230" AngleY="-0.000000" EntryDistance="16.041996" ExitDistance="0.668417" />
+        </node>
+        <node NodeId="376">
+          <Position x="-432.577527" y="0.000000" z="1190.942762" />
+          <ControlPoints AngleXZ="-2.539172" AngleY="-0.000000" EntryDistance="0.668605" ExitDistance="0.000000" />
+        </node>
+      </nodes>      <surfaces count="1">
+        <surface SurfaceId="0" Visible="True">
+          <StartNode>0</StartNode>
+          <StartPercentage>0</StartPercentage>
+          <Name>Surface1</Name>
+          <SetShape>True</SetShape>
+          <SurfaceShape Points="5">
+            <Point Selected="False">
+              <Position x="-4.9" y="0" z="0" />
+            </Point>
+            <Point Selected="False">
+              <Position x="-2.5" y="0" z="0" />
+            </Point>
+            <Point Selected="False">
+              <Position x="0" y="0" z="0" />
+            </Point>
+            <Point Selected="False">
+              <Position x="2.5" y="0" z="0" />
+            </Point>
+            <Point Selected="False">
+              <Position x="4.9" y="0" z="0" />
+            </Point>
+          </SurfaceShape>
+          <SetMaterial>True</SetMaterial>
+          <SurfaceMaterials>
+            <SurfaceMaterial MaterialPath="Default\Materials\Road\Tarmac\Tarmac001" Selected="False">
+              <StartPoint>0</StartPoint>
+              <EndPoint>4</EndPoint>
+              <MaterialApplicationType>PerMeter</MaterialApplicationType>
+              <PerMeterCoverage>12</PerMeterCoverage>
+              <FitNeatly>True</FitNeatly>
+              <texture_coordinate>
+                <FlippedHorizontal>1</FlippedHorizontal>
+                <FlippedVertical>1</FlippedVertical>
+                <Angle>0</Angle>
+                <scale x="1" y="1" />
+                <offset x="0" y="0" />
+              </texture_coordinate>
+            </SurfaceMaterial>
+          </SurfaceMaterials>
+          <PanelLength>5</PanelLength>
+          <CloudInfluence>1</CloudInfluence>
+        </surface>
+      </surfaces>
+      <Cambers count="1">
+        <Camber>
+          <StartNode>0</StartNode>
+          <StartPercentage>0</StartPercentage>
+          <Angle>0</Angle>
+        </Camber>
+      </Cambers>
+      <Widths count="1">
+        <Width>
+          <StartNode>0</StartNode>
+          <StartPercentage>0</StartPercentage>
+          <WidthMultiplier>1</WidthMultiplier>
+        </Width>
+      </Widths>
+      <Anchors count="0" />
+    </track>
+  </tracks>
+  <Walls count="0" />
+  <Terrain>

@@ -1,0 +1,39 @@
+      </nodes>
+      <surfaces count="1">
+        <surface SurfaceId="0" Visible="True">
+          <StartNode>0</StartNode>
+          <StartPercentage>0</StartPercentage>
+          <Name>Surface1</Name>
+          <SetShape>True</SetShape>
+          <SurfaceShape Points="2">
+            <Point Selected="False">
+              <Position x="0" y="1" z="0" />
+            </Point>
+            <Point Selected="False">
+              <Position x="0" y="0" z="0" />
+            </Point>
+          </SurfaceShape>
+          <SetMaterial>True</SetMaterial>
+          <SurfaceMaterials>
+            <SurfaceMaterial MaterialPath="TestMuros\Materials\test_muro" Selected="True">
+              <StartPoint>0</StartPoint>
+              <EndPoint>1</EndPoint>
+              <MaterialApplicationType>PerMeter</MaterialApplicationType>
+              <PerMeterCoverage>4</PerMeterCoverage>
+              <FitNeatly>True</FitNeatly>
+              <texture_coordinate>
+                <FlippedHorizontal>1</FlippedHorizontal>
+                <FlippedVertical>1</FlippedVertical>
+                <Angle>180</Angle>
+                <scale x="1" y="0.99" />
+                <offset x="0" y="-0.01" />
+              </texture_coordinate>
+            </SurfaceMaterial>
+          </SurfaceMaterials>
+          <PanelLength>5</PanelLength>
+          <CloudInfluence>1</CloudInfluence>
+        </surface>
+      </surfaces>
+    </Wall>
+ 
+

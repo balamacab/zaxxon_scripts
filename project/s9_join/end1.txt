@@ -1,0 +1,7 @@
+  <ObjectGroups>
+    <ObjectGroup Visible="True" Selected="False">
+      <Name>default</Name>
+    </ObjectGroup>
+  </ObjectGroups>
+  <Objects />
+  <Driveline>

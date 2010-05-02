@@ -1,0 +1,127 @@
+  </Terrain>
+  <ObjectGroups>
+    <ObjectGroup Visible="True" Selected="False">
+      <Name>default</Name>
+    </ObjectGroup>
+  </ObjectGroups>
+  <Objects />
+  <Driveline>
+    <DrivelineSegments count="0" />
+    <DrivelineTimingGates count="7">
+      <DrivelineTimingGate>
+        <Type>Start</Type>
+        <PlacementStyle>ByDistance</PlacementStyle>
+        <PlacementDistance>5</PlacementDistance>
+        <PlacementPercentage>0</PlacementPercentage>
+        <Left>-20</Left>
+        <Right>20</Right>
+        <Top>15</Top>
+        <Bottom>-5</Bottom>
+        <Visible>True</Visible>
+        <Plane>
+          <Position x="0" y="20" z="0" />
+          <Scale x="1" y="1" z="1" />
+          <Rotation x="0" y="0" z="0" />
+        </Plane>
+      </DrivelineTimingGate>
+      <DrivelineTimingGate>
+        <Type>Checkpoint1</Type>
+        <PlacementStyle>ByPercentage</PlacementStyle>
+        <PlacementDistance>0</PlacementDistance>
+        <PlacementPercentage>0.3333</PlacementPercentage>
+        <Left>-20</Left>
+        <Right>20</Right>
+        <Top>15</Top>
+        <Bottom>-5</Bottom>
+        <Visible>True</Visible>
+        <Plane>
+          <Position x="0" y="20" z="0" />
+          <Scale x="1" y="1" z="1" />
+          <Rotation x="0" y="0" z="0" />
+        </Plane>
+      </DrivelineTimingGate>
+      <DrivelineTimingGate>
+        <Type>Checkpoint2</Type>
+        <PlacementStyle>ByPercentage</PlacementStyle>
+        <PlacementDistance>0</PlacementDistance>
+        <PlacementPercentage>0.6666</PlacementPercentage>
+        <Left>-20</Left>
+        <Right>20</Right>
+        <Top>15</Top>
+        <Bottom>-5</Bottom>
+        <Visible>True</Visible>
+        <Plane>
+          <Position x="0" y="20" z="0" />
+          <Scale x="1" y="1" z="1" />
+          <Rotation x="0" y="0" z="0" />
+        </Plane>
+      </DrivelineTimingGate>
+      <DrivelineTimingGate>
+        <Type>End</Type>
+        <PlacementStyle>ByDistanceFromEnd</PlacementStyle>
+        <PlacementDistance>30</PlacementDistance>
+        <PlacementPercentage>0</PlacementPercentage>
+        <Left>-20</Left>
+        <Right>20</Right>
+        <Top>15</Top>
+        <Bottom>-5</Bottom>
+        <Visible>True</Visible>
+        <Plane>
+          <Position x="0" y="20" z="0" />
+          <Scale x="1" y="1" z="1" />
+          <Rotation x="0" y="0" z="0" />
+        </Plane>
+      </DrivelineTimingGate>
+      <DrivelineTimingGate>
+        <Type>Finish</Type>
+        <PlacementStyle>ByDistanceFromEnd</PlacementStyle>
+        <PlacementDistance>5</PlacementDistance>
+        <PlacementPercentage>0</PlacementPercentage>
+        <Left>-20</Left>
+        <Right>20</Right>
+        <Top>15</Top>
+        <Bottom>-5</Bottom>
+        <Visible>True</Visible>
+        <Plane>
+          <Position x="0" y="20" z="0" />
+          <Scale x="1" y="1" z="1" />
+          <Rotation x="0" y="0" z="0" />
+        </Plane>
+      </DrivelineTimingGate>
+      <DrivelineTimingGate>
+        <Type>PitIn</Type>
+        <PlacementStyle>Manually</PlacementStyle>
+        <PlacementDistance>0</PlacementDistance>
+        <PlacementPercentage>0</PlacementPercentage>
+        <Left>-20</Left>
+        <Right>20</Right>
+        <Top>15</Top>
+        <Bottom>-5</Bottom>
+        <Visible>True</Visible>
+        <Plane>
+          <Position x="0" y="20" z="0" />
+          <Scale x="1" y="1" z="1" />
+          <Rotation x="0" y="0" z="0" />
+        </Plane>
+      </DrivelineTimingGate>
+      <DrivelineTimingGate>
+        <Type>PitOut</Type>
+        <PlacementStyle>Manually</PlacementStyle>
+        <PlacementDistance>0</PlacementDistance>
+        <PlacementPercentage>0</PlacementPercentage>
+        <Left>-20</Left>
+        <Right>20</Right>
+        <Top>15</Top>
+        <Bottom>-5</Bottom>
+        <Visible>True</Visible>
+        <Plane>
+          <Position x="0" y="20" z="0" />
+          <Scale x="1" y="1" z="1" />
+          <Rotation x="0" y="0" z="0" />
+        </Plane>
+      </DrivelineTimingGate>
+    </DrivelineTimingGates>
+    <Pacenotes count="0" />
+  </Driveline>
+  <Cameras />
+</venue>

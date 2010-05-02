@@ -1,0 +1,58 @@
+      <surfaces count="1">
+        <surface SurfaceId="0" Visible="True">
+          <StartNode>0</StartNode>
+          <StartPercentage>0</StartPercentage>
+          <Name>Surface1</Name>
+          <SetShape>True</SetShape>
+          <SurfaceShape Points="5">
+            <Point Selected="False">
+              <Position x="-4.9" y="0" z="0" />
+            </Point>
+            <Point Selected="False">
+              <Position x="-2.5" y="0" z="0" />
+            </Point>
+            <Point Selected="False">
+              <Position x="0" y="0" z="0" />
+            </Point>
+            <Point Selected="False">
+              <Position x="2.5" y="0" z="0" />
+            </Point>
+            <Point Selected="False">
+              <Position x="4.9" y="0" z="0" />
+            </Point>
+          </SurfaceShape>
+          <SetMaterial>True</SetMaterial>
+          <SurfaceMaterials>
+            <SurfaceMaterial MaterialPath="Default\Materials\Road\Tarmac\Tarmac001" Selected="False">
+              <StartPoint>0</StartPoint>
+              <EndPoint>4</EndPoint>
+              <MaterialApplicationType>PerMeter</MaterialApplicationType>
+              <PerMeterCoverage>12</PerMeterCoverage>
+              <FitNeatly>True</FitNeatly>
+              <texture_coordinate>
+                <FlippedHorizontal>1</FlippedHorizontal>
+                <FlippedVertical>1</FlippedVertical>
+                <Angle>0</Angle>
+                <scale x="1" y="1" />
+                <offset x="0" y="0" />
+              </texture_coordinate>
+            </SurfaceMaterial>
+          </SurfaceMaterials>
+          <PanelLength>5</PanelLength>
+          <CloudInfluence>1</CloudInfluence>
+        </surface>
+      </surfaces>
+      <Cambers count="1">
+        <Camber>
+          <StartNode>0</StartNode>
+          <StartPercentage>0</StartPercentage>
+          <Angle>0</Angle>
+        </Camber>
+      </Cambers>
+      <Widths count="1">
+        <Width>
+          <StartNode>0</StartNode>
+          <StartPercentage>0</StartPercentage>
+          <WidthMultiplier>1</WidthMultiplier>
+        </Width>
+      </Widths>

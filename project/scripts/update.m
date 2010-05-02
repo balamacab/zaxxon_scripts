@@ -1,0 +1,2 @@
+function update()
+system('svn update .');

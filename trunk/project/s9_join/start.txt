@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<venue version="0.5.0">
+  <BackgroundImages count="0" />
+  <rFactor_VenueName>BobsTrackBuilder</rFactor_VenueName>
+  <rFactor_TrackName>Track01</rFactor_TrackName>
+  <rFactor_OffsetType>None</rFactor_OffsetType>
+  <RBR_TyreChoice>Gravel</RBR_TyreChoice>
+  <RBR_DisableRBRInstancing>False</RBR_DisableRBRInstancing>
+  <RBR_TrackFolder>BobsTrackBuilder</RBR_TrackFolder>
+  <RBR_TrackDescription>Your BTB Built Track</RBR_TrackDescription>
+  <Export_rFactor_CreateFolder>True</Export_rFactor_CreateFolder>
+  <Export_rFactor_Overwrite_TDF>True</Export_rFactor_Overwrite_TDF>
+  <Export_rFactor_Overwrite_GDB>True</Export_rFactor_Overwrite_GDB>
+  <Export_rFactor_Overwrite_SCN>True</Export_rFactor_Overwrite_SCN>
+  <Export_rFactor_Overwrite_AIW>True</Export_rFactor_Overwrite_AIW>
+  <Export_rFactor_Overwrite_CAM>True</Export_rFactor_Overwrite_CAM>
+  <Racer_TrackName>BobsTrackBuilder</Racer_TrackName>
+  <Racer_TrackFolder>BobsTrackBuilder</Racer_TrackFolder>
+  <xpacks>
+    <xpack>
+      <Name>Default</Name>
+    </xpack>
+    <xpack>
+      <Name>Common</Name>
+    </xpack>
+    <xpack>
+      <Name>WP</Name>
+    </xpack>
+  </xpacks>
+  

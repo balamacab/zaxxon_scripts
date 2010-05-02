@@ -1,0 +1,6 @@
+function trackamont()
+S=load('..\anchors.mat');
+nac=length(S.x);
+alturas_suavizadas=0.5*(S.y(1:nac/2)+S.y(nac/2+1:end));
+
+save('track0.mat','alturas_suavizadas'); %No salva tantas cosas como dar_altura

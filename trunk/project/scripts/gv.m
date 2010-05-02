@@ -1,0 +1,2 @@
+function gv()
+cd ..\venue

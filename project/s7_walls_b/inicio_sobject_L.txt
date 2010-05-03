@@ -1,0 +1,79 @@
+    <SObject RandomSeed="1638159580">
+      <Name>Guardai%d</Name>
+      <SObject Collisions="True">
+        <Start>
+    	  <Pieces>
+      	    <Piece>
+        	<Object>xpack://guarda\Objects\inicio</Object>
+        	<CurveWithLine>False</CurveWithLine>
+        	<Scale x="1" y="1" z="1" />
+        	<Rotation x="0" y="1.570796" z="0" />
+              <RandomLimits>
+                <ScaleAllMin>1</ScaleAllMin>
+                <ScaleAllMax>1</ScaleAllMax>
+                <ScaleXMin>1</ScaleXMin>
+                <ScaleXMax>1</ScaleXMax>
+                <ScaleYMin>1</ScaleYMin>
+                <ScaleYMax>1</ScaleYMax>
+                <ScaleZMin>1</ScaleZMin>
+                <ScaleZMax>1</ScaleZMax>
+                <Roll>0</Roll>
+                <Pitch>0</Pitch>
+                <Yaw>0</Yaw>
+                <PlantableDepth>0</PlantableDepth>
+              </RandomLimits>
+      	    </Piece>
+    	 </Pieces>
+  	</Start>
+        <Pattern>
+          <Pieces>
+            <Piece>
+              <Object>xpack://guarda\Objects\central32</Object>
+              <CurveWithLine>False</CurveWithLine>
+              <Scale x="1" y="1" z="1" />
+              <Rotation x="0" y="1.570796" z="0" />
+              <RandomLimits>
+                <ScaleAllMin>1</ScaleAllMin>
+                <ScaleAllMax>1</ScaleAllMax>
+                <ScaleXMin>1</ScaleXMin>
+                <ScaleXMax>1</ScaleXMax>
+                <ScaleYMin>1</ScaleYMin>
+                <ScaleYMax>1</ScaleYMax>
+                <ScaleZMin>1</ScaleZMin>
+                <ScaleZMax>1</ScaleZMax>
+                <Roll>0</Roll>
+                <Pitch>0</Pitch>
+                <Yaw>0</Yaw>
+                <PlantableDepth>0</PlantableDepth>
+              </RandomLimits>
+            </Piece>
+          </Pieces>
+        </Pattern>
+        <End>
+    	  <Pieces>
+      	    <Piece>
+        	<Object>xpack://guarda\Objects\final</Object>
+        	<CurveWithLine>False</CurveWithLine>
+        	<Scale x="1" y="1" z="1" />
+        	<Rotation x="0" y="1.570796" z="0" />
+              <RandomLimits>
+                <ScaleAllMin>1</ScaleAllMin>
+                <ScaleAllMax>1</ScaleAllMax>
+                <ScaleXMin>1</ScaleXMin>
+                <ScaleXMax>1</ScaleXMax>
+                <ScaleYMin>1</ScaleYMin>
+                <ScaleYMax>1</ScaleYMax>
+                <ScaleZMin>1</ScaleZMin>
+                <ScaleZMax>1</ScaleZMax>
+                <Roll>0</Roll>
+                <Pitch>0</Pitch>
+                <Yaw>0</Yaw>
+                <PlantableDepth>0</PlantableDepth>
+              </RandomLimits>
+      	    </Piece>
+    	 </Pieces>
+  	</End>
+        
+      </SObject>
+      <nodes count="%d">
+        <OnlyOneNodeSelected>-1</OnlyOneNodeSelected>

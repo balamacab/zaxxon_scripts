@@ -1,0 +1,91 @@
+    <SObject RandomSeed="1638159580">
+      <Name>Pretil%d</Name>
+<SObject>
+  <Start />
+  <Pattern>
+    <Pieces>
+      <Piece SpaceAfter="0.4">
+        <Object>xpack://guarda\Objects\pretil</Object>
+        <CurveWithLine>False</CurveWithLine>
+        <Scale x="1" y="1" z="1" />
+        <RandomLimits>
+          <ScaleAllMin>1</ScaleAllMin>
+          <ScaleAllMax>1</ScaleAllMax>
+          <ScaleXMin>1</ScaleXMin>
+          <ScaleXMax>1</ScaleXMax>
+          <ScaleYMin>1</ScaleYMin>
+          <ScaleYMax>1</ScaleYMax>
+          <ScaleZMin>1</ScaleZMin>
+          <ScaleZMax>1</ScaleZMax>
+          <Roll>0</Roll>
+          <Pitch>0</Pitch>
+          <Yaw>0</Yaw>
+          <PlantableDepth>0</PlantableDepth>
+        </RandomLimits>
+      </Piece>
+      <Piece SpaceAfter="0.4">
+        <Object>xpack://guarda\Objects\pretil</Object>
+        <CurveWithLine>False</CurveWithLine>
+        <Scale x="1" y="1" z="1" />
+        <Rotation x="0" y="3.141593" z="0" />
+        <RandomLimits>
+          <ScaleAllMin>1</ScaleAllMin>
+          <ScaleAllMax>1</ScaleAllMax>
+          <ScaleXMin>1</ScaleXMin>
+          <ScaleXMax>1</ScaleXMax>
+          <ScaleYMin>1</ScaleYMin>
+          <ScaleYMax>1</ScaleYMax>
+          <ScaleZMin>1</ScaleZMin>
+          <ScaleZMax>1</ScaleZMax>
+          <Roll>0</Roll>
+          <Pitch>0</Pitch>
+          <Yaw>0</Yaw>
+          <PlantableDepth>0</PlantableDepth>
+        </RandomLimits>
+      </Piece>
+      <Piece SpaceAfter="0.4">
+        <Object>xpack://guarda\Objects\pretil</Object>
+        <CurveWithLine>False</CurveWithLine>
+        <Scale x="-1" y="1" z="1" />
+        <Rotation x="3.141593" y="3.141593" z="3.141593" />
+        <RandomLimits>
+          <ScaleAllMin>1</ScaleAllMin>
+          <ScaleAllMax>1</ScaleAllMax>
+          <ScaleXMin>1</ScaleXMin>
+          <ScaleXMax>1</ScaleXMax>
+          <ScaleYMin>1</ScaleYMin>
+          <ScaleYMax>1</ScaleYMax>
+          <ScaleZMin>1</ScaleZMin>
+          <ScaleZMax>1</ScaleZMax>
+          <Roll>0</Roll>
+          <Pitch>0</Pitch>
+          <Yaw>0</Yaw>
+          <PlantableDepth>0</PlantableDepth>
+        </RandomLimits>
+      </Piece>
+      <Piece SpaceAfter="0.4">
+        <Object>xpack://guarda\Objects\pretil</Object>
+        <CurveWithLine>False</CurveWithLine>
+        <Scale x="-1" y="1" z="1" />
+        <Rotation x="3.141593" y="0" z="3.141593" />
+        <RandomLimits>
+          <ScaleAllMin>1</ScaleAllMin>
+          <ScaleAllMax>1</ScaleAllMax>
+          <ScaleXMin>1</ScaleXMin>
+          <ScaleXMax>1</ScaleXMax>
+          <ScaleYMin>1</ScaleYMin>
+          <ScaleYMax>1</ScaleYMax>
+          <ScaleZMin>1</ScaleZMin>
+          <ScaleZMax>1</ScaleZMax>
+          <Roll>0</Roll>
+          <Pitch>0</Pitch>
+          <Yaw>0</Yaw>
+          <PlantableDepth>0</PlantableDepth>
+        </RandomLimits>
+      </Piece>
+    </Pieces>
+  </Pattern>
+  <End />
+</SObject>
+      <nodes count="%d">
+        <OnlyOneNodeSelected>-1</OnlyOneNodeSelected>

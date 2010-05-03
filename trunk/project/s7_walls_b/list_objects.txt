@@ -1,0 +1,27 @@
+  <ObjectGroups>
+    <ObjectGroup Visible="True" Selected="False">
+      <Name>default</Name>
+    </ObjectGroup>
+  </ObjectGroups>
+  <Objects>
+    <Object>
+      <Name>pretil</Name>
+      <Path>guarda\Objects\pretil</Path>
+      <Instances />
+    </Object>
+    <Object>
+      <Name>central32</Name>
+      <Path>guarda\Objects\central32</Path>
+      <Instances />
+    </Object>
+    <Object>
+      <Name>inicio</Name>
+      <Path>guarda\Objects\inicio</Path>
+      <Instances />
+    </Object>
+    <Object>
+      <Name>final</Name>
+      <Path>guarda\Objects\final</Path>
+      <Instances />
+    </Object>
+  </Objects>

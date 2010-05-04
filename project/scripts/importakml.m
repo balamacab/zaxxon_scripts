@@ -243,8 +243,10 @@ axis square
 plot(controlA(1,:),controlA(2,:),'o',controlB(1,:),controlB(2,:),'*',controlC(1,:),controlC(2,:),'b+',controlD(1,:),controlD(2,:),'r+');
 
 
-[alturas_nodos anguloy]=procesar_alturas(altura,to,t,indicesakima(indices_bp));
-plot(1:length(altura),altura,1:length(indices_bp),0*alturas_nodos,'o');
+%[alturas_nodos anguloy]=procesar_alturas(altura,to,t,indicesakima(indices_bp));
+%plot(1:length(altura),altura,1:length(indices_bp),0*alturas_nodos,'o');
+alturas_nodos=zeros(size(distancias));
+anguloy=zeros(size(distancias));
 
 %WARNING Pongo las alturas a 0 porque un conjunto de alturas incoherente puede hacer que btb06 genere demasiados anchors (un gran salto en altura se tomaría como una gran distancia entre nodos)
 imprime_track(controlA,controlB,controlC,controlD,0*alturas_nodos,0*anguloy);

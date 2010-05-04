@@ -128,7 +128,11 @@ cv = spline(to,xy);
 %Cálculo más exacto de la longitud
 total_de_puntos=round(max(to));
 t=linspace(to(1),to(end),total_de_puntos);%Todo el recorrido dividido porciones de 1m
-nuevosnodos=1:10:length(t);%Me puedo dejar fuera el último nodo
+espaciado=10;
+if length(t)<30 %Consideramos los tramos super cortos
+	espaciado=length(t)/3;
+end
+nuevosnodos=1:espaciado:length(t);%Me puedo dejar fuera el último nodo
 % if nuevosnodos(end)~=length(t)
 	% nuevosnodos=[nuevosnodos length(t)];
 % end

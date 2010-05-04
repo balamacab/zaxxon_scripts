@@ -55,6 +55,8 @@ switch(mcode)
           display('-');
           display('cd ..\s2_elevation_b                                gs2b');
           display('    Use make_grid/read_grid or leer_gridfloat to create lamalla2.mat ')
+		  display('-');
+		  display('Run plot_lamalla if you want to see the data');
 		else
 		  display('cd ..\Venue                                         gv')
 	      display(sprintf('btb06(%.1f)',ancho));

@@ -1,0 +1,3 @@
+function plot_lamalla()
+S=load('salida\lamalla.mat');
+surf(S.rangox,S.rangoz,S.malla_regular);

@@ -130,7 +130,7 @@ total_de_puntos=round(max(to));
 t=linspace(to(1),to(end),total_de_puntos);%Todo el recorrido dividido porciones de 1m
 espaciado=10;
 if length(t)<30 %Consideramos los tramos super cortos
-	espaciado=length(t)/3;
+	espaciado=floor(length(t)/3);
 end
 nuevosnodos=1:espaciado:length(t);%Me puedo dejar fuera el último nodo
 % if nuevosnodos(end)~=length(t)

@@ -111,10 +111,14 @@ cambios=diff(ida); % 0->1, aparecerá un 1 que debe ser movido hacia la derecha. 
 frontera=zeros(nac/2,1);
 frontera(find(cambios==1)+1)=empieza_regular;
 frontera(find(cambios==-1))=empieza_irregular;
-if sum(ida(1:5))==5
-	frontera(1)=empieza_regular;	
+if length(ida)>5
+	if sum(ida(1:5))==5
+		frontera(1)=empieza_regular;	
+	else
+		frontera(1)=empieza_irregular;	
+	end
 else
-	frontera(1)=empieza_irregular;	
+		frontera(1)=empieza_regular;	
 end	
 frontera(end)=empieza_irregular;%da igual
 
@@ -150,10 +154,14 @@ cambios=diff(vuelta); % 0->1, aparecerá un 1 que debe ser movido hacia la derech
 frontera=zeros(nac/2,1);
 frontera(find(cambios==1)+1)=empieza_regular;
 frontera(find(cambios==-1))=empieza_irregular;
-if sum(vuelta(1:5))==5
-	frontera(1)=empieza_regular;	
+if length(vuelta)>5
+	if sum(vuelta(1:5))==5
+		frontera(1)=empieza_regular;	
+	else
+		frontera(1)=empieza_irregular;	
+	end
 else
-	frontera(1)=empieza_irregular;	
+		frontera(1)=empieza_regular;	
 end	
 frontera(end)=empieza_irregular;
 

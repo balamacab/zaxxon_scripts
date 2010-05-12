@@ -89,6 +89,15 @@ alturas_track1=nueva_altura;
 display('Grabando alturas_track1.mat');
 save('alturas_track1.mat','alturas_track1');
 
-message(5);
+if find(isnan(alturas_track1)==1)
+    display('----------------------------------------------------------------------------------------------------------');
+    display('SOME POINTS OF THE MESH WILL HAVE A WRONG ALTITUDE. CHECK THAT YOUR MESH DOESN''T EXCEED AVAILABLE DATA');
+	display('DON''T GO ON WITH THE PROCESS UNTIL YOU CORRECT THIS PROBLEM');
+	display(sprintf('Track limits:                    x in [%.1f,%.1f], z in [%.1f,%.1f]',min(x),max(x),min(z),max(z)));
+	display(sprintf('Available elevation data limits: x in [%.1f,%.1f], z in [%.1f,%.1f]',malla.rangox(1),malla.rangox(end),malla.rangoz(1),malla.rangoz(end)));
+	display('----------------------------------------------------------------------------------------------------------');
+else
+	message(5);
+end
 
 end

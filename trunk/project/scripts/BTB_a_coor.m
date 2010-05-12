@@ -9,9 +9,9 @@ function [pos1,pos2,pos3]=BTB_a_coor(a,c,b,mapeo)
 % 
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código. 
 
-    %pos1 es latitud 
+    %pos1 es longitud 
     %pos2 es la altura
-    %pos3 es longitud
+    %pos3 es latitud
     %y=y0+(x-x0)*(y1-y0)/(x1-x0)
     
 	xinicial=mapeo(1);%2157.232; %mapeo(1)

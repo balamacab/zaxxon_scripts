@@ -22,9 +22,13 @@ for h=1:numero_sons
 	coge_datos
 	creartrack1
 	try
-	    dar_altura(1,0.25,-0.25,10,0);
+            dar_altura(1,0.25,-0.25,10,0);
 	catch
-	    dar_altura(1,0.25,-0.25,5,0);
+            try
+                dar_altura(1,0.25,-0.25,5,0);
+            catch
+                dar_altura(1,0.25,-0.25,2,0);
+            end
 	end
 	cd ..\venue
 	btb06(4)

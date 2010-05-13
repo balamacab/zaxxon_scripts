@@ -4,3 +4,7 @@ Revision 12
 
 plot_lamalla script added to plot the data contained in salida\lamalla.mat
 To be run inside s2_elevation or s2_elevation_b
+
+Revision 21
+---------------------------------------
+Important change to btb06 to avoid changing anchors position when the track changes its elevation

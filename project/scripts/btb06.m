@@ -1,4 +1,4 @@
-function btb06(ancho_track)
+function btb06(ancho_track,force_new_anchors)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -9,14 +9,28 @@ function btb06(ancho_track)
 % 
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
-if nargin~=1
-  display('Introduzca el ancho de la carretera')
+if nargin<1
+  display('Usage: btb06(track_width)');
+  display('(track_width will be used by mallado_regular for creating the mesh)')
   return;
+end
+if nargin==1
+	force_new_anchors=0;
 end
 
 ancho_track=ancho_track/2;
 
 leer_nodos('nodes.xml','nodos.mat');
+%Con el comando anterior regeneramos la carretera. Para evitar problemas de compatibilidad, solo regeneramos anchors
+%si a) no existen o b) existen y se solicita que se regeneren poniendo force_new_anchors a 1
+if (exist('porcentajes.mat')==2) & (force_new_anchors==0)
+	display('Anchors exist for this track and they have not been changed to avoid problems with existing .geo files')
+	display('If you are sure you want to replace them set to 1 the second input parameter (i.e btb06(4,1))')
+	message(3);
+	return;
+end
+
+
 S=load('nodos.mat');
 numnodos=length(S.tree);
 
@@ -78,13 +92,13 @@ save 'anguloxzp.mat' anguloxzp
 total_anchors=total_anchors+2;
 display(sprintf('%d %d',h,total_anchors));
 
-for h=1:length(porcentajes)
+for h=1:length(porcentajes) %Los que están a distancia "1" de un nodo los reconvierto en distancia "0" a partir del siguiente
   if porcentajes(h,2)==1
     porcentajes(h,1)=porcentajes(h,1)+1;
     porcentajes(h,2)=0;
   end
 end
-
+%No es seguro, pero total_anchors debe ser 2 *length(porcentajes), pues los porcentajes son los mismos a ambos lados de la carretera
 
 %%%%%%%%%Grabar ficheros de texto
 

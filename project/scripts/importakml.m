@@ -17,9 +17,11 @@ if (nargin<1) || (ficherokml=='h')
 end
 
 if nargin==2
-	disp('Use: importakml(''file.kml''');
-	disp('Use: importakml(''file.kml'',''decimate'',2');
+    disp('-----------------------------------------------');
+	disp('Use: importakml(''file.kml'')');
+	disp('Use: importakml(''file.kml'',''decimate'',2)');
 	disp('If you want to use the previous version, call importakml_old');
+	disp('-----------------------------------------------');
 	return;
 end
 

@@ -59,12 +59,12 @@ switch(mcode)
 		  display('Run plot_lamalla if you want to see the data');
 		else
 		  display('cd ..\Venue                                         gv')
-	      display(sprintf('btb06(%.1f)',ancho));
+	      display(sprintf('btb06(%.1f,1)',ancho));
 		end
   
   case 2, %read_grid,leer_gridfloat
 	    display('cd ..\Venue                                         gv')
-		display(sprintf('btb06(%.1f)',ancho));
+		display(sprintf('btb06(%.1f,1)',ancho)); 
 
   case 3, %btb06
 		if strcmp(procedencia,'importakml') %El nodes.xml viene de importakml -> todavía no tiene altura

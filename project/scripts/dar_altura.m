@@ -206,16 +206,24 @@ function [altura angulo]=interpola(x,y,alturas_in,intervalo,distancia)
   c_altura = spline(distancia,alturas_in);
   d=linspace(0,distancia(end),pasos);
   alturas_muestreadas=ppval(c_altura,d);
-  c_altura = spline(d,alturas_muestreadas);
-%Obtenemos el valor de altura dado por el spline para los puntos medios de la carretera
-  altura=ppval(c_altura,distancia);
-  angulo=0;
-  c_derivada=c_altura;	
-  c_derivada.P(:,4)=c_altura.P(:,3);
-  c_derivada.P(:,3)=2*c_altura.P(:,2);
-  c_derivada.P(:,2)=3*c_altura.P(:,1);
-  c_derivada.P(:,1)=0; %Coeficiente A
-  pendiente=ppval(c_derivada,distancia);
+  usar_akima=1;
+  if usar_akima==0
+	  c_altura = spline(d,alturas_muestreadas);
+	%Obtenemos el valor de altura dado por el spline para los puntos medios de la carretera
+	  altura=ppval(c_altura,distancia);
+	  angulo=0;
+	  c_derivada=c_altura;	
+	  c_derivada.P(:,4)=c_altura.P(:,3);
+	  c_derivada.P(:,3)=2*c_altura.P(:,2);
+	  c_derivada.P(:,2)=3*c_altura.P(:,1);
+	  c_derivada.P(:,1)=0; %Coeficiente A
+	  pendiente=ppval(c_derivada,distancia);
+  else
+	[altura pendiente]=akima(d,alturas_muestreadas,distancia);
+  end
+  % figure,plot(distancia,pendiente,'-b',distancia,pendiente_akima,'r-');
+  % figure,plot(distancia,altura,'-b',distancia,altura_akima,'r-',d,alturas_muestreadas,'+b');
+  % figure
   angulo=atan(pendiente);
   %figure,plot(distancia,angulo);figure,plot(distancia,altura);pause
 end

@@ -1,4 +1,4 @@
-function yi=akima(x,y,xi)
+function [yi dyi]=akima(x,y,xi)
 %
 % Usage: yi=akima(x,y,xi)
 %
@@ -42,3 +42,5 @@ bin=min(bin,n-1);
 bb=bin(1:length(xi));
 wj=xi-x(bb);
 yi=((wj.*d(bb) +c(bb)).*wj+b(bb)).*wj+y(bb);
+
+dyi=((3*wj.*d(bb) +2*c(bb)).*wj+b(bb));

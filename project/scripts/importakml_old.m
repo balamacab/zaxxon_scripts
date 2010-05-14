@@ -1,4 +1,4 @@
-function importakml(ficherokml,optimize_choice,decimate_factor)
+function importakml(ficherokml,tolerancia)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -11,20 +11,11 @@ function importakml(ficherokml,optimize_choice,decimate_factor)
 
 invertir_tramo=0; %0 es no invertir el sentido del kml, 1 es invertirlo
 
-if (nargin<1) || (ficherokml=='h')
-	disp('Use: importakml(''file.kml''');
+if (nargin<2) || (ficherokml=='h')
+	disp('Uso: importakml(''file.txt'',0.75)');
+	disp('Donde el segundo parámetro es el error máximo en metros permitido al simplificar los nodos');
+	disp('NOTA: se puede invertir el sentido del tramo cambiando la segunda línea de importakml.m');
 	return;
-end
-
-if nargin==2
-	disp('Use: importakml(''file.kml''');
-	disp('Use: importakml(''file.kml'',''decimate'',2');
-	disp('If you want to use the previous version, call importakml_old');
-	return;
-end
-
-if nargin==1
-	optimize_choice='keep';
 end
 
 %Por si acaso
@@ -132,47 +123,134 @@ xy = [x;y]; df = diff(xy,1,2);
 
 %Cálculo basto de la longitud
 to = cumsum([0, sqrt([1 1]*(df.*df))]);  %La variable es la distancia
+cv = spline(to,xy);
 
-disakima=to(1):1:to(end);
+%Cálculo más exacto de la longitud
+total_de_puntos=round(max(to));
+t=linspace(to(1),to(end),total_de_puntos);%Todo el recorrido dividido porciones de 1m
+espaciado=10;
+if length(t)<30 %Consideramos los tramos super cortos
+	espaciado=floor(length(t)/3);
+end
+nuevosnodos=1:espaciado:length(t);%Me puedo dejar fuera el último nodo
+% if nuevosnodos(end)~=length(t)
+	% nuevosnodos=[nuevosnodos length(t)];
+% end
+
+%Distancia, mejor medida
+distancia = [0 cumsum(sqrt(sum(diff(ppval(cv,t),1,2).^2,1)))];
+cv=spline(distancia(nuevosnodos),ppval(cv,distancia(nuevosnodos))); 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+indices=to(1):1:to(end); %Metro a metro dibujo la curva
+puntos=ppval(cv,indices);
+
+indicesakima=to(1):1:to(end);
+coord=to;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-%Curva interpolada con akima metro a metro (disakima son un punto cada metro)
-yakima=akima(to,y,disakima);
-xakima=akima(to,x,disakima);
+%Curva interpolada con akima metro a metro (indicesakima son un punto cada metro)
+yakima=akima(coord,y,indicesakima);
+xakima=akima(coord,x,indicesakima);
 
-if (strcmp(optimize_choice,'keep')==1)
-	seleccion=to;
-else
-	if (strcmp(optimize_choice,'decimate')==1) 
-		indices_seleccion=1:decimate_factor:length(to);
-		if indices_seleccion(end)~=length(to)
-			indices_seleccion=[indices_seleccion length(to)];
-		end
-		seleccion=to(indices_seleccion);
-	else
-		if (strcmp(optimize_choice,'optimize')==1) 
-			mascara=1+0*to;%Todos los puntos del kml son buenos en principio
-			seleccion=simplificanodos(disakima,xakima,yakima,decimate_factor,to);
-		end
+%Vuelvo a ajustar la curva con splines de tipo akima
+plot(xakima,yakima,'+r');
+xaya=[xakima';yakima'];
+cspl=spline(indicesakima,xaya); %cspl son coeficientes de spline para la curva akima
+puntosdef=ppval(cspl,indices);  %puntosdef son los puntos de la interpolación spline, metro a metro
+
+plot(puntosdef(1,:),puntosdef(2,:),'r',x,y,'+');%,puntos(1,:),puntos(2,:),'b');
+%hold on
+
+xaya=[xakima';yakima'];
+
+
+minimo=4; %Partimos de un spline con nodos cada 4 metros
+
+puntos_ruptura=zeros(length(xakima),1);
+iniciales=1:minimo:length(puntos_ruptura)-1;
+puntos_ruptura(iniciales)=1; %Partimos de un nodo cada minimo metros y vamos eliminando
+puntos_ruptura(end)=1;
+mascara=1+0*puntos_ruptura;
+colores='bmg';
+
+%Comprobamos la calidad del ajuste si usásemos todos los nodos (máscara está toda a 1).
+indices=puntos_ruptura.*mascara;
+nindices=find(indices==1);
+cv = spline(indicesakima(nindices),xaya(:,nindices));
+nuevos_valores=ppval(cv,indicesakima);
+distancias=xaya-nuevos_valores;
+[error_maximo posemax]=max(sqrt([1 1]*(distancias.*distancias)));
+
+mensaje=sprintf('Error inicial: %.2f (%d,%d)',error_maximo,xaya(1,posemax),xaya(2,posemax)); %El error con un nodo cada minimo metros
+display(mensaje);
+
+if error_maximo>=tolerancia
+    display('ERROR: The kml has a problem in the coordinates shown above. Repair it or use a bigger tolerance value (second parameter)');
+    return
+end
+
+
+%iniciales es la posición inicial de los nodos
+%puntos_ruptura tiene un 1 donde están los nodos iniciales
+display('Simplificando nodos. Paso1');
+[mascara nelim]=simplificanodos(mascara,iniciales,puntos_ruptura,indicesakima,xaya,tolerancia);
+disp('Se han eliminado '), disp(nelim), disp('nodos');
+
+%Nueva pasada
+
+
+segunda_pasada=0;
+if segunda_pasada==1
+	puntos_ruptura=puntos_ruptura.*mascara;
+	indices_bp=find(puntos_ruptura.*mascara==1);
+	mascara=1+0*puntos_ruptura;
+	iniciales=indices_bp; %Partimos de los nodos aceptados en el paso anterior
+	display('Simplificando nodos. Paso2');
+	[mascara nelim]=simplificanodos(mascara,iniciales,puntos_ruptura,indicesakima,xaya,1);
+	disp('Se han eliminado '), disp(nelim), disp('nodos');
+end
+
+%Si los nodos están demasiado alejados, ponemos nodos intermedios para que en altura haya más resolución
+%plot(diff(find(mascara.*puntos_ruptura==1)))
+
+%Me aseguro de que los puntos inicial y final se conservan
+mascara(1)=1;
+puntos_ruptura(1)=1;
+mascara(end)=1;
+puntos_ruptura(end)=1;
+
+salir=0;
+while salir==0,
+    indices_bp=find(puntos_ruptura.*mascara==1);
+    separacion_nodos=diff(indices_bp);%separación en metros
+    problemas=find(separacion_nodos>(minimo*20)); % Si hay más de 80 metros de separación, actuamos
+	display(sprintf('-%d\n',length(problemas)));
+	if length(problemas)==0
+		salir=1;
+	else %de uno en uno
+		mascara(indices_bp(problemas(1))+10*minimo)=1; %Los nodos están espaciados minimo, por lo que en 10*minimo puntos_ruptura debería tener un 1
+		%disp(puntos_ruptura(indices_bp(problemas(1)+10)));
 	end
 end
-ajuste=ajusta(disakima,xakima,yakima,seleccion);
-%Obtenemos puntos para visualizacióm
-puntosbtb=ppval(ajuste,disakima);
+
+
+ajuste=spline(indicesakima(indices_bp),xaya(:,indices_bp));
+puntosbtb=ppval(ajuste,indicesakima);
 
 figure
-plot(puntosbtb(1,:),puntosbtb(2,:),'-r',x,y,'b+');
+plot(puntosbtb(1,:),puntosbtb(2,:),'r',x,y,'+',puntosbtb(1,indices_bp),puntosbtb(2,indices_bp),'o');
 axis square
 
 [controlA controlB controlC controlD]=saca_controlpoints(ajuste.P,ajuste.x);
 
-%plot(controlA(1,:),controlA(2,:),'o',controlB(1,:),controlB(2,:),'*',controlC(1,:),controlC(2,:),'b+',controlD(1,:),controlD(2,:),'r+');
+plot(controlA(1,:),controlA(2,:),'o',controlB(1,:),controlB(2,:),'*',controlC(1,:),controlC(2,:),'b+',controlD(1,:),controlD(2,:),'r+');
 
 
-%[alturas_nodos anguloy]=procesar_alturas(altura,to,t,disakima(indices_bp));
+%[alturas_nodos anguloy]=procesar_alturas(altura,to,t,indicesakima(indices_bp));
 %plot(1:length(altura),altura,1:length(indices_bp),0*alturas_nodos,'o');
-alturas_nodos=zeros(size(seleccion));
-anguloy=zeros(size(seleccion));
+alturas_nodos=zeros(size(distancias));
+anguloy=zeros(size(distancias));
 
 %WARNING Pongo las alturas a 0 porque un conjunto de alturas incoherente puede hacer que btb06 genere demasiados anchors (un gran salto en altura se tomaría como una gran distancia entre nodos)
 imprime_track(controlA,controlB,controlC,controlD,0*alturas_nodos,0*anguloy);
@@ -231,34 +309,34 @@ function imprime_nodo(fid,h,Px,Pz,Py,AXZ,AY,EnD,ExD);
 
 end
 
-function [nuevos_nodos]=simplificanodos(disakima,xakima,yakima,umbral,to)
+function [mascara nelim]=simplificanodos(mascara,iniciales,puntos_ruptura,indicesakima,xaya,umbral)
 
-%Consideramos tramos desde 5 nodos antes hasta 5 después
-margen=5;
-nuevos_nodos=to;
-nelim=0;
-%Empezamos por el final para que la numeración del nodo investigado no cambie
-for g=length(to)-margen:-1:1+margen
-	nodo_testeado=nuevos_nodos(g);
-	nuevos_nodos_test=[nuevos_nodos(1:g-1) nuevos_nodos(g+1:end)];
-	rango=round(nuevos_nodos_test(1)):1:floor(nuevos_nodos_test(end));%Distancias que empiezan en 0
-	
-	cv = ajusta(disakima(rango+1),xakima(rango+1),yakima(rango+1),nuevos_nodos_test);
-	nuevos_valores=ppval(cv,rango);
-	distancias=[xakima(rango+1)';yakima(rango+1)']-nuevos_valores;
+azar=desorden(length(iniciales)-2);
+azar=azar+1;
+
+for g=2:length(iniciales)-1
+	h=iniciales(azar(g-1));
+	mascara(h)=0;
+	indices=puntos_ruptura.*mascara;
+	nindices=find(indices==1);
+	cv = spline(indicesakima(nindices),xaya(:,nindices));
+	nuevos_valores=ppval(cv,indicesakima);
+	distancias=xaya-nuevos_valores;
 	error_maximo=max(sqrt([1 1]*(distancias.*distancias)));
 	if error_maximo<umbral		
-		nuevos_nodos=nuevos_nodos_test;
-		nelim=nelim+1;
-	else 
-		%No hacemos nada con el punto
+		%Borramos ese punto
+	else
+		mascara(h)=1; %Ese nodo hace falta
     end
-        if mod(g,2)==0	
-	        mensaje=sprintf('%.2f Error: %f\n',g/length(to),error_maximo);
+        if mod(g,200)==0	
+	        mensaje=sprintf('%.2f Error: %f\n',g/length(iniciales),error_maximo);
 	        display(mensaje);
         end
 end
+mascara(1)=1;
+mascara(end)=1;
 
+nelim=sum(puntos_ruptura)-sum(puntos_ruptura.*mascara);
 mensaje=sprintf('Eliminados %d nodos',nelim);
 end
 
@@ -295,22 +373,14 @@ function [alturas_nodos anguloy]=procesar_alturas(alturas,to,t,distancias);
 	alturas_nodos=ppval(ajuste,distancias);
 end
 
-function ajuste=ajusta(disakima,xakima,yakima,seleccion);
-ajustex=ppfit(disakima,xakima,seleccion);
-ajustey=ppfit(disakima,yakima,seleccion);
-%Juntamos los dos ajustes en un solo pp
-ajustex.coefs=[ajustex.coefs(:,:);ajustey.coefs(:,:)];
-ajustex.dim=2;
-%Convertimos el pp al formato octave
-ajuste=convert_pp(ajustex);
 
 
+function lista=desorden(n)
+lista=zeros(1,n);
+for h=1:n
+   posicion=randint(1,1,n-(h-1))+1;
+   huecos=find(lista==0);
+   lista(huecos(posicion))=h;  
+end
 
-
-function npp=convert_pp(pp)
-%Convert pp (matlab format) to npp (octave format)
-npp.x=pp.breaks(:);
-npp.n=pp.pieces;
-npp.k=pp.order;
-npp.d=pp.dim;
-npp.P=pp.coefs(:,:);
+end

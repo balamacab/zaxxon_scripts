@@ -15,9 +15,9 @@ for h=1:numero_sons
 		%%%%%%%%%%%%%%%%%%%%%%CHANGE TEXT BELOW%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 	cd s0_import;
 	
-	importakml(filename,0.75);
+	importakml(filename);
 	cd ..\venue;
-	btb06(4);
+	btb06(4,1);
 	cd ..\s3_road
 	coge_datos
 	creartrack1

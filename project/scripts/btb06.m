@@ -1,4 +1,4 @@
-function btb06(ancho_track,force_new_anchors)
+function btb06(ancho_track,force_new_anchors,panel_length)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -16,6 +16,10 @@ if nargin<1
 end
 if nargin==1
 	force_new_anchors=0;
+	panel_length=5;
+end
+if nargin==2
+	panel_length=5;
 end
 
 ancho_track=ancho_track/2;
@@ -61,7 +65,7 @@ for h=1:numnodos-1
         salida_anterior=salida;
     end
     
-    segmentos=round(distancia/5);
+    segmentos=round(distancia/panel_length);
     if segmentos==0
         segmentos=1;
     end

@@ -20,12 +20,25 @@ end
 
 maximos(contador)=numero;
 
-maximos
+nodos_father=load('..\..\anchors.mat');
 
 [numero_sons caminos]=look_for_father_or_sons('..\..\sons.txt');
 
+nodosx=nodos_father.x;
+nodosz=nodos_father.z;
+
 for h=1:numero_sons
 	nodos=load(strcat(char(caminos(h)),'\anchors.mat'));
+	nodosx=[nodosx nodos.x];
+	nodosz=[nodosz nodos.z];
 	porcentajes=load(strcat(char(caminos(h)),'\venue\porcentajes.mat'));
 	fprintf(1,'%d %d %d %s\n',maximos(h+1),length(nodos.x),length(porcentajes.tree),char(caminos(h)));
 end
+
+for h=1:length(t(:))
+	posx(h)=str2num(char(t{h}{1,2}));
+	posz(h)=str2num(char(t{h}{1,4}));
+end
+
+figure,plot(nodosx-posx);
+figure,plot(nodosz-posz);

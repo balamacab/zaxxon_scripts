@@ -47,7 +47,7 @@ for h=1:numx
 	for g=1:numz
 	posz=maxz-(g-1)*pasoz;
 	fprintf(fid,'    <BackgroundImage>\r\n');
-	fprintf(fid,'      <Path>Common\\Textures\\sat_%d-%d.jpg</Path>\r\n',h,g);
+	fprintf(fid,'      <Path>Common\\Textures\\sat_%d-%d.dds</Path>\r\n',h,g);
 	fprintf(fid,'      <Plane>\r\n');
 	fprintf(fid,'        <Position x="%f" y="-0.5" z="%f" />\r\n',posx,posz);
 	fprintf(fid,'        <Scale x="%f" y="1" z="%f" />\r\n',pasox,-pasoz);

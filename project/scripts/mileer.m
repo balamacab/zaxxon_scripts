@@ -19,15 +19,15 @@ fgets(fid);
 fgets(fid);
 fgets(fid);
 cadena=fgets(fid);
-partes=split(cadena,' ');
-nvertices=str2num(partes(3,:))
+partes=strsplit(cadena,' ');
+nvertices=str2num(char(partes(:,3)));
 
 fgets(fid);
 fgets(fid);
 fgets(fid);
 cadena=fgets(fid);
-partes=split(cadena,' ');
-nfaces=str2num(partes(3,:));
+partes=strsplit(cadena,' ');
+nfaces=str2num(char(partes(:,3)));
 
 fgets(fid);
 fgets(fid);

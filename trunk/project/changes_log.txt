@@ -8,3 +8,11 @@ To be run inside s2_elevation or s2_elevation_b
 Revision 21
 ---------------------------------------
 Important change to btb06 to avoid changing anchors position when the track changes its elevation
+
+Revision 22
+---------------------------------------
+Important change to importakml. Old version kept as importakml_old
+
+Revision 26
+---------------------------------------
+fix_project script added for trying to recover a project from joined.geo when files are corrupted

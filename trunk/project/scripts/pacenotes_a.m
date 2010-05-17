@@ -10,9 +10,9 @@ function pacenotes_a()
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
 
-display('Leyendo anchors')
+display('Leyendo anchors');
 
-S=load('..\anchors.mat')
+S=load('..\anchors.mat');
 nac=length(S.x);
 
 x=0.5*(S.x(1:nac/2)+S.x(nac/2+1:end));

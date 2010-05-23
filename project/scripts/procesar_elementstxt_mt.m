@@ -232,9 +232,6 @@ for h=1:length(n1)
 	    if (anchor1(1)=='T') && (strcmp(anchor1(1:3),anchor2(1:3))==1) && (abs(n1(h)-n2(h))>1),imprimir=0;end;
 	    if (anchor2(1)=='T') && (strcmp(anchor2(1:3),anchor3(1:3))==1) && (abs(n2(h)-n3(h))>1),imprimir=0;end;
 	    if (anchor1(1)=='T') && (strcmp(anchor1(1:3),anchor3(1:3))==1) && (abs(n1(h)-n3(h))>1),imprimir=0;end;
-
-	    %Un triángulo no puede consistir en tres anchors de carretera
-	    if (anchor1(1)=='T') && (anchor2(1)=='T') && (anchor3(1)=='T'), imprimir=0;end;
 	end
 	
 	%Si un triángulo tiene dos anchors que pertenecen a carreteras diferentes, el anchor con numeración 0 debe convertirse en el último anchor de la carretera anterior
@@ -266,6 +263,9 @@ for h=1:length(n1)
 			imprimir=0;	
 		end	
 	end
+	
+	%Un triángulo no puede consistir en tres anchors de carretera
+	if (anchor1(1)=='T') && (anchor2(1)=='T') && (anchor3(1)=='T'), imprimir=0;end;
     if imprimir==1
 
         fprintf(fid,'               <TerrainFace %s>\n                 <Anchor0 Props="%s" />\n                 <Anchor1 Props="%s" />\n                 <Anchor2 Props="%s" />\n               </TerrainFace>\n',argumento,anchor1,anchor2,anchor3);

@@ -161,9 +161,9 @@ char_contenido=char(contenido)';
 fclose(fid);
 
 fid=fopen('salida\muros.txt','w');
-cad_inicial=sprintf('  <Walls count="%d">\r\n',contador);
-cad_final='  </Walls>\r\n';
-fprintf(fid,'%s',strcat(cad_inicial,char_contenido,cad_final));
+cad_inicial=sprintf('  <Walls count="%d">',contador);
+cad_final='  </Walls>';
+fprintf(fid,'%s\r\n %s\r\n %s\r\n',cad_inicial,char_contenido,cad_final);
 fclose(fid);
 
 %-----------------------Muro invertido

@@ -9,10 +9,13 @@ function altura=make_grid(xmin,xmax,zmin,zmax,pasoenmetros,tamfichero)
 % 
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
-if nargin==5
+if (nargin==5)||(nargin==2)
   tamfichero=200000; %Por defecto se agrupan los datos en tamfichero puntos por kml
 end
-if (nargin<5)||(xmin=='h')
+if nargin==3
+  tamfichero=zmin;
+end
+if ((nargin~=5)&&(nargin~=6)&&(nargin~=2)&&(nargin~=3))||(xmin=='h')
     display('Parámetros:')
     display('1) X min')
     display('2) X max')
@@ -23,6 +26,17 @@ if (nargin<5)||(xmin=='h')
     return
 end
 %Obtiene las coordenadas de los puntos de la malla con mala definicion
+
+if (nargin==2)||(nargin==3)
+	pasoenmetros=xmax;
+	[longitud latitud altura]=leer_datos(xmin);
+	[mapeo]=textread('..\mapeo.txt','%f');
+	[lax nada laz]=coor_a_BTB(longitud,latitud,0,mapeo);
+	xmin=min(lax)-pasoenmetros;
+	xmax=max(lax)+pasoenmetros;
+	zmin=min(laz)-pasoenmetros;
+	zmax=max(laz)+pasoenmetros;
+end
 
 if (xmin>=xmax)||(zmin>=zmax)
     display('ERROR: check parameters and make xmin < xmax, zmin < zmax')
@@ -38,7 +52,7 @@ display('Leyendo fichero ..\mapeo.txt')
 %display('Grabando ficheros')
 
 guarda_calentamiento=25;
-columnas=xmin:pasoenmetros:xmax
+columnas=xmin:pasoenmetros:xmax;
 num_columnas=length(columnas);
 filas=zmin:pasoenmetros:zmax;
 num_filas=length(filas);

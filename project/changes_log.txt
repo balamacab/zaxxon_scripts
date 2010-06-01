@@ -16,3 +16,9 @@ Important change to importakml. Old version kept as importakml_old
 Revision 26
 ---------------------------------------
 fix_project script added for trying to recover a project from joined.geo when files are corrupted
+
+
+Revision 30
+---------------------------------------
+New possibility for make_grid added. Read list_of_commands.doc for more info.
+Little changes in the quick-guide doc.

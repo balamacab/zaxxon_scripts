@@ -91,26 +91,8 @@ display(sprintf('x=[%.1f,%.1f] (%.1fm) z=[%.1f,%.1f] (%.1fm)\n',xmin,xmax,rangox
 
 contadorx=1;
 alto=0;
-for xi=rangox
-    contadorz=1;
-    for zi=rangoz
-     [x(contador) y(contador) z(contador)]=coor_a_BTB(pos1(contador),pos2(contador),altura(contador),mapeo);
-     M(contadorz,contadorx)=y(contador);
-     
-     if contadorz>1
-	    if abs(alto-altura(contador))>50
-           display(sprintf('%.5f,%.5f,%.5f',pos2(contador),pos1(contador),abs(alto-altura(contador))));
-        end
-     end
-     alto=altura(contador);
-     contador=contador+1;
-     contadorz=contadorz+1;
-
-    end
-    contadorx=contadorx+1;
-end
-
-
+[x y z]=coor_a_BTB(pos1,pos2,altura,mapeo);
+M=reshape(y,length(rangoz),length(rangox));
 
 datax=x;
 datay=y;

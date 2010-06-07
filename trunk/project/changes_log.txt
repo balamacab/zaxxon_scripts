@@ -26,3 +26,7 @@ Little changes in the quick-guide doc.
 Revision 31
 ---------------------------------------
 Speed improvement for read_grid
+
+Revision 32
+---------------------------------------
+importakml now respects a existing mapeo.txt. If the user wants to create a new one, he has to delete mapeo.txt before running the script

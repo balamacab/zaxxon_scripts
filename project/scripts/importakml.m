@@ -81,26 +81,37 @@ latitud=latitud(unicos);
 [numero_padres caminos]=look_for_father_or_sons('..\father.txt');
 
 if numero_padres==0  % Si no hay padre, generamos mapeo.txt. Si no lo hay, usamos el mapeo.txt existente
-	x_centro=(max(x)+min(x))/2;
-	x=x-x_centro;
-	y_centro=(max(y)+min(y))/2;
-	y=y-y_centro;
+	fid=fopen('..\mapeo.txt','r'); %Si existe no lo sobreescribimos, solo lo usamos
+	if fid==-1
+		x_centro=(max(x)+min(x))/2;
+		x=x-x_centro;
+		y_centro=(max(y)+min(y))/2;
+		y=y-y_centro;
 
-	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-	%Grabo mapeo.txt basado en 
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		%Grabo mapeo.txt basado en 
 
-	fid=my_fopen('..\mapeo.txt','w');
+		fid=my_fopen('..\mapeo.txt','w');
 
-	%Esquinas inferior izquierda y superior derecha
-	[minlat indiceminlat]=min(latitud);
-	[minlong indiceminlong]=min(longitud);
-	[maxlat indicemaxlat]=max(latitud);
-	[maxlong indicemaxlong]=max(longitud);
+		%Esquinas inferior izquierda y superior derecha
+		[minlat indiceminlat]=min(latitud);
+		[minlong indiceminlong]=min(longitud);
+		[maxlat indicemaxlat]=max(latitud);
+		[maxlong indicemaxlong]=max(longitud);
 
-	fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indiceminlong),y(indiceminlat),minlong,minlat);
-	fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indicemaxlong),y(indicemaxlat),maxlong,maxlat);
+		fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indiceminlong),y(indiceminlat),minlong,minlat);
+		fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indicemaxlong),y(indicemaxlat),maxlong,maxlat);
 
-	my_fclose(fid);
+		my_fclose(fid);
+	else
+		display('----------------------------------------------------------------------')
+		display('                                                                     -')
+		display('WARNING: Using existing ..\mapeo.txt. ');
+		display('Delete it if you want to create a new one and run again this script')
+		display('                                                                     -')
+		display('----------------------------------------------------------------------')
+		fclose(fid);
+	end	
 	[mapeo]=textread('..\mapeo.txt','%f');
 else
 	[mapeo]=textread(strcat(caminos(1),'\mapeo.txt'),'%f');

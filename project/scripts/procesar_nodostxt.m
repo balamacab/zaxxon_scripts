@@ -79,31 +79,43 @@ end
 
 tamanyo=length(numero);
 
+
+datan=[(1:tamanyo)' x y z];
+data=[x y z];
+
+m=size(datan);
+datan=reshape(datan',1,m(1)*m(2),1);
+m=size(data);
+data=reshape(data',1,m(1)*m(2),1);
+
+
 fid=my_fopen('salida\listado_anchors.txt','w');
 fid2=my_fopen('salida\nodos_conaltura.txt','w');
 
 fprintf(fid,'     <TerrainAnchors count="%d">\n',tamanyo);
-for h=1:tamanyo
-    fprintf(fid,'       <TerrainAnchor>\n         <Position x="%f" y="%f" z="%f" />\n       </TerrainAnchor>\n',x(h),y(h),z(h));
-    fprintf(fid2,'%d %f %f %f\n',h,x(h),z(h),y(h));
-end
+fprintf(fid,'       <TerrainAnchor>\n         <Position x="%f" y="%f" z="%f" />\n       </TerrainAnchor>\n',data);
+fprintf(fid2,'%d %f %f %f\n',datan);
 fprintf(fid,'     </TerrainAnchors>\n');
 
 my_fclose(fid);
 my_fclose(fid2);
 
-fid=my_fopen('prueba.geo','w')
 
-for h=1:tamanyo
-    fprintf(fid,'       Point(%d) = {%f, %f, %f, 1};\n',h,x(h),z(h),y(h));
-end
+datan=[(1:tamanyo)' x z y];
+m=size(datan);
+datan=reshape(datan',1,m(1)*m(2),1);
+
+
+fid=my_fopen('prueba.geo','w')
+fprintf(fid,'       Point(%d) = {%f, %f, %f, 1};\n',datan);
+my_fclose(fid);
 
 datax=x;
 datay=y;
 dataz=z;
 save('salida\anchors_originales.mat','datax','datay','dataz');
 
-my_fclose(fid);
+
 
 
 function alturas=dar_altura_nac(cx,cy,cz,nac,distancia)

@@ -38,3 +38,7 @@ Documentation update for revision 32 changes
 Revision 34
 --------------------------------------
 read_grid and leer_gridfloat speed improvement
+
+Revision 35
+--------------------------------------
+procesar_nodostxt speed improvement

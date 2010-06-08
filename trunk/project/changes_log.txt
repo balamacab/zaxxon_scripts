@@ -34,3 +34,7 @@ importakml now respects a existing mapeo.txt. If the user wants to create a new 
 Revision 33
 ---------------------------------------
 Documentation update for revision 32 changes
+
+Revision 34
+--------------------------------------
+read_grid and leer_gridfloat speed improvement

@@ -122,12 +122,13 @@ display('Grabando salida\lamalla.mat');
 %save -mat-binary 'salida\lamalla.mat' datax datay dataz rangox rangoz malla_regular
 save -mat-binary 'salida\lamalla.mat' rangox rangoz malla_regular;
 
-%load 'lamalla.mat'
-fid=my_fopen('datos_altura.geo','w');
 
-for h=1:length(datax)
-    fprintf(fid,'       Point(%d) = {%f, %f, %f, 1};\n',100000+h,datax(h),dataz(h),datay(h));%%Les pongo altura cero para que me ayuden a hacer el mallado
-end
+data=[(100000+(1:length(datax)))' datax dataz datay];
+m=size(data);
+data=reshape(data',1,m(1)*m(2),1);
+fid=my_fopen('datos_altura.geo','w')
+
+fprintf(fid,'       Point(%d) = {%f, %f, %f, 1};\n',data);
 
 my_fclose(fid);
 

@@ -243,6 +243,7 @@ plot(puntosbtb(1,:),puntosbtb(2,:),'r',x,y,'+',puntosbtb(1,indices_bp),puntosbtb
 axis square
 
 [controlA controlB controlC controlD]=saca_controlpoints(ajuste.P,ajuste.x);
+graba_kml([controlA(1,:)],[controlA(2,:)],mapeo);
 
 plot(controlA(1,:),controlA(2,:),'o',controlB(1,:),controlB(2,:),'*',controlC(1,:),controlC(2,:),'b+',controlD(1,:),controlD(2,:),'r+');
 
@@ -384,3 +385,23 @@ for h=1:n
 end
 
 end
+
+
+function graba_kml(x,y,mapeo)
+fid=my_fopen('..\s2_elevation\inicio.kml','r');
+inicio=fread(fid,inf);
+inicio=char(inicio)';
+my_fclose(fid);
+
+fid=my_fopen('..\s2_elevation\final.kml','r');
+final=fread(fid,inf);
+my_fclose(fid);
+
+fid=my_fopen('salida\nodes_coordinates.kml','w');
+fwrite(fid,inicio);
+for h=1:length(x)
+			[pos1 pos3 pos2]=BTB_a_coor(x(h),0,y(h),mapeo);%Altura es el segundo
+            fprintf(fid,'%f,%f,%f\n',pos1,pos2,0);
+end
+fwrite(fid,final);			
+my_fclose(fid);

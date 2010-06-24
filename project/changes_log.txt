@@ -42,3 +42,7 @@ read_grid and leer_gridfloat speed improvement
 Revision 35
 --------------------------------------
 procesar_nodostxt speed improvement
+
+Revision 36
+--------------------------------------
+importakml creates nodes_coordinates.kml, a file with the coordinates of the nodes used in the track 

@@ -46,3 +46,7 @@ procesar_nodostxt speed improvement
 Revision 36
 --------------------------------------
 importakml creates nodes_coordinates.kml, a file with the coordinates of the nodes used in the track 
+
+Revision 37
+--------------------------------------
+Minor changes

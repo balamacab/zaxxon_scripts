@@ -320,10 +320,6 @@ else
 	[mapeo]=textread(strcat(caminos(1),'\mapeo.txt'),'%f');
 end
 
-
-contador=1;
-size(x)
-size(z)
 for h=1:length(x)    
             [pos1 pos3 pos2]=BTB_a_coor(x(h),0,z(h),mapeo);%Altura es el segundo
             fprintf(fid,'%f,%f,%f\r\n',pos1,pos2,0);

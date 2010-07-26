@@ -50,3 +50,7 @@ importakml creates nodes_coordinates.kml, a file with the coordinates of the nod
 Revision 37
 --------------------------------------
 Minor changes
+
+Revision 40
+--------------------------------------
+Details.doc updated

@@ -54,3 +54,7 @@ Minor changes
 Revision 40
 --------------------------------------
 Details.doc updated
+
+Revision 41
+--------------------------------------
+Small doc correction

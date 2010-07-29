@@ -58,3 +58,11 @@ Details.doc updated
 Revision 41
 --------------------------------------
 Small doc correction
+
+Revision 42
+--------------------------------------
+Small doc correction
+
+Revision 43
+--------------------------------------
+Quick guide doc updated

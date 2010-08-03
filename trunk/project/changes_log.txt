@@ -70,3 +70,7 @@ Quick guide doc updated
 Revision 45
 --------------------------------------
 start.m script added
+
+Revision 46
+--------------------------------------
+Bug in mallado_regular fixed

@@ -22,15 +22,15 @@ if nargin==2
 	B=inf;
 end
 
-% [numero_sons caminos]=look_for_father_or_sons('..\sons.txt',1);
-% [numero_father caminos]=look_for_father_or_sons('..\father.txt',1);
-% if numero_sons>0, 
-	% tipo='FATHER';
-% elseif numero_father>0
-	% tipo='SON';
-% else
-	% tipo='NORMAL';
-% end
+[numero_sons caminos]=look_for_father_or_sons('..\sons.txt',1);
+[numero_father caminos]=look_for_father_or_sons('..\father.txt',1);
+if numero_sons>0, 
+	tipo='FATHER';
+elseif numero_father>0
+	tipo='SON';
+else
+	tipo='NORMAL';
+end
 
 display('Usando el fichero anchors.mat ya creado...');
 S=load('..\anchors.mat');

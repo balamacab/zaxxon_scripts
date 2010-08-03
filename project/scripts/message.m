@@ -156,7 +156,14 @@ switch(mcode)
     case 19, %join_geos
 				display('    Process salida\joined.geo with gmsh, save the mesh as anchors_carretera.msh');
 				display('trocea_malla                                        t_m');
-			
+	case 20, %start
+		  display('cd ..\s2_elevation                                  gs2');
+          display('    Raise the kml files and use read_grid to create lamalla.mat')
+          display('-');
+          display('cd ..\s2_elevation_b                                gs2b');
+          display('    Raise the kml files and use read_grid to create lamalla2.mat ')
+		  display('-');
+		  display('Run plot_lamalla if you want to see the data');		
 end
 display('                                                                -')
 display('-----------------------------------------------------------------')

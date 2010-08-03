@@ -66,3 +66,7 @@ Small doc correction
 Revision 43
 --------------------------------------
 Quick guide doc updated
+
+Revision 45
+--------------------------------------
+start.m script added

@@ -355,7 +355,7 @@ function inserta_field(fid,longitud,insertar)
     fprintf(fid,'  Field[offsetp+1].NodesList = {offsetp+1:offsetp+%d};\r\n',longitud);
 
     fprintf(fid,'  Field[offsetp+2] = Threshold;\r\n');
-    fprintf(fid,'  Field[offsetp+2].IField = 1;\r\n');
+    fprintf(fid,'  Field[offsetp+2].IField = offsetp+1;\r\n');
     fprintf(fid,'  Field[offsetp+2].LcMin = 20;\r\n');
     fprintf(fid,'  Field[offsetp+2].LcMax = 75;\r\n');
     fprintf(fid,'  Field[offsetp+2].DistMin = 0.05;\r\n');

@@ -350,7 +350,7 @@ end
 
 
 function inserta_field(fid,longitud,insertar)
-	fprintf(fid,'If (%d)',insertar);
+	fprintf(fid,'If (%d)\r\n',insertar);
     fprintf(fid,'  Field[offsetp+1] = Attractor;\r\n');
     fprintf(fid,'  Field[offsetp+1].NodesList = {offsetp+1:offsetp+%d};\r\n',longitud);
 
@@ -363,5 +363,5 @@ function inserta_field(fid,longitud,insertar)
     fprintf(fid,'  Field[offsetp+2].StopAtDistMax = 1;\r\n');
 	
 	fprintf(fid,'  Background Field=offsetp+2;\r\n');
-	fprintf(fid,'EndIf');
+	fprintf(fid,'EndIf\r\n');
 end

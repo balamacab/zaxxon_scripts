@@ -22,7 +22,15 @@ if nargin==2
 	B=inf;
 end
 
-%[numero_hijos caminos]=look_for_father_or_sons('..\sons.txt');
+% [numero_sons caminos]=look_for_father_or_sons('..\sons.txt',1);
+% [numero_father caminos]=look_for_father_or_sons('..\father.txt',1);
+% if numero_sons>0, 
+	% tipo='FATHER';
+% elseif numero_father>0
+	% tipo='SON';
+% else
+	% tipo='NORMAL';
+% end
 
 display('Usando el fichero anchors.mat ya creado...');
 S=load('..\anchors.mat');
@@ -33,6 +41,9 @@ z=S.z;
 longitud=length(x); nac=longitud;
 save '..\nac.mat' nac;
 
+
+fid_kml=my_fopen('salida\mesh.kml','w');
+abrir_kml(fid_kml);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--------------------------------------------------------------------------
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -47,6 +58,14 @@ fprintf(fid,'offsetp=newreg-1;\n');
 for u=1:longitud
     fprintf(fid,'Point(offsetp+%d) = {%f, %f, %f, cl1};\n',u,x(u),z(u),0);
 end
+
+%Si no es un hijo, insertamos el Field
+insertar=0;
+if strcmp(tipo,'SON')==0, insertar=1; end;
+inserta_field(fid,longitud,insertar);
+
+grabar_puntos(fid_kml,x(1:longitud/2),z(1:longitud/2));
+grabar_puntos(fid_kml,x(longitud/2+1:end),z(longitud/2+1:end));
 
 for u=1:longitud/2-1
     fprintf(fid,'Line(offsetp+%d) = {offsetp+%d, offsetp+%d};\n',u+1,u,u+1);
@@ -90,6 +109,7 @@ for h=1:nac/2
 		fprintf(fid,'Line(offset_a+%d) = {offset_a+%d,offset_a+%d};\n',h,h-1,h);
 	end	
 end
+grabar_puntos(fid_kml,punto_izquierda(find(ida==1),1),punto_izquierda(find(ida==1),3));
 
 for h=1:nac/2
 	fprintf(fid,'Point(offset_a+%d) = {%f, %f, %f, cl2};\n',h+nac/2,punto_derecha(h,1),punto_derecha(h,3),0);
@@ -97,6 +117,8 @@ for h=1:nac/2
 		fprintf(fid,'Line(offset_a+%d) = {offset_a+%d,offset_a+%d};\n',h+nac/2,h-1+nac/2,h+nac/2);
 	end
 end
+grabar_puntos(fid_kml,punto_derecha(find(vuelta==1),1),punto_derecha(find(vuelta==1),3));
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--------------------------------------------------------------------------
@@ -222,6 +244,8 @@ fprintf(fid2,'Nsup%s+%d',id_offset,listado_superficies(end));
 my_fclose(fid)
 my_fclose(fid2)
 
+cerrar_kml(fid_kml);
+my_fclose(fid_kml);
 message(18);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -285,4 +309,59 @@ for h=1:length(frontera)
 end
 
 
+end
+
+
+function abrir_kml(fid)
+
+fprintf(fid,'<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">\n<Document>\n	<name>mesh.kml</name>\n	<Style id="sn_ylw-pushpin">\n		<LineStyle>\n			<color>7f00ffff</color>\n			<width>4</width>\n		</LineStyle>\n		<PolyStyle>\n			<color>7f00ff00</color>\n		</PolyStyle>\n	</Style>\n');	
+
+end
+
+
+
+
+function grabar_puntos(fid,x,z)
+
+fprintf(fid,'<Placemark>\n		<name>Route</name>\n		<description>Road and driveable zone</description>\n	<styleUrl>#sn_ylw-pushpin</styleUrl>\n<LineString>			<coordinates>\n');
+
+[numero_padres caminos]=look_for_father_or_sons('..\father.txt');
+
+if numero_padres==0  % Si no hay padre, generamos mapeo.txt. Si no lo hay, usamos el mapeo.txt existente
+	[mapeo]=textread('..\mapeo.txt','%f');
+else
+	[mapeo]=textread(strcat(caminos(1),'\mapeo.txt'),'%f');
+end
+
+for h=1:length(x)    
+            [pos1 pos3 pos2]=BTB_a_coor(x(h),0,z(h),mapeo);%Altura es el segundo
+            fprintf(fid,'%f,%f,%f\r\n',pos1,pos2,0);
+    
+end
+fprintf(fid,'</coordinates>\n		</LineString>\n</Placemark>\n');
+end
+
+
+function cerrar_kml(fid)
+
+fprintf(fid,'</Document>\n</kml>\n');
+
+end
+
+
+function inserta_field(fid,longitud,insertar)
+	fprintf(fid,'If (%d)',insertar);
+    fprintf(fid,'  Field[offsetp+1] = Attractor;\r\n');
+    fprintf(fid,'  Field[offsetp+1].NodesList = {offsetp+1:offsetp+%d};\r\n',longitud);
+
+    fprintf(fid,'  Field[offsetp+2] = Threshold;\r\n');
+    fprintf(fid,'  Field[offsetp+2].IField = 1;\r\n');
+    fprintf(fid,'  Field[offsetp+2].LcMin = 20;\r\n');
+    fprintf(fid,'  Field[offsetp+2].LcMax = 75;\r\n');
+    fprintf(fid,'  Field[offsetp+2].DistMin = 0.05;\r\n');
+    fprintf(fid,'  Field[offsetp+2].DistMax = 150;\r\n');
+    fprintf(fid,'  Field[offsetp+2].StopAtDistMax = 1;\r\n');
+	
+	fprintf(fid,'  Background Field=offsetp+2;\r\n');
+	fprintf(fid,'EndIf');
 end

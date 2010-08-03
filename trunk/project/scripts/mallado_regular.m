@@ -61,7 +61,7 @@ end
 
 %Si no es un hijo, insertamos el Field
 insertar=0;
-if strcmp(tipo,'SON')==0, insertar=1; end;
+%if strcmp(tipo,'SON')==0, insertar=1; end;
 inserta_field(fid,longitud,insertar);
 
 grabar_puntos(fid_kml,x(1:longitud/2),z(1:longitud/2));

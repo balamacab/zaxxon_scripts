@@ -1,4 +1,4 @@
-function start(paso_fino,paso_grueso)
+function start(paso_fino,paso_grueso,npuntos)
 
 if nargin==0
 	paso_fino=25;

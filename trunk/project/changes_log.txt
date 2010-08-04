@@ -74,3 +74,8 @@ start.m script added
 Revision 46
 --------------------------------------
 Bug in mallado_regular fixed
+
+Revision 51
+--------------------------------------
+start.m included in the "list of commands" doc
+

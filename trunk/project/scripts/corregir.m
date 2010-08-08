@@ -89,7 +89,8 @@ end
 
 %para completar el proceso hay que volver a ejecutar dar_altura
 creartrack1
-display('Run dar_altura again with more realistic parameters')
+message(21)
+
 
 
 

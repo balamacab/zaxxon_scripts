@@ -163,7 +163,10 @@ switch(mcode)
           display('cd ..\s2_elevation_b                                gs2b');
           display('    Raise the kml files and use read_grid to create lamalla2.mat ')
 		  display('-');
-		  display('Run plot_lamalla if you want to see the data');		
+		  display('Run plot_lamalla if you want to see the data');	
+    case 21, %corregir
+          display('Run dar_altura again with more realistic parameters')	
+          display('(but before that, consider deleting retoques.txt)')	
 end
 display('                                                                -')
 display('-----------------------------------------------------------------')

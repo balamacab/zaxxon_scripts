@@ -79,3 +79,7 @@ Revision 51
 --------------------------------------
 start.m included in the "list of commands" doc
 
+Revision 52
+-------------------------------------
+Small change in corregir.m
+

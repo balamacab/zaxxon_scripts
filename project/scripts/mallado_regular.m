@@ -357,10 +357,11 @@ function inserta_field(fid,longitud,insertar)
     fprintf(fid,'  Field[offsetp+2] = Threshold;\r\n');
     fprintf(fid,'  Field[offsetp+2].IField = offsetp+1;\r\n');
     fprintf(fid,'  Field[offsetp+2].LcMin = 20;\r\n');
-    fprintf(fid,'  Field[offsetp+2].LcMax = 75;\r\n');
-    fprintf(fid,'  Field[offsetp+2].DistMin = 0.05;\r\n');
-    fprintf(fid,'  Field[offsetp+2].DistMax = 150;\r\n');
-    fprintf(fid,'  Field[offsetp+2].StopAtDistMax = 1;\r\n');
+    fprintf(fid,'  Field[offsetp+2].LcMax = 2000;\r\n');
+    fprintf(fid,'  Field[offsetp+2].DistMin = 1;\r\n');
+    fprintf(fid,'  Field[offsetp+2].DistMax = 10000;\r\n');
+    fprintf(fid,'  Field[offsetp+2].StopAtDistMax = 0;\r\n');
+    fprintf(fid,'  Mesh.CharacteristicLengthExtendFromBoundary = 0;\r\n');
 	
 	fprintf(fid,'  Background Field=offsetp+2;\r\n');
 	fprintf(fid,'EndIf\r\n');

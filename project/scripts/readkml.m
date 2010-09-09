@@ -44,6 +44,8 @@ for h=1:length(longitud)
 			end
 			contador=contador+1;
 end
+inserta_field(fid,length(longitud),0);
+
 	if (isempty(findstr(curvas,'t'))==0) 
 			    fprintf(fid,'Line(numk+%d)={numk+%d,numk+%d};\r\n',0,contador-1,0);
 	end
@@ -61,9 +63,27 @@ my_fclose(fid2);
 
 
 function fichero_salida=dame_nombre_salida(ficherokml)
-pos=findstr('.',ficherokml);
-nombre_sin_extension=ficherokml(1:pos(end)-1);
-fichero_salida=strcat('salida\',nombre_sin_extension,'.geo');
+[A,B,C]=fileparts(ficherokml);
+fichero_salida=strcat('salida\',B,'.geo');
+end
+
+
+function inserta_field(fid,longitud,insertar)
+	fprintf(fid,'If (%d)\r\n',insertar);
+    fprintf(fid,'  Field[numk+1] = Attractor;\r\n');
+    fprintf(fid,'  Field[numk+1].NodesList = {numk+0:numk+%d};\r\n',longitud-1);
+
+    fprintf(fid,'  Field[numk+2] = Threshold;\r\n');
+    fprintf(fid,'  Field[numk+2].IField = numk+1;\r\n');
+    fprintf(fid,'  Field[numk+2].LcMin = 20;\r\n');
+    fprintf(fid,'  Field[numk+2].LcMax = 2000;\r\n');
+    fprintf(fid,'  Field[numk+2].DistMin = 1;\r\n');
+    fprintf(fid,'  Field[numk+2].DistMax = 10000;\r\n');
+    fprintf(fid,'  Field[numk+2].StopAtDistMax = 0;\r\n');
+    fprintf(fid,'  Mesh.CharacteristicLengthExtendFromBoundary = 0;\r\n');
+	
+	fprintf(fid,'  Background Field=numk+2;\r\n');
+	fprintf(fid,'EndIf\r\n');
 end
 
 end

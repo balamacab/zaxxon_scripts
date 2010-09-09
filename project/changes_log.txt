@@ -86,3 +86,8 @@ Small change in corregir.m
 Revision 53
 -------------------------------------
 Small change in mallado_regular.m
+
+
+Revision 54
+-------------------------------------
+I add an example of use of script "start"

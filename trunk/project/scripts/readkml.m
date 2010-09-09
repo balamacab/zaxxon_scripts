@@ -16,7 +16,7 @@ if (nargin<1) || (ficherokml=='h')
 end
 
 if nargin==1
-	curvas='sin curvas';
+	curvas='no curve';
 end
 
 [longitud latitud altura]=leer_datos(ficherokml);

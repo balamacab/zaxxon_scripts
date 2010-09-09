@@ -14,7 +14,7 @@ if nargin==0
 end
 
 if nargin==1
-	curvas='sin curvas';
+	curvas='no curve';
 end
 
 

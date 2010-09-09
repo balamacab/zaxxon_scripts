@@ -91,3 +91,7 @@ Small change in mallado_regular.m
 Revision 54
 -------------------------------------
 I add an example of use of script "start"
+
+Revision 56
+-------------------------------------
+script readkml_bat added

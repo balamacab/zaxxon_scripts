@@ -32,31 +32,34 @@ contador=0;
 aleatorio=round(rand*100000);
 
 fprintf(fid,'cl_route%.4d=100;\n',aleatorio);
-fprintf(fid,'numk=newreg;\n',aleatorio);
+fprintf(fid,'numk=newp;\n');
+fprintf(fid,'numc=newc;\n')
 for h=1:length(longitud)    
 			[lax nada laz]=coor_a_BTB(longitud(h),latitud(h),0,mapeo);
 			x(h)=lax;
 			y(h)=laz;
-            fprintf(fid,'Point (numk+%d)={%f, %f, %f, cl_route%d};\r\n',contador,x(h),y(h),0,aleatorio);%nada(h) en lugar de 0
+                        fprintf(fid,'Point (numk+%d)={%f, %f, %f, cl_route%d};\r\n',contador,x(h),y(h),0,aleatorio);%nada(h) en lugar de 0
 			fprintf(fid2,'%f,%f,%f\r\n',x(h),y(h),0);%nada(h) en lugar de 0
 			if (isempty(findstr(curvas,'t'))==0) & (h>1)
-			    fprintf(fid,'Line(numk+%d)={numk+%d,numk+%d};\r\n',contador,contador-1,contador);
+			    fprintf(fid,'Line(numc+%d)={numk+%d,numk+%d};\r\n',contador,contador-1,contador);
 			end
 			contador=contador+1;
 end
 inserta_field(fid,length(longitud),0);
 
-	if (isempty(findstr(curvas,'t'))==0) 
-			    fprintf(fid,'Line(numk+%d)={numk+%d,numk+%d};\r\n',0,contador-1,0);
-	end
+if (isempty(findstr(curvas,'t'))==0) 
+                       fprintf(fid,'Line(numc+%d)={numk+%d,numk+%d};\r\n',0,contador-1,0);
+end
 
-	if (isempty(findstr(curvas,'s'))==0)
-			fprintf(fid,'Spline(numk+%d)={',length(longitud)+1);
+if (isempty(findstr(curvas,'s'))==0)
+                        fprintf(fid,'numc=newc;\n');
+			
+			fprintf(fid,'Spline(numc)={');
 			for h=1:length(longitud)
 			    fprintf(fid,'numk+%d,',h-1);
 			end
 			fprintf(fid,'numk+%d};\r\n',0);
-	end
+end
 
 my_fclose(fid);
 my_fclose(fid2);
@@ -72,17 +75,18 @@ function inserta_field(fid,longitud,insertar)
 	fprintf(fid,'If (%d)\r\n',insertar);
     fprintf(fid,'  Field[numk+1] = Attractor;\r\n');
     fprintf(fid,'  Field[numk+1].NodesList = {numk+0:numk+%d};\r\n',longitud-1);
-
-    fprintf(fid,'  Field[numk+2] = Threshold;\r\n');
-    fprintf(fid,'  Field[numk+2].IField = numk+1;\r\n');
-    fprintf(fid,'  Field[numk+2].LcMin = 20;\r\n');
-    fprintf(fid,'  Field[numk+2].LcMax = 2000;\r\n');
-    fprintf(fid,'  Field[numk+2].DistMin = 1;\r\n');
-    fprintf(fid,'  Field[numk+2].DistMax = 10000;\r\n');
-    fprintf(fid,'  Field[numk+2].StopAtDistMax = 0;\r\n');
+    id_threshold=sprintf('%05d',10000*rand()); 
+    fprintf(fid,'threshold%s=numk+2;\r\n',id_threshold);
+    fprintf(fid,'  Field[threshold%s] = Threshold;\r\n',id_threshold);
+    fprintf(fid,'  Field[threshold%s].IField = numk+1;\r\n',id_threshold);
+    fprintf(fid,'  Field[threshold%s].LcMin = 20;\r\n',id_threshold);
+    fprintf(fid,'  Field[threshold%s].LcMax = 2000;\r\n',id_threshold);
+    fprintf(fid,'  Field[threshold%s].DistMin = 1;\r\n',id_threshold);
+    fprintf(fid,'  Field[threshold%s].DistMax = 10000;\r\n',id_threshold);
+    fprintf(fid,'  Field[threshold%s].StopAtDistMax = 0;\r\n',id_threshold);
     fprintf(fid,'  Mesh.CharacteristicLengthExtendFromBoundary = 0;\r\n');
 	
-	fprintf(fid,'  Background Field=numk+2;\r\n');
+	fprintf(fid,'  Background Field=threshold%s;\r\n',id_threshold);
 	fprintf(fid,'EndIf\r\n');
 end
 

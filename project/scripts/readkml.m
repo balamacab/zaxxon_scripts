@@ -45,7 +45,9 @@ for h=1:length(longitud)
 			end
 			contador=contador+1;
 end
-inserta_field(fid,length(longitud),0);
+
+[A,B,C]=fileparts(ficherokml);
+inserta_field(fid,length(longitud),0,strrep(B,' ',''));
 
 if (isempty(findstr(curvas,'t'))==0) 
                        fprintf(fid,'Line(numc+%d)={numk+%d,numk+%d};\r\n',0,contador-1,0);
@@ -71,22 +73,23 @@ fichero_salida=strcat('salida\',B,'.geo');
 end
 
 
-function inserta_field(fid,longitud,insertar)
+function inserta_field(fid,longitud,insertar,nombre)
 	fprintf(fid,'If (%d)\r\n',insertar);
     fprintf(fid,'  Field[numk+1] = Attractor;\r\n');
     fprintf(fid,'  Field[numk+1].NodesList = {numk+0:numk+%d};\r\n',longitud-1);
-    id_threshold=sprintf('%05d',10000*rand()); 
-    fprintf(fid,'threshold%s=numk+2;\r\n',id_threshold);
-    fprintf(fid,'  Field[threshold%s] = Threshold;\r\n',id_threshold);
-    fprintf(fid,'  Field[threshold%s].IField = numk+1;\r\n',id_threshold);
-    fprintf(fid,'  Field[threshold%s].LcMin = 20;\r\n',id_threshold);
-    fprintf(fid,'  Field[threshold%s].LcMax = 2000;\r\n',id_threshold);
-    fprintf(fid,'  Field[threshold%s].DistMin = 1;\r\n',id_threshold);
-    fprintf(fid,'  Field[threshold%s].DistMax = 10000;\r\n',id_threshold);
-    fprintf(fid,'  Field[threshold%s].StopAtDistMax = 0;\r\n',id_threshold);
+    %id_threshold=sprintf('%05d',10000*rand()); 
+    id_threshold=nombre;
+    fprintf(fid,'  th_%s=numk+2;\r\n',id_threshold);
+    fprintf(fid,'  Field[th_%s] = Threshold;\r\n',id_threshold);
+    fprintf(fid,'  Field[th_%s].IField = numk+1;\r\n',id_threshold);
+    fprintf(fid,'  Field[th_%s].LcMin = 20;\r\n',id_threshold);
+    fprintf(fid,'  Field[th_%s].LcMax = 2000;\r\n',id_threshold);
+    fprintf(fid,'  Field[th_%s].DistMin = 1;\r\n',id_threshold);
+    fprintf(fid,'  Field[th_%s].DistMax = 10000;\r\n',id_threshold);
+    fprintf(fid,'  Field[th_%s].StopAtDistMax = 0;\r\n',id_threshold);
     fprintf(fid,'  Mesh.CharacteristicLengthExtendFromBoundary = 0;\r\n');
 	
-	fprintf(fid,'  Background Field=threshold%s;\r\n',id_threshold);
+	fprintf(fid,'  Background Field=th_%s;\r\n',id_threshold);
 	fprintf(fid,'EndIf\r\n');
 end
 

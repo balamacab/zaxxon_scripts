@@ -47,7 +47,10 @@ for h=1:length(longitud)
 end
 
 [A,B,C]=fileparts(ficherokml);
-inserta_field(fid,length(longitud),0,strrep(B,' ',''));
+B=strrep(B,' ','');%Quito los espacios del nombre, por coherencia con la variable th_nombre
+B=strrep(B,'(','');%Quito los () del nombre, por coherencia con la variable th_nombre
+B=strrep(B,')','');
+inserta_field(fid,length(longitud),0,B);
 
 if (isempty(findstr(curvas,'t'))==0) 
                        fprintf(fid,'Line(numc+%d)={numk+%d,numk+%d};\r\n',0,contador-1,0);
@@ -69,6 +72,9 @@ my_fclose(fid2);
 
 function fichero_salida=dame_nombre_salida(ficherokml)
 [A,B,C]=fileparts(ficherokml);
+B=strrep(B,' ','');%Quito los espacios del nombre, por coherencia con la variable th_nombre
+B=strrep(B,'(','');%Quito los () del nombre, por coherencia con la variable th_nombre
+B=strrep(B,')','');
 fichero_salida=strcat('salida\',B,'.geo');
 end
 

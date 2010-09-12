@@ -21,8 +21,19 @@ end
 [errores,filename]=system(sprintf('dir %s\\*.kml /b',camino));
 ficheros=strsplit(filename,strcat(char(13),char(10)));
 
+fid=fopen('salida\kml_list.txt','w');
 for h=1:length(ficheros)
 	if length(find(char(ficheros(h)))>0)
-		readkml(strcat(camino,'\',char(ficheros(h))),curvas);
+		ficherokml=strcat(camino,'\',char(ficheros(h)));
+		readkml(ficherokml,curvas);
+	end
+	[A,B,C]=fileparts(ficherokml);
+	B=strrep(B,' ','');
+	B=strrep(B,'(','');%Quito los () del nombre, por coherencia con la variable th_nombre
+    B=strrep(B,')','');
+	fprintf(fid,'th_%s',B);
+	if h<length(ficheros)
+		fprintf(fid,',');
 	end
 end	
+fclose(fid)

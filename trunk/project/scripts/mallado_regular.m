@@ -102,7 +102,7 @@ vuelta=ones(nac,1);
     
 
 %Unimos los puntos que pueden ponerse con transfinite
-fprintf(fid,'offset_a=newp+2;\r\n');
+fprintf(fid,'offset_a=newp+2;\n');
 for h=1:nac/2
 	fprintf(fid,'Point(offset_a+%d) = {%f, %f, %f, cl2};\n',h,punto_izquierda(h,1),punto_izquierda(h,3),0);        
 	if (h>1) && (ida(h)==1) && (ida(h-1)==1)
@@ -150,13 +150,13 @@ cambios=find(abs(frontera)>0);
 
 %Unimos (transversalmente) los puntos quedaron en los extremos de los lazos eliminados con sus correspondientes anchors de carretera
 
-fprintf(fid,'Ntra=newl;\r\n');
+fprintf(fid,'Ntra=newl;\n');
 for h=1:length(cambios)
   poner_division(fid,h,cambios(h),ndivisiones);
 end
 
 id_offset=sprintf('%05d',10000*rand());
-fprintf(fid,'Nsup%s=news;\r\n',id_offset);
+fprintf(fid,'Nsup%s=news;\n',id_offset);
 for h=1:length(cambios)-1
 	if frontera(cambios(h))==empieza_regular %Entramos en una zona regular
 		malla_regular(fid,cambios(h),cambios(h+1),h,contador,id_offset);
@@ -192,7 +192,7 @@ frontera=inserta_divisiones(frontera,B);
 cambios=find(abs(frontera)>0);
 
 %Unimos (transversalmente) los puntos quedaron en los extremos de los lazos eliminados con sus correspondientes anchors de carretera
-fprintf(fid,'Ntra=newl;\r\n');
+fprintf(fid,'Ntra=newl;\n');
 for h=1:length(cambios)
   poner_division(fid,h,cambios(h)+nac/2,ndivisiones);
 end
@@ -350,19 +350,19 @@ end
 
 
 function inserta_field(fid,longitud,insertar)
-	fprintf(fid,'If (%d)\r\n',insertar);
-    fprintf(fid,'  Field[offsetp+1] = Attractor;\r\n');
-    fprintf(fid,'  Field[offsetp+1].NodesList = {offsetp+1:offsetp+%d};\r\n',longitud);
+	fprintf(fid,'If (%d)\n',insertar);
+    fprintf(fid,'  Field[offsetp+1] = Attractor;\n');
+    fprintf(fid,'  Field[offsetp+1].NodesList = {offsetp+1:offsetp+%d};\n',longitud);
 
-    fprintf(fid,'  Field[offsetp+2] = Threshold;\r\n');
-    fprintf(fid,'  Field[offsetp+2].IField = offsetp+1;\r\n');
-    fprintf(fid,'  Field[offsetp+2].LcMin = 20;\r\n');
-    fprintf(fid,'  Field[offsetp+2].LcMax = 2000;\r\n');
-    fprintf(fid,'  Field[offsetp+2].DistMin = 1;\r\n');
-    fprintf(fid,'  Field[offsetp+2].DistMax = 10000;\r\n');
-    fprintf(fid,'  Field[offsetp+2].StopAtDistMax = 0;\r\n');
-    fprintf(fid,'  Mesh.CharacteristicLengthExtendFromBoundary = 0;\r\n');
+    fprintf(fid,'  Field[offsetp+2] = Threshold;\n');
+    fprintf(fid,'  Field[offsetp+2].IField = offsetp+1;\n');
+    fprintf(fid,'  Field[offsetp+2].LcMin = 20;\n');
+    fprintf(fid,'  Field[offsetp+2].LcMax = 2000;\n');
+    fprintf(fid,'  Field[offsetp+2].DistMin = 1;\n');
+    fprintf(fid,'  Field[offsetp+2].DistMax = 10000;\n');
+    fprintf(fid,'  Field[offsetp+2].StopAtDistMax = 0;\n');
+    fprintf(fid,'  Mesh.CharacteristicLengthExtendFromBoundary = 0;\n');
 	
-	fprintf(fid,'  Background Field=offsetp+2;\r\n');
-	fprintf(fid,'EndIf\r\n');
+	fprintf(fid,'  Background Field=offsetp+2;\n');
+	fprintf(fid,'EndIf\n');
 end

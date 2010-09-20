@@ -141,13 +141,12 @@ fprintf(fid,'     </TerrainAnchors>\n');
 my_fclose(fid);
 my_fclose(fid2);
 
-fid=my_fopen('salida\prueba.geo','w')
+% fid=my_fopen('salida\prueba.geo','w')
 
-for h=1:tamanyo
-    fprintf(fid,'       Point(%d) = {%f, %f, %f, 1};\n',h,x(h),z(h),y(h));
-end
-
-my_fclose(fid)
+% for h=1:tamanyo
+    % fprintf(fid,'       Point(%d) = {%f, %f, %f, 1};\n',h,x(h),z(h),y(h));
+% end
+% my_fclose(fid)
 
 system('copy salida\listado_anchors.txt ..\s6_hairpins\salida\.');
 system('copy salida\nodos_conaltura.txt ..\s6_hairpins\salida\.');
@@ -157,9 +156,25 @@ system('copy salida\nodos_conaltura.txt ..\s6_hairpins\salida\.');
 
 fid=my_fopen('salida\elements.txt','w');
 for h=1:length(new_faces)
-    fprintf(fid,'%d %d %d %d %d %d %d %d %d\n',h,0,0,id_superficie(h),0,0,new_faces(h,1),new_faces(h,2),new_faces(h,3));
+    fprintf(fid,'%d %d %d %d %d %d %d %d %d\n',h,2,3,id_superficie(h),id_particular(h),0,new_faces(h,1),new_faces(h,2),new_faces(h,3));
 end
 my_fclose(fid);
+
+fid=my_fopen('salida\elements.txt','r');
+contents=fread(fid,inf);
+my_fclose(fid);
+cadena=char(contents)';
+
+fid=my_fopen('salida\test.msh','w');
+fprintf(fid,'$MeshFormat\n2.1 0 8\n$EndMeshFormat\n$Nodes\n');
+fprintf(fid,'%d\n',tamanyo);
+indices=(1:tamanyo)';
+fprintf(fid,'%d %f %f %f\n',[indices x z y]');
+fprintf(fid,'$EndNodes\n$Elements\n');
+fprintf(fid,'%d\n',length(new_faces));
+fprintf(fid,'%s',cadena);
+fprintf(fid,'$EndElements');
+fclose(fid)
 
 message(11);
 

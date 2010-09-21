@@ -43,6 +43,7 @@ take coord_list
 return coord_list with elevations
 """
     print len(coord_list)
+    print '[                                                        ]\r[',
     for idx,i in enumerate(coord_list):
         if (len(i) == 3):
             ele = getEle(i[1], i[0], ge)
@@ -94,24 +95,27 @@ if __name__ == '__main__':
 
     listado=glob.glob(options.input_file+'/grid???.kml')
     for i in listado:     
-	ge = pygoogleearth.GoogleEarth()
+        (anterior,extension)=os.path.splitext(i)
+        destino=anterior+'_relleno'+extension
+        if os.path.exists(destino)==False:
+            ge = pygoogleearth.GoogleEarth()
 
-        print i
-        f = open(i, 'r')
-        data = f.read()
-        coord_str = getCoordStr(data)
-        coord_list = getCoords(coord_str)
-        f.close()
+            print i
+            f = open(i, 'r')
+            data = f.read()
+            coord_str = getCoordStr(data)
+            coord_list = getCoords(coord_str)
+            f.close()
     
-        coord_list_ele = insertEle(coord_list,ge)
-        coord_str_ele = convertListToStr(coord_list_ele)
+            coord_list_ele = insertEle(coord_list,ge)
+            coord_str_ele = convertListToStr(coord_list_ele)
 
-	(anterior,extension)=os.path.splitext(i);
+	
     
-        f = open(anterior+'_relleno'+extension, 'w')
-        new_data = replaceCoordStr(coord_str_ele, data)
-        f.write(new_data)
-        f.close()    
+            f = open(destino, 'w')
+            new_data = replaceCoordStr(coord_str_ele, data)
+            f.write(new_data)
+            f.close()    
 
-	os.system('taskkill /im googleearth.exe')
-        time.sleep(5)
+            os.system('taskkill /im googleearth.exe')
+            time.sleep(5)

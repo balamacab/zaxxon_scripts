@@ -51,10 +51,12 @@ switch(mcode)
   case 1, %importakml
 		if numero_father==0
           display('cd ..\s2_elevation                                  gs2');
-          display('    Use make_grid/read_grid or leer_gridfloat to create lamalla.mat ')
+          display('    Create lamalla.mat. Options:                       ');
+		  display('        1) Use make_grid/raise_kml/read_grid           ');
+		  display('        2) Use leer_gridfloat or leehgt(2)             ');  
           display('-');
           display('cd ..\s2_elevation_b                                gs2b');
-          display('    Use make_grid/read_grid or leer_gridfloat to create lamalla2.mat ')
+          display('    Create lamalla.mat. Same options as above ')
 		  display('-');
 		  display('Run plot_lamalla if you want to see the data');
 		else
@@ -98,7 +100,7 @@ switch(mcode)
   case 8, %coge_datos en s4_terrain
           display('    Check that all the check messages above are "ok"');
           display('procesar_nodostxt                                   p_n');
-          display('simplificar                                         simp');
+          
   case 9, %coge_datos en s4_terrain
           display('ERROR: your elevation data does NOT cover up all the terrain') 
 		  display('FIX THE PROBLEM BEFORE GOING ON')
@@ -157,16 +159,24 @@ switch(mcode)
 				display('    Process salida\joined.geo with gmsh, save the mesh as anchors_carretera.msh');
 				display('trocea_malla                                        t_m');
 	case 20, %start
-		  display('cd ..\s2_elevation                                  gs2');
-          display('    Raise the kml files and use read_grid to create lamalla.mat')
+         display('cd ..\s2_elevation                                  gs2');
+          display('    Create lamalla.mat. Options:                       ');
+		  display('        1) Use make_grid/raise_kml/read_grid           ');
+		  display('        2) Use leer_gridfloat or leehgt(2)             ');  
           display('-');
           display('cd ..\s2_elevation_b                                gs2b');
-          display('    Raise the kml files and use read_grid to create lamalla2.mat ')
+          display('    Create lamalla.mat. Same options as above ')
 		  display('-');
 		  display('Run plot_lamalla if you want to see the data');	
     case 21, %corregir
           display('Run dar_altura again with more realistic parameters')	
           display('(but before that, consider deleting retoques.txt)')	
+    case 22,%procesar_nodostxt
+	
+		  display('Option 1) accept_mesh  (skips MeshLab step)          a_m');
+	      display('Option 2) simplificar                               simp');
+    case 23,%accept mesh
+	      display('read_grid                                               ');
 end
 display('                                                                -')
 display('-----------------------------------------------------------------')

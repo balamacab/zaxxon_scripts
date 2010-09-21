@@ -115,7 +115,7 @@ datay=y;
 dataz=z;
 save('salida\anchors_originales.mat','datax','datay','dataz');
 
-
+message(22)
 
 
 function alturas=dar_altura_nac(cx,cy,cz,nac,distancia)

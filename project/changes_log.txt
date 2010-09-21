@@ -103,3 +103,7 @@ Documentation about gmsh threshold fields added
 Revision 67
 -------------------------------------
 elevar.ply and raise_kml added
+
+Revision 70
+-------------------------------------
+list_of_commands updated

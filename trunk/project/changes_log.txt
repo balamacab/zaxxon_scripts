@@ -107,3 +107,8 @@ elevar.ply and raise_kml added
 Revision 70
 -------------------------------------
 list_of_commands updated
+
+Revision 71
+-------------------------------------
+Basics.ppt added
+

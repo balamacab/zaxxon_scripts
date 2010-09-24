@@ -1,0 +1,47 @@
+function lamalla_limits()
+
+S=load('salida\lamalla.mat');
+
+indicesx=[S.rangox(1) S.rangox(end)];
+indicesz=[S.rangoz(1) S.rangoz(end)];
+x=[indicesx(1) indicesx(1) indicesx(end) indicesx(end) indicesx(1)];
+z=[indicesz(1) indicesz(end) indicesz(end) indicesz(1) indicesz(1)];
+
+fid=fopen('salida\lamalla_limits.kml','w');
+abrir_kml(fid);
+grabar_puntos(fid,x,z);
+cerrar_kml(fid);
+fclose(fid);
+
+
+function abrir_kml(fid)
+
+fprintf(fid,'<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">\n<Document>\n	<name>lamalla_limits.kml</name>\n	<Style id="sn_ylw-pushpin">\n		<LineStyle>\n			<color>7f00ffff</color>\n			<width>4</width>\n		</LineStyle>\n		<PolyStyle>\n			<color>7f00ff00</color>\n		</PolyStyle>\n	</Style>\n');	
+
+end
+
+
+
+
+function grabar_puntos(fid,x,z)
+
+fprintf(fid,'<Placemark>\n		<name>Route</name>\n		<description>Road and driveable zone</description>\n	<styleUrl>#sn_ylw-pushpin</styleUrl>\n<LineString>			<coordinates>\n');
+
+[mapeo]=textread('..\mapeo.txt','%f');
+
+for h=1:length(x)    
+            [pos1 pos3 pos2]=BTB_a_coor(x(h),0,z(h),mapeo);%Altura es el segundo
+            fprintf(fid,'%f,%f,%f\r\n',pos1,pos2,0);
+    
+end
+fprintf(fid,'</coordinates>\n		</LineString>\n</Placemark>\n');
+end
+
+
+function cerrar_kml(fid)
+
+fprintf(fid,'</Document>\n</kml>\n');
+
+end
+
+end

@@ -4,7 +4,7 @@ function addgrid(xmin,xmax,zmin,zmax,nummetros)
 if (nargin==2)|(nargin==3)
     numx=xmin;
 	numz=xmax;
-	salvaguarda=0;
+	salvaguarda=0.01;
 	try 
 		S=load('..\s2_elevation_b\salida\lamalla.mat');
 	catch

@@ -217,12 +217,12 @@ function imprime_track(controlA,controlB,controlC,controlD,alturas_nodos,angulov
 		end
 		if h==1
 			
-			imprime_nodo(fid,h-1,controlA(1,h),controlA(2,h),altura,angulo,anguloy,0,exdis);
+			imprime_nodo(fid,h-1,controlA(1,h),controlA(2,h),altura,angulo,anguloy,4,exdis);
 		elseif h==(length(controlA)+1)
 			complejo=-j*(controlD(1,h-1)-controlC(1,h-1))-(controlD(2,h-1)-controlC(2,h-1));
 			angulo=angle(complejo);
 			endis=abs(complejo);
-			imprime_nodo(fid,h-1,controlD(1,h-1),controlD(2,h-1),altura,angulo,anguloy,endis,0);
+			imprime_nodo(fid,h-1,controlD(1,h-1),controlD(2,h-1),altura,angulo,anguloy,endis,4);
 		else
 			complejo=-j*(controlD(1,h-1)-controlC(1,h-1))-(controlD(2,h-1)-controlC(2,h-1));
 			angulo=angle(complejo);

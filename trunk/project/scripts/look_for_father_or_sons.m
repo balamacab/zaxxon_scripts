@@ -12,6 +12,9 @@ function [numero caminos]=look_for_father_or_sons(fichero,silencioso)
 if nargin==1
 	silencioso=1;
 end
+		[BASEPATH status msg]=canonicalize_file_name(fichero);
+		barras=findstr(BASEPATH,filesep);
+		BASEPATH=BASEPATH(1:(barras(end-1)-1));
 
 %Los ficheros sons.txt y father.txt deben contener el path a los tramos secundarios y al tramo principal respectivamente
 %de un proyecto
@@ -25,32 +28,40 @@ end
         contenido=fread(fid,Inf);
 		if silencioso==1, fclose(fid); else my_fclose(fid); end
         cadena=char(contenido)';
-        pos=findstr(char(10),cadena);
+        pos=findstr(char(10),cadena); %Localizamos el carácter de cambio de línea
 		inicio=1;
 		contador=1;
         if length(pos)>=1
 			for h=1:length(pos)
 				final=pos(h)-1;
-				haybarra=findstr('\',cadena(inicio:final));
-				if (isempty(haybarra)==0) %Si hay una barra invertida, es un path
-					if contador==1
-						caminos=cellstr(deblank(cadena(inicio:final)));
-					else
-						caminos(contador)=deblank(cadena(inicio:final));
+				directorio=deblank(cadena(inicio:final));
+				if (length(directorio)>0) 
+					if length(findstr(directorio,':'))==0
+						directorio=canonicalize_file_name(strcat(BASEPATH,filesep(),directorio));
 					end
-					contador=contador+1;
+					if length(directorio)>0
+						if contador==1
+							caminos=cellstr(directorio);
+						else
+							caminos(contador)=directorio;
+						end
+						contador=contador+1;
+					end
 				end
 				inicio=pos(h)+1;
 			end
 		end
 		%Ya hemos procesado todas las cadenas que había antes de los cambios de línea
 		final=length(cadena);
-		haybarra=findstr('\',cadena(inicio:final));
-		if (isempty(haybarra)==0)
+		directorio=deblank(cadena(inicio:final));
+		if (length(directorio)>0) 
+			if length(findstr(directorio,':'))==0
+				directorio=canonicalize_file_name(strcat(BASEPATH,filesep(),directorio))
+			end
 			if contador==1
-				caminos=cellstr(deblank(cadena(inicio:final)));
+				caminos=cellstr(directorio);
 			else
-				caminos(contador)=deblank(cadena(inicio:final));
+				caminos(contador)=directorio;
 			end
 			contador=contador+1;
 		end

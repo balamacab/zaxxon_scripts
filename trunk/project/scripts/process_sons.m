@@ -4,6 +4,10 @@ function process_sons()
 [numero_sons caminossons]=look_for_father_or_sons('sons.txt')
 origen=pwd;
 
+%road_width=8*ones(numero_sons,1);%All the roads have 8m width
+%road_width(4)=6; %road 6 has a different width
+%Use: btb06(road_width(h),1)
+
 for h=1:numero_sons
 
 	cd(char(caminossons(h)));

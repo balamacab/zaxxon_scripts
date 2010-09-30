@@ -112,3 +112,23 @@ Revision 71
 -------------------------------------
 Basics.ppt added
 
+
+Revision 77
+-------------------------------------
+create_Sons.m script added. 
+
+And now father.txt and sons.txt can contain just a name if father and sons are subdirectories of the same root folder:
+
+In example:
+C:\project\father
+c:\project\son01
+c:\project\son02
+
+sons.txt:
+------------------
+son01
+son01
+
+father.txt
+-----------------
+father

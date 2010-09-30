@@ -37,7 +37,7 @@ salida=salida((length(filtro)-1)/2:end);
 %-----------------------------------------------------------------------------------------
 %                                   Calculando máximos y mínimos
 
-display('Caracterizando curvas')
+display('Caracterizando curvas');
 
 [maxtab, mintab]=peakdet(salida,sensibilidad);
 maximospositivos=find(maxtab(:,2)>0);
@@ -66,9 +66,9 @@ plot(distancias(indices),(180/pi)*magnitudes,'xb');
 %---------------------------------------------------------------------------------------
 %                       Asignar pacenotes según la magnitud
   
-figure
+figure;
 axis('equal');
-hold on
+hold on;
  
 plot(x,z,'or');
 leyenda=sprintf('C->Angle turned in center (%.1fm)\nT->Angle turned in total (%.1fm)',anchoint*5,ancho*5);

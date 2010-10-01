@@ -62,7 +62,7 @@ for h=1:num_files
 	fprintf(fid,'%s\n',name);
 	basedir=strcat('..\',name);
 	mkdir(basedir);
-	system(sprintf('xcopy default_son_files\*.* %s /E /Y',basedir));
+	system(sprintf('xcopy default_son_files\\*.* %s /E /Y',basedir));
 	if copiar_kmls==1
         comando=sprintf('copy %s %s\\s0_import\\ /Y',char(ficheros(h)),basedir);
 		system(comando);

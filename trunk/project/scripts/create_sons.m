@@ -62,18 +62,12 @@ for h=1:num_files
 	fprintf(fid,'%s\n',name);
 	basedir=strcat('..\',name);
 	mkdir(basedir);
-	system(sprintf('xcopy *.* %s /Y',basedir));
-	system(sprintf('xcopy s0_import %s\\s0_import\\ /E /Y',basedir));
-	system(sprintf('xcopy s1_mesh %s\\s1_mesh\\ /E /Y',basedir));
-	system(sprintf('xcopy s3_road %s\\s3_road\\ /E /Y',basedir));
-	system(sprintf('xcopy s10_split %s\\s10_split\\ /E /Y',basedir));
-	system(sprintf('xcopy Venue %s\\Venue\\ /E /Y',basedir));
-    system(sprintf('del %s\\sons.txt /Q',basedir));
+	system(sprintf('xcopy default_son_files\*.* %s /E /Y',basedir));
 	if copiar_kmls==1
         comando=sprintf('copy %s %s\\s0_import\\ /Y',char(ficheros(h)),basedir);
 		system(comando);
 	end
-	fids=fopen('father.txt','w');
+	fids=fopen(sprintf('%s\\father.txt',basedir),'w');
 	fprintf(fids,'%s\n',actual);
 	fclose(fids);
 end	

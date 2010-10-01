@@ -22,6 +22,17 @@ if nargin==1
     keep_names=1;
 end
 
+fid=fopen('sons.txt');
+if fid==-1
+	
+else
+	fclose(fid);
+	display('!!!!!!!!!!!!!!!!!!!!');
+        display('WARNING: sons.txt exists. Remove it and run this script again');
+	display('!!!!!!!!!!!!!!!!!!!!');
+	return;
+end
+
 if exist(char(camino))
 	%Leer kmls
 	[errores,filename]=system(sprintf('dir %s\\*.kml /b',camino));

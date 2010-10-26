@@ -38,11 +38,13 @@ contents=fread(fid,inf);
 fclose(fid);
 cadena=char(contents)';
 todo=sscanf(cadena,'%d',inf);
-id_superficie=todo(4:9:end);
-n1=todo(7:9:end);
-n2=todo(8:9:end);
-n3=todo(9:9:end);
-id_particular=todo(5:9:end);
+numtags=todo(3);
+tam_registro=numtags+6;
+id_superficie=todo(4:tam_registro:end);
+n1=todo((numtags+4):tam_registro:end);
+n2=todo((numtags+5):tam_registro:end);
+n3=todo((numtags+6):tam_registro:end);
+id_particular=todo(5:tam_registro:end);
 
 Data_c.vertex.x = x;
 Data_c.vertex.y = y;

@@ -74,19 +74,20 @@ for h=1:numnodos-1
     divisiones=linspace(0,1,segmentos+1);
 
     for t=divisiones
-        [salida angulop]=interpola_spline(Punto0,Distancia0,[AngleXZ0 AngleY0],Punto3,Distancia3,[AngleXZ3 AngleY3],t);
+        [salida angulop curvatura]=interpola_spline(Punto0,Distancia0,[AngleXZ0 AngleY0],Punto3,Distancia3,[AngleXZ3 AngleY3],t);
 		if (h==1) || (t>0)
 			porcentajes(contador,:)=[h t];
 			anchors_dcha(contador,:)=[salida(1)+ancho_track*cos(angulop) salida(2) salida(3)+ancho_track*sin(angulop)];
 			anchors_izda(contador,:)=[salida(1)-ancho_track*cos(angulop) salida(2) salida(3)-ancho_track*sin(angulop)];
 			%plot([anchors_izda(contador,1) anchors_dcha(contador,1)],[anchors_izda(contador,3) anchors_dcha(contador,3)],'g');
 			anguloxzp(contador)=angulop;
+            curvaturaxz(contador)=1/curvatura;
 			contador=contador+1;
 		end	 
     end
 end    
 
-save 'anguloxzp.mat' anguloxzp
+save('anguloxzp.mat','anguloxzp','curvaturaxz');
 
 %figure
 %hold on

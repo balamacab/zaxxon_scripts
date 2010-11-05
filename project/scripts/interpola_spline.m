@@ -1,4 +1,4 @@
-function [salida angulop]=interpola_spline(punto0,distancia0,angulos0,punto3,distancia3,angulos3,t)
+function [salida angulop curvatura]=interpola_spline(punto0,distancia0,angulos0,punto3,distancia3,angulos3,t)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -63,5 +63,15 @@ dx=3*A*t^2+2*B*t+C;
 %Según z
 dz=3*E*t^2+2*F*t+G;
 
+derivada1=[dx 0 dz];
+
 %Pendiente de la recta perpendicular
 angulop=atan2(-dx,dz);
+
+ddx=6*A*t+2*B;
+ddz=6*E*t+2*F;
+
+derivada2=[ddx 0 ddz];
+
+%curvatura=cross(derivada1,derivada2)/(norm(derivada1)^3);
+curvatura=(dx*ddz-dz*ddx)/((dx^2+dz^2)^(3/2));

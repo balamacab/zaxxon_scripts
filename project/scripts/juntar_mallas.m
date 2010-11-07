@@ -214,7 +214,7 @@ message(11);
         end
         distancias1=abs(Pts1(h,1)-nodos_finales(:,1))+abs(Pts1(h,3)-nodos_finales(:,3));
         [valor pos]=min(distancias1);
-        if valor<0.02 %Menos de 2cm-> mismo nodo
+        if valor<0.05 %Menos de 5cm-> mismo nodo
             mapeo1(h)=pos;
         else
             nodos_finales=[nodos_finales; Pts1(h,:)];

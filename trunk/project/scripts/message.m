@@ -41,7 +41,7 @@ end
 		  end	  
 
 display('                                                                -')
-display('--------------------------------------------multitrack- 1/05/10  ')
+display('-------------------------------------------multitrack- 12/11/10  ')
 display(sprintf('----------------------  Next step  ---------------------- %s',tipo));
 display('-----------------------------------------------------------------')
 display('                                                   short form   -')
@@ -160,9 +160,9 @@ switch(mcode)
 				display('trocea_malla                                        t_m');
 	case 20, %start
          display('cd ..\s2_elevation                                  gs2');
-          display('    Create lamalla.mat. Options:                       ');
-		  display('        1) Use make_grid/raise_kml/read_grid           ');
-		  display('        2) Use leer_gridfloat or leehgt(2)             ');  
+          display('    Raise gridXXX.kml. Options:                       ');
+		  display('        1) raise_kml           ');
+		  display('        2) BTBLofty (or 3DRouteBuilder)           ');  
           display('-');
           display('cd ..\s2_elevation_b                                gs2b');
           display('    Create lamalla.mat. Same options as above ')

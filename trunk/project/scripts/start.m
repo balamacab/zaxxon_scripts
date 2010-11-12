@@ -27,4 +27,4 @@ maxz=max(laz);
 
 make_grid(minx-2*paso,maxx+2*paso,minz-2*paso,maxz+2*paso,paso,npuntos);
 
-message(20);
+%message(20);

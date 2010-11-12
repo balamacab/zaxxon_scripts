@@ -120,6 +120,8 @@ end
 
     save('dimensiones.mat','num_filas','num_columnas','guarda_calentamiento');
 
+message(20);	
+
     function repite(fid,longi,lati,repe)
     for g=1:repe
         fprintf(fid,'%f,%f,%f ',longi,lati,0);

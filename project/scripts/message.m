@@ -158,15 +158,16 @@ switch(mcode)
     case 19, %join_geos
 				display('    Process salida\joined.geo with gmsh, save the mesh as anchors_carretera.msh');
 				display('trocea_malla                                        t_m');
-	case 20, %start
+	case 20, %make_grid
          display('cd ..\s2_elevation                                  gs2');
           display('    Raise gridXXX.kml. Options:                       ');
 		  display('        1) raise_kml           ');
 		  display('        2) BTBLofty (or 3DRouteBuilder)           ');  
           display('-');
           display('cd ..\s2_elevation_b                                gs2b');
-          display('    Create lamalla.mat. Same options as above ')
+          display('    Raise gridXXX.kml. Same options as above ')
 		  display('-');
+		  display('Use read_grid to create lamalla.mat');
 		  display('Run plot_lamalla if you want to see the data');	
     case 21, %corregir
           display('Run dar_altura again with more realistic parameters')	

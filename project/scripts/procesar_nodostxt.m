@@ -36,8 +36,6 @@ end
 %Los nodos no tienen altura, así que hay que cargar los datos de los xml
 %para interpolar la altura en ese punto de la malla
 
-S=load('..\nac.mat');
-nac=S.nac;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -119,52 +117,6 @@ save('salida\anchors_originales.mat','datax','datay','dataz');
 msh_to_obj('salida\nodos_conaltura.txt','elements.txt')
 message(22)
 
-
-function alturas=dar_altura_nac(cx,cy,cz,nac,distancia)
-%La posición real de los anchors de carretera está moviéndose 10cm
-%(distancia) hacia el anchor opuesto
-
-for h=1:nac/2
-    vector_entrante=[cx(h+nac/2)-cx(h) cz(h+nac/2)-cz(h)];
-    unitario_entrante=vector_entrante/norm(vector_entrante);
-    x_real(h)=cx(h)+distancia*unitario_entrante(1);
-    z_real(h)=cz(h)+distancia*unitario_entrante(2);
-end
-
-for h=nac/2+1:nac
-    vector_entrante=[cx(h-nac/2)-cx(h) cz(h-nac/2)-cz(h)];
-    unitario_entrante=vector_entrante/norm(vector_entrante);
-    x_real(h)=cx(h)+distancia*unitario_entrante(1);
-    z_real(h)=cz(h)+distancia*unitario_entrante(2);
-end
-
-for h=1:nac/2
-    vector_saliente=[x_real(h+nac/2)-x_real(h) cy(h+nac/2)-cy(h) z_real(h+nac/2)-z_real(h)];
-    unitario_saliente=vector_saliente/norm(vector_saliente);
-    %tangente=alturaY/distanciaXZ;
-    tangente=unitario_saliente(2)/sqrt(unitario_saliente(1)^2+unitario_saliente(3)^2);
-    if tangente~=0
-        mensaje=sprintf('El anchor se sube %.3fm',distancia*tangente);
-        display(mensaje);
-    end
-    %altura=distancia*tangente;
-    alturas(h)=cy(h)+distancia*tangente;
-end
-
-for h=nac/2+1:nac
-    vector_saliente=[x_real(h-nac/2)-x_real(h) cy(h-nac/2)-cy(h) z_real(h-nac/2)-z_real(h)];
-    unitario_saliente=vector_saliente/norm(vector_saliente);
-    %tangente=alturaY/distanciaXZ;
-    tangente=unitario_saliente(2)/sqrt(unitario_saliente(1)^2+unitario_saliente(3)^2);
-    if tangente~=0
-        mensaje=sprintf('El anchor se sube %.3fm',distancia*tangente);
-        display(mensaje);
-    end
-    %altura=distancia*tangente;
-    alturas(h)=cy(h)+distancia*tangente;
-end
-
-alturas=alturas';
 
 
 

@@ -2,7 +2,18 @@ function msh_to_obj(fichero_nodos,fichero_elements)
 
 [numero x y z]=textread(fichero_nodos,'%d %f %f %f');
 
-[nada1 nada2 nada3 id_superficie nada5 nada6 n1 n2 n3]=textread(fichero_elements,'%d %d %d %d %d %d %d %d %d');
+fid=fopen(fichero_elements,'r');
+contents=fread(fid,inf);
+fclose(fid);
+cadena=char(contents)';
+todo=sscanf(cadena,'%d',inf);
+numtags=todo(3);
+tam_registro=numtags+6;
+id_superficie=todo(4:tam_registro:end);
+n1=todo((numtags+4):tam_registro:end);
+n2=todo((numtags+5):tam_registro:end);
+n3=todo((numtags+6):tam_registro:end);
+id_particular=todo(5:tam_registro:end);
 
 		fid_w=fopen(strcat('salida\test','.obj'),'w');
 		fprintf(fid_w,'g group1\r\n');

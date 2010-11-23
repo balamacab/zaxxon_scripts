@@ -24,7 +24,9 @@ def getCoordStr(kml):
 return coords string from kml
 """
     match = re.match(r"[\s\S]+\<coordinates\>([\s\S]+)\</coordinates\>[\s\S]+", data)
-    return match.group(1)
+    limpio=match.group(1)
+    limpio=limpio.strip()
+    return limpio
 
 def getCoords(coord_str):
     """

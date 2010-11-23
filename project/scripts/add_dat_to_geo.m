@@ -74,3 +74,6 @@ function longitudes=ordena_y_limpia(longitudes)
 longitudes=sort(longitudes);
 buenos=(find(diff(longitudes)>0)+1);
 longitudes=[longitudes(1) longitudes(buenos)];
+
+function salida=randint(dimA,dimB,maxvalue)
+salida=floor(maxvalue*rand(dimA,dimB));

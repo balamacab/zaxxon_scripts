@@ -28,7 +28,7 @@ latitudes=ordena_y_limpia(latitudes);
 pasox=(maxx-minx)/(length(longitudes)-1);
 pasoz=(maxz-minz)/(length(latitudes)-1);
 display('Making a backup of addgrid.hlg')
-backup_name=sprintf('addgrid_backup%03d.hlg',randint(1,1,1000));
+backup_name=sprintf('addgrid_backup%03d.hlg',randint_propio(1,1,1000));
 display(sprintf('Backuping addgrid.hlg as %s',backup_name));
 system(sprintf('copy addgrid.hlg %s',backup_name));
 addgrid(minx,maxx,minz,maxz,[pasox pasoz]);
@@ -75,5 +75,5 @@ longitudes=sort(longitudes);
 buenos=(find(diff(longitudes)>0)+1);
 longitudes=[longitudes(1) longitudes(buenos)];
 
-function salida=randint(dimA,dimB,maxvalue)
+function salida=randint_propio(dimA,dimB,maxvalue)
 salida=floor(maxvalue*rand(dimA,dimB));

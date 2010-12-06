@@ -8,13 +8,13 @@ function dar_altura(filtrado,pendiente_limite,pend_minima,intervalo,interactivo)
 % y sin finalidad comercial.
 % 
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
-silent_functions(1);
+%silent_functions(1);
 
 fichero_nodos='nodos.mat';
 fichero_anchors='porcentajes.mat';
 
 if (nargin<3) || (filtrado=='h')
-    display('Uso: dar_altura(9,0.2,-0.2)');
+    display('Uso:  dar_altura(9,0.2,-0.2)');
     display('donde el primer parámetro debe ser impar y es el factor de suavizado en altura (más suave cuanto mayor sea)');
     display('El segundo y tercer parámetros son las pendientes máxima y mínima permitidas (antes de suavizar)');
     return;
@@ -49,6 +49,7 @@ anchors=load('..\anchors.mat');
 display('Leyendo alturas_track1.mat');
 alturas1=load('alturas_track1.mat');
 alturas_track1=alturas1.alturas_track1;
+alturas_track1=reshape(alturas_track1,length(alturas_track1),1);
 
 try 
     alturas_suavizadas=sgolayfilt(alturas_track1,5,9);

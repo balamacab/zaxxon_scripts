@@ -15,8 +15,14 @@ n2=todo((numtags+5):tam_registro:end);
 n3=todo((numtags+6):tam_registro:end);
 id_particular=todo(5:tam_registro:end);
 
+[nada,orden]=sort(id_superficie);
+n1=n1(orden);
+n2=n2(orden);
+n3=n3(orden);
+id_particular=id_particular(orden);
+
 		fid_w=fopen(strcat('salida\test','.obj'),'w');
-		fprintf(fid_w,'g group1\r\n');
+		
 		
 		fprintf(fid_w,'v %f %f %f\r\n',[x y -z]')
 		
@@ -27,7 +33,13 @@ id_particular=todo(5:tam_registro:end);
 		v1=n1;
 		v2=n2;
 		v3=n3;
+		id_anterior=-1;
 		for h=1:length(n1)
+				if id_superficie(h)~=id_anterior
+					fprintf(fid_w,'g group%02d\r\n',id_anterior);
+					id_anterior=id_superficie(h);
+				else
+				end
 			    fprintf(fid_w,'f %d/%d/%d %d/%d/%d %d/%d/%d\r\n',v1(h),v1(h),v1(h),v2(h),v2(h),v2(h),v3(h),v3(h),v3(h));
 		end			
 

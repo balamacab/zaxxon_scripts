@@ -9,6 +9,8 @@ function procesar_elementstxt_mt(partes_x,partes_z,mapear)
 % 
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
+conunion=-inf;
+
 if nargin==0
    partes_x=10;
    partes_z=10;
@@ -167,7 +169,7 @@ if hay_triangulos_pegados==1
     escarretera=[escarretera;ceros];%Todos los generados se unen a carretera. Los de la malla no se une ninguno
     id_superficie=[identificador;id_superficie];
 else
-	escarretera=[n1<=nac n2<=nac n3<=nac];
+	escarretera=[n1<=(nac*conunion) n2<=(nac*conunion) n3<=(nac*conunion)];
 end	
 
 tramos=cargar_tramos();

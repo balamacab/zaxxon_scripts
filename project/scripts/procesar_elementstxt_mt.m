@@ -9,7 +9,7 @@ function procesar_elementstxt_mt(partes_x,partes_z,mapear)
 % 
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
-conunion=-inf;
+conunion=1;%-inf para no unir con la carretera
 
 if nargin==0
    partes_x=10;

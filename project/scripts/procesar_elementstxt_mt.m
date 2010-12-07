@@ -1,4 +1,4 @@
-function procesar_elementstxt_mt(partes_x,partes_z,mapear)
+function procesar_elementstxt_mt(partes_x,partes_z,mapear,conunion)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -9,13 +9,18 @@ function procesar_elementstxt_mt(partes_x,partes_z,mapear)
 % 
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
-conunion=1;%-inf para no unir con la carretera
+%conunion=1;%-inf para no unir con la carretera
 
 if nargin==0
    partes_x=10;
    partes_z=10;
    mapear=0;
 end
+
+if nargin==3
+   conunion=1;
+end
+
    hay_triangulos_pegados=0;
 
   fichero_de_nodos_con_altura='nodos_conaltura.txt';
@@ -82,7 +87,8 @@ for k=1:partes_z
 	    fid_nc(g)=fopen(nombre_fichero,'w');
 	end
 end
-
+usado_c=zeros(size(fid_c));
+usado_nc=zeros(size(fid_nc));
 
 fid_apoyo=fopen('lis_apoyo.txt','w');
 
@@ -272,12 +278,14 @@ for h=1:length(n1)
 
         fprintf(fid,'               <TerrainFace %s>\n                 <Anchor0 Props="%s" />\n                 <Anchor1 Props="%s" />\n                 <Anchor2 Props="%s" />\n               </TerrainFace>\n',argumento,anchor1,anchor2,anchor3);
         if sum(fid==fid_c)>0
+		    usado_c(zona)=1;
             cuenta_conducibles=cuenta_conducibles+1;
             if mod(h,10000)==0
                 mensaje=sprintf('Cond=%d\n',cuenta_conducibles);
                 display(mensaje);
             end
         else
+			usado_nc(zona)=1;
             cuenta_noconducibles=cuenta_noconducibles+1;
             if mod(h,10000)==0
                 mensaje=sprintf('NoCond=%d\n',cuenta_noconducibles);
@@ -294,11 +302,26 @@ for g=1:length(fid_c)
 	fprintf(fid_c(g),final);
 	fclose(fid_c(g));
 end
-
 for g=1:length(fid_nc)
 	fprintf(fid_nc(g),final);
 	fclose(fid_nc(g));
 end
+
+for k=1:partes_z
+	for h=1:partes_x
+        g=(k-1)*partes_x+h;
+	    nombre_fichero=sprintf('lis_conducibles_%02d-%02d.txt',h,partes_z-k+1);
+	    if usado_c(g)==0
+			system(sprintf('del /Q /f %s 2> nul',nombre_fichero));
+		end
+		nombre_fichero=sprintf('lis_noconducibles_%02d-%02d.txt',h,partes_z-k+1);
+	    if usado_nc(g)==0
+			system(sprintf('del /Q /f %s 2> nul',nombre_fichero));
+		end
+	end
+end
+
+
 
 fprintf(fid_apoyo,final);
 fclose(fid_apoyo);
@@ -306,16 +329,16 @@ fclose(fid_apoyo);
 system('del lis.txt');
 
 fid=fopen('lis.txt','w');
-fprintf(fid,'      <TerrainAreas count="%d">',length(fid_c)+length(fid_nc));
+fprintf(fid,'      <TerrainAreas count="%d">',sum(usado_c)+sum(usado_nc));
 fclose(fid)
 
-system('copy lis.txt+lis_conducibles*.txt+lis_noconducibles*.txt lis.txt/b');
+system('copy lis.txt+lis_conducibles*.txt+lis_noconducibles*.txt lis.txt/b  1>nul');
 
 fid=fopen('final.txt','w');
 fprintf(fid,'      </TerrainAreas>');
 fclose(fid)
 
-system('copy lis.txt+final.txt salida\lis.txt/b');
+system('copy lis.txt+final.txt salida\lis.txt/b  1>nul');
 message(16);
 
 function area=elarea(a,b,c)

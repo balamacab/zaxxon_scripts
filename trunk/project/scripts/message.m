@@ -142,6 +142,8 @@ switch(mcode)
           display('    Try to open salida\Venue.xml with BTB')
   case 17, %split_track
           display('    Edit pos_nodes.txt if you want to change split-points') 
+		  display(sprintf('    Approximated total length of the track is: %.0fm',dime_distancia));
+		  display('                                                                -')
           display(sprintf('partir_track                                        p_t'));
 	case 18, %mallado_regular
 			if numero_sons>0
@@ -185,3 +187,18 @@ display('-----------------------------------------------------------------')
 if (numero_sons>0) & (numero_father>0)
 	display('WARNING: You have both father.txt and sons.txt on the root folder of this track. Remove one of them');
 end
+
+function distancia=dime_distancia()
+S=load('..\anchors.mat');
+x=S.x;
+z=S.z;
+nac=length(x);
+x=0.5*(x(1:nac/2)+x(nac/2+1:end));
+y=0.5*(z(1:nac/2)+z(nac/2+1:end));
+
+xy = [x;y]; 
+df = diff(xy,1,2); 
+
+  %Cálculo basto de la longitud
+distancia = cumsum([0, sqrt([1 1]*(df.*df))]);
+distancia=distancia(end);

@@ -1,4 +1,4 @@
-function mallado_regular(separacion,ndivisiones,B)
+function mallado_regular(separacion,ndivisiones,transfinite)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -13,13 +13,14 @@ function mallado_regular(separacion,ndivisiones,B)
 
   if (nargin<2)||(separacion=='h')
     display('mallado_regular(12,3)');
-    display('mallado_regular(12,3,7)');
-    display('Arguments: width of driveable zone in meters, number of panels for that zone, size of regular meshes');
+    display('mallado_regular(12,3,1)');
+    display('Arguments: width of driveable zone in meters, number of panels for that zone, use transfinite');
     return;
 end
 
+B=inf;
 if nargin==2
-	B=inf;
+	transfinite=0;
 end
 
 [numero_sons caminos]=look_for_father_or_sons('..\sons.txt',1);
@@ -161,7 +162,7 @@ for h=1:length(cambios)-1
 	if frontera(cambios(h))==empieza_regular %Entramos en una zona regular
 		malla_regular(fid,cambios(h),cambios(h+1),h,contador,id_offset);
 	else                                           %Entramos en una zona irregular
-		malla_irregular(fid,cambios(h),cambios(h+1),h,contador,id_offset);
+		malla_irregular(fid,cambios(h),cambios(h+1),h,contador,id_offset,transfinite);
 	end
 	listado_superficies(contador)=contador;
 	contador=contador+1;
@@ -201,7 +202,7 @@ for h=1:length(cambios)-1
 	if frontera(cambios(h))==empieza_regular
 		malla_regular(fid,cambios(h)+nac/2,cambios(h+1)+nac/2,h,contador,id_offset);
 	else
-		malla_irregular(fid,cambios(h)+nac/2,cambios(h+1)+nac/2,h,contador,id_offset);
+		malla_irregular(fid,cambios(h)+nac/2,cambios(h+1)+nac/2,h,contador,id_offset,transfinite);
 	end
 	listado_superficies(contador)=contador;
 	contador=contador+1;
@@ -267,20 +268,28 @@ function malla_regular(fid,inicio,final,linea_izda,id_superficie,id_offset)
 		fprintf(fid,'Transfinite Surface (Nsup%s+%d)={offset_a+%d,offset_a+%d,offsetp+%d,offsetp+%d};\n',id_offset,id_superficie,puntoIA,puntoDA,puntoDB,puntoIB);
 end
 
-function malla_irregular(fid,inicio,final,linea_izda,id_superficie,id_offset)
-        linea_dcha=linea_izda+1;
+function malla_irregular(fid,inicio,final,linea_izda,id_superficie,id_offset,transfinite)
+
+		linea_dcha=linea_izda+1;
 		
 		puntoIA=inicio;
 		puntoDA=final;
 		puntoIB=inicio;
 		puntoDB=final;
-		
+		fprintf(fid,'Delete {\n');
+		fprintf(fid,'    Point{offset_a+%d:offset_a+%d};\n',puntoIA+1,puntoDA-1);
+		fprintf(fid,'}\n');
+
 		fprintf(fid,'l1=newl; Line(l1) = {offset_a+%d,offset_a+%d};\n',puntoIA,puntoDA);
-		
+		if transfinite==1
+			fprintf(fid,'Transfinite Line(l1) = %d Using Progression 1;\n',puntoDA-puntoIA+1);
+		end
 		fprintf(fid,'l2=newl;Line Loop (l2)={l1,Ntra+%d,-(offsetp+%d):-(offsetp+%d),-(Ntra+%d)};\n',linea_dcha,puntoDB,puntoIB+1,linea_izda);
 		
 		fprintf(fid,'Plane Surface (Nsup%s+%d)={l2};\n',id_offset,id_superficie);
-
+		if transfinite==1
+			fprintf(fid,'Transfinite Surface (Nsup%s+%d)={offset_a+%d,offset_a+%d,offsetp+%d,offsetp+%d};\n',id_offset,id_superficie,puntoIA,puntoDA,puntoDB,puntoIB);
+		end
 end
 
 function poner_division(fid,numero,posicion,ndivisiones)

@@ -377,7 +377,6 @@ function inserta_field(fid,longitud,insertar)
 end
 
 function salida=descarta_lazos_enormes(datos)
-    inicio=false;
 	inicio=true;
     for h=1:length(datos)
 	    if datos(h)==1
@@ -386,6 +385,8 @@ function salida=descarta_lazos_enormes(datos)
 			else            %cerramos un lazo
 			    if (h-ini_pos)>200
 			        datos(ini_pos:h)=ones(size(datos(ini_pos:h)));
+					ini_pos
+					h
 				end
 			end
 			inicio=true;

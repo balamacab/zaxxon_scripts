@@ -97,10 +97,10 @@ vuelta=ones(nac,1);
 	
 	%Recorremos la parte izquierda buscando lazos
     ida=busca_lazos(punto_izquierda);
-	
+	ida=descarta_lazos_enormes(ida);
 	%Recorremos la parte derecha buscando lazos
 	vuelta=busca_lazos(punto_derecha);
-    
+    vuelta=descarta_lazos_enormes(vuelta);
 
 %Unimos los puntos que pueden ponerse con transfinite
 fprintf(fid,'offset_a=newp+2;\n');
@@ -374,4 +374,25 @@ function inserta_field(fid,longitud,insertar)
 	
 	fprintf(fid,'  Background Field=offsetp+2;\n');
 	fprintf(fid,'EndIf\n');
+end
+
+function salida=descarta_lazos_enormes(datos)
+    inicio=false;
+	inicio=true;
+    for h=1:length(datos)
+	    if datos(h)==1
+		    if inicio==true %seguimos con el 1 anterior
+		        ini_pos=h;
+			else            %cerramos un lazo
+			    if (h-ini_pos)>200
+			        datos(ini_pos:h)=ones(size(datos(ini_pos:h)));
+				end
+			end
+			inicio=true;
+		end
+		if datos(h)==0
+		    inicio=false;
+		end
+    end
+	salida=datos;
 end

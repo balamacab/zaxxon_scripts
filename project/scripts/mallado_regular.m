@@ -377,16 +377,15 @@ function inserta_field(fid,longitud,insertar)
 end
 
 function salida=descarta_lazos_enormes(datos)
+    tamanyo_limite_de_lazo=200; %Un lazo que comprenda más de 200 puntos no es un lazo (mas o menos es 1Km)
 	inicio=true;
     for h=1:length(datos)
 	    if datos(h)==1
 		    if inicio==true %seguimos con el 1 anterior
 		        ini_pos=h;
 			else            %cerramos un lazo
-			    if (h-ini_pos)>200
+			    if (h-ini_pos)>tamanyo_limite_de_lazo
 			        datos(ini_pos:h)=ones(size(datos(ini_pos:h)));
-					ini_pos
-					h
 				end
 			end
 			inicio=true;

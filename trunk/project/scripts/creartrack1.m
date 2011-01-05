@@ -1,4 +1,4 @@
-function creartrack1();
+function creartrack1(usar_centro);
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -10,12 +10,14 @@ function creartrack1();
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
 
-if nargin>0
+if nargin>1
   display('Sin argumentos');
   return;
 end
 
-malla_regular=1;
+if nargin==0
+  usar_centro=0;
+end
 
 %        <node NodeId="700">
 %          <Position x="1666.922" y="4296.436" z="-3785.737" />
@@ -44,21 +46,22 @@ display('Leyendo lamalla.mat')
 malla=load('lamalla.mat');
 malla.malla_regular=single(malla.malla_regular); %Por si los datos son enteros
 
-if malla_regular==1
+if usar_centro==0
     alturas_derecha=z_interp2(malla.rangox,malla.rangoz,malla.malla_regular,x(1:nac/2),z(1:nac/2));
     alturas_izquierda=z_interp2(malla.rangox,malla.rangoz,malla.malla_regular,x(nac/2+1:end),z(nac/2+1:end));
+	nueva_altura=zeros(length(alturas_derecha),1);
 else
-    datax=malla.datax;
-    datay=malla.datay;
-    dataz=malla.dataz;
-    alturas_derecha=consulta_malla_alternativa(x(1:nac/2),z(1:nac/2),datax,datay,dataz,20);
-    alturas_izquierda=consulta_malla_alternativa(x(nac/2+1:end),z(nac/2+1:end),datax,datay,dataz,20);
+    alturas_centro=z_interp2(malla.rangox,malla.rangoz,malla.malla_regular,0.5*(x(1:nac/2)+x(nac/2+1:end)),0.5*(z(1:nac/2)+z(nac/2+1:end)));
+	nueva_altura=zeros(length(alturas_centro),1);
 end
 
-nueva_altura=zeros(length(alturas_derecha),1);
 
-for h=1:length(alturas_derecha)
-    nueva_altura(h)=min([alturas_izquierda(h) alturas_derecha(h)]);
+for h=1:length(nueva_altura)
+    if usar_centro==0
+       nueva_altura(h)=min([alturas_izquierda(h) alturas_derecha(h)]);
+    else
+       nueva_altura(h)=alturas_centro(h);
+    end
 end
 
 cabecera=sprintf('      <nodes count=\"%d\">\n        <OnlyOneNodeSelected>1</OnlyOneNodeSelected>\n<LineType>BezierSpline</LineType>\n',length(nueva_altura));

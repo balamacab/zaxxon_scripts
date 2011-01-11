@@ -107,14 +107,17 @@ if numero_padres==0  % Si no hay padre, generamos mapeo.txt. Si no lo hay, usamo
 		fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indiceminlong),y(indiceminlat),minlong,minlat);
 		fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indicemaxlong),y(indicemaxlat),maxlong,maxlat);
 		my_fclose(fid);
-		fid=my_fopen('..\mapeo_utm.txt','w');
+		%fid=my_fopen('..\mapeo_utm.txt','w');
 		%[minlong_utm minlat_utm]=deg2utm(minlat,minlong)
 		%x_utm(indiceminlong),y_utm(indiceminlat)
 		%[maxlong_utm maxlat_utm]=deg2utm(maxlat,maxlong)
 		%x_utm(indicemaxlong),y_utm(indicemaxlat)
-		fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indiceminlong),y(indiceminlat),x_utm(indiceminlong),y_utm(indiceminlat));
-		fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indicemaxlong),y(indicemaxlat),x_utm(indicemaxlong),y_utm(indicemaxlat));
-		my_fclose(fid);
+		%fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indiceminlong),y(indiceminlat),x_utm(indiceminlong),y_utm(indiceminlat));
+		%fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indicemaxlong),y(indicemaxlat),x_utm(indicemaxlong),y_utm(indicemaxlat));
+		%my_fclose(fid);
+		fid=fopen('..\mapeo_uses_longlat.txt','w');
+		fprintf(fid,'This file should exist if mapeo.txt relates BTB coordinates to longitude,latitude. Delete it if uses UTM');
+		fclose(fid);
 	else
 		display('----------------------------------------------------------------------')
 		display('                                                                     -')

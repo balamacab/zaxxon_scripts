@@ -1,6 +1,12 @@
 function message(mcode)
 fflush(stdout);
 
+if (exist('..\..\agr')==7) || (exist('..\..\lidar')==7)
+	modo_agr=1;
+	else
+	modo_agr=0;
+end
+
 [numero_sons caminos]=look_for_father_or_sons('..\sons.txt',1);
 [numero_father caminos]=look_for_father_or_sons('..\father.txt',1);
 if numero_sons>0, 
@@ -46,6 +52,10 @@ display(sprintf('----------------------  Next step  ---------------------- %s',t
 display('-----------------------------------------------------------------')
 display('                                                   short form   -')
 display('                                                                -')
+
+if (modo_agr==1)&&(mcode==1)
+	mcode=2;
+end
 
 switch(mcode)
   case 1, %importakml

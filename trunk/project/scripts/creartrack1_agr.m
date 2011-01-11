@@ -1,4 +1,4 @@
-function creartrack1(usar_centro);
+function creartrack1_agr(usar_centro);
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -19,12 +19,6 @@ if nargin==0
   usar_centro=0;
 end
 
-if (exist('..\..\agr')==7) || (exist('..\..\lidar')==7)
-	creartrack1_agr(usar_centro);
-	return
-end
-
-
 %        <node NodeId="700">
 %          <Position x="1666.922" y="4296.436" z="-3785.737" />
 %          <ControlPoints AngleXZ="-1.997605" AngleY="0.04364966" EntryDistance="5.304023" ExitDistance="0" />
@@ -37,33 +31,61 @@ end
 %         elporcentaje(h)=tree.Anchor(h).StartPercentage  ;
 % end
 
-S=load('..\nac.mat');
-nac=S.nac;
+[numero_padres caminos]=look_for_father_or_sons('..\father.txt');
 
-S=load('..\anchors.mat');
-x=S.x;
-y=S.y;
-z=S.z;
-
-malla=load('lamalla.mat');
-malla.malla_regular=single(malla.malla_regular); %Por si los datos son enteros
-
-if usar_centro==0
-    alturas_derecha=z_interp2(malla.rangox,malla.rangoz,malla.malla_regular,x(1:nac/2),z(1:nac/2));
-    alturas_izquierda=z_interp2(malla.rangox,malla.rangoz,malla.malla_regular,x(nac/2+1:end),z(nac/2+1:end));
-	nueva_altura=zeros(length(alturas_derecha),1);
+if numero_padres==0  
+	[mapeo]=textread('..\mapeo.txt','%f');
 else
-    alturas_centro=z_interp2(malla.rangox,malla.rangoz,malla.malla_regular,0.5*(x(1:nac/2)+x(nac/2+1:end)),0.5*(z(1:nac/2)+z(nac/2+1:end)));
-	nueva_altura=zeros(length(alturas_centro),1);
+	[mapeo]=textread(strcat(caminos(1),'\mapeo.txt'),'%f');
 end
 
 
-for h=1:length(nueva_altura)
-    if usar_centro==0
-       nueva_altura(h)=min([alturas_izquierda(h) alturas_derecha(h)]);
-    else
-       nueva_altura(h)=alturas_centro(h);
+display('Calculamos la altura de la carretera en función de la altura de los anchors de carretera')
+
+S=load('..\nac.mat');
+nac=S.nac;
+
+display('Leyendo la posición de los anchors de lamalla.mat')
+S=load('..\anchors.mat');
+
+if usar_centro==0
+    x=S.x;
+    y=S.y;
+    z=S.z;
+
+    [pos1 pos3 pos2]=BTB_a_coor(x,0,z,mapeo);%Altura es el segundo
+
+    %Los datos LiDAR mantienen las coordenadas originales, así que la carretera hay que pasarla a ese sistema de coordenadas
+    fid=fopen('carretera.txt','w')
+    for h=1:nac
+      fprintf(fid,'%f %f\r\n',pos1(h),pos2(h));
     end
+    fclose(fid);
+
+    alturas=elevar_agr('carretera.txt');
+
+    %No tengo claro que la derecha y la izquierda estén bien escogidas
+    alturas_izquierda=alturas(1:nac/2);
+    alturas_derecha=alturas(nac/2+1:end);
+
+    for h=1:length(alturas_derecha)
+        nueva_altura(h)=min([alturas_izquierda(h) alturas_derecha(h)]);
+    end
+else
+    x=0.5*(S.x(1:nac/2)+S.x(nac/2+1:nac));
+    y=0.5*(S.y(1:nac/2)+S.y(nac/2+1:nac));
+    z=0.5*(S.z(1:nac/2)+S.z(nac/2+1:nac));
+
+    [pos1 pos3 pos2]=BTB_a_coor(x,0,z,mapeo);%Altura es el segundo
+
+    %Los datos LiDAR mantienen las coordenadas originales, así que la carretera hay que pasarla a ese sistema de coordenadas
+    fid=fopen('carretera.txt','w')
+    for h=1:nac
+      fprintf(fid,'%f %f\r\n',pos1(h),pos2(h));
+    end
+    fclose(fid);
+
+    nueva_altura=elevar_lidar('carretera.txt');
 end
 
 cabecera=sprintf('      <nodes count=\"%d\">\n        <OnlyOneNodeSelected>1</OnlyOneNodeSelected>\n<LineType>BezierSpline</LineType>\n',length(nueva_altura));

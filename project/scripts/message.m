@@ -175,9 +175,10 @@ switch(mcode)
           display('Run dar_altura again with more realistic parameters')	
           display('(but before that, consider deleting retoques.txt)')	
     case 22,%procesar_nodostxt
-	
+	      display('(Reading doc/gmsh_threshold.pdf is encouraged)');
+		  display('-');
 		  display('Option 1) accept_mesh  (skips MeshLab step)          a_m');
-	      display('Option 2) simplificar                               simp');
+	      display('Option 2) simplificar (deprecated)                  simp');
     case 23,%accept mesh
 	      display('read_grid                                               ');
 end

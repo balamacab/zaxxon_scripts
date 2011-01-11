@@ -10,8 +10,9 @@ function importakml(ficherokml,optimize_choice,decimate_factor)
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
 invertir_tramo=0; %0 es no invertir el sentido del kml, 1 es invertirlo
+metodo=1;
 
-if (nargin<1) || (ficherokml=='h')
+if (nargin<1) | (ficherokml=='h')
 	disp('Use: importakml(''file.kml''');
 	return;
 end
@@ -30,7 +31,7 @@ if nargin==1
 end
 
 %Por si acaso
-pkg rebuild -auto communications;
+%pkg rebuild -auto communications;
 
 [longitud latitud altura]=leer_datos(ficherokml);
 if length(longitud)<1
@@ -60,7 +61,11 @@ if invertir_tramo==1
 	
 end
 
-[x y nel]=calcoord(longitud,latitud,length(longitud),22);
+if metodo==0
+    [x y nel]=calcoord(longitud,latitud,length(longitud),22);
+else
+    [x y]=deg2utm(latitud,longitud);
+end
 x=x';
 y=y';
 
@@ -73,7 +78,9 @@ distanciao = cumsum([0, sqrt([1 1]*(dfo.*dfo))]);  %La variable es la distancia
 unicos=[1 1+find(diff(distanciao)>0)];
 
 x=x(unicos);
+x_utm=x;
 y=y(unicos);
+y_utm=y;
 altura=altura(unicos);
 longitud=longitud(unicos);
 latitud=latitud(unicos);
@@ -92,16 +99,21 @@ if numero_padres==0  % Si no hay padre, generamos mapeo.txt. Si no lo hay, usamo
 		%Grabo mapeo.txt basado en 
 
 		fid=my_fopen('..\mapeo.txt','w');
-
 		%Esquinas inferior izquierda y superior derecha
 		[minlat indiceminlat]=min(latitud);
 		[minlong indiceminlong]=min(longitud);
 		[maxlat indicemaxlat]=max(latitud);
 		[maxlong indicemaxlong]=max(longitud);
-
 		fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indiceminlong),y(indiceminlat),minlong,minlat);
 		fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indicemaxlong),y(indicemaxlat),maxlong,maxlat);
-
+		my_fclose(fid);
+		fid=my_fopen('..\mapeo_utm.txt','w');
+		%[minlong_utm minlat_utm]=deg2utm(minlat,minlong)
+		%x_utm(indiceminlong),y_utm(indiceminlat)
+		%[maxlong_utm maxlat_utm]=deg2utm(maxlat,maxlong)
+		%x_utm(indicemaxlong),y_utm(indicemaxlat)
+		fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indiceminlong),y(indiceminlat),x_utm(indiceminlong),y_utm(indiceminlat));
+		fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indicemaxlong),y(indicemaxlat),x_utm(indicemaxlong),y_utm(indicemaxlat));
 		my_fclose(fid);
 	else
 		display('----------------------------------------------------------------------')
@@ -317,7 +329,7 @@ ajustex.coefs=[ajustex.coefs(:,:);ajustey.coefs(:,:)];
 ajustex.dim=2;
 %Convertimos el pp al formato octave
 ajuste=convert_pp(ajustex);
-
+end
 
 
 
@@ -328,7 +340,7 @@ npp.n=pp.pieces;
 npp.k=pp.order;
 npp.d=pp.dim;
 npp.P=pp.coefs(:,:);
-
+end
 
 function graba_kml(x,y,mapeo)
 fid=my_fopen('..\s2_elevation\inicio.kml','r');
@@ -348,3 +360,7 @@ for h=1:length(x)
 end
 fwrite(fid,final);			
 my_fclose(fid);
+end
+
+
+end

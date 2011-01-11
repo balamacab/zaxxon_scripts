@@ -77,7 +77,7 @@ try
     longitud_tramo(end+1)=longitud_tramo(end);%Not used, but needed
     display('WARNING! Reading track segments from pos_nodes.txt');
 	display(sprintf('    %d segments found',trozos));
-    pause(5)
+    %pause(5)
 catch
 end
 

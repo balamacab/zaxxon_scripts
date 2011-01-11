@@ -1,4 +1,4 @@
-function procesar_nodostxt(amp_ruido)
+function procesar_nodostxt_agr(amp_ruido)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -31,42 +31,40 @@ else if length(amp_ruido)==1
      end
 end
 
-if (exist('..\..\agr')==7) || (exist('..\..\lidar')==7)
-	procesar_nodostxt_agr(amp_ruido);
-	return
-end
-
-
 [numero x z y]=textread(fichero_entrada,'%d %f %f %f');
 
 %Los nodos no tienen altura, así que hay que cargar los datos de los xml
 %para interpolar la altura en ese punto de la malla
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+[numero_padres caminos]=look_for_father_or_sons('..\father.txt');
 
-%[datax datay dataz]=leerloskml();
-malla=load('lamalla.mat');
-
-try
-    mallaB=load('lamalla2.mat');
-catch
-    display('No se ha encontrado una segunda malla');
+if numero_padres==0  
+	[mapeo]=textread('..\mapeo.txt','%f');
+else
+	[mapeo]=textread(strcat(caminos(1),'\mapeo.txt'),'%f');
 end
 
-
-display('Recalculando altura de anchors próximos a carretera...');
 x_deseados=x;
 z_deseados=z;
-[indices indicesfuera]=comprobar_rangos(malla.rangox,malla.rangoz,x_deseados,z_deseados);
-y(indices)=z_interp2(malla.rangox,malla.rangoz,malla.malla_regular,x_deseados(indices),z_deseados(indices));
-if length(indices)<length(x_deseados) %Si algún dato no ha sido obtenido de la malla principal, tratamos de sacarlo de la secundaria
-	display('Buscando alturas para datos que caen fuera del mallado rectangular principal. Se usará ''lamalla2.mat''');
-	indices=indicesfuera;
-	y(indices)=z_interp2(mallaB.rangox,mallaB.rangoz,mallaB.malla_regular,x_deseados(indices),z_deseados(indices));
-end
 
-y=double(y);
+[pos1 pos3 pos2]=BTB_a_coor(x_deseados,0,z_deseados,mapeo);%Altura es el segundo
+
+%Los datos LiDAR mantienen las coordenadas originales, así que hay que pasar los datos a ese sistema de coordenadas
+fid=fopen('deseados.txt','w');
+
+tamanyo=length(numero);
+for h=1:tamanyo
+  fprintf(fid,'%f %f\r\n',pos1(h),pos2(h));
+end
+fclose(fid);
+
+y=elevar_agr('deseados.txt')';
+if length(y)!=tamanyo
+    display('ERROR FOUND');
+	display('ERROR FOUND');
+	return
+end
 
 if find(isnan(y)==1)
     display('SOME POINTS OF THE MESH WILL HAVE A WRONG ALTITUDE. CHECK THAT YOUR MESH DOESN''T EXCEED AVAILABLE DATA');
@@ -80,9 +78,6 @@ try
 catch
 	display('...')
 end
-
-tamanyo=length(numero);
-
 
 datan=[(1:tamanyo)' x y z];
 data=[x y z];
@@ -110,7 +105,7 @@ m=size(datan);
 datan=reshape(datan',1,m(1)*m(2),1);
 
 
-fid=my_fopen('prueba.geo','w')
+fid=my_fopen('prueba.geo','w');
 fprintf(fid,'       Point(%d) = {%f, %f, %f, 1};\n',datan);
 my_fclose(fid);
 
@@ -119,11 +114,8 @@ datay=y;
 dataz=z;
 save('salida\anchors_originales.mat','datax','datay','dataz');
 
-
-msh_to_obj('salida\nodos_conaltura.txt','elements.txt')
+msh_to_obj('salida\nodos_conaltura.txt','elements.txt');
 message(22)
-
-
 
 
 function [indices indicesfuera]=comprobar_rangos(rangox,rangoz,x,z)

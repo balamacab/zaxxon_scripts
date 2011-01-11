@@ -1,4 +1,4 @@
-function accept_mesh()
+function accept_mesh_agr()
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -19,11 +19,6 @@ if nargin>1
 end
 if nargin==0
 	usando_plywrite=0;
-end
-
-if (exist('..\..\agr')==7) || (exist('..\..\lidar')==7)
-	accept_mesh_agr();
-	return
 end
 
 display('Leyendo datos entrada (nac.mat y salida\anchors_originales.mat)')
@@ -105,6 +100,20 @@ z=[z_izquierda z_derecha];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+%Les damos altura
+[mapeo]=textread('..\mapeo.txt','%f');
+[pos1 pos3 pos2]=BTB_a_coor(x,0,z,mapeo);%Altura es el segundo
+fidy=fopen('deseados.txt','w')
+tamanyo=length(x);
+for h=1:tamanyo
+  fprintf(fid,'%f %f\r\n',pos1(h),pos2(h));
+end
+fclose(fidy);
+
+y=elevar_agr('deseados.txt')';
+y=reshape(y,size(x));
 
 nodos_finales=[x;y;z]'; %Punto de partida
 

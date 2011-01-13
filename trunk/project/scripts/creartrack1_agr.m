@@ -47,11 +47,11 @@ nac=S.nac;
 
 display('Leyendo la posición de los anchors de lamalla.mat')
 S=load('..\anchors.mat');
-
+x=S.x;
+y=S.y;
+z=S.z;
 if usar_centro==0
-    x=S.x;
-    y=S.y;
-    z=S.z;
+
 
     [pos1 pos3 pos2]=BTB_a_coor(x,0,z,mapeo);%Altura es el segundo
 
@@ -72,20 +72,20 @@ if usar_centro==0
         nueva_altura(h)=min([alturas_izquierda(h) alturas_derecha(h)]);
     end
 else
-    x=0.5*(S.x(1:nac/2)+S.x(nac/2+1:nac));
-    y=0.5*(S.y(1:nac/2)+S.y(nac/2+1:nac));
-    z=0.5*(S.z(1:nac/2)+S.z(nac/2+1:nac));
+    xc=0.5*(S.x(1:nac/2)+S.x(nac/2+1:nac));
+    yc=0.5*(S.y(1:nac/2)+S.y(nac/2+1:nac));
+    zc=0.5*(S.z(1:nac/2)+S.z(nac/2+1:nac));
 
-    [pos1 pos3 pos2]=BTB_a_coor(x,0,z,mapeo);%Altura es el segundo
+    [pos1 pos3 pos2]=BTB_a_coor(xc,0,zc,mapeo);%Altura es el segundo
 
     %Los datos LiDAR mantienen las coordenadas originales, así que la carretera hay que pasarla a ese sistema de coordenadas
     fid=fopen('carretera.txt','w')
-    for h=1:nac
+    for h=1:nac/2
       fprintf(fid,'%f %f\r\n',pos1(h),pos2(h));
     end
     fclose(fid);
 
-    nueva_altura=elevar_lidar('carretera.txt');
+    nueva_altura=elevar_agr('carretera.txt');
 end
 
 cabecera=sprintf('      <nodes count=\"%d\">\n        <OnlyOneNodeSelected>1</OnlyOneNodeSelected>\n<LineType>BezierSpline</LineType>\n',length(nueva_altura));
@@ -95,6 +95,7 @@ fid=my_fopen('salida\t1.txt','w')
 fprintf(fid,cabecera);
 angulo=0;
 anguloy=0;
+
 for h=1:length(nueva_altura)
     if mod(h,100)==0
         mensaje=sprintf('%.2f\n',h/length(nueva_altura));

@@ -50,6 +50,21 @@ if exist(char(camino))
             contador=contador+1;
         end
     end
+	%Leer xmls
+	[errores,filename]=system(sprintf('dir %s\\*.xml /b',camino));
+    ficheros=strsplit(filename,strcat(char(13),char(10)));
+    for h=1:length(ficheros)
+        file_name=deblank(char(ficheros(h)));
+        if length(file_name)>0
+            file_name=canonicalize_file_name(strcat(camino,filesep(),file_name));
+            if contador==1
+                caminos=cellstr(file_name);
+            else
+                caminos(contador)=file_name;
+            end
+            contador=contador+1;
+        end
+    end
     ficheros=caminos;
 	num_files=length(caminos);
 	copiar_kmls=1;
@@ -75,8 +90,16 @@ for h=1:num_files
 	mkdir(basedir);
 	system(sprintf('xcopy default_son_files\\*.* %s /E /Y',basedir));
 	if copiar_kmls==1
-        comando=sprintf('copy %s %s\\s0_import\\ /Y',char(ficheros(h)),basedir);
-		system(comando);
+		if length(findstr(tolower(char(ficheros(h))),'.kml')>0)
+			comando=sprintf('copy %s %s\\s0_import\\ /Y',char(ficheros(h)),basedir);
+			system(comando);
+		end
+		if length(findstr(tolower(char(ficheros(h))),'.xml')>0)
+			comando=sprintf('copy %s %s\\ /Y',char(ficheros(h)),basedir);
+			system(comando);
+			comando=sprintf('copy %s %s\\Venue\\nodes.xml /Y',char(ficheros(h)),basedir);
+			system(comando);
+		end
 	end
 	fids=fopen(sprintf('%s\\father.txt',basedir),'w');
 	fprintf(fids,'%s\n',actual);

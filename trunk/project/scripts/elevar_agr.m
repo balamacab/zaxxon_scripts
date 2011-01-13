@@ -91,21 +91,21 @@ function alturas=elevar_agr(fichero_puntos)
 		for h=1:length(ficheros)
 			file_name=deblank(char(ficheros(h)));
 			if length(file_name)>0
-				comando=sprintf('c:\\FUSION\\SurfaceSample /noheader ..\\..\\lidar\\%s %s c%03d.txt',file_name,fichero_puntos,contador);
+				comando=sprintf('c:\\FUSION\\SurfaceSample /noheader ..\\..\\lidar\\%s %s temp.txt',file_name,fichero_puntos);
 				system(comando);		
 			
-				fid=fopen(sprintf('c%03d.txt',contador),'r');
+				fid=fopen('temp.txt','r');
 				data=fscanf(fid,'%f,%f,%f ');
 				fclose(fid); 
 				alturas1=data(3:3:end);
 				alturas1(find(alturas1==-1))=0;
+				%alturas1=0.30479999798832*alturas1;
 				if contador==1
 					alturas=alturas1;
 					contador=contador+1;
 				else
 					%Nos aseguramos de no volver a sumar altura al mismo punto
 					ya_conseguidos=find(alturas!=0);
-					alturas1(ya_conseguidos)=0;
 					alturas=alturas+alturas1;
 				end	
 			

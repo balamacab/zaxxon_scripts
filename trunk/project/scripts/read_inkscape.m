@@ -37,59 +37,94 @@ pos_path=findstr('<path',contenido);
 for g=1:length(pos_path)
 	final_path=findstr('/>',contenido(pos_path(g):end));
 	fragmento_path=contenido(pos_path(g):final_path(1)+pos_path(g)-1);
+	ini_width=findstr(fragmento_path,'stroke-width:');
+	ancho=sscanf(fragmento_path(ini_width+length('stroke-width:'):end),'%f');
     ini_id=findstr('id="',fragmento_path);
     fin_id=findstr('"',fragmento_path(ini_id+4:end));
 	fin_id=fin_id(1);
 	id_path=fragmento_path(ini_id+4:(ini_id+fin_id+2));
-	display(sprintf('Processing %s',id_path));
-	%Sacamos los datos del path##########################################
-	pos_datos=findstr('d="M ',fragmento_path);
-	if length(pos_datos)<1
-		display('The following path has mistakes. It must have absolute coordinates (M, not m)');
-		display(id_path);
-	else
-		ini_datos=pos_datos(1);
+	ini_nodetypes=findstr(fragmento_path,'sodipodi:nodetypes="');
+	fin_nodetypes=findstr('"',fragmento_path(ini_nodetypes+length('sodipodi:nodetypes="'):end));
+	nodetypes=fragmento_path(ini_nodetypes+length('sodipodi:nodetypes="'):(ini_nodetypes+length('sodipodi:nodetypes="')+fin_nodetypes-2));
+	nodetypes=deblank(nodetypes);
+	%display(sprintf('%d',length(nodetypes)))
+	aceptable=1;
 	
-		fragmento_path=fragmento_path(ini_datos+3:end);
-		pos_datos=findstr('"',fragmento_path);
-		fin_datos=pos_datos(1);
-
-		fragmento_path=fragmento_path(1:fin_datos-1);
-
-		posM=findstr('M',fragmento_path);
+	if length(nodetypes(2:end-1))!=(length(findstr('s',nodetypes(2:end-1))))
+		aceptable=0;
+		%display(sprintf('%s %d %d', nodetypes,length(nodetypes(2:end-1)), length(findstr('s',nodetypes(2:end-1)))))
+		%display('-')
+	end
+	if aceptable==1
+		display(sprintf('Processing %s (width %.1f)',id_path,ancho));
+		%Sacamos los datos del path##########################################
+		pos_datos=findstr('d="M ',fragmento_path);
+		if length(pos_datos)<1
+			display('The following path has mistakes. It must have absolute coordinates (M, not m)');
+			display(id_path);
+		else
+			ini_datos=pos_datos(1);
 		
+			fragmento_path=fragmento_path(ini_datos+3:end);
+			pos_datos=findstr('"',fragmento_path);
+			fin_datos=pos_datos(1);
 
-		posM=[posM length(fragmento_path)+1];
+			fragmento_path=fragmento_path(1:fin_datos-1);
 
-		for h=1:length(posM)-1
-			inicio=posM(h)+1;
-			fin=posM(h+1)-1;
-			cadena=strrep(fragmento_path(inicio:fin),'C',' ');
-			coordenadas=sscanf(cadena,'%f,%f ',inf);
-			longitud_x=coordenadas(1:2:end);
-			latitud_y=coordenadas(2:2:end);
-			normalizada_long=(longitud_x-image_x)/image_width;
-			normalizada_lat=1-(latitud_y-image_y)/image_height;
-			[mapeo]=textread('mapeo.txt','%f');
+			posM=findstr('M',fragmento_path);
 			
-			longitud=esquina1(1)+normalizada_long*(esquina2(1)-esquina1(1));
-			latitud=esquina1(2)+normalizada_lat*(esquina2(2)-esquina1(2));
-			
-			[lax nada laz]=coor_a_BTB(longitud,latitud,0,mapeo);
-			hold on, plot(lax(1:3:end),laz(1:3:end))
-			
-			if length(lax(1:3:end-3))<2
-			    display('ERROR: this track has less than 3 nodes')
-			else
-			    imprime_track(sprintf('%s.xml',id_path),[lax(1:3:end-3) laz(1:3:end-3)]',[lax(2:3:end-2) laz(2:3:end-2)]' ,[lax(3:3:end-1) laz(3:3:end-1)]',[lax(4:3:end) laz(4:3:end)]',zeros(length(lax)+1,1),zeros(length(lax)+1,1));
+
+			posM=[posM length(fragmento_path)+1];
+
+			for h=1:length(posM)-1
+				inicio=posM(h)+1;
+				fin=posM(h+1)-1;
+				cadena=strrep(fragmento_path(inicio:fin),'C',' ');
+				coordenadas=sscanf(cadena,'%f,%f ',inf);
+				longitud_x=coordenadas(1:2:end);
+				latitud_y=coordenadas(2:2:end);
+				normalizada_long=(longitud_x-image_x)/image_width;
+				normalizada_lat=1-(latitud_y-image_y)/image_height;
+				[mapeo]=textread('mapeo.txt','%f');
+				
+				longitud=esquina1(1)+normalizada_long*(esquina2(1)-esquina1(1));
+				latitud=esquina1(2)+normalizada_lat*(esquina2(2)-esquina1(2));
+				
+				[lax nada laz]=coor_a_BTB(longitud,latitud,0,mapeo);
+				
+				distancias_salida=sqrt(sum(([lax(1:3:end-3) laz(1:3:end-3)]-[lax(2:3:end-2) laz(2:3:end-2)]).^2,2));
+				distancias_entrada=sqrt(sum(([lax(3:3:end-1) laz(3:3:end-1)]-[lax(4:3:end) laz(4:3:end)]).^2,2));
+				media=0.5*(mean(distancias_salida)+mean(distancias_entrada));
+				%Si un punto de control tiene una longitud menor que el 15% de la longitud media, alertamos del problema
+				[ind_salida]=find(distancias_salida<0.15*media);
+				[ind_entrada]=find(distancias_entrada<0.15*media);
+				if length(ind_salida)>0
+					for t=1:length(ind_salida)
+						display(sprintf('   Check control points of node %d. One of them is too short',ind_salida(t)));
+					end
+				end
+				if length(ind_entrada)>0
+					for t=1:length(ind_entrada)
+						display(sprintf('   Check control points of node %d. One of them is too short',ind_entrada(t)+1));
+					end
+				end
+				
+				if length(lax(1:3:end-3))<2
+					display('ERROR: this track has less than 3 nodes')
+				else
+					imprime_track(sprintf('%s.xml',id_path),[lax(1:3:end-3) laz(1:3:end-3)]',[lax(2:3:end-2) laz(2:3:end-2)]' ,[lax(3:3:end-1) laz(3:3:end-1)]',[lax(4:3:end) laz(4:3:end)]',zeros(length(lax)+1,1),zeros(length(lax)+1,1));
+					hold on, plot(lax(1:3:end),laz(1:3:end))
+				end
 			end
 		end
+	else
+		display(sprintf('%s has nodes not smoothed (ignore start and end nodes). Fix it and try again',id_path));
 	end
 end
 	
 function imprime_track(nombre,controlA,controlB,controlC,controlD,alturas_nodos,angulover)
 	
-	fid=my_fopen(nombre,'w');
+	fid=fopen(nombre,'w');
 	fprintf(fid,'      <nodes count=\"%d\">\n        %s\n        %s\n',length(controlA)+1,'<OnlyOneNodeSelected>1</OnlyOneNodeSelected>','<LineType>BezierSpline</LineType>');
 	for h=1:length(controlA)+1
 		altura=alturas_nodos(h);
@@ -115,7 +150,7 @@ function imprime_track(nombre,controlA,controlB,controlC,controlD,alturas_nodos,
 
 	end
     fprintf(fid,'      </nodes>');
-    my_fclose(fid);
+    fclose(fid);
 end
 
 

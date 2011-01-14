@@ -8,7 +8,7 @@ If (1)
   Field[2].LcMax = 2000;
   Field[2].DistMin = 1;
   Field[2].DistMax = 10000;
-  Field[].StopAtDistMax = 0;
+  Field[2].StopAtDistMax = 0;
   Mesh.CharacteristicLengthExtendFromBoundary = 0;
   Background Field=2;
 EndIf

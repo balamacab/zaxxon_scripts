@@ -30,4 +30,7 @@ fid=my_fopen('salida\joined.geo','w')
 fprintf(fid,'%s',cadena);
 my_fclose(fid);
 
+%Si es multiproyecto los thresholds se anyaden en join_geos, pero si es un solo track se hace en mallado_regular
+make_thresholds_active('salida\joined.geo');
+
 message(19);

@@ -63,7 +63,7 @@ end
 %Si no es un hijo, insertamos el Field
 insertar=0;
 %if strcmp(tipo,'SON')==0, insertar=1; end;
-inserta_field(fid,longitud,insertar);
+%inserta_field(fid,longitud,insertar);
 
 grabar_puntos(fid_kml,x(1:longitud/2),z(1:longitud/2));
 grabar_puntos(fid_kml,x(longitud/2+1:end),z(longitud/2+1:end));
@@ -247,6 +247,12 @@ my_fclose(fid2)
 
 cerrar_kml(fid_kml);
 my_fclose(fid_kml);
+
+%Si solo hay un track, metemos los thresholds en el propio anchors_carretera.geo
+if strcmp(tipo,'NORMAL')==1 
+	make_thresholds_active('salida\anchors_carretera.geo');
+end
+
 message(18);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

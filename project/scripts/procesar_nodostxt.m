@@ -110,9 +110,9 @@ m=size(datan);
 datan=reshape(datan',1,m(1)*m(2),1);
 
 
-fid=my_fopen('prueba.geo','w')
-fprintf(fid,'       Point(%d) = {%f, %f, %f, 1};\n',datan);
-my_fclose(fid);
+%fid=my_fopen('prueba.geo','w')
+%fprintf(fid,'       Point(%d) = {%f, %f, %f, 1};\n',datan);
+%my_fclose(fid);
 
 datax=x;
 datay=y;

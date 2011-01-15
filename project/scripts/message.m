@@ -101,7 +101,7 @@ switch(mcode)
 
   case 6, %dar_altura
           display('cd ..\Venue                                        gv');
-	  display(sprintf('btb06(%.1f)',ancho));
+          display(sprintf('btb06  (no parameter needed)                     btb06',ancho));
 
   case 7, %trocear_malla 
           display('cd ..\s4_terrain                                    gs4');

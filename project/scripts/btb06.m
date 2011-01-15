@@ -9,10 +9,9 @@ function btb06(ancho_track,force_new_anchors,panel_length)
 % 
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
-if nargin<1
-  display('Usage: btb06(track_width)');
-  display('(track_width will be used by mallado_regular for creating the mesh)')
-  return;
+if nargin==0
+    force_new_anchors=0;
+	panel_length=5;
 end
 if nargin==1
 	force_new_anchors=0;
@@ -21,8 +20,6 @@ end
 if nargin==2
 	panel_length=5;
 end
-
-ancho_track=ancho_track/2;
 
 leer_nodos('nodes.xml','nodos.mat');
 %Con el comando anterior regeneramos la carretera. Para evitar problemas de compatibilidad, solo regeneramos anchors
@@ -34,6 +31,7 @@ if (exist('porcentajes.mat')==2) & (force_new_anchors==0)
 	return;
 end
 
+ancho_track=ancho_track/2;
 
 S=load('nodos.mat');
 numnodos=length(S.tree);

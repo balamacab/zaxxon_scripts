@@ -3,7 +3,7 @@ If (1)
   Field[1] = Attractor;
   Field[1].NodesList = {1:(newp-1)};
   Field[2] = Threshold;
-  Field[2].IField = offsetp+1;
+  Field[2].IField = 1;
   Field[2].LcMin = 20;
   Field[2].LcMax = 2000;
   Field[2].DistMin = 1;

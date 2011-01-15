@@ -2,8 +2,8 @@ function join_geos()
 
 [numero_sons caminos]=look_for_father_or_sons('..\sons.txt');
 
-fid=my_fopen('salida\anchors_carretera.geo','r')
-fid2=my_fopen('salida\phys111.txt','r')
+fid=my_fopen('salida\anchors_carretera.geo','r');
+fid2=my_fopen('salida\phys111.txt','r');
 contenido=fread(fid,Inf); 
 cadena=char(contenido)';
 contenido2=fread(fid2,Inf); 
@@ -26,7 +26,7 @@ end
 
 cadena=strcat(char(10),char(13),cadena,char(10),char(13),cadena2,'};',char(10),char(13),'//******************* END OF JOINED .GEO FILES **************************',char(10),char(13));
 
-fid=my_fopen('salida\joined.geo','w')
+fid=my_fopen('salida\joined.geo','w');
 fprintf(fid,'%s',cadena);
 my_fclose(fid);
 

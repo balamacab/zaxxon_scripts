@@ -1,2 +1,4 @@
 function gs10()
 cd ..\s10_split
+cd ..
+cd s10_split

@@ -16,7 +16,7 @@ function alturas=elevar_agr(fichero_puntos)
 			[coo_x coo_z]=deg2utm(coo_z,coo_x);
 		end
 		contador=1;
-		
+		alturas=[];
 		for h=1:length(ficheros)
 			file_name=deblank(char(ficheros(h)));
 			if length(file_name)>0
@@ -31,10 +31,23 @@ function alturas=elevar_agr(fichero_puntos)
 				ncols=sscanf(contenido((pos_ncols+length('ncols')+1):end),'%d',1);
 				pos_nrows=findstr(contenido,'nrows');
 				nrows=sscanf(contenido((pos_nrows+length('nrows')+1):end),'%d',1);
-				pos_yllcorner=findstr(contenido,'yllcorner');
-				yllcorner=sscanf(contenido((pos_yllcorner+length('yllcorner')+1):end),'%f',1);
+				
+				pos_yllcorner=strfind(contenido,'yllcorner');
+				if length(pos_yllcorner)>0
+					yllcorner=sscanf(contenido((pos_yllcorner+length('yllcorner')+1):end),'%f',1);
+				end
 				pos_xllcorner=findstr(contenido,'xllcorner');
-				xllcorner=sscanf(contenido((pos_xllcorner+length('xllcorner')+1):end),'%f',1);
+				if length(pos_xllcorner)>0
+					xllcorner=sscanf(contenido((pos_xllcorner+length('xllcorner')+1):end),'%f',1);
+				end
+				pos_yllcenter=strfind(contenido,'yllcenter');
+				if length(pos_yllcenter)>0
+					yllcenter=sscanf(contenido((pos_yllcenter+length('yllcenter')+1):end),'%f',1);
+				end
+				pos_xllcenter=findstr(contenido,'xllcenter');
+				if length(pos_xllcenter)>0
+					xllcenter=sscanf(contenido((pos_xllcenter+length('xllcenter')+1):end),'%f',1);
+				end
 				pos_cellsize=findstr(contenido,'cellsize');
 				cellsize=sscanf(contenido((pos_cellsize+length('cellsize')+1):end),'%f',1);
 				pos_nodata=findstr(contenido,'nodata_value');
@@ -46,8 +59,14 @@ function alturas=elevar_agr(fichero_puntos)
 				%
 				x_deseados=coo_x;
 				z_deseados=coo_z;
-				malla.rangox=xllcorner+cellsize*(0:(ncols-1));
-				malla.rangoz=yllcorner+cellsize*(0:(nrows-1));
+				
+				if length(pos_xllcorner)>0
+					malla.rangox=xllcorner+cellsize*(0:(ncols-1));
+					malla.rangoz=yllcorner+cellsize*(0:(nrows-1));
+				else
+					malla.rangox=xllcenter+cellsize*(0:(ncols-1))-cellsize*(ncols-1)/2;
+					malla.rangoz=yllcenter+cellsize*(0:(nrows-1))-cellsize*(nrows-1)/2;
+				end
 				malla.malla_regular=flipud(reshape(datos,ncols,nrows)');
 				
 				%if h==3
@@ -73,6 +92,9 @@ function alturas=elevar_agr(fichero_puntos)
 			end
 		end
 		alturas=alturas';
+		if length(alturas)==0
+			display('ERROR: Those AGR files do not contain useful elevation data');
+		end
 	end
 	
 	[errores,filename]=system('dir ..\..\lidar\*.dtm /b');
@@ -124,3 +146,9 @@ function [indices indicesfuera]=comprobar_rangos(rangox,rangoz,x,z)
 dentrodelrango=(x>=min(rangox)).*(x<=max(rangox)).*(z>=min(rangoz)).*(z<=max(rangoz));
 indices=find(dentrodelrango==1);
 indicesfuera=find(dentrodelrango==0);
+
+end
+
+
+   
+

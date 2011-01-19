@@ -63,7 +63,9 @@ if usar_centro==0
     fclose(fid);
 
     alturas=elevar_agr('carretera.txt');
-
+	if length(alturas)==0
+		return
+	end
     %No tengo claro que la derecha y la izquierda estén bien escogidas
     alturas_izquierda=alturas(1:nac/2);
     alturas_derecha=alturas(nac/2+1:end);

@@ -61,11 +61,11 @@ function alturas=elevar_agr(fichero_puntos)
 				z_deseados=coo_z;
 				
 				if length(pos_xllcorner)>0
-					malla.rangox=xllcorner+cellsize*(0:(ncols-1));
-					malla.rangoz=yllcorner+cellsize*(0:(nrows-1));
+					malla.rangox=xllcorner+cellsize*(0:(ncols-1))+cellsize/2;
+					malla.rangoz=yllcorner+cellsize*(0:(nrows-1))+cellsize/2;
 				else
-					malla.rangox=xllcenter+cellsize*(0:(ncols-1))-cellsize*(ncols-1)/2;
-					malla.rangoz=yllcenter+cellsize*(0:(nrows-1))-cellsize*(nrows-1)/2;
+					malla.rangox=xllcenter+cellsize*(0:(ncols-1));
+					malla.rangoz=yllcenter+cellsize*(0:(nrows-1));
 				end
 				malla.malla_regular=flipud(reshape(datos,ncols,nrows)');
 				

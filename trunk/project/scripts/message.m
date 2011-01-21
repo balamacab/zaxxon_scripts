@@ -195,6 +195,8 @@ end
 display('                                                                -')
 display('-----------------------------------------------------------------')
 
+%[error, mensaje_pantalla]=system('svn st -u');if length(findstr(mensaje_pantalla,'*'))>0, display('Update your scripts');end
+
 if (numero_sons>0) & (numero_father>0)
 	display('WARNING: You have both father.txt and sons.txt on the root folder of this track. Remove one of them');
 end

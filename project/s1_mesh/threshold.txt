@@ -10,6 +10,7 @@ If (1)
   Field[2].DistMax = 10000;
   Field[2].StopAtDistMax = 0;
   Mesh.CharacteristicLengthExtendFromBoundary = 0;
+  Mesh.CharacteristicLengthFromPoints =0;
   Background Field=2;
 EndIf
 

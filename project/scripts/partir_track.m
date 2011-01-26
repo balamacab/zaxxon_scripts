@@ -106,6 +106,8 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Cambiamos el ancho de los tracks
 cambiar_anchos()
+%Cambiar panel spacing
+cambiar_spacing()
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Cambiamos la numeración de los nodos
@@ -212,6 +214,22 @@ fclose(fid);
 cadena=char(contents)';
 cadena=strrep(cadena,'<WidthMultiplier>1</WidthMultiplier>',sprintf('<WidthMultiplier>%.2f</WidthMultiplier>',ancho/10));
 fid=fopen('track_middle_b.txt','w');
+fprintf(fid,'%s',cadena);
+fclose(fid);
+end
+
+function cambiar_spacing()
+distribucion=get_option('LINEAR','%d');
+fid=fopen('track_start.txt','r');
+contents=fread(fid,inf);
+fclose(fid);
+cadena=char(contents)';
+if distribucion==0 %0 quiere decir NonLinear
+	cadena=strrep(cadena,'<PanelSpacingType>Linear</PanelSpacingType>','<PanelSpacingType>NonLinear</PanelSpacingType>');
+else
+	cadena=strrep(cadena,'<PanelSpacingType>NonLinear</PanelSpacingType>','<PanelSpacingType>Linear</PanelSpacingType>');
+end
+fid=fopen('track_start.txt','w');
 fprintf(fid,'%s',cadena);
 fclose(fid);
 end

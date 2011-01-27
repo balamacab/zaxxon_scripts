@@ -13,3 +13,4 @@ contenido=char(contenido)';
 
 pos_option=findstr(contenido,nombre);
 value=sscanf(contenido((pos_option+length(nombre)+1):end),tipo,1);
+fclose(fid);

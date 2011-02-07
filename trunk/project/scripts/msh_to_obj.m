@@ -11,17 +11,17 @@ while (feof(fid)!=1)
 		tipo=todo(2);
 		if (tipo==2) || (tipo==3)
 			numtags=todo(3);
-			lostags=fscanf(fid,'%d',numtags)
+			lostags=fscanf(fid,'%d',numtags);
 			id_superficie(contador)=lostags(1);
 			id_particular(contador)=lostags(2);
 			if tipo==2 %Triang
-				datos=fscanf(fid,'%d %d %d\n',3)
+				datos=fscanf(fid,'%d %d %d\n',3);
 				n1(contador)=datos(1);
 				n2(contador)=datos(2);
 				n3(contador)=datos(3);
 				n4(contador)=-1;
 			elseif tipo==3
-				datos=fscanf(fid,'%d %d %d %d\n',4)
+				datos=fscanf(fid,'%d %d %d %d\n',4);
 				n1(contador)=datos(1);
 				n2(contador)=datos(2);
 				n3(contador)=datos(3);
@@ -41,7 +41,7 @@ n3=n3(orden);
 n4=n4(orden);
 id_particular=id_particular(orden);
 
-		fprintf(fid_w,'v %f %f %f\r\n',[x y -z]')
+		fprintf(fid_w,'v %f %f %f\r\n',[x y -z]');
 		
 		for g=1:length(x)
 			fprintf(fid_w,'vn 0 1 0\r\n');

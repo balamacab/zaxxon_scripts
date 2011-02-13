@@ -7,6 +7,8 @@ You will see it shows only a few of the possibilities shown in "Basics_poster.pp
 "Starting a project.pdf" shows another way of starting a project, showing also a way of working 
 with bad elevation data.
 
+More files you can find inside the documentatin folder:
+
 - "Getting satellite images for your terrain.pdf": it is easy to include satellite images as 
     background images in your BTB project. Learn how to do it
 	

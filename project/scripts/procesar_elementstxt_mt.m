@@ -15,6 +15,7 @@ if nargin==0
    partes_x=10;
    partes_z=10;
    mapear=0;
+   conunion=1;
 end
 
 if nargin==3

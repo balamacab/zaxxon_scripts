@@ -10,6 +10,7 @@ for h=1:length(ficheros)
 		cumplen=sum(altura<=offset);
 		if cumplen>0
 			display(sprintf('------------------ %s has points with elevation below %f',ficherokml,offset));
+			pause
 		end
 	end
 end	

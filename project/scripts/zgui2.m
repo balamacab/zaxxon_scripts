@@ -62,47 +62,28 @@ buts10_createterrain = gtk(in,out,"gtk_button_new_with_label 'Create the terrain
 s10_pb_createterrain = gtk(in,out,"gtk_progress_bar_new ");
 drops10X = gtk(in,out,"gtk_combo_box_new_text '");
 drops10Y = gtk(in,out,"gtk_combo_box_new_text '");
+lbls10split = gtk(in,out,"gtk_label_new '# segments:'");gtk(in,out,["gtk_misc_set_alignment ",lbls10split,"0 0.5"]);
+s10_split = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",s10_split,"1"]);gtk(in,out,["gtk_entry_set_width_chars ",s10_split,'3']);
 s10_blend = gtk(in,out,["gtk_check_button_new_with_label 'Blend with\nBackground' 1"]);
 hseps2bs3 = gtk(in,out,"gtk_hseparator_new");
 lbls10_grid = gtk(in,out,"gtk_label_new 'Split terrain\nwith grid:'");gtk(in,out,["gtk_misc_set_alignment ",lbls10_grid,"1 0.5"]);
+lbls10_distancia=gtk(in,out,"gtk_label_new 'Split terrain\nwith grid:'");gtk(in,out,["gtk_misc_set_alignment ",lbls10_distancia,"1 0.5"]);
 for h=1:16
 	gtk(in,out,["gtk_combo_box_append_text ", drops10X, "\"" ,	sprintf('%d',h) , "\""]);
 	gtk(in,out,["gtk_combo_box_append_text ", drops10Y, "\"" ,	sprintf('%d',h) , "\""]);
 end
-%inicializa_s10(in,out,buts2b_makegrid,buts2b_raisekml,buts2b_readgrid,buts2b_plotlamalla,lbls2blimits,'s2_elevation_b','limits_b.kml')
+%gtk(in,out,["gtk_combo_box_set_wrap_width  ",drops10split, " \" 2\""]);
 
-buts3_refresh = gtk(in,out,"gtk_button_new_from_stock 'gtk-refresh'");
-lbls3 = gtk(in,out,"gtk_label_new s3_road");
-buts3_readdata = gtk(in,out,"gtk_button_new_with_label 'Read Elevation Data'");
-buts3_createprofile = gtk(in,out,"gtk_button_new_with_label 'Create Elevation Profile'");
-buts3_consolidate = gtk(in,out,"gtk_button_new_with_label 'Consolidate'");
-buts3_fixterrain = gtk(in,out,"gtk_button_new_with_label 'Fix terrain (opt)'");
-buts3_removeretoques = gtk(in,out,"gtk_button_new_with_label 'Remove hand-fixes'");
-s3_pb_readdata = gtk(in,out,"gtk_progress_bar_new ");
-s3_pb_consolidate = gtk(in,out,"gtk_progress_bar_new ");
-s3_usecenter = gtk(in,out,["gtk_check_button_new_with_label 'Use\ncenterline' 0"]);
-lbls3smooth1 = gtk(in,out,"gtk_label_new 'Smooth\nFactor:'");gtk(in,out,["gtk_misc_set_alignment ",lbls3smooth1,"0 0.5"]);
-s3_smoothfactor = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",s3_smoothfactor,"15"]);gtk(in,out,["gtk_entry_set_width_chars ",s3_smoothfactor,'3']);
-lbls3_slopelimit = gtk(in,out,"gtk_label_new 'Slope\nlimit:'");gtk(in,out,["gtk_misc_set_alignment ",lbls3_slopelimit,"0 0.5"]);
-s3_slopelimit= gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",s3_slopelimit,"0.25"]);gtk(in,out,["gtk_entry_set_width_chars ",s3_slopelimit,'5']);
-hseps3s1= gtk(in,out,"gtk_hseparator_new");
+inicializa_s10(in,out,buts10_createsplit,buts10_splittrack,buts10_createterrain,lbls10_distancia)
 
-inicializa_s3(in,out,buts3_readdata,buts3_createprofile,buts3_fixterrain,buts3_consolidate);
+lbls9 = gtk(in,out,"gtk_label_new s9_join");
+buts9_refresh = gtk(in,out,"gtk_button_new_from_stock 'gtk-refresh'");
+buts9_joinall = gtk(in,out,"gtk_button_new_with_label 'Create Venue.xml'");
+s9_pb_joinall = gtk(in,out,"gtk_progress_bar_new ");
+%s9_includebg = gtk(in,out,["gtk_check_button_new_with_label 'Include\nlist_bi.txt' 1"]);
+hseps9end= gtk(in,out,"gtk_hseparator_new");
 
-buts1_refresh = gtk(in,out,"gtk_button_new_from_stock 'gtk-refresh'");
-lbls1 = gtk(in,out,"gtk_label_new s1_mesh");
-lbls1width = gtk(in,out,"gtk_label_new 'Width (m):'");gtk(in,out,["gtk_misc_set_alignment ",lbls1width,"0 0.5"]);
-widths1 = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",widths1,"20"]);gtk(in,out,["gtk_entry_set_width_chars ",widths1,'3']);
-lbls1panels = gtk(in,out,"gtk_label_new 'Panels:'");gtk(in,out,["gtk_misc_set_alignment ",lbls1panels,"0 0.5"]);
-panelss1 = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",panelss1,"5"]);;gtk(in,out,["gtk_entry_set_width_chars ",panelss1,'3']);
-buts1 = gtk(in,out,"gtk_button_new_with_label 'Create .geo'");
-hseps1fin= gtk(in,out,"gtk_hseparator_new");
-s1_regular = gtk(in,out,["gtk_check_button_new_with_label 'Force\nregular' 0"]);
-s1_includelimits = gtk(in,out,["gtk_check_button_new_with_label 'Include\nElevation Limits' 1"]);
-gtk(in,out,["gtk_toggle_button_set_active ",s1_includelimits,"1"]);
-s1_pb_creategeo = gtk(in,out,"gtk_progress_bar_new ");
 
-inicializa_s1(in,out,buts1);
 
 invisible = gtk(in,out,"gtk_label_new '      '");
 invisible2 = gtk(in,out,"gtk_label_new '      '");
@@ -130,57 +111,35 @@ gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s7_pb_createwalls, " 28 34 5
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps7s10, " 1 80 7 8"]);
 
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls10, " 1 3 8 9"]);
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls10split, " 20 21 8 9"]);
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls10_distancia, " 20 21 9 10"]);
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s10_split, " 21 22 8 9"]);
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", drops10Y, " 61 64 8 9"]);
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", drops10X, " 58 61 8 9"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_refresh, " 1 3 9 10"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_createsplit, " 30 32 8 9"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_splittrack, " 30 32 9 10"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_createterrain, " 60 62 8 9"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s10_pb_createterrain, " 58 64 9 10"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", drops10X, " 50 52 8 9"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", drops10Y, " 50 52 9 10"]);
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_createterrain, " 60 62 9 10"]);
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s10_pb_createterrain, " 58 64 10 11"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s10_blend, " 48 50 10 11"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls10_grid, " 48 50 8 10"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps2bs3, " 1 80 11 12"]);
-%s3
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls3, " 1 3 12 13"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts3_refresh, " 1 3 13 14"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts3_readdata, " 23 24 12 13"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts3_createprofile, " 45 47 12 13"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts3_consolidate, " 60 62 12 13"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts3_fixterrain, " 45 47 13 14"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s3_pb_readdata, " 23 24 13 14"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s3_usecenter, " 20 22 13 14"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s3_pb_consolidate, " 58 64 13 14"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls3smooth1, " 28 30 12 13"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s3_smoothfactor, " 30 34 12 13"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls3_slopelimit, " 28 30 13 14"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s3_slopelimit, " 30 34 13 14"]);
- 
+%s9
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls9, " 1 3 12 13"]);
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts9_refresh, " 1 3 13 14"]);
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts9_joinall, " 30 32 12 13"]);
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s9_pb_joinall, " 28 34 13 14"]);
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps9end, " 1 80 14 15"]);
 
-
-
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps3s1, " 1 80 14 15"]);
-%s1
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls1, " 1 3 16 17"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts1_refresh, " 1 3 17 18"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls1width, " 20 22 16 17"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", widths1, " 23 24 16 17"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls1panels, " 20 22 17 18"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", panelss1, " 23 24 17 18"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts1, " 30 32 16 17"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s1_pb_creategeo, " 28 34 17 18"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s1_regular, " 20 22 18 19"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s1_includelimits, " 23 24 18 19"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps1fin, " 1 80 19 20"]);
-
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", invisible, " 24 28 16 17"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", invisible2, " 4 5 16 17"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", invisible3, " 19 20 16 17"]);
+%gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", invisible, " 24 28 15 16"]);
+%gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", invisible2, " 4 5 16 17"]);
+%gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", invisible3, " 19 20 16 17"]);
 
 % Some Octave advertisement
 adv = gtk(in,out,"gtk_text_view_new 'Created with Octave!'");
 advb = gtk(in,out,["gtk_text_view_get_buffer ",adv]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl2, " ", adv, " 1 2 58 60"]);
-cadena='To start:\nCopy your kml to the s0_import folder\nand press \"Import the kml\" button';
+cadena='';
 informa_nuevo(in,out,advb,cadena)
 
 inicializa_s4(in,out,buts4_raise,buts4_accept,advb)
@@ -302,48 +261,22 @@ while (1)
 			end
 		end 
 
+
+		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%				
-		if strcmp(event, buts3_readdata )
-			informa_nuevo(in,out,advb,'S3');
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		if strcmp(event, buts10_createsplit )
+			informa_nuevo(in,out,advb,'S10');
 			try
-				valor_usecenter=str2num(gtk(in,out,["gtk_toggle_button_get_active ",s3_usecenter]))
-				global progress_bar;
-				progress_bar.id=s3_pb_readdata;
-				progress_bar.in=in;
-				progress_bar.out=out;
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
-				ejecuta(in,out,advb,'cd s3_road');
+				num_segmentos=str2num(gtk(in,out,["gtk_entry_get_text ", s10_split]));
+				cd s10_split
+				cd ..
+				ejecuta(in,out,advb,'cd s10_split');
 				ejecuta(in,out,advb,'coge_datos');
-				ejecuta(in,out,advb,sprintf('creartrack1(%d)',valor_usecenter));
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
-				gtk(in,out,["gtk_widget_set_sensitive ",buts3_createprofile,"1"]);
+				ejecuta(in,out,advb,sprintf('split_track(%d)',num_segmentos));
+				gtk(in,out,["gtk_widget_set_sensitive ",buts10_splittrack,"1"]);
 				informa_anyade(in,out,advb,'Operation Successful');
-			catch
-				informa_anyade(in,out,advb,'Operation Failed');
-			end
-		end
-		
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		if strcmp(event, buts3_createprofile )
-			informa_nuevo(in,out,advb,'S3');
-			try
-				slope_limit = str2num(gtk(in,out,["gtk_entry_get_text ", s3_slopelimit]));
-				smooth_factor1 = str2num(gtk(in,out,["gtk_entry_get_text ", s3_smoothfactor]));
-				if mod(smooth_factor1,2)==1
-					ejecuta(in,out,advb,'cd s3_road');
-					cadena=sprintf('dar_altura(%d,%.2f,%.2f,%.1f);',smooth_factor1, slope_limit,-slope_limit,2*smooth_factor1);
-					ejecuta(in,out,advb,cadena);
-					gtk(in,out,["gtk_widget_set_sensitive ",buts3_fixterrain,"1"]);
-					gtk(in,out,["gtk_widget_set_sensitive ",buts3_consolidate,"1"]);
-					gtk(in,out,["gtk_progress_bar_set_fraction ",s3_pb_consolidate,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
-					informa_anyade(in,out,advb,'Operation Successful');
-				else
-					informa_anyade(in,out,advb,'Operation Failed. Use an odd smoothing factor');
-				end
 			catch
 				informa_anyade(in,out,advb,'Operation Failed');
 			end
@@ -351,46 +284,47 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        if strcmp(event, buts3_consolidate)
-			informa_nuevo(in,out,advb,'S3');
+        if strcmp(event, buts10_splittrack )
+			informa_nuevo(in,out,advb,'S10');
+			try
+				ejecuta(in,out,advb,'cd s10_split');
+				ejecuta(in,out,advb,'partir_track');
+				informa_anyade(in,out,advb,'Operation Successful');
+			catch
+				informa_anyade(in,out,advb,'Operation Failed');
+			end
+		end		
+		
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+		if strcmp(event, buts10_createterrain )
+			informa_nuevo(in,out,advb,'S10');
+			gridX=str2num(gtk(in,out,["gtk_combo_box_get_active_text ", drops10X]));
+			gridY=str2num(gtk(in,out,["gtk_combo_box_get_active_text ", drops10Y]));
+			mezclar=str2num(gtk(in,out,["gtk_toggle_button_get_active ",s10_blend]));
 			try
 				global progress_bar;
-				progress_bar.id=s3_pb_consolidate;
+				progress_bar.id=s10_pb_createterrain;
 				progress_bar.in=in;
 				progress_bar.out=out;
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
-				ejecuta(in,out,advb,'cd venue;');
-				ejecuta(in,out,advb,'btb06');
+				ejecuta(in,out,advb,'cd s10_split');
+				ejecuta(in,out,advb,sprintf('procesar_elementstxt_mt(%d,%d,%d)',gridX,gridY,mezclar));				
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
-				gtk(in,out,["gtk_widget_set_sensitive ",buts1,"1"]);
 				informa_anyade(in,out,advb,'Operation Successful');
 			catch
-				informa_anyade(in,out,advb,'Operation Failed');
-			end
-		end
-		
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		if strcmp(event, buts3_refresh )
-			informa_nuevo(in,out,advb,'S3');
-			try
-				inicializa_s3(in,out,buts3_readdata,buts3_createprofile,buts3_fixterrain,buts3_consolidate);
-				informa_anyade(in,out,advb,'Operation Successful');
-			catch
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
 				informa_anyade(in,out,advb,'Operation Failed');
 			end
 		end		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-		if strcmp(event, buts3_fixterrain)
-			informa_nuevo(in,out,advb,'S3');
+		if strcmp(event, buts10_refresh		)
+			informa_nuevo(in,out,advb,'S10');
 			try
-				slope_limit = str2num(gtk(in,out,["gtk_entry_get_text ", s3_slopelimit]));
-				smooth_factor1 = str2num(gtk(in,out,["gtk_entry_get_text ", s3_smoothfactor]));
-				ejecuta(in,out,advb,'cd s3_road');
-				ejecuta(in,out,advb,'corregir');
+				inicializa_s10(in,out,buts10_createsplit,buts10_splittrack,buts10_createterrain,lbls10_distancia)
 				informa_anyade(in,out,advb,'Operation Successful');
 			catch
 				informa_anyade(in,out,advb,'Operation Failed');
@@ -400,38 +334,30 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-        if strcmp(event, buts1)
-			informa_nuevo(in,out,advb,'S1');
+		if strcmp(event, buts9_joinall)
+			informa_nuevo(in,out,advb,'S9');
 			try
-				valor_regular=str2num(gtk(in,out,["gtk_toggle_button_get_active ",s1_regular]))
-				valor_includelimits=str2num(gtk(in,out,["gtk_toggle_button_get_active ",s1_includelimits]))
 				global progress_bar;
-				progress_bar.id=s1_pb_creategeo;
+				progress_bar.id=s10_pb_joinall;
 				progress_bar.in=in;
 				progress_bar.out=out;
 				terrain_width= str2num(gtk(in,out,["gtk_entry_get_text ", widths1]));
 				terrain_panels = str2num(gtk(in,out,["gtk_entry_get_text ", panelss1]));
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
-				ejecuta(in,out,advb,'cd s1_mesh;');
-				ejecuta(in,out,advb,sprintf('mallado_regular(%.2f,%d,%d)',terrain_width,round(terrain_panels),valor_regular));
-				if valor_includelimits==1
-					informa_anyade(in,out,advb,'Select an option in command-line window');
-					ejecuta(in,out,advb,'addgrid(1,1)')
-				end
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
+				ejecuta(in,out,advb,'cd s9_join');
+				ejecuta(in,out,advb,'join_all');				
 				informa_anyade(in,out,advb,'Operation Successful');
 			catch
 				informa_anyade(in,out,advb,'Operation Failed');
 			end
-		end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
+		end		
+		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-		if strcmp(event, buts1_refresh)
+		if strcmp(event, buts9_refresh)
 			informa_nuevo(in,out,advb,'S1');
 			try
-				inicializa_s1(in,out,buts1);
 				informa_anyade(in,out,advb,'Operation Successful');
 			catch
 				informa_anyade(in,out,advb,'Operation Failed');
@@ -469,114 +395,27 @@ end
 
 
 function inicializa_s7(in,out,buts7)
-
-	[errores,nadena]=system('dir s4_terrain\salida\elements.txt /b');
-	numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
-	if numero_ficheros>0
-		gtk(in,out,["gtk_widget_set_sensitive ",buts7,"1"]);
-	else
-		gtk(in,out,["gtk_widget_set_sensitive ",buts7,"0"]);
-	end
+	comprueba(in,out,'dir s4_terrain\salida\elements.txt /b',buts7);
 end
 
-function inicializa_s2(in,out,buts2_makegrid,buts2_raisekml,buts2_readgrid,buts2_plotlamalla,lbls2limits,folder,ficherokml)
-	[numero_padres caminos]=look_for_father_or_sons('father.txt');
-	
-    if (exist('..\agr')==7) || (exist('..\lidar')==7) || (numero_padres~=0) %No usamos s2_elevation
-				gtk(in,out,["gtk_widget_set_sensitive ",buts2_makegrid,"0"]);
-				gtk(in,out,["gtk_widget_set_sensitive ",buts2_raisekml,"0"]);
-				gtk(in,out,["gtk_widget_set_sensitive ",buts2_readgrid,"0"]);
-				gtk(in,out,["gtk_widget_set_sensitive ",buts2_plotlamalla,"0"]);
-				gtk(in,out,["gtk_label_set_text ",lbls2limits,'"AGR Dir\nFound"'])
-				if (exist('..\agr')==7)
-					gtk(in,out,["gtk_label_set_text ",lbls2limits,'"AGR Dir\nFound"'])
-				else
-					gtk(in,out,["gtk_label_set_text ",lbls2limits,'"lidar Dir\nFound"'])
-				end
-	else
-				[errores,nadena]=system('dir mapeo.txt /b');
-				existe_mapeo=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
-				
-				[errores,nadena]=system(['dir ',folder,'\',ficherokml,' /b']);
-				numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
-				if (numero_ficheros>0) & (existe_mapeo)
-					gtk(in,out,["gtk_widget_set_sensitive ",buts2_makegrid,"1"]);
-				else
-					gtk(in,out,["gtk_widget_set_sensitive ",buts2_makegrid,"0"]);
-				end
-				if (numero_ficheros>0)
-					gtk(in,out,["gtk_label_set_text ",lbls2limits,'"',ficherokml,'\nFound"'])
-				else
-					gtk(in,out,["gtk_label_set_text ",lbls2limits,'"',ficherokml,'\nNOT Found"'])					
-				end
-				
-				[errores,nadena]=system(['dir ',folder,'\salida\grid*.kml /b']);
-			    numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
-				if (numero_ficheros>0) & ((exist('c:\python27')==7))
-					gtk(in,out,["gtk_widget_set_sensitive ",buts2_raisekml,"1"]);
-				else
-					gtk(in,out,["gtk_widget_set_sensitive ",buts2_raisekml,"0"]);
-				end
-				[errores,nadena]=system(['dir ',folder,'\salida\grid*_relleno.kml /b']);
-			    numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
-				if numero_ficheros>0
-					gtk(in,out,["gtk_widget_set_sensitive ",buts2_readgrid,"1"]);
-				else
-					gtk(in,out,["gtk_widget_set_sensitive ",buts2_readgrid,"0"]);
-				end
-				[errores,nadena]=system(['dir ',folder,'\salida\lamalla.mat /b']);
-			    numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
-				if numero_ficheros>0
-					gtk(in,out,["gtk_widget_set_sensitive ",buts2_plotlamalla,"1"]);
-				else
-					gtk(in,out,["gtk_widget_set_sensitive ",buts2_plotlamalla,"0"]);
-				end
-		end
+function inicializa_s10(in,out,buts10_createsplit,buts10_splittrack,buts10_createterrain,lbls10_distancia)
+	comprueba(in,out,'dir venue\porcentajes.mat /b',buts10_createsplit);
+	comprueba(in,out,'dir s10_split\pos_nodes.txt /b',buts10_splittrack);
+	comprueba(in,out,'dir s6_hairpins\salida\nodos_conaltura.txt /b',buts10_createterrain);
+	try 
+	          S=load('anchors.mat');
+			  nac=length(S.x);
+			  ancho=sqrt((S.x(1)-S.x(nac/2+1))^2+(S.z(1)-S.z(nac/2+1))^2);
+			  ancho=ancho*10;
+			  ancho=round(ancho);
+			  ancho=ancho/10;
+			  distancia=dame_distancia(S.x,S.z);
+	catch
+		      ancho=5;
+			  distancia=0;
+	end
+	gtk(in,out,["gtk_label_set_text ",lbls10_distancia,sprintf('"%d m"',round(distancia(end)))]);
 end
-
-function inicializa_s3(in,out,buts3_readdata,buts3_createprofile,buts3_fixterrain,buts3_consolidate);
-	if (exist('..\agr')==7) || (exist('..\lidar')==7) %No usamos s2_elevation
-		gtk(in,out,["gtk_widget_set_sensitive ",buts3_readdata,"1"]);
-	else
-		[numero_padres caminos]=look_for_father_or_sons('father.txt');
-		if numero_padres==0
-			[errores,nadena]=system('dir s2_elevation\salida\lamalla.mat /b');
-			numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
-		else
-			[errores,nadena]=system(sprintf('dir %s\\s3_road\\lamalla.mat',char(caminos(1))));
-			numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
-		end
-		if numero_ficheros>0
-			gtk(in,out,["gtk_widget_set_sensitive ",buts3_readdata,"1"]);
-		else
-			gtk(in,out,["gtk_widget_set_sensitive ",buts3_readdata,"0"]);
-		end
-	end
-	[errores,nadena]=system('dir s3_road\alturas_track1.mat /b');
-	numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
-	if numero_ficheros>0
-		gtk(in,out,["gtk_widget_set_sensitive ",buts3_createprofile,"1"]);
-		gtk(in,out,["gtk_widget_set_sensitive ",buts3_fixterrain,"1"]);
-	else
-		gtk(in,out,["gtk_widget_set_sensitive ",buts3_createprofile,"0"]);
-		gtk(in,out,["gtk_widget_set_sensitive ",buts3_fixterrain,"0"]);
-	end
-	[errores,nadena]=system('dir s3_road\track0.mat /b');
-	numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
-	if numero_ficheros>0
-		gtk(in,out,["gtk_widget_set_sensitive ",buts3_consolidate,"1"]);
-	else
-		gtk(in,out,["gtk_widget_set_sensitive ",buts3_consolidate,"0"]);
-	end
-
-function inicializa_s1(in,out,buts1);
-	[errores,nadena]=system('dir anchors.mat /b');
-	numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
-	if numero_ficheros>0
-		gtk(in,out,["gtk_widget_set_sensitive ",buts1,"1"]);
-	else
-		gtk(in,out,["gtk_widget_set_sensitive ",buts1,"0"]);
-	end
 	
 function fichero=encuentra_kml()
 
@@ -637,3 +476,12 @@ function ejecuta(in,out,advb,cadena)
 function ejecuta(in,out,advb,cadena)
 informa_anyade(in,out,advb,['Running command:   ',strrep(cadena,'"','\"')]);gtk(in,out,"gtk_server_callback update");
 eval(cadena);
+
+function comprueba(in,out,ficheros,widget)
+	[errores,nadena]=system(ficheros);
+	numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
+	if numero_ficheros>0
+		gtk(in,out,["gtk_widget_set_sensitive ",widget,"1"]);
+	else
+		gtk(in,out,["gtk_widget_set_sensitive ",widget,"0"]);
+	end

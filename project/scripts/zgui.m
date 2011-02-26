@@ -667,9 +667,9 @@ function inicializa_s2(in,out,buts2_makegrid,buts2_raisekml,buts2_readgrid,buts2
 					gtk(in,out,["gtk_widget_set_sensitive ",buts2_makegrid,"0"]);
 				end
 				if (numero_ficheros>0)
-					gtk(in,out,["gtk_label_set_text ",lbls2limits,ficherokml,"\nFound"])
+					gtk(in,out,["gtk_label_set_text ",lbls2limits,'"',ficherokml,'\nFound"'])
 				else
-					gtk(in,out,["gtk_label_set_text ",lbls2limits,ficherokml,"\nNOT Found"])					
+					gtk(in,out,["gtk_label_set_text ",lbls2limits,'"',ficherokml,'\nNOT Found"'])					
 				end
 				
 				[errores,nadena]=system(['dir ',folder,'\salida\grid*.kml /b']);

@@ -119,8 +119,6 @@ datay=y;
 dataz=z;
 save('salida\anchors_originales.mat','datax','datay','dataz');
 
-
-msh_to_obj('salida\nodos_conaltura.txt','elements.txt')
 message(22)
 
 

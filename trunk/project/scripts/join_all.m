@@ -60,6 +60,18 @@ if fid~=-1
   display(sprintf('%s not found',muros1));
 end
 
+fclose(fid1);
+
+fid1=my_fopen(fichero1,'r');
+contents=fread(fid1,inf);
+fclose(fid1);
+fid1=my_fopen(fichero1,'w');
+cadena=char(contents)';
+cadena=regexprep(cadena,'</tracks>  <tracks count="\d+" ActiveTrack="\d+">','');
+fprintf(fid1,'%s',cadena);
+fclose(fid1);
+fid1=my_fopen(fichero1,'a');
+
 fprintf(fid1,'\r\n  <Terrain>\r\n');
 
 fid=my_fopen('..\s4_terrain\salida\listado_anchors.txt','r');
@@ -116,15 +128,6 @@ my_fclose(fid)
 
 fwrite(fid1,contents);
 
-fclose(fid1);
-
-fid1=my_fopen(fichero1,'r');
-contents=fread(fid1,inf);
-fclose(fid1);
-fid1=my_fopen(fichero1,'w');
-cadena=char(contents)';
-cadena=regexprep(cadena,'</tracks>  <tracks count="\d+" ActiveTrack="\d+">','');
-fprintf(fid1,'%s',cadena);
 fclose(fid1)
 end
 

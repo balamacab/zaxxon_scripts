@@ -338,17 +338,17 @@ while (1)
 			informa_nuevo(in,out,advb,'S9');
 			try
 				global progress_bar;
-				progress_bar.id=s10_pb_joinall;
+				progress_bar.id=s9_pb_joinall;
 				progress_bar.in=in;
 				progress_bar.out=out;
-				terrain_width= str2num(gtk(in,out,["gtk_entry_get_text ", widths1]));
-				terrain_panels = str2num(gtk(in,out,["gtk_entry_get_text ", panelss1]));
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s9_join');
 				ejecuta(in,out,advb,'join_all');				
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
 				informa_anyade(in,out,advb,'Operation Successful');
 			catch
 				informa_anyade(in,out,advb,'Operation Failed');
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
 			end
 		end		
 		%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		

@@ -448,7 +448,7 @@ while (1)
 			inicializa_s2(in,out,buts2b_makegrid,buts2b_raisekml,buts2b_readgrid,buts2b_plotlamalla,lbls2blimits,'s2_elevation_b','limits_b.kml')
 			try	
 				cd s2_elevation_b;
-				ficherokml = 'limits.kml';
+				ficherokml = 'limits_b.kml';
 				tamfile = str2num(gtk(in,out,["gtk_entry_get_text ", sizes2b]));
 				paso = str2num(gtk(in,out,["gtk_entry_get_text ", steps2b]));
 				cadena=sprintf('%d _relleno files needed',calcular_num_rellenos(ficherokml,tamfile,paso));

@@ -34,13 +34,13 @@ fs0=gtk(in,out,"gtk_frame_new");
 
 lbls4 = gtk(in,out,"gtk_label_new s4_terrain");
 %http://library.gnome.org/devel/gtk/2.12/gtk-Stock-Items.html
-buts4_raise = gtk(in,out,"gtk_button_new_with_label 'Give Elevation\nto the mesh'");
+buts4_raise = gtk(in,out,"gtk_button_new_with_label 'Give Elevation to the mesh'");
 s4_pb_raise = gtk(in,out,"gtk_progress_bar_new ");
 buts4_refresh = gtk(in,out,"gtk_button_new_from_stock 'gtk-refresh'");
 %Si es SON, esta casilla debería estar desmarcada porque no tiene sentido
-s4_createhlg = gtk(in,out,["gtk_check_button_new_with_label 'Create\ngrid.hlg' 1"]);
-s4_createobj = gtk(in,out,["gtk_check_button_new_with_label 'Create\ntest.obj' 1"]);
-buts4_accept = gtk(in,out,"gtk_button_new_with_label 'Accept\nthe mesh'");
+s4_createhlg = gtk(in,out,["gtk_check_button_new_with_label 'Create grid.hlg' 1"]);
+s4_createobj = gtk(in,out,["gtk_check_button_new_with_label 'Create test.obj' 1"]);
+buts4_accept = gtk(in,out,"gtk_button_new_with_label 'Accept the mesh'");
 s4_pb_accept = gtk(in,out,"gtk_progress_bar_new ");
 
 hseps4s7 = gtk(in,out,"gtk_hseparator_new");
@@ -80,6 +80,8 @@ lbls9 = gtk(in,out,"gtk_label_new s9_join");
 buts9_refresh = gtk(in,out,"gtk_button_new_from_stock 'gtk-refresh'");
 buts9_joinall = gtk(in,out,"gtk_button_new_with_label 'Create Venue.xml'");
 s9_pb_joinall = gtk(in,out,"gtk_progress_bar_new ");
+lbls9dotdat = gtk(in,out,'gtk_label_new ".dat files are in dir:"'); gtk(in,out,["gtk_misc_set_alignment ",lbls9dotdat,"0.5 0.5"]);
+s9_dotdat = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",s9_dotdat,"\"",regexprep(char(current_dir),'\\','/'),"/images\""]);gtk(in,out,["gtk_entry_set_width_chars ",s9_dotdat,'20']);
 %s9_includebg = gtk(in,out,["gtk_check_button_new_with_label 'Include\nlist_bi.txt' 1"]);
 hseps9end= gtk(in,out,"gtk_hseparator_new");
 
@@ -117,7 +119,8 @@ gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s10_split, " 21 22 8 9"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", drops10Y, " 61 64 8 9"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", drops10X, " 58 61 8 9"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_refresh, " 1 3 9 10"]);
-gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_createsplit, " 30 32 8 9"]);
+%gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_createsplit, " 28 31 8 9"]);
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_createsplit, " 21 22 9 10"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_splittrack, " 30 32 9 10"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_createterrain, " 60 62 9 10"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s10_pb_createterrain, " 58 64 10 11"]);
@@ -126,6 +129,8 @@ gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls10_grid, " 48 50 8 10"])
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps2bs3, " 1 80 11 12"]);
 %s9
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls9, " 1 3 12 13"]);
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls9dotdat, " 20 22 12 13"]);
+gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s9_dotdat, " 20 22 13 14"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts9_refresh, " 1 3 13 14"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts9_joinall, " 30 32 12 13"]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s9_pb_joinall, " 28 34 13 14"]);
@@ -336,12 +341,22 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		if strcmp(event, buts9_joinall)
 			informa_nuevo(in,out,advb,'S9');
+			
+			
 			try
+				dotdatdir=(gtk(in,out,["gtk_entry_get_text ", s9_dotdat]));
 				global progress_bar;
 				progress_bar.id=s9_pb_joinall;
 				progress_bar.in=in;
 				progress_bar.out=out;
+				
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+				display(dotdatdir)
+				if (exist(dotdatdir)==7)
+					ejecuta(in,out,advb,'cd s1_mesh');
+					ejecuta(in,out,advb,sprintf('add_dat_to_geo(%s)',dotdatdir));
+					ejecuta(in,out,advb,'cd ..');
+				end
 				ejecuta(in,out,advb,'cd s9_join');
 				ejecuta(in,out,advb,'join_all');				
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
@@ -470,8 +485,6 @@ function informa_nuevo(in,out,advb,cadena)
 gtk(in,out,["gtk_text_buffer_set_text ",advb,strcat('"',cadena,'"'),' -1']);
 function informa_anyade(in,out,advb,cadena)
 gtk(in,out,["gtk_text_buffer_insert_at_cursor ",advb,strcat('"\n',cadena,'"'),' -1']);
-
-function ejecuta(in,out,advb,cadena)
 
 function ejecuta(in,out,advb,cadena)
 informa_anyade(in,out,advb,['Running command:   ',strrep(cadena,'"','\"')]);gtk(in,out,"gtk_server_callback update");

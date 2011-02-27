@@ -1,0 +1,55 @@
+
+%Don't use special characters like á, é, ñ, n, etc.
+%Respect all the special chars like ", ', \n, %f, etc.
+
+string001='Use this script only on the root folder of the project';
+string002="'Import the kml'";
+string003="'Road\nwidth (m):'";
+string004="'Panel\nspacing (m):'";
+string005="'File not found'";
+string006="'Make Grid'";
+string007="'Raise Kmls'";
+string008="'Read Grid'";
+string009="'Plot\nData'";
+string010="'Step (m):'";
+string011="'File size\n(points):'";
+string012="Processing of this SON has finished";
+string013="'Read Elevation Data'";
+string014="'Create Elevation Profile'";
+string015="'Consolidate'";
+string016="'Fix terrain (opt)'";
+string017="'Use\ncenterline'";
+string018="'Smooth\nFactor:'";
+string019="'Slope\nlimit:'";
+string020="'Width (m):'";
+string021="'Panels:'";
+string022="'Create .geo'";
+string023="'Force\nregular'";
+string024="'Include\nElevation Limits'";
+string025="'Give Elevation to the mesh'";
+string026="'Create grid.hlg'";
+string027="'Create test.obj'";
+string028="'Accept the mesh'";
+string029="'Create walls'";
+string030="'Create split points'";
+string031="'Split the track'";
+string032="'Create the terrain'";
+string033="'# segments:'";
+string034="'Blend with\nBackground'";
+string035="'Split terrain\nwith grid:'";
+string036="'Create Venue.xml'";
+string037="'.dat files are in dir:'";
+string038='To start:\nCopy your kml to the s0_import folder\nand press \"Import the kml\" button';
+string039='"Operation failed  %f"';
+string040='Operation Successful';
+string041='Operation Failed';
+string042='files needed';
+string043='Operation Failed. Use an odd smoothing factor';
+global string044='"AGR Dir\nFound"';
+global string045='"lidar Dir\nFound"';
+global string046='\nFound"';
+global string047='\nNOT Found"';
+string048='anchors_carretera.mesh NOT found';
+global string049='Running command:   ';
+string050='You can edit pos_nodes.txt to change the split points';
+string051='Process the sons with mallado_regular and then run join_geos inside s1_mesh';

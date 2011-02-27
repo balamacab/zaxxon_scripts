@@ -63,6 +63,7 @@ end
 %hold on
 %figure
 %hold on
+global progress_bar;
 for h=1:numnodos-1
 	Punto0=[S.tree(h).Position.x S.tree(h).Position.y S.tree(h).Position.z];
 	%plot(S.tree(h).Position.x,S.tree(h).Position.z,'*');
@@ -73,8 +74,14 @@ for h=1:numnodos-1
 	AngleY3=S.tree(h+1).ControlPoints.AngleY;
 	Distancia0=S.tree(h).ControlPoints.ExitDistance;
 	Distancia3=S.tree(h+1).ControlPoints.EntryDistance;
-    if mod(h,1000)==0
-         display(sprintf('%d %d',h,total_anchors));
+    
+	if mod(h,100)==0
+	     if isempty('progress_bar')==0
+			gtk(progress_bar.in,progress_bar.out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.5+(0.5*h)/numnodos)]);
+			gtk(progress_bar.in,progress_bar.out,"gtk_server_callback update");
+		 else
+            display(sprintf('%d %d',h,total_anchors));
+		 end
     end
 	
 	metodo_distancia=2;

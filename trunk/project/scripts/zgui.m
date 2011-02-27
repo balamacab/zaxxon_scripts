@@ -317,12 +317,12 @@ if (pantalla==1) || ((pantalla==0) && (strcmp(tipo,'SON')))
 	s10_pb_createterrain = gtk(in,out,"gtk_progress_bar_new ");
 	drops10X = gtk(in,out,"gtk_combo_box_new_text '");
 	drops10Y = gtk(in,out,"gtk_combo_box_new_text '");
-	lbls10split = gtk(in,out,"gtk_label_new '# segments:'");gtk(in,out,["gtk_misc_set_alignment ",lbls10split,"0 0.5"]);
+	lbls10split = gtk(in,out,"gtk_label_new '# segments:'");gtk(in,out,["gtk_misc_set_alignment ",lbls10split,"1 0.5"]);
 	s10_split = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",s10_split,"1"]);gtk(in,out,["gtk_entry_set_width_chars ",s10_split,'3']);
 	s10_blend = gtk(in,out,["gtk_check_button_new_with_label 'Blend with\nBackground' 1"]);
 	hseps2bs3 = gtk(in,out,"gtk_hseparator_new");
 	lbls10_grid = gtk(in,out,"gtk_label_new 'Split terrain\nwith grid:'");gtk(in,out,["gtk_misc_set_alignment ",lbls10_grid,"1 0.5"]);
-	lbls10_distancia=gtk(in,out,"gtk_label_new 'Split terrain\nwith grid:'");gtk(in,out,["gtk_misc_set_alignment ",lbls10_distancia,"1 0.5"]);
+	lbls10_distancia=gtk(in,out,"gtk_label_new '0m'");gtk(in,out,["gtk_misc_set_alignment ",lbls10_distancia,"1 0.5"]);
 	for h=1:16
 		gtk(in,out,["gtk_combo_box_append_text ", drops10X, "\"" ,	sprintf('%d',h) , "\""]);
 		gtk(in,out,["gtk_combo_box_append_text ", drops10Y, "\"" ,	sprintf('%d',h) , "\""]);
@@ -343,8 +343,8 @@ if (pantalla==1) || ((pantalla==0) && (strcmp(tipo,'SON')))
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_splittrack, " 30 32 109 110"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_createterrain, " 60 62 109 110"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s10_pb_createterrain, " 58 64 110 111"]);
-	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s10_blend, " 45 47 110 111"]);
-	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls10_grid, " 45 47 108 110"]);
+	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s10_blend, " 45 47 109 110"]);
+	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls10_grid, " 45 47 108 109"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps2bs3, " 1 80 111 112"]);
 else
 	buts10_refresh =-1;	buts10_createsplit = -1; buts10_splittrack = -1; buts10_createterrain=-1;

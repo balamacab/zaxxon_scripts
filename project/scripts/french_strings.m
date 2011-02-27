@@ -1,0 +1,56 @@
+
+%N'utilisez pas des caracteres speciaux tels que á, e, ñ, n, etc.
+%Respectez la ponctuation speciale telle que ", ', \n, %f, etc.
+
+string001='Utilisez se script uniquement dans le dossier d"origine du projet';
+string002="'Importer le kml'";
+string003="'Route\nlargueur (m):'";
+string004="'Paneaux\necartement (m):'";
+string005="'Fichier non-trouve'";
+string006="'Etablir la grille'";
+string007="'Eriger les Kmls'";
+string008="'Lire la grille'";
+string009="'Terrain\nDonnees'";
+string010="'Etape (m):'";
+string011="'Taille de fichier\n(points):'";
+string012="Le traitement de cette etape est termine";
+string013="'Lecture des donnees d\"altitude'";
+string014="'Cree le profil du relief'";
+string015="'Fusionner'";
+string016="'Figer le terrain (opt)'";
+string017="'Utiliser\ncenterline'";
+string018="'Lisser\nFactor:'";
+string019="'Denivelation\nlimit:'";
+string020="'Largueur (m):'";
+string021="'Panneaux:'";
+string022="'Creer .geo'";
+string023="'Force\nregular'";
+string024="'Inclure\nAltitude Limites'";
+string025="'Donner du relief au maillage'";
+string026="'Creer la grille.hlg'";
+string027="'Creer test.obj'";
+string028="'Accepter le maillage'";
+string029="'Creer les murs'";
+string030="'Creer les points de separation'";
+string031="'Diviser le trace'";
+string032="'Creer le terrain'";
+string033="'# fractions:'";
+string034="'Fusionner avec\nImage de fond'";
+string035="'Diviser le terrain\navec la grille:'";
+string036="'Creer le Venue.xml'";
+string037="' fichier .dat sont dans le repertoire:'";
+string038='Pour commencer:\nCopier vos kml dans le dossier s0_import\net cliquer \"Importer le kml\" boutton';
+string039='"L\"operation a echoue  %f"';
+string040='L\"operation a reussi';
+string041='L\"operation a echoue';
+string042='Besoin des fichier';
+string043='L\"operation a echoue. Utiliser un autre facteur de lissage';
+global string044='"AGR Repertoire\nTrouve"';
+global string045='"Repertoire lidar \nTrouve"';
+global string046='\nTrouve"';
+global string047='\nNon-trouve"';
+string048='anchors_carretera.mesh Non trouve';
+global string049='Traitement en cours:   ';
+string050='Vous pouvez modifier pos_nodes.txt pour modifier les endroits de division';
+string051='Executer les fils avec mallado_regular et apres executer join_geos inside s1_mesh';
+string052='"Creer pacenotes"';

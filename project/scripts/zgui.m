@@ -11,7 +11,7 @@ if length(findstr(cadena,'pertoire'))>0
 elseif length(findstr(cadena,'irectorio'))>0
 	display('Español');
 	try
-		spanish_strings
+		french_strings
 	catch
 		display('spanish_strings.m no encontrado');
 		english_strings
@@ -19,6 +19,7 @@ elseif length(findstr(cadena,'irectorio'))>0
 else
 	english_strings
 end
+
 if exist('s0_import')!=7
 disp(string001);
 	return;
@@ -310,10 +311,9 @@ end
 if (pantalla==1) && (strcmp(tipo,'SON')==0)
 	lbls7 = gtk(in,out,"gtk_label_new s7_walls");
 	buts7_refresh = gtk(in,out,"gtk_button_new_from_stock 'gtk-refresh'");
-buts7 = gtk(in,out,["gtk_button_new_with_label ",string029]);
+	buts7 = gtk(in,out,["gtk_button_new_with_label ",string029]);
 	s7_pb_createwalls = gtk(in,out,"gtk_progress_bar_new ");
 	hseps7s10 = gtk(in,out,"gtk_hseparator_new");
-
 	inicializa_s7(in,out,buts7);
 	
 	%s7
@@ -323,7 +323,7 @@ buts7 = gtk(in,out,["gtk_button_new_with_label ",string029]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s7_pb_createwalls, " 28 34 105 106"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps7s10, " 1 80 107 108"]);
 else
-	buts7_refresh=-1;buts7=-1;
+	buts7_refresh=-1;buts7=-1;buts7_pacenotes=-1;
 end
 
 if (pantalla==1) || ((pantalla==0) && (strcmp(tipo,'SON')))
@@ -375,8 +375,11 @@ if (pantalla==1) && (strcmp(tipo,'SON')==0)
 	s9_pb_joinall = gtk(in,out,"gtk_progress_bar_new ");
 	lbls9dotdat = gtk(in,out,["gtk_label_new ",string037]); gtk(in,out,["gtk_misc_set_alignment ",lbls9dotdat,"0.5 0.5"]);
 	s9_dotdat = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",s9_dotdat,"\"",regexprep(char(current_dir),'\\','/'),"/images\""]);gtk(in,out,["gtk_entry_set_width_chars ",s9_dotdat,'20']);
+	buts9_pacenotes = gtk(in,out,["gtk_button_new_with_label ",string052]);
+	s9_pb_pacenotes = gtk(in,out,"gtk_progress_bar_new ");
 	hseps9end= gtk(in,out,"gtk_hseparator_new");
-	
+
+	inicializa_s9(in,out,buts9_pacenotes);
 	%s9
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls9, " 1 3 112 113"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls9dotdat, " 20 22 112 113"]);
@@ -385,9 +388,14 @@ if (pantalla==1) && (strcmp(tipo,'SON')==0)
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts9_joinall, " 30 32 112 113"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s9_pb_joinall, " 28 34 113 114"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps9end, " 1 80 114 115"]);
+	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts9_pacenotes, " 23 24 112 113"]);
+	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s9_pb_pacenotes, " 21 25 113 114"]);
+
 else
-	buts9_refresh=-1;buts9_joinall=-1;
+	buts9_refresh=-1;buts9_joinall=-1;buts9_pacenotes=-1;
 end
+
+
 
 if (pantalla==0)
 	invisible = gtk(in,out,"gtk_label_new '      '");
@@ -405,8 +413,10 @@ adv2 = gtk(in,out,"gtk_text_view_new 'Created with Octave!'");
 advb2 = gtk(in,out,["gtk_text_view_get_buffer ",adv2]);
 gtk(in,out,["gtk_table_attach_defaults ", tbl3, " ", adv2, " 1 2 58 60"]);
 
-informa_nuevo(in,out,advb,string038)
-informa_nuevo(in,out,advb2,'')
+if pantalla==0
+	informa_nuevo(in,out,advb,string038)
+	informa_nuevo(in,out,advb2,'')
+end
 
 gtk(in,out,["gtk_widget_show_all ", win]);
 
@@ -917,7 +927,28 @@ while (1)
 			end
 		end 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%				
+        if strcmp(event, buts9_pacenotes)
+			informa_nuevo(in,out,advb,'S7');
+			try
+				global progress_bar;
+				progress_bar.id=s9_pb_pacenotes;
+				progress_bar.in=in;
+				progress_bar.out=out;
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
+				ejecuta(in,out,advb,'cd pacenotes');
+				ejecuta(in,out,advb,'coge_datos');
+				ejecuta(in,out,advb,'pacenotes_a');
+				ejecuta(in,out,advb,'pacenotes2_a(0.03,10)');
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);
+				informa_anyade(in,out,advb,string040);
+			catch
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+				informa_anyade(in,out,advb,string041);
+			end
+		end
 		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
@@ -947,7 +978,11 @@ while (1)
 				ejecuta(in,out,advb,'cd s10_split');
 				ejecuta(in,out,advb,'partir_track');
 				informa_anyade(in,out,advb,string040);
-				informa_anyade(in,out,advb2,string012);
+				if strcmp(tipo,'SON')==1
+					informa_anyade(in,out,advb2,string012);
+				end
+				gtk(in,out,["gtk_widget_set_sensitive ",buts9_pacenotes,"1"]);
+				informa_anyade(in,out,advb,string040);
 			catch
 				informa_anyade(in,out,advb,string041);
 			end
@@ -1026,6 +1061,7 @@ while (1)
 		if strcmp(event, buts9_refresh)
 			informa_nuevo(in,out,advb,'S1');
 			try
+				inicializa_s9(in,out,buts9_pacenotes);
 				informa_anyade(in,out,advb,string040);
 			catch
 				informa_anyade(in,out,advb,string041);
@@ -1158,6 +1194,9 @@ function inicializa_s10(in,out,buts10_createsplit,buts10_splittrack,buts10_creat
 	gtk(in,out,["gtk_label_set_text ",lbls10_distancia,sprintf('"%d m"',round(distancia(end)))]);
 end
 
+function inicializa_s9(in,out,buts9_pacenotes)
+	comprueba(in,out,'dir s10_split\tramos_nodos.mat',buts9_pacenotes);
+end
 	
 function fichero=encuentra_kml()
 

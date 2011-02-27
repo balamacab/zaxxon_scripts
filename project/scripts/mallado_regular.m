@@ -275,7 +275,7 @@ function malla_regular(fid,inicio,final,linea_izda,id_superficie,id_offset)
 end
 
 function malla_irregular(fid,inicio,final,linea_izda,id_superficie,id_offset,transfinite)
-
+		%Si el recorte es de menos de 10 puntos, forzamos transfinite
 		linea_dcha=linea_izda+1;
 		
 		puntoIA=inicio;
@@ -287,13 +287,13 @@ function malla_irregular(fid,inicio,final,linea_izda,id_superficie,id_offset,tra
 		fprintf(fid,'}\n');
 
 		fprintf(fid,'l1=newl; Line(l1) = {offset_a+%d,offset_a+%d};\n',puntoIA,puntoDA);
-		if transfinite==1
+		if ((transfinite==1) || ((puntoDA-puntoIA+1)<10))
 			fprintf(fid,'Transfinite Line(l1) = %d Using Progression 1;\n',puntoDA-puntoIA+1);
 		end
 		fprintf(fid,'l2=newl;Line Loop (l2)={l1,Ntra+%d,-(offsetp+%d):-(offsetp+%d),-(Ntra+%d)};\n',linea_dcha,puntoDB,puntoIB+1,linea_izda);
 		
 		fprintf(fid,'Plane Surface (Nsup%s+%d)={l2};\n',id_offset,id_superficie);
-		if transfinite==1
+		if ((transfinite==1) || ((puntoDA-puntoIA+1)<10))
 			fprintf(fid,'Transfinite Surface (Nsup%s+%d)={offset_a+%d,offset_a+%d,offsetp+%d,offsetp+%d};\n',id_offset,id_superficie,puntoIA,puntoDA,puntoDB,puntoIB);
 		end
 end

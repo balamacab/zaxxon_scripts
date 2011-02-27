@@ -426,7 +426,7 @@ while (1)
 						progress_bar.out=out;
 						ejecuta(in,out,advb,'cd s0_import;');
 						fichero=encuentra_kml(); 
-						gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]); gtk(in,out,"gtk_server_callback update");
+						gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]); gtk(in,out,"gtk_server_callback update");
 						ejecuta(in,out,advb,sprintf('importakml(''%s'')',fichero));
 						gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.5)]);gtk(in,out,"gtk_server_callback update");
 						ejecuta(in,out,advb,'cd ..\venue');
@@ -474,7 +474,7 @@ while (1)
 				progress_bar.id=s2_pb_makegrid;
 				progress_bar.in=in;
 				progress_bar.out=out;
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				tamfile = str2num(gtk(in,out,["gtk_entry_get_text ", sizes2]));
 				paso = str2num(gtk(in,out,["gtk_entry_get_text ", steps2]));
 				ejecuta(in,out,advb,'cd s2_elevation');
@@ -497,7 +497,7 @@ while (1)
 				progress_bar.id=s2_pb_readgrid;
 				progress_bar.in=in;
 				progress_bar.out=out;
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s2_elevation');
 				ejecuta(in,out,advb,'read_grid;');
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);
@@ -550,7 +550,7 @@ while (1)
 				progress_bar.id=s2_pb_raisekml;
 				progress_bar.in=in;
 				progress_bar.out=out;
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s2_elevation');
 				ejecuta(in,out,advb,'raise_kml');
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
@@ -570,7 +570,7 @@ while (1)
 				progress_bar.id=s2b_pb_makegrid;
 				progress_bar.in=in;
 				progress_bar.out=out;
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				tamfile = str2num(gtk(in,out,["gtk_entry_get_text ", sizes2b]));
 				paso = str2num(gtk(in,out,["gtk_entry_get_text ", steps2b]));
 				ejecuta(in,out,advb,'cd s2_elevation_b');
@@ -592,13 +592,14 @@ while (1)
 				progress_bar.id=s2b_pb_readgrid;
 				progress_bar.in=in;
 				progress_bar.out=out;
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s2_elevation_b;');
 				ejecuta(in,out,advb,'read_grid;');
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
 				gtk(in,out,["gtk_widget_set_sensitive ",buts2b_plotlamalla,"1"]);
 				informa_anyade(in,out,advb,'Operation Successful');
 			catch
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
 				informa_anyade(in,out,advb,'Operation Failed');
 			end
 		
@@ -645,13 +646,14 @@ while (1)
 				progress_bar.id=s2b_pb_raisekml;
 				progress_bar.in=in;
 				progress_bar.out=out;
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s2_elevation_b');
 				ejecuta(in,out,advb,'raise_kml');
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
 				gtk(in,out,["gtk_widget_set_sensitive ",buts2b_readgrid,"1"]);
 				informa_anyade(in,out,advb,'Operation Successful');
 			catch
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
 				informa_anyade(in,out,advb,'Operation Failed');
 			end
 		end
@@ -666,7 +668,7 @@ while (1)
 				progress_bar.id=s3_pb_readdata;
 				progress_bar.in=in;
 				progress_bar.out=out;
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s3_road');
 				ejecuta(in,out,advb,'coge_datos');
 				ejecuta(in,out,advb,sprintf('creartrack1(%d)',valor_usecenter));
@@ -674,6 +676,7 @@ while (1)
 				gtk(in,out,["gtk_widget_set_sensitive ",buts3_createprofile,"1"]);
 				informa_anyade(in,out,advb,'Operation Successful');
 			catch
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
 				informa_anyade(in,out,advb,'Operation Failed');
 			end
 		end
@@ -711,13 +714,14 @@ while (1)
 				progress_bar.id=s3_pb_consolidate;
 				progress_bar.in=in;
 				progress_bar.out=out;
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd venue;');
 				ejecuta(in,out,advb,'btb06');
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
 				gtk(in,out,["gtk_widget_set_sensitive ",buts1,"1"]);
 				informa_anyade(in,out,advb,'Operation Successful');
 			catch
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
 				informa_anyade(in,out,advb,'Operation Failed');
 			end
 		end
@@ -764,7 +768,7 @@ while (1)
 				progress_bar.out=out;
 				terrain_width= str2num(gtk(in,out,["gtk_entry_get_text ", widths1]));
 				terrain_panels = str2num(gtk(in,out,["gtk_entry_get_text ", panelss1]));
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s1_mesh;');
 				ejecuta(in,out,advb,sprintf('mallado_regular(%.2f,%d,%d)',terrain_width,round(terrain_panels),valor_regular));
 				if valor_includelimits==1
@@ -774,6 +778,7 @@ while (1)
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
 				informa_anyade(in,out,advb,'Operation Successful');
 			catch
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
 				informa_anyade(in,out,advb,'Operation Failed');
 			end
 		end
@@ -837,7 +842,7 @@ while (1)
 						progress_bar.id=s4_pb_accept;
 						progress_bar.in=in;
 						progress_bar.out=out;
-						gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]); gtk(in,out,"gtk_server_callback update");
+						gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]); gtk(in,out,"gtk_server_callback update");
 						ejecuta(in,out,advb,'cd s4_terrain');
 						ejecuta(in,out,advb,'accept_mesh');
 						gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);
@@ -870,7 +875,7 @@ while (1)
 				progress_bar.id=s7_pb_createwalls;
 				progress_bar.in=in;
 				progress_bar.out=out;
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s7_walls');
 				ejecuta(in,out,advb,'coge_datos');
 				ejecuta(in,out,advb,'poner_muro');
@@ -941,7 +946,7 @@ while (1)
 				progress_bar.id=s10_pb_createterrain;
 				progress_bar.in=in;
 				progress_bar.out=out;
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s10_split');
 				ejecuta(in,out,advb,sprintf('procesar_elementstxt_mt(%d,%d,%d)',gridX,gridY,mezclar));				
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
@@ -978,7 +983,7 @@ while (1)
 				progress_bar.in=in;
 				progress_bar.out=out;
 				
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				dotdatdir=strtrim(dotdatdir);
 				if (exist(dotdatdir)==7)
 					ejecuta(in,out,advb,'cd s1_mesh');

@@ -53,3 +53,4 @@ string048='anchors_carretera.mesh NO encontrado';
 global string049='Ejecutando comando:   ';
 string050='Edita pos_nodes.txt si quieres cambiar los puntos de division';
 string051='Procesa los SONS y luego ejectuta join_geos en s1_mesh';
+string052='"Notas copiloto"';

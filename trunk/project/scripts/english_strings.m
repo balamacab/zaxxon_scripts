@@ -53,3 +53,4 @@ string048='anchors_carretera.mesh NOT found';
 global string049='Running command:   ';
 string050='You can edit pos_nodes.txt to change the split points';
 string051='Process the sons with mallado_regular and then run join_geos inside s1_mesh';
+string052='"Create pacenotes"';

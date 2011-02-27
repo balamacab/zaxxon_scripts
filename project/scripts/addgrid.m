@@ -58,10 +58,16 @@ if nargin==0
 	display('addgrid(numx,numz) creates a numx X numz grid relative to available elevation data');
 	display('addgrid(xmin,xmax,zmin,zmax,step) creates a grid with those limits and splitted every "step" meters');
 end
-display('1) Create grid.geo')
-display('2) Add grid to salida\joined.geo')
-display('3) Add grid to salida\anchors_carretera.geo')
-option=input('Select one option:')
+
+global progress_bar
+if isempty('progress_bar')==0
+	option=1;
+else
+	display('1) Create grid.geo')
+	display('2) Add grid to salida\joined.geo')
+	display('3) Add grid to salida\anchors_carretera.geo')
+	option=input('Select one option:')
+end
 if option==2
 	fid=fopen('salida\joined.geo','a');
 elseif option==3

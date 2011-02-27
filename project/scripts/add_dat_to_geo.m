@@ -4,7 +4,7 @@ if nargin==0
 	camino=pwd;
 end
 
-
+camino=strrep(camino,'/','\');
 [errores,filename]=system(sprintf('dir %s\\*.dat /b',camino));
 ficheros=strsplit(filename,strcat(char(13),char(10)));
 

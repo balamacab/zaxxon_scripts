@@ -11,21 +11,34 @@ function  join_all()
 
 fichero1='salida\Venue.xml';
 muros1='..\s7_walls\salida\muros.txt';
+listado_imagenes='..\s1_mesh\list_bi.txt';
 
-grabar(fichero1,muros1);
+grabar(fichero1,muros1,listado_imagenes);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function grabar(fichero1,muros1)
+function grabar(fichero1,muros1,listado_imagenes)
 fid1=my_fopen(fichero1,'w')
 
 fid=my_fopen('start.txt','r');
 contents=fread(fid,inf);
-my_fclose(fid)
+my_fclose(fid);
 
-fwrite(fid1,contents);
+fid=fopen(listado_imagenes,'r');
+if fid~=-1
+  contenido_imagenes=fread(fid,inf);
+  fclose(fid);
+  contenido_imagenes=char(contenido_imagenes)';
+  contents=strrep(char(contents)','<BackgroundImages count="0" />',contenido_imagenes);
+  display(sprintf('Including %s',listado_imagenes));
+else
+  display(sprintf('%s not found',listado_imagenes));
+end
+fprintf(fid1,"%s",contents);
+
+
 
 numtramos=cargar_tramos()
 

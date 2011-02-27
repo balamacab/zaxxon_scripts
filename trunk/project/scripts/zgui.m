@@ -11,7 +11,7 @@ if length(findstr(cadena,'pertoire'))>0
 elseif length(findstr(cadena,'irectorio'))>0
 	display('Español');
 	try
-		french_strings
+		spanish_strings
 	catch
 		display('spanish_strings.m no encontrado');
 		english_strings

@@ -1,0 +1,55 @@
+
+%Don't use special characters like á, é, ñ, n, etc.
+%Respect all the special chars like ", ', \n, %f, etc.
+
+string001='Este script debe usarse en el directorio raiz del proyecto';
+string002="'Importar el kml'";
+string003="'Ancho\ncarretera (m):'";
+string004="'Espaciado\npaneles (m):'";
+string005="'Fichero no encontrado'";
+string006="'Crear rejilla'";
+string007="'Elevar kmls'";
+string008="'Leer rejilla'";
+string009="'Ver\ndatos'";
+string010="'Paso (m):'";
+string011="'Tamanyo fichero\n(puntos):'";
+string012="El procesamiento de este SON ha terminado";
+string013="'Leer datos elevacion'";
+string014="'Crear perfil en altura'";
+string015="'Consolidar'";
+string016="'Corregir terreno (opt)'";
+string017="'Usar linea\ncentral'";
+string018="'Factor de\nsuavizado:'";
+string019="'Pendiente\nmaxima:'";
+string020="'Ancho (m):'";
+string021="'nn Paneles:'";
+string022="'Crear el .geo'";
+string023="'Forzar\nregularidad'";
+string024="'Incluir limites\nde elevacion'";
+string025="'Elevar la malla'";
+string026="'Crear grid.hlg'";
+string027="'Crear test.obj'";
+string028="'Aceptar la malla'";
+string029="'Crear muros'";
+string030="'Crear puntos de ruptura'";
+string031="'Trocear carretera'";
+string032="'Crear el terreno'";
+string033="'nn segmentos:'";
+string034="'Mezcla con\nfondo'";
+string035="'Dividir terreno\n con rejilla:'";
+string036="'Crear Venue.xml'";
+string037="' Los ficheros .dat estan en el directorio:'";
+string038='Para comenzar:\nCopia el kml en el directorio s0_import\ny pulsa \"Importar el kml\"';
+string039='"La operacion no se pudo completar  %f"';
+string040='Operacion finalizada con exito';
+string041='La operacion no se pudo completar';
+string042='ficheros necesarios';
+string043='La operacion fallo. Usa un factor de suavizado impar';
+global string044='"AGR Dir\nencontrado"';
+global string045='"lidar Dir\nencontrado"';
+global string046='\nEncontrado"';
+global string047='\nNO Encontrado"';
+string048='anchors_carretera.mesh NO encontrado';
+global string049='Ejecutando comando:   ';
+string050='Edita pos_nodes.txt si quieres cambiar los puntos de division';
+string051='Procesa los SONS y luego ejectuta join_geos en s1_mesh';

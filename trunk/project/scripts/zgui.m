@@ -710,6 +710,7 @@ while (1)
 				progress_bar.out=out;
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s3_road');
+				clear coge_datos;
 				ejecuta(in,out,advb,'coge_datos');
 				ejecuta(in,out,advb,sprintf('creartrack1(%d)',valor_usecenter));
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
@@ -869,6 +870,7 @@ while (1)
 						end
 						gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 						ejecuta(in,out,advb,'cd ..\s4_terrain');
+						clear coge_datos;
 						ejecuta(in,out,advb,'coge_datos');
 						ejecuta(in,out,advb,'procesar_nodostxt');
 						if valor_createobj==1
@@ -930,6 +932,7 @@ while (1)
 				progress_bar.out=out;
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s7_walls');
+				clear coge_datos;
 				ejecuta(in,out,advb,'coge_datos');
 				ejecuta(in,out,advb,'poner_muro');
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);

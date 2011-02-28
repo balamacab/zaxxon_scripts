@@ -459,8 +459,10 @@ while (1)
 						ejecuta(in,out,advb,sprintf('btb06(%.1f,1,%.1f)',ancho,espaciado));
 						gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);
 						cd .. %Necesario para inicializa_s2
-						inicializa_s2(in,out,buts2b_makegrid,buts2b_raisekml,buts2b_readgrid,buts2b_plotlamalla,lbls2blimits,'s2_elevation_b','limits_b.kml')
-						inicializa_s2(in,out,buts2_makegrid,buts2_raisekml,buts2_readgrid,buts2_plotlamalla,lbls2limits,'s2_elevation','limits.kml')
+						if (strcmp(tipo,'SON')==0)
+							inicializa_s2(in,out,buts2b_makegrid,buts2b_raisekml,buts2b_readgrid,buts2b_plotlamalla,lbls2blimits,'s2_elevation_b','limits_b.kml')
+							inicializa_s2(in,out,buts2_makegrid,buts2_raisekml,buts2_readgrid,buts2_plotlamalla,lbls2limits,'s2_elevation','limits.kml')
+						end
 						informa_anyade(in,out,advb,string040);
 					catch
 						gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);
@@ -607,7 +609,7 @@ while (1)
 				tamfile = str2num(gtk(in,out,["gtk_entry_get_text ", sizes2b]));
 				paso = str2num(gtk(in,out,["gtk_entry_get_text ", steps2b]));
 				ejecuta(in,out,advb,'cd s2_elevation_b');
-				ejecuta(in,out,advb,sprintf('make_grid("limits.kml",%.1f,%d);',paso,tamfile));
+				ejecuta(in,out,advb,sprintf('make_grid("limits_b.kml",%.1f,%d);',paso,tamfile));
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
 				gtk(in,out,["gtk_widget_set_sensitive ",buts2b_raisekml,"1"]);
 				informa_anyade(in,out,advb,string040);
@@ -814,7 +816,7 @@ while (1)
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s1_mesh;');
 				ejecuta(in,out,advb,sprintf('mallado_regular(%.2f,%d,%d)',terrain_width,round(terrain_panels),valor_regular));
-				if valor_includelimits==1
+				if (valor_includelimits==1) && (strcmp(tipo,'SON')==0)
 					%informa_anyade(in,out,advb,'Select an option in command-line window');
 					ejecuta(in,out,advb,'addgrid(1,1)')
 				end
@@ -964,6 +966,7 @@ while (1)
 				progress_bar.out=out;
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd pacenotes');
+				clear coge_datos;
 				ejecuta(in,out,advb,'coge_datos');
 				ejecuta(in,out,advb,'pacenotes_a');
 				ejecuta(in,out,advb,'pacenotes2_a(0.03,10)');
@@ -986,6 +989,7 @@ while (1)
 				cd s10_split
 				cd ..
 				ejecuta(in,out,advb,'cd s10_split');
+				clear coge_datos;
 				ejecuta(in,out,advb,'coge_datos');
 				ejecuta(in,out,advb,sprintf('split_track(%d)',num_segmentos));
 				gtk(in,out,["gtk_widget_set_sensitive ",buts10_splittrack,"1"]);
@@ -1007,7 +1011,9 @@ while (1)
 				if strcmp(tipo,'SON')==1
 					informa_anyade(in,out,advb2,string012);
 				end
-				gtk(in,out,["gtk_widget_set_sensitive ",buts9_pacenotes,"1"]);
+				if (strcmp(tipo,'SON')==0)
+					gtk(in,out,["gtk_widget_set_sensitive ",buts9_pacenotes,"1"]);
+				end
 				informa_anyade(in,out,advb,string040);
 			catch
 				informa_anyade(in,out,advb,string041);

@@ -87,7 +87,7 @@ for h=1:length(lista_pacenotes)
       nodo=buscar_anchor_cercano(x(lista_pacenotes(h).nodo),z(lista_pacenotes(h).nodo),anchors);
       [track nodo_inicial frontera]=dame_nodo_inicial(elnodo(nodo),tramos);
       fprintf(fid,'<Pacenote Name=\"%s\" DrivelineSegmentId=\"%d\" KnotOrNodeId=\"%d\" Percentage=\"%.2f\" Variation=\"%s\" />\r\n',lista_pacenotes(h).Nombre,track,elnodo(nodo)-nodo_inicial,elporcentaje(nodo),lista_pacenotes(h).Variation);
-      fprintf(1,'%s %f %f %d %d\r\n',lista_pacenotes(h).Nombre,x(lista_pacenotes(h).nodo),z(lista_pacenotes(h).nodo),track,elnodo(nodo)-nodo_inicial);
+      %fprintf(1,'%s %f %f %d %d\r\n',lista_pacenotes(h).Nombre,x(lista_pacenotes(h).nodo),z(lista_pacenotes(h).nodo),track,elnodo(nodo)-nodo_inicial);
     end
 end
   fprintf(fid,'</Pacenotes>\r\n');

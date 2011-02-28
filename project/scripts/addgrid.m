@@ -61,8 +61,8 @@ end
 
 global progress_bar
 if isempty('progress_bar')==0
-	option=1;
-else
+	option=4;
+	else
 	display('1) Create grid.geo')
 	display('2) Add grid to salida\joined.geo')
 	display('3) Add grid to salida\anchors_carretera.geo')
@@ -72,6 +72,8 @@ if option==2
 	fid=fopen('salida\joined.geo','a');
 elseif option==3
     fid=fopen('salida\anchors_carretera.geo','a');
+elseif option==4
+    fid=fopen('salida\limits.geo','w');
 else
     fid=fopen('grid.geo','w');
 end

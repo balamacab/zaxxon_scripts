@@ -438,6 +438,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
         if strcmp(event, buts0)
+				informa_nuevo(in,out,advb2,string053);
 				informa_nuevo(in,out,advb,'S0');
 				%gtk(in,out,["gtk_label_set_text ",adv,sprintf('"Processing"')]);
 				ancho = gtk(in,out,["gtk_entry_get_text ", widths0]);
@@ -473,6 +474,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%				
 		if strcmp(event, buts0_refresh)
+			informa_nuevo(in,out,advb2,string054);
 			informa_nuevo(in,out,advb,'S0');
 			try
 				[ancho,espaciado,fichero]=inicializa_s0;
@@ -493,6 +495,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%				
         if strcmp(event, buts2_makegrid)
+			informa_nuevo(in,out,advb2,string058);
 			informa_nuevo(in,out,advb,'S2');
 			try
 				global progress_bar;
@@ -516,6 +519,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%			
 		if strcmp(event, buts2_readgrid )
+			informa_nuevo(in,out,advb2,string056);
 			informa_nuevo(in,out,advb,'S2');
 			try
 				global progress_bar;
@@ -537,6 +541,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%			
 		if strcmp(event, buts2_plotlamalla )
+			informa_nuevo(in,out,advb2,string057);
 			informa_nuevo(in,out,advb,'S2');
 			try
 				ejecuta(in,out,advb,'cd s2_elevation');
@@ -551,6 +556,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 		if strcmp(event, buts2_refresh )
+			informa_nuevo(in,out,advb2,string055);
 			informa_nuevo(in,out,advb,'S2');
 			inicializa_s2(in,out,buts2_makegrid,buts2_raisekml,buts2_readgrid,buts2_plotlamalla,lbls2limits,'s2_elevation','limits.kml')
 			try	
@@ -569,6 +575,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%				
 		if strcmp(event, buts2_raisekml )
+			informa_nuevo(in,out,advb2,string059);
 			informa_nuevo(in,out,advb,'S2');
 			try
 				global progress_bar;
@@ -589,6 +596,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%				
         if strcmp(event, buts2b_makegrid)
+			informa_nuevo(in,out,advb2,string058);
 			informa_nuevo(in,out,advb,'S2b');
 			try
 				global progress_bar;
@@ -611,6 +619,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%			
 		if strcmp(event, buts2b_readgrid )
+			informa_nuevo(in,out,advb2,string056);
 			informa_nuevo(in,out,advb,'S2b');
 			try
 				global progress_bar;
@@ -633,6 +642,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%			
 		if strcmp(event, buts2b_plotlamalla )
+			informa_nuevo(in,out,advb2,string057);
 			informa_nuevo(in,out,advb,'S2b');
 			try
 				ejecuta(in,out,advb,'cd s2_elevation_b;');
@@ -647,6 +657,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 		if strcmp(event, buts2b_refresh )
+			informa_nuevo(in,out,advb2,string063);
 			informa_nuevo(in,out,advb,'S2b');
 			inicializa_s2(in,out,buts2b_makegrid,buts2b_raisekml,buts2b_readgrid,buts2b_plotlamalla,lbls2blimits,'s2_elevation_b','limits_b.kml')
 			try	
@@ -665,6 +676,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%				
 		if strcmp(event, buts2b_raisekml )
+			informa_nuevo(in,out,advb2,string059);
 			informa_nuevo(in,out,advb,'S2b');
 			try
 				global progress_bar;
@@ -686,6 +698,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%				
 		if strcmp(event, buts3_readdata )
+			informa_nuevo(in,out,advb2,string065);
 			informa_nuevo(in,out,advb,'S3');
 			try
 				valor_usecenter=str2num(gtk(in,out,["gtk_toggle_button_get_active ",s3_usecenter]))
@@ -710,6 +723,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		if strcmp(event, buts3_createprofile )
+			informa_nuevo(in,out,advb2,string066);
 			informa_nuevo(in,out,advb,'S3');
 			try
 				slope_limit = str2num(gtk(in,out,["gtk_entry_get_text ", s3_slopelimit]));
@@ -733,6 +747,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         if strcmp(event, buts3_consolidate)
+			informa_nuevo(in,out,advb2,string067);
 			informa_nuevo(in,out,advb,'S3');
 			try
 				global progress_bar;
@@ -755,6 +770,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		if strcmp(event, buts3_refresh )
+			informa_nuevo(in,out,advb2,string068);
 			informa_nuevo(in,out,advb,'S3');
 			try
 				inicializa_s3(in,out,buts3_readdata,buts3_createprofile,buts3_fixterrain,buts3_consolidate);
@@ -767,6 +783,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		if strcmp(event, buts3_fixterrain)
+			informa_nuevo(in,out,advb2,string069);
 			informa_nuevo(in,out,advb,'S3');
 			try
 				slope_limit = str2num(gtk(in,out,["gtk_entry_get_text ", s3_slopelimit]));
@@ -783,6 +800,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         if strcmp(event, buts1)
+			informa_nuevo(in,out,advb2,string070);
 			informa_nuevo(in,out,advb,'S1');
 			try
 				valor_regular=str2num(gtk(in,out,["gtk_toggle_button_get_active ",s1_regular]))
@@ -815,6 +833,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		if strcmp(event, buts1_refresh)
+			informa_nuevo(in,out,advb2,string071);
 			informa_nuevo(in,out,advb,'S1');
 			try
 				inicializa_s1(in,out,buts1);
@@ -830,6 +849,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
         if strcmp(event, buts4_raise)
+					informa_nuevo(in,out,advb2,string072);
 					informa_nuevo(in,out,advb,'S2');
 					valor_createhlg=str2num(gtk(in,out,["gtk_toggle_button_get_active ",s4_createhlg]));
 					valor_createobj=str2num(gtk(in,out,["gtk_toggle_button_get_active ",s4_createobj]));
@@ -864,6 +884,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
         if strcmp(event, buts4_accept)
+					informa_nuevo(in,out,advb2,string073);
 					informa_nuevo(in,out,advb,'S2');
 					try
 						global progress_bar;
@@ -878,13 +899,14 @@ while (1)
 						informa_anyade(in,out,advb,string040);
 					catch
 						gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);
-						informa_anyade(in,out,advb,sprintf(string039,ancho));
+						informa_anyade(in,out,advb,string041);
 					end
         end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%				
 		if strcmp(event, buts4_refresh)
+			informa_nuevo(in,out,advb2,string074);
 			informa_nuevo(in,out,advb,'S4');
 			try
 				inicializa_s4(in,out,buts4_raise,buts4_accept,advb)
@@ -897,6 +919,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%				
         if strcmp(event, buts7)
+			informa_nuevo(in,out,advb2,string075);
 			informa_nuevo(in,out,advb,'S7');
 			try
 				global progress_bar;
@@ -918,6 +941,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 		if strcmp(event, buts7_refresh )
+			informa_nuevo(in,out,advb2,string076);
 			informa_nuevo(in,out,advb,'S7');
 			try
 				inicializa_s7(in,out,buts7)	
@@ -931,6 +955,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%				
         if strcmp(event, buts9_pacenotes)
+			informa_nuevo(in,out,advb2,string077);
 			informa_nuevo(in,out,advb,'S7');
 			try
 				global progress_bar;
@@ -954,6 +979,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		if strcmp(event, buts10_createsplit )
+			informa_nuevo(in,out,advb2,string079);
 			informa_nuevo(in,out,advb,'S10');
 			try
 				num_segmentos=str2num(gtk(in,out,["gtk_entry_get_text ", s10_split]));
@@ -964,7 +990,7 @@ while (1)
 				ejecuta(in,out,advb,sprintf('split_track(%d)',num_segmentos));
 				gtk(in,out,["gtk_widget_set_sensitive ",buts10_splittrack,"1"]);
 				informa_anyade(in,out,advb,string040);
-				informa_anyade(in,out,advb2,string050);
+				informa_anyade(in,out,advb,string050);
 			catch
 				informa_anyade(in,out,advb,string041);
 			end
@@ -973,11 +999,11 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         if strcmp(event, buts10_splittrack )
+			informa_nuevo(in,out,advb2,string078);
 			informa_nuevo(in,out,advb,'S10');
 			try
 				ejecuta(in,out,advb,'cd s10_split');
 				ejecuta(in,out,advb,'partir_track');
-				informa_anyade(in,out,advb,string040);
 				if strcmp(tipo,'SON')==1
 					informa_anyade(in,out,advb2,string012);
 				end
@@ -992,6 +1018,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		if strcmp(event, buts10_createterrain )
+			informa_nuevo(in,out,advb2,string080);
 			informa_nuevo(in,out,advb,'S10');
 			gridX=str2num(gtk(in,out,["gtk_combo_box_get_active_text ", drops10X]));
 			gridY=str2num(gtk(in,out,["gtk_combo_box_get_active_text ", drops10Y]));
@@ -1015,6 +1042,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		if strcmp(event, buts10_refresh		)
+			informa_nuevo(in,out,advb2,string081);
 			informa_nuevo(in,out,advb,'S10');
 			try
 				inicializa_s10(in,out,buts10_createsplit,buts10_splittrack,buts10_createterrain,lbls10_distancia)
@@ -1028,6 +1056,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 		if strcmp(event, buts9_joinall)
+			informa_nuevo(in,out,advb2,string082);
 			informa_nuevo(in,out,advb,'S9');
 			
 			
@@ -1059,6 +1088,7 @@ while (1)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 		if strcmp(event, buts9_refresh)
+			informa_nuevo(in,out,advb2,string083);
 			informa_nuevo(in,out,advb,'S1');
 			try
 				inicializa_s9(in,out,buts9_pacenotes);
@@ -1259,7 +1289,7 @@ end
 function ejecuta(in,out,advb,cadena)
 global string049;%='Running command:   ';
 informa_anyade(in,out,advb,[string049,strrep(cadena,'"','\"')]);gtk(in,out,"gtk_server_callback update");
-eval(cadena);
+eval(cadena,'a***xnada');
 end
 
 function comprueba(in,out,ficheros,widget)

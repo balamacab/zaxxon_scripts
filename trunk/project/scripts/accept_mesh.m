@@ -193,7 +193,7 @@ message(11);
     function [mapeo1 nodos_finales]=remapear(Pts1,nodos_finales);
     mapeo1=[];
     for h=1:length(Pts1)
-        if mod(h,5000)==0
+        if mod(h,50)==0
             mensaje=sprintf('%.3f\r',h/length(Pts1));
 	    display(mensaje);
         end

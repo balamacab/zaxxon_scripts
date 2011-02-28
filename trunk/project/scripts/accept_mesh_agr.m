@@ -222,9 +222,6 @@ message(11);
 		 dim1=dim1(1);
          rango=1:dim1;
          Ntri1=[mapeo1(tri1(rango,1))' mapeo1(tri1(rango,2))' mapeo1(tri1(rango,3))'];
-         %for h=1:length(tri1)
-         %   Ntri1(h,:)=[mapeo1(tri1(h,1)) mapeo1(tri1(h,2)) mapeo1(tri1(h,3))];
-         %end
     end	
 
 end

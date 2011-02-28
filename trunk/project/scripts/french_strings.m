@@ -40,7 +40,7 @@ string034="'Fusionner avec\nArriere Plan'";
 string035="'Diviser le terrain\navec une grille:'";
 string036="'Creer Venue.xml'";
 string037="' Les fichiers .dat\nsont dans le dossier:'";
-string038='Pour commencer:\nCopier votre trace kml dans le dossier s0_import\net appuyez sur le bouton\"Importer un kml\" \n\nFor mor info Visit:\n http://www.plpcreation.tonsite.biz/\nhttp://btbtracks-rbr.foroactivo.com/t131-zaxxon-s-method-tutorial\nhttp://foro.simracing.es/bobs-track-builder/3815-1.html\nhttp://devtrackteam.solorally.it/viewforum.php?f=28';
+string038='Pour commencer:\nCopier votre trace kml dans le dossier s0_import\net appuyez sur le bouton\"Importer un kml\" \n\nFor mor info Visit:\n http://www.plpcreation.tonsite.biz/\nhttp://forum.rallyesim.fr/viewtopic.php?f=51&t=3025&start=825\nhttp://btbtracks-rbr.foroactivo.com/t131-zaxxon-s-method-tutorial\nhttp://foro.simracing.es/bobs-track-builder/3815-1.html\nhttp://devtrackteam.solorally.it/viewforum.php?f=28';
 string039='"L operation a echouee  %f"';
 string040='L operation a reussi';
 string041='L operation a echouee';

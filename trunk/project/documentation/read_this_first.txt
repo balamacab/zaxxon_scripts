@@ -37,4 +37,7 @@ More files you can find inside the documentatin folder:
 	
 - "How to add SObjects with the scripts.pdf": this is for advanced users. Tells you how can you
     automatically create sobjects on both sides of the road, like guardrails
-    
+
+
+You have also the possibility of using a graphical interface for the scripts. Read:
+Install_of_the_graphical_interface.pdf

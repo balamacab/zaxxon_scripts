@@ -10,14 +10,25 @@ function trocea_malla()
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
 subdirectorio='salida\';
-fichero_entrada='anchors_carretera.msh';
-fid=fopen(strcat(subdirectorio,fichero_entrada),'r');
-if fid==-1
-    subdirectorio='';    
-    fid=my_fopen(strcat(subdirectorio,fichero_entrada),'r');
+fichero_entrada1='joined.msh';
+fichero_entrada2='anchors_carretera.msh';
+
+if exist(strcat(subdirectorio,fichero_entrada1))>0
+	fid=fopen(strcat(subdirectorio,fichero_entrada1),'r');
+	display(sprintf('Using %s as input',fichero_entrada1));
+elseif exist(strcat(subdirectorio,fichero_entrada2))>0	
+	fid=fopen(strcat(subdirectorio,fichero_entrada2),'r');
+	display(sprintf('Using %s as input',fichero_entrada2))
+elseif exist(fichero_entrada2)>0   	
+	subdirectorio='';
+        fid=my_fopen(strcat(subdirectorio,fichero_entrada2),'r');
+	display(sprintf('Using %s as input',fichero_entrada2))
 else
-   display('Abriendo el fichero salida\anchors_carretera.msh');	
+	display('.msh file not found');
+	return;
 end
+
+
 contenido=fread(fid,Inf); 
 my_fclose(fid)
 

@@ -22,6 +22,8 @@ if nargin==3
    conunion=1;
 end
 
+global progress_bar;
+
    hay_triangulos_pegados=0;
 
   fichero_de_nodos_con_altura='nodos_conaltura.txt';
@@ -282,15 +284,25 @@ for h=1:length(n1)
 		    usado_c(zona)=1;
             cuenta_conducibles=cuenta_conducibles+1;
             if mod(h,10000)==0
-                mensaje=sprintf('Cond=%d\n',cuenta_conducibles);
-                display(mensaje);
+				if isempty('progress_bar')==0
+					gtk(progress_bar.in,progress_bar.out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',(1.0*h)/length(n1))]);
+					gtk(progress_bar.in,progress_bar.out,"gtk_server_callback update");
+				else
+					mensaje=sprintf('Cond=%d\n',cuenta_conducibles);
+					display(mensaje);
+				end
             end
         else
 			usado_nc(zona)=1;
             cuenta_noconducibles=cuenta_noconducibles+1;
             if mod(h,10000)==0
-                mensaje=sprintf('NoCond=%d\n',cuenta_noconducibles);
-                display(mensaje);
+				if isempty('progress_bar')==0
+					gtk(progress_bar.in,progress_bar.out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',(1.0*h)/length(n1))]);
+					gtk(progress_bar.in,progress_bar.out,"gtk_server_callback update");
+				else
+					mensaje=sprintf('NoCond=%d\n',cuenta_noconducibles);
+					display(mensaje);
+				end
             end
         end
     end

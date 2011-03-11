@@ -1,5 +1,6 @@
 function zgui()
-[status cadena]=system('dir nothing');
+%[Status, Text]=dos("chcp 1251") 
+[status cadena]=system('dir nothing 2>NUL');
 if length(findstr(cadena,'pertoire'))>0
 	display('French');
 	try
@@ -872,13 +873,18 @@ while (1)
 						ejecuta(in,out,advb,'cd ..\s4_terrain');
 						clear coge_datos;
 						ejecuta(in,out,advb,'coge_datos');
-						ejecuta(in,out,advb,'procesar_nodostxt');
-						if valor_createobj==1
-							ejecuta(in,out,advb,"msh_to_obj('salida/nodos_conaltura.txt','elements.txt');");
+						errores=load('errores.mat');errores=errores.errores;
+						if errores==1
+							b=fuerzo_una_excepcion
+						else
+							ejecuta(in,out,advb,'procesar_nodostxt');
+							if valor_createobj==1
+								ejecuta(in,out,advb,"msh_to_obj('salida/nodos_conaltura.txt','elements.txt');");
+							end
+							gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);
+							gtk(in,out,["gtk_widget_set_sensitive ",buts4_accept,"1"]);
+							informa_anyade(in,out,advb,string040);
 						end
-						gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);
-						gtk(in,out,["gtk_widget_set_sensitive ",buts4_accept,"1"]);
-						informa_anyade(in,out,advb,string040);
 					catch
 						gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);
 						informa_anyade(in,out,advb,string041);
@@ -1157,10 +1163,10 @@ global string047;
 					gtk(in,out,["gtk_label_set_text ",lbls2limits,string045])
 				end
 	else
-				[errores,nadena]=system('dir mapeo.txt /b');
+				[errores,nadena]=system('dir mapeo.txt /b 2>NUL');
 				existe_mapeo=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
 				
-				[errores,nadena]=system(['dir ',folder,'\',ficherokml,' /b']);
+				[errores,nadena]=system(['dir ',folder,'\',ficherokml,' /b  2>NUL']);
 				numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
 				if (numero_ficheros>0) & (existe_mapeo)
 					gtk(in,out,["gtk_widget_set_sensitive ",buts2_makegrid,"1"]);
@@ -1173,7 +1179,7 @@ global string047;
 					gtk(in,out,["gtk_label_set_text ",lbls2limits,'"',ficherokml,string047])					
 				end
 				
-				[errores,nadena]=system(['dir ',folder,'\salida\grid*.kml /b']);
+				[errores,nadena]=system(['dir ',folder,'\salida\grid*.kml /b  2>NUL']);
 			    numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
 				if (numero_ficheros>0) & ((exist('c:\python27')==7))
 					gtk(in,out,["gtk_widget_set_sensitive ",buts2_raisekml,"1"]);
@@ -1239,7 +1245,7 @@ end
 	
 function fichero=encuentra_kml()
 
-	[errores,filename]=system('dir *.kml /b');
+	[errores,filename]=system('dir *.kml /b  2>NUL');
 	pos = findstr (filename, '.kml');
 	filename=filename(1:pos+3);
 	if length(filename)<3
@@ -1302,7 +1308,7 @@ eval(cadena,'a***xnada');
 end
 
 function comprueba(in,out,ficheros,widget)
-	[errores,nadena]=system(ficheros);
+	[errores,nadena]=system([ficheros,' 2>NUL']);
 	numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
 	if numero_ficheros>0
 		gtk(in,out,["gtk_widget_set_sensitive ",widget,"1"]);

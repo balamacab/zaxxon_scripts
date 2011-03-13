@@ -76,7 +76,7 @@ for h=1:numnodos-1
 	Distancia3=S.tree(h+1).ControlPoints.EntryDistance;
     
 	if mod(h,100)==0
-	     if isempty('progress_bar')==0
+	     if isempty(progress_bar)==0
 			gtk(progress_bar.in,progress_bar.out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.5+(0.5*h)/numnodos)]);
 			gtk(progress_bar.in,progress_bar.out,"gtk_server_callback update");
 		 else

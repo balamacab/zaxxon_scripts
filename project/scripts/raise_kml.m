@@ -9,4 +9,7 @@ function raise_kml()
 % 
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
-system('c:\Python27\python.exe ..\scripts\elevar.ply -i "salida"')
+[status]=system('c:\Python27\python.exe ..\scripts\elevar.ply -i "salida"')
+if status~=5
+	aaa=force_exception;
+end

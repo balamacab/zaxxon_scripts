@@ -64,7 +64,7 @@ string056='We read the gridXXX_relleno.kml files and create a file\n (called lam
 string057='We plot the elevation data (lamalla.mat)';
 string058=['We create a grid of equispaced points that covers all the \nterrain enclosed by limits.kml. Those points are saved',...
 'in gridXXX.kml files and we will give elevation to those files\n using Raise the kmls button. File size should be kept below 5000'];
-string059='We give elevation to gridXXX.kml files\nResults are saved as gridXXX_relleno.kml files\nDo not use these button before reading raise_with_python.pdf';
+string059='We give elevation to gridXXX.kml files\nResults are saved as gridXXX_relleno.kml files\nDo not use this button before reading raise_with_python.pdf';
 string060='';
 string061='';
 string062='';

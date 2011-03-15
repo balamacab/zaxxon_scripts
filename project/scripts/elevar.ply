@@ -121,3 +121,4 @@ if __name__ == '__main__':
 
             os.system('taskkill /im googleearth.exe')
             time.sleep(5)
+    exit(5)

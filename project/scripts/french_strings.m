@@ -91,8 +91,7 @@ string072='On utlise nos donnees d elevation pour elever notre anchors_carretera
 string073='On doit changer l ordre des points du maillage pour correspondre aux points d ancrage de la route. C est un procede long.';
 string074='A cette etape, on attribue l altitude a notre terrain en utilisant nos donnees d elevation.';
 string075='On cree les murs de protection ainsi la voiture ne pourra pas atteindre la zone non-roulable.';
-string076=['On peut creer des murs de protection pour empecher la voiture de rouler sur une zone non-roulable\n Cette etape necessite qu il n y ai pas de trou dans les limites:\n',...
-'il doit toujours y avoir un triangle roulable en contact avec la limite. Les zones de fin de route sont la principale source de probleme pour cette etape.'];
+string076=['On peut creer des murs de protection pour empecher la voiture de rouler sur une zone non-roulable'];
 string077='On cree le pacenote pour la route principale';
 string078='On scinde la route en segments en utilisant le fichier info.\nLes tests nous ont appris qu utiliser des segments de 1-1.5Km marche bien. Des segments plus longs peuvent rendre BTB vraiment tres lent.';
 string079='On cree une liste des points de division de la route. Le resultat est dans le fichier pos_nodes.txt.\n Vous pouvez l editer pour le faire correspondre a vos besoins';

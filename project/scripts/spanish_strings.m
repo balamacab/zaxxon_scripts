@@ -90,9 +90,8 @@ string072='We use our elevation data to raise our anchors_carretera.msh\n';
 string073='We have to change mesh nodes order to match tracks anchors ordering. It is a slow process.';
 string074='In this step we give elevation to our terrain mesh using our elevation data';
 string075='We create the protection walls so the car can not reach the non-driveable zone.';
-string076=['We can create protection walls to avoid the car racing on the non-driveable zones\nThis step needs that the boundary has no gaps:\n',...
-'there must be always a driveable triangle in touch with boundary. End-track surfaces are the main source of problems for this step.'];
-string077='We create pacnotes for the main track';
+string076=['We can create protection walls to avoid the car racing on the non-driveable zones.'];
+string077='We create pacenotes for the main track';
 string078='We split the track into segments using pos_nodes.txt info.\nExperience tells us that 1-1.5Km segments work ok. Bigger segments can make BTB work really slow';
 string079='We create a set of split points for the track. Result is pos_nodes.txt.\n The user can edit pos_nodes.txt to fit his needs';
 string080=['We transform our mesh into BTB terrain format. The mesh will be split into\n',...

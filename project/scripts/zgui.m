@@ -380,7 +380,7 @@ if (pantalla==1) && (strcmp(tipo,'SON')==0)
 	s9_pb_pacenotes = gtk(in,out,"gtk_progress_bar_new ");
 	hseps9end= gtk(in,out,"gtk_hseparator_new");
 
-	inicializa_s9(in,out,buts9_pacenotes);
+	inicializa_s9(in,out,buts9_pacenotes,buts9_joinall);
 	%s9
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls9, " 1 3 112 113"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls9dotdat, " 20 22 112 113"]);
@@ -1023,6 +1023,7 @@ while (1)
 				if (strcmp(tipo,'SON')==0)
 					gtk(in,out,["gtk_widget_set_sensitive ",buts9_pacenotes,"1"]);
 				end
+				gtk(in,out,["gtk_widget_set_sensitive ",buts10_createterrain,"1"]);
 				informa_anyade(in,out,advb,string040);
 			catch
 				informa_anyade(in,out,advb,string041);
@@ -1045,8 +1046,11 @@ while (1)
 				progress_bar.out=out;
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s10_split');
+				clear coge_datos;
+				ejecuta(in,out,advb,'coge_datos');
 				ejecuta(in,out,advb,sprintf('procesar_elementstxt_mt(%d,%d,%d)',gridX,gridY,mezclar));				
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
+				gtk(in,out,["gtk_widget_set_sensitive ",buts9_joinall,"1"]);
 				informa_anyade(in,out,advb,string040);
 			catch
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
@@ -1106,7 +1110,7 @@ while (1)
 			informa_nuevo(in,out,advb2,string083);
 			informa_nuevo(in,out,advb,'S1');
 			try
-				inicializa_s9(in,out,buts9_pacenotes);
+				inicializa_s9(in,out,buts9_pacenotes,buts9_joinall);
 				informa_anyade(in,out,advb,string040);
 			catch
 				informa_anyade(in,out,advb,string041);
@@ -1197,33 +1201,33 @@ function inicializa_s3(in,out,buts3_readdata,buts3_createprofile,buts3_fixterrai
 	else
 		[numero_padres caminos]=look_for_father_or_sons('father.txt');
 		if numero_padres==0
-			comprueba(in,out,'dir s2_elevation\salida\lamalla.mat /b',buts3_readdata);
+			comprueba(in,out,'dir s2_elevation\salida\lamalla.mat ',buts3_readdata);
 		else
 			comprueba(in,out,sprintf('dir %s\\s3_road\\lamalla.mat',char(caminos(1))),buts3_readdata);
 		end
 	end
-	comprueba(in,out,'dir s3_road\alturas_track1.mat /b',buts3_createprofile);
-	comprueba(in,out,'dir s3_road\alturas_track1.mat /b',buts3_fixterrain);
-	comprueba(in,out,'dir s3_road\track0.mat /b',buts3_consolidate);
+	comprueba(in,out,'dir s3_road\alturas_track1.mat ',buts3_createprofile);
+	comprueba(in,out,'dir s3_road\alturas_track1.mat ',buts3_fixterrain);
+	comprueba(in,out,'dir s3_road\track0.mat ',buts3_consolidate);
 
 function inicializa_s1(in,out,buts1);
-	comprueba(in,out,'dir anchors.mat /b',buts1);
+	comprueba(in,out,'dir anchors.mat ',buts1);
 end
 
 function inicializa_s4(in,out,buts4_raise,buts4_accept,advb);
-	comprueba(in,out,'dir s1_mesh\salida\anchors_carretera.msh /b',buts4_raise);
-	comprueba(in,out,'dir s4_terrain\salida\anchors_originales.mat /b',buts4_accept);
+	comprueba(in,out,'dir s1_mesh\salida\anchors_carretera.msh ',buts4_raise);
+	comprueba(in,out,'dir s4_terrain\salida\anchors_originales.mat ',buts4_accept);
 end
 
 
 function inicializa_s7(in,out,buts7)
-	comprueba(in,out,'dir s4_terrain\salida\elements.txt /b',buts7);
+	comprueba(in,out,'dir s4_terrain\salida\elements.txt ',buts7);
 end
 
 function inicializa_s10(in,out,buts10_createsplit,buts10_splittrack,buts10_createterrain,lbls10_distancia)
-	comprueba(in,out,'dir venue\porcentajes.mat /b',buts10_createsplit);
-	comprueba(in,out,'dir s10_split\pos_nodes.txt /b',buts10_splittrack);
-	comprueba(in,out,'dir s6_hairpins\salida\nodos_conaltura.txt /b',buts10_createterrain);
+	comprueba(in,out,'dir venue\porcentajes.mat ',buts10_createsplit);
+	comprueba(in,out,'dir s10_split\pos_nodes.txt ',buts10_splittrack);
+	comprueba(in,out,'dir s6_hairpins\salida\nodos_conaltura.txt ',buts10_createterrain);
 	try 
 	          S=load('anchors.mat');
 			  nac=length(S.x);
@@ -1239,8 +1243,9 @@ function inicializa_s10(in,out,buts10_createsplit,buts10_splittrack,buts10_creat
 	gtk(in,out,["gtk_label_set_text ",lbls10_distancia,sprintf('"%d m"',round(distancia(end)))]);
 end
 
-function inicializa_s9(in,out,buts9_pacenotes)
+function inicializa_s9(in,out,buts9_pacenotes,buts9_joinall)
 	comprueba(in,out,'dir s10_split\tramos_nodos.mat',buts9_pacenotes);
+	comprueba(in,out,'dir s10_split\salida\lis.txt',buts9_joinall);
 end
 	
 function fichero=encuentra_kml()
@@ -1308,7 +1313,7 @@ eval(cadena,'a***xnada');
 end
 
 function comprueba(in,out,ficheros,widget)
-	[errores,nadena]=system([ficheros,' 2>NUL']);
+	[errores,nadena]=system([ficheros,' /b 2>NUL']);
 	numero_ficheros=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
 	if numero_ficheros>0
 		gtk(in,out,["gtk_widget_set_sensitive ",widget,"1"]);

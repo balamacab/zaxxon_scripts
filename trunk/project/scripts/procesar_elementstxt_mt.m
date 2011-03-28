@@ -42,8 +42,8 @@ if hay_triangulos_pegados=='h'
     return;
 end
 
-system('del /Q lis_conducibles*.txt');
-system('del /Q lis_noconducibles*.txt')
+system('del /Q lis_conducibles*.txt 2>NUL');
+system('del /Q lis_noconducibles*.txt 2>NUL')
 
 nac=obtener_nac();
 %nac es el número de anchors de la carretera
@@ -325,11 +325,11 @@ for k=1:partes_z
         g=(k-1)*partes_x+h;
 	    nombre_fichero=sprintf('lis_conducibles_%02d-%02d.txt',h,partes_z-k+1);
 	    if usado_c(g)==0
-			system(sprintf('del /Q /f %s 2> nul',nombre_fichero));
+			system(sprintf('del /Q /f %s 2>nul',nombre_fichero));
 		end
 		nombre_fichero=sprintf('lis_noconducibles_%02d-%02d.txt',h,partes_z-k+1);
 	    if usado_nc(g)==0
-			system(sprintf('del /Q /f %s 2> nul',nombre_fichero));
+			system(sprintf('del /Q /f %s 2>nul',nombre_fichero));
 		end
 	end
 end
@@ -339,7 +339,7 @@ end
 fprintf(fid_apoyo,final);
 fclose(fid_apoyo);
 
-system('del lis.txt');
+system('del lis.txt 2>NUL');
 
 fid=fopen('lis.txt','w');
 fprintf(fid,'      <TerrainAreas count="%d">',sum(usado_c)+sum(usado_nc));

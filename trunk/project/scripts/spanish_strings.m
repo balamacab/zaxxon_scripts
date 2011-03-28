@@ -100,5 +100,5 @@ string080=['We transform our mesh into BTB terrain format. The mesh will be spli
 'If you select this option BTB will refuse to open your Venue.xml\nunless it can find the .dds files for the background images\n',...
 'If you want blending select now the same grid dimensions you used with SASPLanet'];
 string081='This step creates the main blocks of the BTB project: the track segments and the terrain.\n For better BTB/RBR performance both should be splitted into smaller parts';
-string082='This is the final step. We are creating the BTB project joining all the parts.\nDo not foget to add the WP.zip and good luck';
+string082='This is the final step. We are creating the BTB project joining all the parts.\nDo not forget to add the WP.zip and good luck';
 string083='In this step we create the Venue.xml, the final output of the process.\nIf you have background images, set the correct path for them (using always /),\notherwise just make sure you enter a non-existant path';

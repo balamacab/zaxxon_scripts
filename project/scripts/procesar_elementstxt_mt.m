@@ -9,6 +9,7 @@ function procesar_elementstxt_mt(partes_x,partes_z,mapear,conunion)
 % 
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
+
 %conunion=1;%-inf para no unir con la carretera
 
 if nargin==0
@@ -86,8 +87,10 @@ for k=1:partes_z
         g=(k-1)*partes_x+h;
 	    nombre_fichero=sprintf('lis_conducibles_%02d-%02d.txt',h,partes_z-k+1);
 	    fid_c(g)=fopen(nombre_fichero,'w');
+        if fid_c(g)==-1,display('Unable to open output files for writing. Close octave and try with a smaller grid');a=force_exception;return;end
 	    nombre_fichero=sprintf('lis_noconducibles_%02d-%02d.txt',h,partes_z-k+1);
 	    fid_nc(g)=fopen(nombre_fichero,'w');
+        if fid_nc(g)==-1,display('Unable to open output files for writing. Close octave and try with a smaller grid');a=force_exception;return;end
 	end
 end
 usado_c=zeros(size(fid_c));
@@ -285,8 +288,8 @@ for h=1:length(n1)
             cuenta_conducibles=cuenta_conducibles+1;
             if mod(h,10000)==0
 				if isempty(progress_bar)==0
-					gtk(progress_bar.in,progress_bar.out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',(1.0*h)/length(n1))]);
-					gtk(progress_bar.in,progress_bar.out,"gtk_server_callback update");
+					gtk(progress_bar.in,progress_bar.out,['gtk_progress_bar_set_fraction ',progress_bar.id,sprintf('%.1f',(1.0*h)/length(n1))]);
+					gtk(progress_bar.in,progress_bar.out,'gtk_server_callback update');
 				else
 					mensaje=sprintf('Cond=%d\n',cuenta_conducibles);
 					display(mensaje);
@@ -297,8 +300,8 @@ for h=1:length(n1)
             cuenta_noconducibles=cuenta_noconducibles+1;
             if mod(h,10000)==0
 				if isempty(progress_bar)==0
-					gtk(progress_bar.in,progress_bar.out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',(1.0*h)/length(n1))]);
-					gtk(progress_bar.in,progress_bar.out,"gtk_server_callback update");
+					gtk(progress_bar.in,progress_bar.out,['gtk_progress_bar_set_fraction ',progress_bar.id,sprintf('%.1f',(1.0*h)/length(n1))]);
+					gtk(progress_bar.in,progress_bar.out,'gtk_server_callback update');
 				else
 					mensaje=sprintf('NoCond=%d\n',cuenta_noconducibles);
 					display(mensaje);

@@ -282,16 +282,17 @@ fs0=gtk(in,out,"gtk_frame_new");
 if (pantalla==1) && (strcmp(tipo,'SON')==0)
 	lbls4 = gtk(in,out,"gtk_label_new s4_terrain");
 	%http://library.gnome.org/devel/gtk/2.12/gtk-Stock-Items.html
-buts4_raise = gtk(in,out,["gtk_button_new_with_label ",string025]);
+	buts4_raise = gtk(in,out,["gtk_button_new_with_label ",string025]);
 	s4_pb_raise = gtk(in,out,"gtk_progress_bar_new ");
 	buts4_refresh = gtk(in,out,"gtk_button_new_from_stock 'gtk-refresh'");
 	%Si es SON, esta casilla debería estar desmarcada porque no tiene sentido
-	  s4_createhlg = gtk(in,out,["gtk_check_button_new_with_label ",string026," 1"]);
-s4_createobj = gtk(in,out,["gtk_check_button_new_with_label ",string027," 1"]);
-buts4_accept = gtk(in,out,["gtk_button_new_with_label ",string028]);
+	s4_createhlg = gtk(in,out,["gtk_check_button_new_with_label ",string026," 1"]);
+	s4_createobj = gtk(in,out,["gtk_check_button_new_with_label ",string027," 1"]);
+	buts4_accept = gtk(in,out,["gtk_button_new_with_label ",string028]);
 	s4_pb_accept = gtk(in,out,"gtk_progress_bar_new ");
 
 	hseps4s7 = gtk(in,out,"gtk_hseparator_new");
+	inicializa_s4(in,out,buts4_raise,buts4_accept);
 	
 	 %so ocupa del 1 al 4
 	 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", fs0, " 3 4 101 160"]);
@@ -919,7 +920,7 @@ while (1)
 			informa_nuevo(in,out,advb2,string074);
 			informa_nuevo(in,out,advb,'S4');
 			try
-				inicializa_s4(in,out,buts4_raise,buts4_accept,advb)
+				inicializa_s4(in,out,buts4_raise,buts4_accept)
 				informa_anyade(in,out,advb,string040);
 			catch
 				informa_anyade(in,out,advb,string041);
@@ -1214,8 +1215,8 @@ function inicializa_s1(in,out,buts1);
 	comprueba(in,out,'dir anchors.mat ',buts1);
 end
 
-function inicializa_s4(in,out,buts4_raise,buts4_accept,advb);
-	comprueba(in,out,'dir s1_mesh\salida\anchors_carretera.msh ',buts4_raise);
+function inicializa_s4(in,out,buts4_raise,buts4_accept);
+	comprueba(in,out,'dir s1_mesh\salida\*.msh ',buts4_raise);
 	comprueba(in,out,'dir s4_terrain\salida\anchors_originales.mat ',buts4_accept);
 end
 

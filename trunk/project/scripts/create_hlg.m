@@ -13,7 +13,7 @@ maxz=max(z);
 [longitudmax altura latitudmax]=BTB_a_coor(maxx,0,maxz,mapeo);
 
 %‘Operations’>’Select’>’Load from file’
-fid=fopen('grid.hlg','w');
+fid=fopen('sasplanet.hlg','w');
 fprintf(fid,'[HIGHLIGHTING]\r\n');
 fprintf(fid,'zoom=17\r\n');
 fprintf(fid,'PointLat_1=%f\r\n',latitudmax);%38.7015972947917

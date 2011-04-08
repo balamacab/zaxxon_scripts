@@ -115,9 +115,7 @@ if numero_padres==0  % Si no hay padre, generamos mapeo.txt. Si no lo hay, usamo
 		%fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indiceminlong),y(indiceminlat),x_utm(indiceminlong),y_utm(indiceminlat));
 		%fprintf(fid,'%.10f\n%.10f\n%.10f\n%.10f\n',x(indicemaxlong),y(indicemaxlat),x_utm(indicemaxlong),y_utm(indicemaxlat));
 		%my_fclose(fid);
-		fid=fopen('..\mapeo_uses_longlat.txt','w');
-		fprintf(fid,'This file should exist if mapeo.txt relates BTB coordinates to longitude,latitude. Delete it if uses UTM');
-		fclose(fid);
+
 	else
 		display('----------------------------------------------------------------------')
 		display('                                                                     -')
@@ -132,6 +130,10 @@ else
 	[mapeo]=textread(strcat(caminos(1),'\mapeo.txt'),'%f');
 end
 
+%Creamos un fichero que anota que se ha usado importakml y por tanto longitud/latitud
+fid=fopen('..\mapeo_uses_longlat.txt','w');
+fprintf(fid,'This file should exist if mapeo.txt relates BTB coordinates to longitude,latitude. Delete it if uses UTM');
+fclose(fid);
 
 fid=my_fopen('salida\trazado.kml','w');
 

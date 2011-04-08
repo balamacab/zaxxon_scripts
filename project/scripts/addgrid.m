@@ -8,8 +8,14 @@ if (nargin==2)|(nargin==3)
 	try 
 		S=load('..\s2_elevation_b\salida\lamalla.mat');
 	catch
-	    display('Warning: s2_elevation_b\lamalla.mat not found. Getting it from s2_elevation');
-		S=load('..\s2_elevation\salida\lamalla.mat'); %Asumimos que solo hay una malla
+	        display('Warning: s2_elevation_b\lamalla.mat not found. Getting it from s2_elevation');
+                try 
+		    S=load('..\s2_elevation\salida\lamalla.mat'); %Asumimos que solo hay una malla
+                catch
+                    display('Warning: lamalla.mat file not found');
+                    display('Grid not added');
+                    return;
+                end
 	end
 	minx=S.rangox(1);
 	maxx=S.rangox(end);

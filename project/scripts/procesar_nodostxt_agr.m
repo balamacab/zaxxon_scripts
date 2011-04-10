@@ -59,7 +59,7 @@ for h=1:tamanyo
 end
 fclose(fid);
 
-y=elevar_agr('deseados.txt')';
+y=elevar_agr('deseados.txt',mapeo)';
 if length(y)!=tamanyo
     display('ERROR FOUND');
 	display('ERROR FOUND');

@@ -1,4 +1,8 @@
-function alturas=elevar_agr(fichero_puntos)
+function alturas=elevar_agr(fichero_puntos,mapeo)
+	z_scale=get_option('Z_SCALING_FACTOR','%f');
+	if z_scale==-1
+		z_scale=1
+	end
 	%Buscamos datos AGR
 	[errores,filename]=system('dir ..\..\agr\*.agr /b');
 	pos = findstr (filename, '.agr');
@@ -10,9 +14,11 @@ function alturas=elevar_agr(fichero_puntos)
 		coo_x=coordenadas(1:2:end);
 		coo_z=coordenadas(2:2:end);
 		fclose(fid);
-		if (fchecked=fopen('..\mapeo_uses_longlat.txt','r'))!=-1 %Si este fichero existe, hay que transformar las coordenadas que 
-	                                                         %devuelve BTB_a_coor a UTM
-			fclose(fchecked);
+		%if (fchecked=fopen('..\mapeo_uses_longlat.txt','r'))!=-1 %Si este fichero existe, hay que transformar las coordenadas que    
+		%devuelve BTB_a_coor a UTM
+		%fclose(fchecked);
+		
+		if hay_terrestres_en_mapeo(mapeo)	
 			[coo_x coo_z]=deg2utm(coo_z,coo_x);
 		end
 		contador=1;
@@ -91,7 +97,7 @@ function alturas=elevar_agr(fichero_puntos)
 				end
 			end
 		end
-		alturas=alturas';
+		alturas=z_scale*alturas';
 		if length(alturas)==0
 			display('ERROR: Those AGR files do not contain useful elevation data');
 		end
@@ -134,7 +140,7 @@ function alturas=elevar_agr(fichero_puntos)
 				
 			end
 		end
-		alturas=alturas';
+		alturas=z_scale*alturas';
 	end 
 	
 
@@ -149,6 +155,10 @@ indicesfuera=find(dentrodelrango==0);
 
 end
 
-
-   
-
+function salida=hay_terrestres_en_mapeo(mapeo)
+%Si las coordenadas BTB son claramente mayores en magnitud que las otras, entonces deducimos que las otras son longitud/latitud
+if log10(abs((mapeo(2)-mapeo(6))/(mapeo(4)-mapeo(8))))>2
+	salida=1
+else
+	salida=0
+end

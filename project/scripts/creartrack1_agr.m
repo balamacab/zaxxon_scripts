@@ -62,7 +62,7 @@ if usar_centro==0
     end
     fclose(fid);
 
-    alturas=elevar_agr('carretera.txt');
+    alturas=elevar_agr('carretera.txt',mapeo);
 	if length(alturas)==0
 		return
 	end
@@ -87,7 +87,7 @@ else
     end
     fclose(fid);
 
-    nueva_altura=elevar_agr('carretera.txt');
+    nueva_altura=elevar_agr('carretera.txt',mapeo);
 end
 
 cabecera=sprintf('      <nodes count=\"%d\">\n        <OnlyOneNodeSelected>1</OnlyOneNodeSelected>\n<LineType>BezierSpline</LineType>\n',length(nueva_altura));

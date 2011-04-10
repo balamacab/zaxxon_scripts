@@ -12,5 +12,9 @@ contenido=fread(fid,inf);
 contenido=char(contenido)';
 
 pos_option=findstr(contenido,nombre);
-value=sscanf(contenido((pos_option+length(nombre)+1):end),tipo,1);
+if length(pos_option)>0
+	value=sscanf(contenido((pos_option+length(nombre)+1):end),tipo,1);
+else
+	value=-1;
+end
 fclose(fid);

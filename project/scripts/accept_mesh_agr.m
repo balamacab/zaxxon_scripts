@@ -112,7 +112,7 @@ for h=1:tamanyo
 end
 fclose(fidy);
 
-y=elevar_agr('deseados.txt')';
+y=elevar_agr('deseados.txt',mapeo)';
 y=reshape(y,size(x));
 
 nodos_finales=[x;y;z]'; %Punto de partida

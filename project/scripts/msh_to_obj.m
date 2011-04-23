@@ -34,7 +34,7 @@ while (feof(fid)!=1)
 	end
 end
 fclose(fid);
-[nada,orden]=sort(id_superficie);
+[id_superficie,orden]=sort(id_superficie);
 n1=n1(orden);
 n2=n2(orden);
 n3=n3(orden);
@@ -53,9 +53,13 @@ id_particular=id_particular(orden);
 		v4=n4;
 		id_anterior=-1;
 		for h=1:length(n1)
-				if id_superficie(h)~=id_anterior
-					fprintf(fid_w,'g group%02d\r\n',id_anterior);
-					id_anterior=id_superficie(h);
+				%if id_superficie(h)~=id_anterior
+				%	fprintf(fid_w,'g group%02d\r\n',id_superficie(h));
+				%	id_anterior=id_superficie(h);
+				%end
+				if id_particular(h)~=id_anterior
+					fprintf(fid_w,'g group%02d\r\n',id_particular(h));
+					id_anterior=id_particular(h);
 				end
 				if v4(h)==-1
 					fprintf(fid_w,'f %d/%d/%d %d/%d/%d %d/%d/%d\r\n',v1(h),v1(h),v1(h),v2(h),v2(h),v2(h),v3(h),v3(h),v3(h));

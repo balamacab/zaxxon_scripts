@@ -85,16 +85,18 @@ fronterasz=linspace(limite_izquierdo-0.1,limite_derecho+0.1,partes_z+1); %Dividi
 for k=1:partes_z
 	for h=1:partes_x
         g=(k-1)*partes_x+h;
-	    nombre_fichero=sprintf('lis_conducibles_%02d-%02d.txt',h,partes_z-k+1);
-	    fid_c(g)=fopen(nombre_fichero,'w');
-        if fid_c(g)==-1,display('Unable to open output files for writing. Close octave and try with a smaller grid');a=force_exception;return;end
-	    nombre_fichero=sprintf('lis_noconducibles_%02d-%02d.txt',h,partes_z-k+1);
-	    fid_nc(g)=fopen(nombre_fichero,'w');
-        if fid_nc(g)==-1,display('Unable to open output files for writing. Close octave and try with a smaller grid');a=force_exception;return;end
+	    %nombre_fichero=sprintf('lis_conducibles_%02d-%02d.txt',h,partes_z-k+1);
+	    %fid_c(g)=fopen(nombre_fichero,'w');
+		terreno_c{g}='';
+        %if fid_c(g)==-1,display('Unable to open output files for writing. Close octave and try with a smaller grid');a=force_exception;return;end
+	    %nombre_fichero=sprintf('lis_noconducibles_%02d-%02d.txt',h,partes_z-k+1);
+	    %fid_nc(g)=fopen(nombre_fichero,'w');
+		terreno_nc{g}='';
+        %if fid_nc(g)==-1,display('Unable to open output files for writing. Close octave and try with a smaller grid');a=force_exception;return;end
 	end
 end
-usado_c=zeros(size(fid_c));
-usado_nc=zeros(size(fid_nc));
+usado_c=zeros(partes_x*partes_z,1);
+usado_nc=zeros(partes_x*partes_z,1);
 
 fid_apoyo=fopen('lis_apoyo.txt','w');
 
@@ -117,21 +119,30 @@ else
 	'            <TerrainFaces>\n');
 end
 	
-for g=1:length(fid_c)
-	columna=mod(g-1,partes_x);%Eje x
-	fila=floor((g-1)/partes_x);     %Eje z
-	nombre=sprintf('Drive %d-%d',columna+1,partes_z-fila);
-	fprintf(fid_c(g),inicio_conducible,nombre);
+for k=1:partes_z
+	for h=1:partes_x
+        g=(k-1)*partes_x+h;
+		columna=mod(g-1,partes_x);%Eje x
+		fila=floor((g-1)/partes_x);     %Eje z
+		nombre=sprintf('Drive %d-%d',columna+1,partes_z-fila);
+		%fprintf(fid_c(g),inicio_conducible,nombre);
+		terreno_c{g}=[terreno_c{g} sprintf(inicio_conducible,nombre)];
+	end
 end
 
-for g=1:length(fid_nc)
-	columna=mod(g-1,partes_x);%Eje x
-	fila=floor((g-1)/partes_x);     %Eje z
-	nombre=sprintf('N Drive %d-%d',columna+1,partes_z-fila);
-	if mapear==1
-		fprintf(fid_nc(g),inicio_noconducible,nombre,columna*partes_z+(partes_z-fila-1));
-	else
-		fprintf(fid_nc(g),inicio_noconducible,nombre);
+for k=1:partes_z
+	for h=1:partes_x
+        g=(k-1)*partes_x+h;
+		columna=mod(g-1,partes_x);%Eje x
+		fila=floor((g-1)/partes_x);     %Eje z
+		nombre=sprintf('N Drive %d-%d',columna+1,partes_z-fila);
+		if mapear==1
+			%fprintf(fid_nc(g),inicio_noconducible,nombre,columna*partes_z+(partes_z-fila-1));
+			terreno_nc{g}=[terreno_nc{g} sprintf(inicio_noconducible,nombre,columna*partes_z+(partes_z-fila-1))];
+		else
+			%fprintf(fid_nc(g),inicio_noconducible,nombre);
+			terreno_nc{g}=[terreno_nc{g} sprintf(inicio_noconducible,nombre)];
+		end
 	end
 end
 
@@ -194,24 +205,27 @@ for h=1:length(n1)
         zonax=sum(punto_mediox>fronterasx);
 		zonaz=sum(punto_medioz>fronterasz);
 		zona=(zonaz-1)*partes_x+zonax;
-        fid=fid_c(zona);
+		%fid=fid_c(zona);
+        conducible=1;
     end
     if length(find(id_noconducible==id_superficie(h)))>0
         zonax=sum(punto_mediox>fronterasx);
 		zonaz=sum(punto_medioz>fronterasz);
 		zona=(zonaz-1)*partes_x+zonax;
-        fid=fid_nc(zona);
+        %fid=fid_nc(zona);
+		conducible=0;
     end
     if length(find(id_apoyo==id_superficie(h)))>0
         fid=fid_apoyo;
+		conducible=0;
     end
     
     excepcion=0;
 
 
-    [anchor1 anchor1B]=obtener_anchor(n1(h)-1,escarretera(h,1),y(n1(h)),distancias(n1(h)),sum(fid==fid_c)>0,tramos,nac);
-    [anchor2 anchor2B]=obtener_anchor(n2(h)-1,escarretera(h,2),y(n2(h)),distancias(n2(h)),sum(fid==fid_c)>0,tramos,nac);
-    [anchor3 anchor3B]=obtener_anchor(n3(h)-1,escarretera(h,3),y(n3(h)),distancias(n3(h)),sum(fid==fid_c)>0,tramos,nac);
+    [anchor1 anchor1B]=obtener_anchor(n1(h)-1,escarretera(h,1),y(n1(h)),distancias(n1(h)),conducible,tramos,nac);
+    [anchor2 anchor2B]=obtener_anchor(n2(h)-1,escarretera(h,2),y(n2(h)),distancias(n2(h)),conducible,tramos,nac);
+    [anchor3 anchor3B]=obtener_anchor(n3(h)-1,escarretera(h,3),y(n3(h)),distancias(n3(h)),conducible,tramos,nac);
 
     if (anchor1(1)=='T')
         if n1(h)<=nac/2
@@ -281,9 +295,14 @@ for h=1:length(n1)
 	%Un triángulo no puede consistir en tres anchors de carretera
 	if (anchor1(1)=='T') && (anchor2(1)=='T') && (anchor3(1)=='T'), imprimir=0;end;
     if imprimir==1
-
-        fprintf(fid,'               <TerrainFace %s>\n                 <Anchor0 Props="%s" />\n                 <Anchor1 Props="%s" />\n                 <Anchor2 Props="%s" />\n               </TerrainFace>\n',argumento,anchor1,anchor2,anchor3);
-        if sum(fid==fid_c)>0
+		if conducible==1
+			%fprintf(fid,'               <TerrainFace %s>\n                 <Anchor0 Props="%s" />\n                 <Anchor1 Props="%s" />\n                 <Anchor2 Props="%s" />\n               </TerrainFace>\n',argumento,anchor1,anchor2,anchor3);
+			terreno_c{zona}=[terreno_c{zona} sprintf('               <TerrainFace %s>\n                 <Anchor0 Props="%s" />\n                 <Anchor1 Props="%s" />\n                 <Anchor2 Props="%s" />\n               </TerrainFace>\n',argumento,anchor1,anchor2,anchor3)];
+		else
+			%fprintf(fid,'               <TerrainFace %s>\n                 <Anchor0 Props="%s" />\n                 <Anchor1 Props="%s" />\n                 <Anchor2 Props="%s" />\n               </TerrainFace>\n',argumento,anchor1,anchor2,anchor3);
+			terreno_nc{zona}=[terreno_nc{zona} sprintf('               <TerrainFace %s>\n                 <Anchor0 Props="%s" />\n                 <Anchor1 Props="%s" />\n                 <Anchor2 Props="%s" />\n               </TerrainFace>\n',argumento,anchor1,anchor2,anchor3)];
+		end
+        if conducible==1
 		    usado_c(zona)=1;
             cuenta_conducibles=cuenta_conducibles+1;
             if mod(h,10000)==0
@@ -314,47 +333,47 @@ end
 
 final='            </TerrainFaces>\n          </MaterialBlend>\n        </MaterialBlends>\n      </TerrainArea>\n';
 
-for g=1:length(fid_c)
-	fprintf(fid_c(g),final);
-	fclose(fid_c(g));
-end
-for g=1:length(fid_nc)
-	fprintf(fid_nc(g),final);
-	fclose(fid_nc(g));
-end
-
 for k=1:partes_z
 	for h=1:partes_x
         g=(k-1)*partes_x+h;
-	    nombre_fichero=sprintf('lis_conducibles_%02d-%02d.txt',h,partes_z-k+1);
-	    if usado_c(g)==0
-			system(sprintf('del /Q /f %s 2>nul',nombre_fichero));
-		end
-		nombre_fichero=sprintf('lis_noconducibles_%02d-%02d.txt',h,partes_z-k+1);
-	    if usado_nc(g)==0
-			system(sprintf('del /Q /f %s 2>nul',nombre_fichero));
-		end
+		%fprintf(fid_c(g),final);
+		terreno_c{g}=[terreno_c{g} sprintf(final)];
+		terreno_nc{g}=[terreno_nc{g} sprintf(final)];
+		%fclose(fid_c(g));
 	end
 end
-
-
 
 fprintf(fid_apoyo,final);
 fclose(fid_apoyo);
 
-system('del lis.txt 2>NUL');
+%system('del lis.txt 2>NUL');
 
 fid=fopen('lis.txt','w');
 fprintf(fid,'      <TerrainAreas count="%d">',sum(usado_c)+sum(usado_nc));
-fclose(fid)
 
-system('copy lis.txt+lis_conducibles*.txt+lis_noconducibles*.txt lis.txt/b  1>nul');
+%system('copy lis.txt+lis_conducibles*.txt+lis_noconducibles*.txt lis.txt/b  1>nul');
+for k=1:partes_z
+	for h=1:partes_x
+        g=(k-1)*partes_x+h;
+		if usado_c(g)==1;
+			fprintf(fid,'%s',terreno_c{g});
+		end
+	end
+end
+for k=1:partes_z
+	for h=1:partes_x
+        g=(k-1)*partes_x+h;
+		if usado_nc(g)==1;
+			fprintf(fid,'%s',terreno_nc{g});
+		end
+	end
+end
 
-fid=fopen('final.txt','w');
 fprintf(fid,'      </TerrainAreas>');
 fclose(fid)
 
-system('copy lis.txt+final.txt salida\lis.txt/b  1>nul');
+system('move lis.txt salida\.  1>nul');
+
 message(16);
 
 function area=elarea(a,b,c)

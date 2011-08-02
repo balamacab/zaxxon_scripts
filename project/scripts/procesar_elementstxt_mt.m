@@ -46,11 +46,6 @@ end
 system('del /Q lis_conducibles*.txt 2>NUL');
 system('del /Q lis_noconducibles*.txt 2>NUL')
 
-nac=obtener_nac();
-%nac es el número de anchors de la carretera
-%Si son 7824 la numeración de los enganches de la carretera llega desde 0 hasta
-%nac-1=7823
-
 [numero x y z]=textread(fichero_de_nodos_con_altura,'%d %f %f %f');
 temp=y;
 y=z;
@@ -60,27 +55,40 @@ z=temp;
 %solo en horizontal (considerando x y z)
 %Para los nac primeros anchors no se calcula nada, porque son los de la
 %carretera
-datax=x(1:nac);
-dataz=z(1:nac);
+
 distancias=zeros(length(x),1);
-for h=nac+1:length(x)
-    distancia=sqrt((x(h)-datax).^2+(z(h)-dataz).^2);  
-    [minimo pos]=min(distancia);
-    distancias(h)=minimo;
+if conunion==1
+	nac=obtener_nac();
+	%nac es el número de anchors de la carretera
+	%Si son 7824 la numeración de los enganches de la carretera llega desde 0 hasta
+	%nac-1=7823
+	datax=x(1:nac);
+	dataz=z(1:nac);
+	for h=nac+1:length(x)
+		distancia=sqrt((x(h)-datax).^2+(z(h)-dataz).^2);  
+		[minimo pos]=min(distancia);
+		distancias(h)=minimo;
+	end
+else
+	nac=0;
 end
 
 
 [nada1 nada2 nada3 id_superficie nada5 nada6 n1 n2 n3]=textread(fichero_elements,'%d %d %d %d %d %d %d %d %d');
-
+if nada3==2 %Solo hay dos tags
+    n3=n2;
+    n2=n1;
+    n1=nada6;
+end
 tamanyo=length(n1);
 
 limite_izquierdo=min(x);
 limite_derecho=max(x);
-fronterasx=linspace(limite_izquierdo-0.1,limite_derecho+0.1,partes_x+1); %Dividimos los triángulos conducibles en 10 zonas
+fronterasx=linspace(limite_izquierdo-0.1,limite_derecho+0.1,partes_x+1); %Dividimos los triángulos conducibles en partes_x zonas
 
 limite_izquierdo=min(z);
 limite_derecho=max(z);
-fronterasz=linspace(limite_izquierdo-0.1,limite_derecho+0.1,partes_z+1); %Dividimos los triángulos conducibles en 10 zonas
+fronterasz=linspace(limite_izquierdo-0.1,limite_derecho+0.1,partes_z+1); %Dividimos los triángulos conducibles en partes_z zonas
 
 for k=1:partes_z
 	for h=1:partes_x
@@ -151,7 +159,7 @@ cuenta_conducibles=0;
 cuenta_noconducibles=0;
 
 
-if hay_triangulos_pegados==1
+if hay_triangulos_pegados==1 %Esta parte ya no se usa. Se puede quitar
 	contador=1;
 	for h=1:nac/2-1
 		%T0 0 = A0 = T0 1

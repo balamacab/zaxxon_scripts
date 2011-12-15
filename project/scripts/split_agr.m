@@ -61,14 +61,14 @@ function split_agr(file_name,numtrozos)
                         numrows=corte_nrows(h+1)-corte_nrows(h)+1;
                         if xllcorner>=0
                             xllco=xllcorner+cellsize*(corte_ncols(g)-1);
-                            yllco=yllcorner+cellsize*(corte_nrows(numtrozos-h+1)-1);
+                            yllco=yllcorner+cellsize*(corte_nrows(end)-corte_nrows(h+1));
                         else
                             xllco=-1;
                             yllco=-1;
                         end
                         if xllcenter>=0
                             xllce=xllcenter+cellsize*(corte_ncols(g)-1);
-                            yllce=yllcenter+cellsize*(corte_nrows(numtrozos-h+1)-1);
+                            yllce=yllcenter+cellsize*(corte_nrows(end)-corte_nrows(h+1));
                         else
                             xllce=-1;
                             yllce=-1;

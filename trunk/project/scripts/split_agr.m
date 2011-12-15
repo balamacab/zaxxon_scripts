@@ -56,7 +56,7 @@ function split_agr(file_name,numtrozos)
                 for h=1:numtrozos
                     for g=1:numtrozos
                         fichero(h,g)=fopen(sprintf('%s_%02d_%02d.agr',file_name,h,g),'w');
-                        display(sprintf('%s_%02d_%02d.agr',file_name,h,g))
+                        %display(sprintf('%s_%02d_%02d.agr',file_name,h,g))
                         numcols=corte_ncols(g+1)-corte_ncols(g)+1;
                         numrows=corte_nrows(h+1)-corte_nrows(h)+1;
                         if xllcorner>=0
@@ -79,6 +79,7 @@ function split_agr(file_name,numtrozos)
                 for row=1:nrows %Hay nrows bloques de datos, de ncols datos cada uno
                     datos=fscanf(fid,'%f ',ncols);
 				    %Repartimos los datos entre los numtrozos ficheros
+                    if mod(row,10)==1,fprintf(2,'\r%.1f%%',100.0*row/nrows);end
                     for g=1:numtrozos
                         %Si row está en el rango
                         %corte_nrows(t):corte_nrows(t+1)) hay que grabar
@@ -90,9 +91,10 @@ function split_agr(file_name,numtrozos)
                             end
                         end
                     end
+                    %fprintf(2,'\r%.1f%%',100.0*row/nrows);
                 end
 				fclose(fid);
-
+                fprintf(2,'\n')
                
                 %Cerramos los ficheros
                 for h=1:numtrozos

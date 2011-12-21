@@ -85,6 +85,7 @@ tamanyo=length(numero);
 
 
 datan=[(1:tamanyo)' x y z];
+
 data=[x y z];
 
 m=size(datan);

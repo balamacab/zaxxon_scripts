@@ -311,7 +311,14 @@ for h=1:length(n1)
 			terreno_nc{zona}=[terreno_nc{zona} sprintf('               <TerrainFace %s>\n                 <Anchor0 Props="%s" />\n                 <Anchor1 Props="%s" />\n                 <Anchor2 Props="%s" />\n               </TerrainFace>\n',argumento,anchor1,anchor2,anchor3)];
 		end
         if conducible==1
-		    usado_c(zona)=1;
+		    usado_c(zona)=usado_c(zona)+1;
+			if usado_c(zona)==1000
+				columna_=mod(zona-1,partes_x);%Eje x
+				fila_=floor((zona-1)/partes_x);     %Eje z
+				display('WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+				mensaje=sprintf('WARNING: driveable zone %d_%d has too many faces for rFactor',columna_+1,partes_z-fila_);
+				display(mensaje);
+			end
             cuenta_conducibles=cuenta_conducibles+1;
             if mod(h,10000)==0
 				if isempty(progress_bar)==0
@@ -323,7 +330,14 @@ for h=1:length(n1)
 				end
             end
         else
-			usado_nc(zona)=1;
+			usado_nc(zona)=usado_nc(zona)+1;
+			if usado_nc(zona)==1000
+				columna_=mod(zona-1,partes_x);%Eje x
+				fila_=floor((zona-1)/partes_x);     %Eje z
+				display('WARNING!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!');
+				mensaje=sprintf('WARNING: non-driveable zone %d_%d has too many faces for rFactor',columna_+1,partes_z-fila_);
+				display(mensaje);
+			end
             cuenta_noconducibles=cuenta_noconducibles+1;
             if mod(h,10000)==0
 				if isempty(progress_bar)==0
@@ -357,13 +371,13 @@ fclose(fid_apoyo);
 %system('del lis.txt 2>NUL');
 
 fid=fopen('lis.txt','w');
-fprintf(fid,'      <TerrainAreas count="%d">',sum(usado_c)+sum(usado_nc));
+fprintf(fid,'      <TerrainAreas count="%d">',sum(usado_c>0)+sum(usado_nc>0));
 
 %system('copy lis.txt+lis_conducibles*.txt+lis_noconducibles*.txt lis.txt/b  1>nul');
 for k=1:partes_z
 	for h=1:partes_x
         g=(k-1)*partes_x+h;
-		if usado_c(g)==1;
+		if usado_c(g)>0
 			fprintf(fid,'%s',terreno_c{g});
 		end
 	end
@@ -371,7 +385,7 @@ end
 for k=1:partes_z
 	for h=1:partes_x
         g=(k-1)*partes_x+h;
-		if usado_nc(g)==1;
+		if usado_nc(g)>0
 			fprintf(fid,'%s',terreno_nc{g});
 		end
 	end

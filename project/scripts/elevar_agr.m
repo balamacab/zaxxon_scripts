@@ -27,6 +27,7 @@ function alturas=elevar_agr(fichero_puntos,mapeo)
 			file_name=deblank(char(ficheros(h)));
 			if length(file_name)>0
 				file_name=sprintf('..\\..\\agr\\%s',file_name);
+				display(file_name);
 				fid=fopen(file_name,'r');
 				contenido=fread(fid,inf);
 				fclose(fid);

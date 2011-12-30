@@ -28,61 +28,16 @@ function alturas=elevar_agr(fichero_puntos,mapeo)
 			if length(file_name)>0
 				file_name=sprintf('..\\..\\agr\\%s',file_name);
 				display(file_name);
-				fid=fopen(file_name,'r');
-				contenido=fread(fid,inf);
-				fclose(fid);
-				contenido=char(contenido)';
-				contenido=tolower(contenido);
-				
-				pos_ncols=findstr(contenido,'ncols');
-				ncols=sscanf(contenido((pos_ncols+length('ncols')+1):end),'%d',1);
-				pos_nrows=findstr(contenido,'nrows');
-				nrows=sscanf(contenido((pos_nrows+length('nrows')+1):end),'%d',1);
-				
-				pos_yllcorner=strfind(contenido,'yllcorner');
-				if length(pos_yllcorner)>0
-					yllcorner=sscanf(contenido((pos_yllcorner+length('yllcorner')+1):end),'%f',1);
-				end
-				pos_xllcorner=findstr(contenido,'xllcorner');
-				if length(pos_xllcorner)>0
-					xllcorner=sscanf(contenido((pos_xllcorner+length('xllcorner')+1):end),'%f',1);
-				end
-				pos_yllcenter=strfind(contenido,'yllcenter');
-				if length(pos_yllcenter)>0
-					yllcenter=sscanf(contenido((pos_yllcenter+length('yllcenter')+1):end),'%f',1);
-				end
-				pos_xllcenter=findstr(contenido,'xllcenter');
-				if length(pos_xllcenter)>0
-					xllcenter=sscanf(contenido((pos_xllcenter+length('xllcenter')+1):end),'%f',1);
-				end
-				pos_cellsize=findstr(contenido,'cellsize');
-				cellsize=sscanf(contenido((pos_cellsize+length('cellsize')+1):end),'%f',1);
-				pos_nodata=findstr(contenido,'nodata_value');
-				datos=sscanf(contenido((pos_nodata+length('nodata_value')+1):end),'%f',inf);
-				%Doy por supuesto que después de nodata_value vienen todos los datos
-				nodata=datos(1);
-				datos=datos(2:end);
-				%
-				%
+				[malla,pos_nodata,ncols,nrows]=lee_cabecera(file_name);
+						
 				x_deseados=coo_x;
 				z_deseados=coo_z;
 				
-				if length(pos_xllcorner)>0
-					malla.rangox=xllcorner+cellsize*(0:(ncols-1))+cellsize/2;
-					malla.rangoz=yllcorner+cellsize*(0:(nrows-1))+cellsize/2;
-				else
-					malla.rangox=xllcenter+cellsize*(0:(ncols-1));
-					malla.rangoz=yllcenter+cellsize*(0:(nrows-1));
-				end
-				malla.malla_regular=flipud(reshape(datos,ncols,nrows)');
-				
-				%if h==3
-				% surf(malla.rangox,malla.rangoz,malla.malla_regular);
-				%end
 				[indices indicesfuera]=comprobar_rangos(malla.rangox,malla.rangoz,x_deseados,z_deseados);
 				alturas1=zeros(size(coo_x));
 				display(sprintf('Looking for [%.1f,%.1f][%.1f,%.1f] in [%.1f,%.1f][%.1f,%.1f]',min(coo_x),max(coo_x),min(coo_z),max(coo_z),malla.rangox(1),malla.rangox(end),malla.rangoz(1),malla.rangoz(end)))
 				if length(indices)>0
+					[malla,nodata]=lee_datos(file_name,pos_nodata,ncols,nrows,malla); %Solo leemos los datos de la malla si son de interés
 					alturas1(indices)=z_interp2(malla.rangox,malla.rangoz,malla.malla_regular,x_deseados(indices),z_deseados(indices));
 					if contador==1
 						alturas=alturas1;
@@ -163,3 +118,61 @@ if log10(abs((mapeo(2)-mapeo(6))/(mapeo(4)-mapeo(8))))>2
 else
 	salida=0
 end
+
+function [malla,pos_nodata,ncols,nrows]=lee_cabecera(file_name)
+
+				fid=fopen(file_name,'r');
+				contenido=fread(fid,1000);
+				fclose(fid);
+				contenido=char(contenido)';
+				contenido=tolower(contenido);
+				
+				pos_ncols=findstr(contenido,'ncols');
+				ncols=sscanf(contenido((pos_ncols+length('ncols')+1):end),'%d',1);
+				pos_nrows=findstr(contenido,'nrows');
+				nrows=sscanf(contenido((pos_nrows+length('nrows')+1):end),'%d',1);
+				
+				pos_yllcorner=strfind(contenido,'yllcorner');
+				if length(pos_yllcorner)>0
+					yllcorner=sscanf(contenido((pos_yllcorner+length('yllcorner')+1):end),'%f',1);
+				end
+				pos_xllcorner=findstr(contenido,'xllcorner');
+				if length(pos_xllcorner)>0
+					xllcorner=sscanf(contenido((pos_xllcorner+length('xllcorner')+1):end),'%f',1);
+				end
+				pos_yllcenter=strfind(contenido,'yllcenter');
+				if length(pos_yllcenter)>0
+					yllcenter=sscanf(contenido((pos_yllcenter+length('yllcenter')+1):end),'%f',1);
+				end
+				pos_xllcenter=findstr(contenido,'xllcenter');
+				if length(pos_xllcenter)>0
+					xllcenter=sscanf(contenido((pos_xllcenter+length('xllcenter')+1):end),'%f',1);
+				end
+				pos_cellsize=findstr(contenido,'cellsize');
+				
+				cellsize=sscanf(contenido((pos_cellsize+length('cellsize')+1):end),'%f',1);
+				pos_nodata=findstr(contenido,'nodata_value');
+								
+				if length(pos_xllcorner)>0
+					malla.rangox=xllcorner+cellsize*(0:(ncols-1))+cellsize/2;
+					malla.rangoz=yllcorner+cellsize*(0:(nrows-1))+cellsize/2;
+				else
+					malla.rangox=xllcenter+cellsize*(0:(ncols-1));
+					malla.rangoz=yllcenter+cellsize*(0:(nrows-1));
+				end
+end
+
+function [malla,nodata]=lee_datos(file_name,pos_nodata,ncols,nrows,malla)
+				fid=fopen(file_name,'r');
+				contenido=fread(fid,inf);
+				fclose(fid);
+				contenido=char(contenido)';
+				contenido=tolower(contenido);
+				datos=sscanf(contenido((pos_nodata+length('nodata_value')+1):end),'%f',inf);
+				%Doy por supuesto que después de nodata_value vienen todos los datos
+				nodata=datos(1);
+				datos=datos(2:end);
+				%
+				%
+				malla.malla_regular=flipud(reshape(datos,ncols,nrows)');
+end				

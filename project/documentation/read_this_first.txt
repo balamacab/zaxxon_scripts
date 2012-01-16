@@ -33,7 +33,7 @@ More files you can find inside the documentatin folder:
 - "gmsh_threshold.pdf": read this to know more about the way gmsh meshes are created
 
 - "raise_with_python.pdf": raise_kml is a script that gives elevation to kml files. Read this to
-    now what you have to do before trying to use it.
+    know what you have to do before trying to use it.
 	
 - "How to add SObjects with the scripts.pdf": this is for advanced users. Tells you how can you
     automatically create sobjects on both sides of the road, like guardrails

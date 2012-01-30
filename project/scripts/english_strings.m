@@ -39,7 +39,7 @@ string034="'Blend with\nBackground'";
 string035="'Split terrain\nwith grid:'";
 string036="'Create Venue.xml'";
 string037="'.dat files are in dir:'";
-string038='To start:\nCopy your kml to the s0_import folder\nand press \"Import the kml\" button\n\nFor more info Visit:\n http://forum.rallyesim.fr/viewtopic.php?f=51&t=3025&start=825\nhttp://btbtracks-rbr.foroactivo.com/t131-zaxxon-s-method-tutorial\nhttp://foro.simracing.es/bobs-track-builder/3815-1.html\nhttp://devtrackteam.solorally.it/viewforum.php?f=28';
+string038='To start:\nCopy your kml to the s0_import folder\nand press \"Import the kml\" button\n\nFor more info Visit:\nhttp://plpcreation.tonsite.biz\nhttp://forum.rallyesim.fr/viewtopic.php?f=51&t=3025&start=825\nhttp://btbtracks-rbr.foroactivo.com/t131-zaxxon-s-method-tutorial\nhttp://foro.simracing.es/bobs-track-builder/3815-1.html\nhttp://devtrackteam.solorally.it/viewforum.php?f=28';
 string039='"Operation failed %f"';
 string040='Operation Successful';
 string041='Operation Failed';

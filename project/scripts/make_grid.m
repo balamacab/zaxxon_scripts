@@ -117,6 +117,14 @@ for h=1:tandas
     fwrite(fid,final);
     my_fclose(fid);
 end
+nombre=sprintf('salida\\grid%.3d.kml',tandas+1);
+while (exist(nombre)==2)
+	delete(nombre);
+	display(sprintf('Deleting file %s',nombre));
+	tandas=tandas+1;
+	nombre=sprintf('salida\\grid%.3d.kml',tandas+1);
+endwhile
+
 
     save('dimensiones.mat','num_filas','num_columnas','guarda_calentamiento');
 

@@ -819,8 +819,12 @@ while (1)
 				terrain_panels = str2num(gtk(in,out,["gtk_entry_get_text ", panelss1]));
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s1_mesh;');
-				default_minisups=get_option('MINISUPS','%d');
-				ejecuta(in,out,advb,sprintf('mallado_regular(%.2f,%d,%d,%d)',terrain_width,round(terrain_panels),valor_regular,valor_minsups));
+				if valor_minisups==1
+					default_minisups=get_option('MINISUPS','%d');
+				else
+					default_minisups=10000;
+				end
+				ejecuta(in,out,advb,sprintf('mallado_regular(%.2f,%d,%d,%d)',terrain_width,round(terrain_panels),valor_regular,default_minisups));
 				if (valor_includelimits==1) && (strcmp(tipo,'SON')==0)
 					%informa_anyade(in,out,advb,'Select an option in command-line window');
 					ejecuta(in,out,advb,'addgrid(1,1)')

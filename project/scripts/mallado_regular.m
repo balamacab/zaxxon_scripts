@@ -1,4 +1,4 @@
-function mallado_regular(separacion,ndivisiones,transfinite)
+function mallado_regular(separacion,ndivisiones,transfinite,B)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -14,14 +14,20 @@ function mallado_regular(separacion,ndivisiones,transfinite)
   if (nargin<2)||(separacion=='h')
     display('mallado_regular(12,3)');
     display('mallado_regular(12,3,1)');
-    display('Arguments: width of driveable zone in meters, number of panels for that zone, use transfinite');
+	display('mallado_regular(12,3,1,15)');
+    display('Arguments: width of driveable zone in meters, number of panels for that zone, force transfinite');
+	display('Last parameter forces division of driveable surfaces into smaller segments (every N points)');
     return;
 end
 
-B=inf;
+
 if nargin==2
 	transfinite=0;
+elseif nargin==3
+	transfinite=0;
+	B=inf;
 end
+
 
 [numero_sons caminos]=look_for_father_or_sons('..\sons.txt',1);
 [numero_father caminos]=look_for_father_or_sons('..\father.txt',1);

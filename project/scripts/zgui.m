@@ -252,7 +252,7 @@ lbls1panels = gtk(in,out,["gtk_label_new ",string021]);gtk(in,out,["gtk_misc_set
 	panelss1 = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",panelss1,"5"]);;gtk(in,out,["gtk_entry_set_width_chars ",panelss1,'3']);
 buts1 = gtk(in,out,["gtk_button_new_with_label ",string022]);
 	hseps1fin= gtk(in,out,"gtk_hseparator_new");
-s1_regular = gtk(in,out,["gtk_check_button_new_with_label ",string023," 0"]);
+s1_minisups = gtk(in,out,["gtk_check_button_new_with_label ",string023," 0"]);
 s1_includelimits = gtk(in,out,["gtk_check_button_new_with_label ",string024," 1"]);
 	gtk(in,out,["gtk_toggle_button_set_active ",s1_includelimits,"1"]);
 	s1_pb_creategeo = gtk(in,out,"gtk_progress_bar_new ");
@@ -268,7 +268,7 @@ s1_includelimits = gtk(in,out,["gtk_check_button_new_with_label ",string024," 1"
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", panelss1, " 23 24 17 18"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts1, " 30 32 16 17"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s1_pb_creategeo, " 28 34 17 18"]);
-	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s1_regular, " 20 22 18 19"]);
+	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s1_minisups, " 20 22 18 19"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s1_includelimits, " 23 24 18 19"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps1fin, " 1 80 19 20"]);
 
@@ -808,8 +808,9 @@ while (1)
 			informa_nuevo(in,out,advb2,string070);
 			informa_nuevo(in,out,advb,'S1');
 			try
-				valor_regular=str2num(gtk(in,out,["gtk_toggle_button_get_active ",s1_regular]))
-				valor_includelimits=str2num(gtk(in,out,["gtk_toggle_button_get_active ",s1_includelimits]))
+				valor_minisups=str2num(gtk(in,out,["gtk_toggle_button_get_active ",s1_minisups]));
+				valor_regular=0; %No se puede forzar regularidad desde el GUI
+				valor_includelimits=str2num(gtk(in,out,["gtk_toggle_button_get_active ",s1_includelimits]));
 				global progress_bar;
 				progress_bar.id=s1_pb_creategeo;
 				progress_bar.in=in;
@@ -818,7 +819,8 @@ while (1)
 				terrain_panels = str2num(gtk(in,out,["gtk_entry_get_text ", panelss1]));
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s1_mesh;');
-				ejecuta(in,out,advb,sprintf('mallado_regular(%.2f,%d,%d)',terrain_width,round(terrain_panels),valor_regular));
+				default_minisups=get_option('MINISUPS','%d');
+				ejecuta(in,out,advb,sprintf('mallado_regular(%.2f,%d,%d,%d)',terrain_width,round(terrain_panels),valor_regular,valor_minsups));
 				if (valor_includelimits==1) && (strcmp(tipo,'SON')==0)
 					%informa_anyade(in,out,advb,'Select an option in command-line window');
 					ejecuta(in,out,advb,'addgrid(1,1)')

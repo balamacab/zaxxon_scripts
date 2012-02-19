@@ -23,7 +23,7 @@ for h=1:numero_sons
 	cd ..\venue;
 	btb06(4,1);
 	cd ..\s3_road
-	coge_datos
+	s3_coge_datos
 	creartrack1
 	try
             dar_altura(1,0.25,-0.25,10,0);
@@ -39,7 +39,7 @@ for h=1:numero_sons
 	cd ..\s1_mesh
 	mallado_regular(8,2);
 	cd ..\s10_split
-	coge_datos
+	s10_coge_datos
 	split_track(1)
 	partir_track
 	%%%%%%%%%%%%%%%%%%%%%%CHANGE TEXT ABOVE%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

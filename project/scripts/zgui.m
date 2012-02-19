@@ -712,8 +712,8 @@ while (1)
 				progress_bar.out=out;
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s3_road');
-				clear coge_datos;
-				ejecuta(in,out,advb,'coge_datos');
+				%clear coge_datos;
+				ejecuta(in,out,advb,'s3_coge_datos');
 				ejecuta(in,out,advb,sprintf('creartrack1(%d)',valor_usecenter));
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
 				gtk(in,out,["gtk_widget_set_sensitive ",buts3_createprofile,"1"]);
@@ -878,8 +878,8 @@ while (1)
 						end
 						gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 						ejecuta(in,out,advb,'cd ..\s4_terrain');
-						clear coge_datos;
-						ejecuta(in,out,advb,'coge_datos');
+						%clear coge_datos;
+						ejecuta(in,out,advb,'s4_coge_datos');
 						errores=load('errores.mat');errores=errores.errores;
 						if errores==1
 							b=fuerzo_una_excepcion
@@ -945,8 +945,8 @@ while (1)
 				progress_bar.out=out;
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s7_walls');
-				clear coge_datos;
-				ejecuta(in,out,advb,'coge_datos');
+				%clear coge_datos;
+				ejecuta(in,out,advb,'s7_coge_datos');
 				ejecuta(in,out,advb,'poner_muro');
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);
 				informa_anyade(in,out,advb,string040);
@@ -982,8 +982,8 @@ while (1)
 				progress_bar.out=out;
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd pacenotes');
-				clear coge_datos;
-				ejecuta(in,out,advb,'coge_datos');
+				%clear coge_datos;
+				ejecuta(in,out,advb,'pn_coge_datos');
 				ejecuta(in,out,advb,'pacenotes_a');
 				ejecuta(in,out,advb,'pacenotes2_a(0.03,10)');
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);
@@ -1005,8 +1005,8 @@ while (1)
 				cd s10_split
 				cd ..
 				ejecuta(in,out,advb,'cd s10_split');
-				clear coge_datos;
-				ejecuta(in,out,advb,'coge_datos');
+				%clear coge_datos;
+				ejecuta(in,out,advb,'s10_coge_datos');
 				ejecuta(in,out,advb,sprintf('split_track(%d)',num_segmentos));
 				gtk(in,out,["gtk_widget_set_sensitive ",buts10_splittrack,"1"]);
 				informa_anyade(in,out,advb,string040);
@@ -1054,7 +1054,7 @@ while (1)
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.1)]);gtk(in,out,"gtk_server_callback update");
 				ejecuta(in,out,advb,'cd s10_split');
 				clear coge_datos;
-				ejecuta(in,out,advb,'coge_datos');
+				ejecuta(in,out,advb,'s10_coge_datos');
 				ejecuta(in,out,advb,sprintf('procesar_elementstxt_mt(%d,%d,%d)',gridX,gridY,mezclar));				
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
 				gtk(in,out,["gtk_widget_set_sensitive ",buts9_joinall,"1"]);

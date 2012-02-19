@@ -81,12 +81,12 @@ switch(mcode)
   case 3, %btb06
 		if strcmp(procedencia,'importakml') %El nodes.xml viene de importakml -> todavía no tiene altura
           display('cd ..\s3_road                                       gs3');
-          display('coge_datos                                          coge');
+          display('s3_coge_datos                                       s3coge');
 		  
 		else
 			if strcmp(procedencia,'dar_altura')==0 %Si no sabemos de dónde venimos, sacamos toda la información
 				display('cd ..\s3_road                                       gs3');
-				display('coge_datos                                          coge');
+				display('s3_coge_datos                                       s3coge');
 				display('---------------------------or------------------------');
 			end
 			display('cd ..\s1_mesh                                           gs1')
@@ -105,7 +105,7 @@ switch(mcode)
 
   case 7, %trocear_malla 
           display('cd ..\s4_terrain                                    gs4');
-          display('coge_datos                                          coge');
+          display('s4_coge_datos                                       s4coge');
 
   case 8, %coge_datos en s4_terrain
           display('    Check that all the check messages above are "ok"');
@@ -121,14 +121,14 @@ switch(mcode)
 
   case 11, %juntar_mallas
 	  display('cd ..\s7_walls                                      gs7'); 
-	  display('coge_datos                                          coge');
+	  display('s7_coge_datos                                       s7coge');
 
   case 12, %coge_datos en s7_walls
  	  display('poner_muro                                          p_m'); 
 
   case 13, %poner_muro
           display('cd ..\s10_split                                     gs10');
-          display('coge_datos                                          coge');  
+          display('s10_coge_datos                                      s10coge');  
 
   case 14, %coge_datos en s10_split
 		  %if pos_nodes_existe==1
@@ -162,7 +162,7 @@ switch(mcode)
 			elseif numero_father>0 %Si tiene padre, no procesamos el .geo sino que nos vamos a partir el track
 				display('    Check anchors_carretera.geo with gmsh before proceeding');			
 				display('cd ..\s10_split                                     gs10');
-				display('coge_datos                                          coge');  
+				display('s10_coge_datos                                      s10coge');  
 			else
                 display('    Process salida\anchors_carretera.geo with gmsh, save the mesh and...');
 				display('trocea_malla                                        t_m');

@@ -12,6 +12,8 @@ contenido=fread(fid,inf);
 contenido=char(contenido)';
 fclose(fid)
 
+figure;
+
 %Localizamos la imagen dentro del .svg################################
 pos_image=findstr('<image',contenido);
 if length(pos_image)!=1
@@ -90,6 +92,21 @@ for g=1:length(pos_path)
 				longitud=esquina1(1)+normalizada_long*(esquina2(1)-esquina1(1));
 				latitud=esquina1(2)+normalizada_lat*(esquina2(2)-esquina1(2));
 				
+				if hay_terrestres_en_mapeo(mapeo)	
+					[nnnx nnnny utmzona]=deg2utm(0.5*(mapeo(4)+mapeo(8)),0.5*(mapeo(3)+mapeo(7))); %Obtenemos la zona utm
+					temporal=utmzona;
+					utmzona=[];
+					for gg=1:length(latitud)
+						utmzona=[utmzona;temporal];
+					end
+					[latitud longitud]=utm2deg(longitud,latitud,utmzona); %Pasamos de utm a terrestres para que mapeo.txt funcione bien
+					
+					fid_kml=my_fopen(strcat(id_path,'.kml'),'w');
+					abrir_kml(fid_kml);
+					grabar_puntos(fid_kml,longitud,latitud);
+					cerrar_kml(fid_kml);
+
+				end
 				[lax nada laz]=coor_a_BTB(longitud,latitud,0,mapeo);
 				
 				distancias_salida=sqrt(sum(([lax(1:3:end-3) laz(1:3:end-3)]-[lax(2:3:end-2) laz(2:3:end-2)]).^2,2));
@@ -160,5 +177,37 @@ function imprime_nodo(fid,h,Px,Pz,Py,AXZ,AY,EnD,ExD);
 	fprintf(fid,'          <Position x=\"%f\" y=\"%f\" z=\"%f\" />\r\n',Px,Py,Pz);
 	fprintf(fid,'          <ControlPoints AngleXZ=\"%f\" AngleY=\"%f\" EntryDistance=\"%f\" ExitDistance=\"%f\" />\r\n',AXZ,AY,EnD,ExD);
 	fprintf(fid,'        </node>\r\n');
+
+end
+
+function salida=hay_terrestres_en_mapeo(mapeo)
+%Si las coordenadas BTB son claramente mayores en magnitud que las otras, entonces deducimos que las otras son longitud/latitud
+if log10(abs((mapeo(2)-mapeo(6))/(mapeo(4)-mapeo(8))))>2
+	salida=1
+else
+	salida=0
+end
+
+function abrir_kml(fid)
+
+	fprintf(fid,'<?xml version="1.0" encoding="UTF-8"?>\n<kml xmlns="http://www.opengis.net/kml/2.2" xmlns:gx="http://www.google.com/kml/ext/2.2" xmlns:kml="http://www.opengis.net/kml/2.2" xmlns:atom="http://www.w3.org/2005/Atom">\n<Document>\n	<name>mesh.kml</name>\n	<Style id="sn_ylw-pushpin">\n		<LineStyle>\n			<color>7f00ffff</color>\n			<width>4</width>\n		</LineStyle>\n		<PolyStyle>\n			<color>7f00ff00</color>\n		</PolyStyle>\n	</Style>\n');	
+
+end
+
+
+function grabar_puntos(fid,x,z)
+ 
+    fprintf(fid,'<Placemark>\n		<name>Route</name>\n		<description>Road and driveable zone</description>\n	<styleUrl>#sn_ylw-pushpin</styleUrl>\n<LineString>			<coordinates>\n');
+
+    fprintf(fid,'%f,%f,%f\r\n',[x'; z'; zeros(size(x'))]);    
+
+    fprintf(fid,'</coordinates>\n		</LineString>\n</Placemark>\n');
+end
+
+
+function cerrar_kml(fid)
+
+fprintf(fid,'</Document>\n</kml>\n');
+fclose(fid)
 
 end

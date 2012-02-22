@@ -22,9 +22,9 @@ end
 
 
 if nargin==2
-	transfinite=0;
+	transfinite=0;	
+        B=inf;
 elseif nargin==3
-	transfinite=0;
 	B=inf;
 end
 
@@ -58,7 +58,7 @@ abrir_kml(fid_kml);
 
 fid=my_fopen('salida\anchors_carretera.geo','w');
 fid2=my_fopen('salida\phys111.txt','w');
-fprintf(fid,'cl1=20;\ncl2=10;\ncl4=120;\ncl5=200;\ncl3=250;\n');
+fprintf(fid,'cl1=20;\ncl2=10;\ncl4=120;\ncl5=200;\ncl3=250;\nMesh.CharacteristicLengthMax = 1000;\n');
 
 fprintf(fid,'offsetp=newreg-1;\n');
 

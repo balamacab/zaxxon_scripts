@@ -150,15 +150,15 @@ end
 
 
 function trocear_noconducibles(Data_nc,id_particular)
-system('mkdir salida\nc_splitted');
-system('del /Q salida\nc_splitted\*.ply');
+system('mkdir salida\nc_split');
+system('del /Q salida\nc_split\*.ply');
 restan=id_particular;
 Data_seleccionados=Data_nc;
 do
 	id_concreto=restan(1);
 	indices=find(id_particular==id_concreto);
 	Data_seleccionados.vertex_indices=Data_nc.vertex_indices(indices,:);
-	my_plywrite(Data_seleccionados,sprintf('salida\\nc_splitted\\sup%d.ply',id_concreto));
+	my_plywrite(Data_seleccionados,sprintf('salida\\nc_split\\sup%d.ply',id_concreto));
 	restan=restan(find(restan~=id_concreto));
 until length(restan)==0
 

@@ -1,4 +1,4 @@
-function importakml(ficherokml,optimize_choice,decimate_factor)
+function importakml2(ficherokml,optimize_choice,decimate_factor)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -158,53 +158,42 @@ my_fclose(fid);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-xy = [x;y]; df = diff(xy,1,2); 
-
-%Cálculo basto de la longitud
-to = cumsum([0, sqrt([1 1]*(df.*df))]);  %La variable es la distancia
-
-disakima=to(1):1:to(end);
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-%Curva interpolada con akima metro a metro (disakima son un punto cada metro)
-yakima=akima(to,y,disakima);
-xakima=akima(to,x,disakima);
-
-if (strcmp(optimize_choice,'keep')==1)
-	seleccion=to;
+if length(x)>500
+	tandas=round(linspace(1,length(x),round(length(x)/500)+1));
 else
-	if (strcmp(optimize_choice,'decimate')==1) 
-		indices_seleccion=1:decimate_factor:length(to);
-		if indices_seleccion(end)~=length(to)
-			indices_seleccion=[indices_seleccion length(to)];
-		end
-		seleccion=to(indices_seleccion);
-	else
-		if (strcmp(optimize_choice,'optimize')==1) 
-			mascara=1+0*to;%Todos los puntos del kml son buenos en principio
-			seleccion=simplificanodos(disakima,xakima,yakima,decimate_factor,to);
-		end
-	end
+	tandas=round(linspace(1,length(x),2));
 end
-ajuste=ajusta(disakima,xakima,yakima,seleccion);
-%Obtenemos puntos para visualizacióm
-puntosbtb=ppval(ajuste,disakima);
+tandas
+controlA=[]; controlB=[];controlC=[]; controlD=[];alturas_nodos=[];anguloy=[];
 
-figure
-plot(puntosbtb(1,:),puntosbtb(2,:),'-r',x,y,'b+');
-axis square
+figure;hold on
+for h=1:(length(tandas)-1)
+	display(sprintf('%.1f',1.0*h/length(tandas)))
+	if h>1
+		rellenoinicial=4;
+	else
+		rellenoinicial=0;
+	end
+	inicio=tandas(h)-rellenoinicial;
+	if h<(length(tandas)-1)
+		rellenofinal=4;
+	else
+		rellenofinal=0;
+	end
+	fin=tandas(h+1)+rellenofinal;
+	lasx=x(inicio:fin);
+	lasy=y(inicio:fin);
+	[s_alturas_nodos s_anguloy s_controlA s_controlB s_controlC s_controlD]=realizar_ajuste(lasx,lasy,optimize_choice);
+	alturas_nodos=[alturas_nodos s_alturas_nodos((1+rellenoinicial):(end-rellenofinal))];
+	anguloy=[anguloy s_anguloy((1+rellenoinicial):(end-rellenofinal))];
 
-[controlA controlB controlC controlD]=saca_controlpoints(ajuste.P,ajuste.x);
+	controlA=[controlA s_controlA(:,(1+rellenoinicial):(end-rellenofinal))];
+	controlB=[controlB s_controlB(:,(1+rellenoinicial):(end-rellenofinal))];
+	controlC=[controlC s_controlC(:,(1+rellenoinicial):(end-rellenofinal))];
+	controlD=[controlD s_controlD(:,(1+rellenoinicial):(end-rellenofinal))];
+end
+
 graba_kml([controlA(1,:)],[controlA(2,:)],mapeo);
-
-%plot(controlA(1,:),controlA(2,:),'o',controlB(1,:),controlB(2,:),'*',controlC(1,:),controlC(2,:),'b+',controlD(1,:),controlD(2,:),'r+');
-
-
-%[alturas_nodos anguloy]=procesar_alturas(altura,to,t,disakima(indices_bp));
-%plot(1:length(altura),altura,1:length(indices_bp),0*alturas_nodos,'o');
-alturas_nodos=zeros(size(seleccion));
-anguloy=zeros(size(seleccion));
-
 %WARNING Pongo las alturas a 0 porque un conjunto de alturas incoherente puede hacer que btb06 genere demasiados anchors (un gran salto en altura se tomaría como una gran distancia entre nodos)
 imprime_track(controlA,controlB,controlC,controlD,0*alturas_nodos,0*anguloy);
 
@@ -365,6 +354,56 @@ for h=1:length(x)
 end
 fwrite(fid,final);			
 my_fclose(fid);
+end
+
+function [alturas_nodos anguloy  controlA controlB controlC controlD]=realizar_ajuste(x,y,optimize_choice)
+
+	xy = [x;y]; df = diff(xy,1,2); 
+
+	%Cálculo basto de la longitud
+	to = cumsum([0, sqrt([1 1]*(df.*df))]);  %La variable es la distancia
+
+	disakima=to(1):1:to(end);
+	%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+	%Curva interpolada con akima metro a metro (disakima son un punto cada metro)
+	yakima=akima(to,y,disakima);
+	xakima=akima(to,x,disakima);
+
+	if (strcmp(optimize_choice,'keep')==1)
+		seleccion=to;
+	else
+		if (strcmp(optimize_choice,'decimate')==1) 
+			indices_seleccion=1:decimate_factor:length(to);
+			if indices_seleccion(end)~=length(to)
+				indices_seleccion=[indices_seleccion length(to)];
+			end
+			seleccion=to(indices_seleccion);
+		else
+			if (strcmp(optimize_choice,'optimize')==1) 
+				mascara=1+0*to;%Todos los puntos del kml son buenos en principio
+				seleccion=simplificanodos(disakima,xakima,yakima,decimate_factor,to);
+			end
+		end
+	end
+	ajuste=ajusta(disakima,xakima,yakima,seleccion);
+	%Obtenemos puntos para visualizacióm
+	puntosbtb=ppval(ajuste,disakima);
+
+	
+	plot(puntosbtb(1,:),puntosbtb(2,:),'-r',x,y,'b+');
+	axis square
+
+	[controlA controlB controlC controlD]=saca_controlpoints(ajuste.P,ajuste.x);
+	
+
+	%plot(controlA(1,:),controlA(2,:),'o',controlB(1,:),controlB(2,:),'*',controlC(1,:),controlC(2,:),'b+',controlD(1,:),controlD(2,:),'r+');
+
+
+	%[alturas_nodos anguloy]=procesar_alturas(altura,to,t,disakima(indices_bp));
+	%plot(1:length(altura),altura,1:length(indices_bp),0*alturas_nodos,'o');
+	alturas_nodos=zeros(size(seleccion));
+	anguloy=zeros(size(seleccion));
 end
 
 

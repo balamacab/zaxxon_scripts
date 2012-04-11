@@ -217,24 +217,26 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--------------------------------------------------------------------------
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%Esta parte añadía superficies en los extremos de la carretera. Funciona bien, pero lo comento porque los muros de s7_walls ya no lo necesitan.
+%
+% punto_extremoA=[punto_izquierda(1,1) punto_izquierda(1,3)]+[(punto_izquierda(1,1)-punto_izquierda(2,1)) (punto_izquierda(1,3)-punto_izquierda(2,3))];
+% punto_extremoB=[punto_izquierda(nac/2,1) punto_izquierda(nac/2,3)]+[(punto_izquierda(nac/2,1)-punto_izquierda(nac/2-1,1)) (punto_izquierda(nac/2,3)-punto_izquierda(nac/2-1,3))];
+% punto_extremoC=[punto_derecha(1,1) punto_derecha(1,3)]+[(punto_derecha(1,1)-punto_derecha(2,1)) (punto_derecha(1,3)-punto_derecha(2,3))];
+% punto_extremoD=[punto_derecha(nac/2,1) punto_derecha(nac/2,3)]+[(punto_derecha(nac/2,1)-punto_derecha(nac/2-1,1)) (punto_derecha(nac/2,3)-punto_derecha(nac/2-1,3))];
 
-punto_extremoA=[punto_izquierda(1,1) punto_izquierda(1,3)]+[(punto_izquierda(1,1)-punto_izquierda(2,1)) (punto_izquierda(1,3)-punto_izquierda(2,3))];
-punto_extremoB=[punto_izquierda(nac/2,1) punto_izquierda(nac/2,3)]+[(punto_izquierda(nac/2,1)-punto_izquierda(nac/2-1,1)) (punto_izquierda(nac/2,3)-punto_izquierda(nac/2-1,3))];
-punto_extremoC=[punto_derecha(1,1) punto_derecha(1,3)]+[(punto_derecha(1,1)-punto_derecha(2,1)) (punto_derecha(1,3)-punto_derecha(2,3))];
-punto_extremoD=[punto_derecha(nac/2,1) punto_derecha(nac/2,3)]+[(punto_derecha(nac/2,1)-punto_derecha(nac/2-1,1)) (punto_derecha(nac/2,3)-punto_derecha(nac/2-1,3))];
-
-fprintf(fid,'p1=newp;Point (p1) = {%f, %f, %f, cl2};\n',punto_extremoA(1),punto_extremoA(2),0);%Extremo izquierdo inicial
-fprintf(fid,'p2=newp;Point (p2) = {%f, %f, %f, cl2};\n',punto_extremoC(1),punto_extremoC(2),0);%Extremo derecho inicial
-fprintf(fid,'l1=newl;Line (l1) = {p1,p2};\n');
-fprintf(fid,'l2=newl;Line (l2) = {p1,offset_a+%d};\n',1);
-fprintf(fid,'l3=newl;Line (l3) = {p2,offset_a+%d};\n',nac/2+1);
+% fprintf(fid,'p1=newp;Point (p1) = {%f, %f, %f, cl2};\n',punto_extremoA(1),punto_extremoA(2),0);%Extremo izquierdo inicial
+% fprintf(fid,'p2=newp;Point (p2) = {%f, %f, %f, cl2};\n',punto_extremoC(1),punto_extremoC(2),0);%Extremo derecho inicial
+% fprintf(fid,'l1=newl;Line (l1) = {p1,p2};\n');
+% fprintf(fid,'l2=newl;Line (l2) = {p1,offset_a+%d};\n',1);
+% fprintf(fid,'l3=newl;Line (l3) = {p2,offset_a+%d};\n',nac/2+1);
 
 
-fprintf(fid,'p1=newp;Point (p1) = {%f, %f, %f, cl2};\n',punto_extremoB(1),punto_extremoB(2),0);%Extremo izquierdo final
-fprintf(fid,'p2=newp;Point (p2) = {%f, %f, %f, cl2};\n',punto_extremoD(1),punto_extremoD(2),0);%Extremo derecho final
-fprintf(fid,'l1=newl;Line (l1) = {p1,p2};\n');
-fprintf(fid,'l2=newl;Line (l2) = {p1,offset_a+%d};\n',nac/2);
-fprintf(fid,'l3=newl;Line (l3) = {p2,offset_a+%d};\n',nac);
+% fprintf(fid,'p1=newp;Point (p1) = {%f, %f, %f, cl2};\n',punto_extremoB(1),punto_extremoB(2),0);%Extremo izquierdo final
+% fprintf(fid,'p2=newp;Point (p2) = {%f, %f, %f, cl2};\n',punto_extremoD(1),punto_extremoD(2),0);%Extremo derecho final
+% fprintf(fid,'l1=newl;Line (l1) = {p1,p2};\n');
+% fprintf(fid,'l2=newl;Line (l2) = {p1,offset_a+%d};\n',nac/2);
+% fprintf(fid,'l3=newl;Line (l3) = {p2,offset_a+%d};\n',nac);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %--------------------------------------------------------------------------

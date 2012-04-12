@@ -101,8 +101,8 @@ if (pantalla==0)
 	end
 	buts0_refresh = gtk(in,out,"gtk_button_new_from_stock 'gtk-refresh'");
 	lbls0kml = gtk(in,out,["gtk_label_new -"]);gtk(in,out,["gtk_label_set_text ", lbls0kml,sprintf("'%s'",fichero)]);gtk(in,out,["gtk_misc_set_alignment ",lbls0kml,"0 0.5"]);
-        lbls0width = gtk(in,out,["gtk_label_new ",string003]);gtk(in,out,["gtk_misc_set_alignment ",lbls0width,"0 0.5"]);
-        lbls0spacing = gtk(in,out,["gtk_label_new ",string004]);gtk(in,out,["gtk_misc_set_alignment ",lbls0spacing,"0 0.5"]);
+	lbls0width = gtk(in,out,["gtk_label_new ",string003]);gtk(in,out,["gtk_misc_set_alignment ",lbls0width,"0 0.5"]);
+	lbls0spacing = gtk(in,out,["gtk_label_new ",string004]);gtk(in,out,["gtk_misc_set_alignment ",lbls0spacing,"0 0.5"]);
 	widths0 = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",widths0,sprintf('%.1f',ancho)]);gtk(in,out,["gtk_entry_set_width_chars ",widths0,'4']);
 	spacings0 = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",spacings0,sprintf('%.1f',espaciado)]);gtk(in,out,["gtk_entry_set_width_chars ",spacings0,'4']);
 	%ver=gtk(in,out,["gtk_entry_get_width_chars ",widths0])
@@ -110,17 +110,17 @@ if (pantalla==0)
 	hseps0s1 = gtk(in,out,"gtk_hseparator_new");
 	
 	 %so ocupa del 1 al 4
- gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", fs0, " 3 4 1 160"]);
- gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls0, " 1 3 1 2"]);
- gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts0, " 30 32 1 2"]);
- gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts0_refresh, " 1 3 2 3"]);
- gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls0kml, " 5 6 2 3"]);
- gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s0_pb, " 28 34 2 3"]);
- gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls0width, " 20 22 1 2"]);
- gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls0spacing, " 20 22 2 3"]);
- gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", widths0, " 23 24 1 2"]);
- gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", spacings0, " 23 24 2 3"]);
- gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps0s1, " 1 80 3 4"]);
+	 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", fs0, " 3 4 1 160"]);
+	 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls0, " 1 3 1 2"]);
+	 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts0, " 30 32 1 2"]);
+	 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts0_refresh, " 1 3 2 3"]);
+	 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls0kml, " 5 6 2 3"]);
+	 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s0_pb, " 28 34 2 3"]);
+	 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls0width, " 20 22 1 2"]);
+	 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls0spacing, " 20 22 2 3"]);
+	 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", widths0, " 23 24 1 2"]);
+	 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", spacings0, " 23 24 2 3"]);
+	 gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps0s1, " 1 80 3 4"]);
 else
 	buts0=-1;buts0_refresh=-1;
 end
@@ -128,21 +128,21 @@ end
 if (pantalla==0) && (strcmp(tipo,'SON')==0)
 	buts2_refresh = gtk(in,out,"gtk_button_new_from_stock 'gtk-refresh'");
 	lbls2 = gtk(in,out,"gtk_label_new s2_elevation");
-        lbls2limits = gtk(in,out,["gtk_label_new ",string005]);gtk(in,out,["gtk_misc_set_alignment ",lbls2limits,"0 0.5"]);
-buts2_makegrid = gtk(in,out,["gtk_button_new_with_label ",string006]);
-buts2_raisekml = gtk(in,out,["gtk_button_new_with_label ",string007]);
-buts2_readgrid = gtk(in,out,["gtk_button_new_with_label ",string008]);
-buts2_plotlamalla = gtk(in,out,["gtk_button_new_with_label ",string009]);
+	lbls2limits = gtk(in,out,["gtk_label_new ",string005]);gtk(in,out,["gtk_misc_set_alignment ",lbls2limits,"0 0.5"]);
+	buts2_makegrid = gtk(in,out,["gtk_button_new_with_label ",string006]);
+	buts2_raisekml = gtk(in,out,["gtk_button_new_with_label ",string007]);
+	buts2_readgrid = gtk(in,out,["gtk_button_new_with_label ",string008]);
+	buts2_plotlamalla = gtk(in,out,["gtk_button_new_with_label ",string009]);
 	s2_pb_makegrid = gtk(in,out,"gtk_progress_bar_new ");
 	s2_pb_raisekml = gtk(in,out,"gtk_progress_bar_new ");
 	s2_pb_readgrid = gtk(in,out,"gtk_progress_bar_new ");
-lbls2step = gtk(in,out,["gtk_label_new ",string010]);gtk(in,out,["gtk_misc_set_alignment ",lbls2step,"0 0.5"]);
+	lbls2step = gtk(in,out,["gtk_label_new ",string010]);gtk(in,out,["gtk_misc_set_alignment ",lbls2step,"0 0.5"]);
 	steps2 = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",steps2,"20"]);gtk(in,out,["gtk_entry_set_width_chars ",steps2,'3']);
-lbls2size = gtk(in,out,["gtk_label_new ",string011]);gtk(in,out,["gtk_misc_set_alignment ",lbls2size,"0 0.5"]);
+	lbls2size = gtk(in,out,["gtk_label_new ",string011]);gtk(in,out,["gtk_misc_set_alignment ",lbls2size,"0 0.5"]);
 	sizes2 = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",sizes2,"5000"]);;gtk(in,out,["gtk_entry_set_width_chars ",sizes2,'5']);
 	hseps2s2b = gtk(in,out,"gtk_hseparator_new");
 
-	inicializa_s2(in,out,buts2_makegrid,buts2_raisekml,buts2_readgrid,buts2_plotlamalla,lbls2limits,'s2_elevation','limits.kml')
+	tipo_elevacion=inicializa_s2(in,out,buts2_makegrid,buts2_raisekml,buts2_readgrid,buts2_plotlamalla,lbls2limits,'s2_elevation','limits.kml')
 	
 	%s2
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls2, " 1 3 4 5"]);
@@ -169,21 +169,21 @@ end
 if (pantalla==0) && (strcmp(tipo,'SON')==0)
 	buts2b_refresh = gtk(in,out,"gtk_button_new_from_stock 'gtk-refresh'");
 	lbls2b = gtk(in,out,"gtk_label_new s2_elevation_b");
-lbls2blimits = gtk(in,out,["gtk_label_new ",string005]);gtk(in,out,["gtk_misc_set_alignment ",lbls2blimits,"0 0.5"]);
-buts2b_makegrid = gtk(in,out,["gtk_button_new_with_label ",string006]);
-buts2b_raisekml = gtk(in,out,["gtk_button_new_with_label ",string007]);
-buts2b_readgrid = gtk(in,out,["gtk_button_new_with_label ",string008]);
-buts2b_plotlamalla = gtk(in,out,["gtk_button_new_with_label ",string009]);
+	lbls2blimits = gtk(in,out,["gtk_label_new ",string005]);gtk(in,out,["gtk_misc_set_alignment ",lbls2blimits,"0 0.5"]);
+	buts2b_makegrid = gtk(in,out,["gtk_button_new_with_label ",string006]);
+	buts2b_raisekml = gtk(in,out,["gtk_button_new_with_label ",string007]);
+	buts2b_readgrid = gtk(in,out,["gtk_button_new_with_label ",string008]);
+	buts2b_plotlamalla = gtk(in,out,["gtk_button_new_with_label ",string009]);
 	s2b_pb_makegrid = gtk(in,out,"gtk_progress_bar_new ");
 	s2b_pb_raisekml = gtk(in,out,"gtk_progress_bar_new ");
 	s2b_pb_readgrid = gtk(in,out,"gtk_progress_bar_new ");
-lbls2bstep = gtk(in,out,["gtk_label_new ",string010]);gtk(in,out,["gtk_misc_set_alignment ",lbls2bstep,"0 0.5"]);
+	lbls2bstep = gtk(in,out,["gtk_label_new ",string010]);gtk(in,out,["gtk_misc_set_alignment ",lbls2bstep,"0 0.5"]);
 	steps2b = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",steps2b,"75"]);;gtk(in,out,["gtk_entry_set_width_chars ",steps2b,'3']);
-lbls2bsize = gtk(in,out,["gtk_label_new ",string011]);gtk(in,out,["gtk_misc_set_alignment ",lbls2bsize,"0 0.5"]);
+	lbls2bsize = gtk(in,out,["gtk_label_new ",string011]);gtk(in,out,["gtk_misc_set_alignment ",lbls2bsize,"0 0.5"]);
 	sizes2b = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",sizes2b,"5000"]);;gtk(in,out,["gtk_entry_set_width_chars ",sizes2b,'5']);
 	hseps2bs3 = gtk(in,out,"gtk_hseparator_new");
 	
-	inicializa_s2(in,out,buts2b_makegrid,buts2b_raisekml,buts2b_readgrid,buts2b_plotlamalla,lbls2blimits,'s2_elevation_b','limits_b.kml')
+	tipo_elevacion=inicializa_s2(in,out,buts2b_makegrid,buts2b_raisekml,buts2b_readgrid,buts2b_plotlamalla,lbls2blimits,'s2_elevation_b','limits_b.kml')
 	
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls2b, " 1 3 8 9"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts2b_plotlamalla, " 78 80 8 10"]);
@@ -209,20 +209,23 @@ end
 if (pantalla==0)
 	buts3_refresh = gtk(in,out,"gtk_button_new_from_stock 'gtk-refresh'");
 	lbls3 = gtk(in,out,"gtk_label_new s3_road");
-buts3_readdata = gtk(in,out,["gtk_button_new_with_label ",string013]);
-buts3_createprofile = gtk(in,out,["gtk_button_new_with_label ",string014]);
-buts3_consolidate = gtk(in,out,["gtk_button_new_with_label ",string015]);
-buts3_fixterrain = gtk(in,out,["gtk_button_new_with_label ",string016]);
+	buts3_readdata = gtk(in,out,["gtk_button_new_with_label ",string013]);
+	buts3_createprofile = gtk(in,out,["gtk_button_new_with_label ",string014]);
+	buts3_consolidate = gtk(in,out,["gtk_button_new_with_label ",string015]);
+	buts3_fixterrain = gtk(in,out,["gtk_button_new_with_label ",string016]);
 	s3_pb_readdata = gtk(in,out,"gtk_progress_bar_new ");
 	s3_pb_consolidate = gtk(in,out,"gtk_progress_bar_new ");
-s3_usecenter = gtk(in,out,["gtk_check_button_new_with_label ",string017," 0"]);
-lbls3smooth1 = gtk(in,out,["gtk_label_new ",string018]);gtk(in,out,["gtk_misc_set_alignment ",lbls3smooth1,"0 0.5"]);
+	s3_usecenter = gtk(in,out,["gtk_check_button_new_with_label ",string017," 0"]);
+	lbls3smooth1 = gtk(in,out,["gtk_label_new ",string018]);gtk(in,out,["gtk_misc_set_alignment ",lbls3smooth1,"0 0.5"]);
 	s3_smoothfactor = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",s3_smoothfactor,"15"]);gtk(in,out,["gtk_entry_set_width_chars ",s3_smoothfactor,'3']);
-lbls3_slopelimit = gtk(in,out,["gtk_label_new ",string019]);gtk(in,out,["gtk_misc_set_alignment ",lbls3_slopelimit,"0 0.5"]);
+	lbls3_slopelimit = gtk(in,out,["gtk_label_new ",string019]);gtk(in,out,["gtk_misc_set_alignment ",lbls3_slopelimit,"0 0.5"]);
 	s3_slopelimit= gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",s3_slopelimit,"0.25"]);gtk(in,out,["gtk_entry_set_width_chars ",s3_slopelimit,'5']);
 	hseps3s1= gtk(in,out,"gtk_hseparator_new");
 	
 	inicializa_s3(in,out,buts3_readdata,buts3_createprofile,buts3_fixterrain,buts3_consolidate);
+	if tipo_elevacion==0 %caso de datos AGR o LIDAR
+		gtk(in,out,["gtk_widget_set_sensitive ",buts3_fixterrain,"0"]);
+	end
 	
 	%s3
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls3, " 1 3 12 13"]);
@@ -238,6 +241,8 @@ lbls3_slopelimit = gtk(in,out,["gtk_label_new ",string019]);gtk(in,out,["gtk_mis
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s3_smoothfactor, " 30 34 12 13"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls3_slopelimit, " 28 30 13 14"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s3_slopelimit, " 30 34 13 14"]);
+	
+
 
 else
 	buts3_readdata=-1;	buts3_createprofile = 1;	buts3_consolidate = -1;	buts3_fixterrain = -1;buts3_refresh=-1;
@@ -246,16 +251,20 @@ end
 if (pantalla==0)
 	buts1_refresh = gtk(in,out,"gtk_button_new_from_stock 'gtk-refresh'");
 	lbls1 = gtk(in,out,"gtk_label_new s1_mesh");
-lbls1width = gtk(in,out,["gtk_label_new ",string020]);gtk(in,out,["gtk_misc_set_alignment ",lbls1width,"0 0.5"]);
+	lbls1width = gtk(in,out,["gtk_label_new ",string020]);gtk(in,out,["gtk_misc_set_alignment ",lbls1width,"0 0.5"]);
 	widths1 = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",widths1,"20"]);gtk(in,out,["gtk_entry_set_width_chars ",widths1,'3']);
-lbls1panels = gtk(in,out,["gtk_label_new ",string021]);gtk(in,out,["gtk_misc_set_alignment ",lbls1panels,"0 0.5"]);
+	lbls1panels = gtk(in,out,["gtk_label_new ",string021]);gtk(in,out,["gtk_misc_set_alignment ",lbls1panels,"0 0.5"]);
 	panelss1 = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",panelss1,"5"]);;gtk(in,out,["gtk_entry_set_width_chars ",panelss1,'3']);
-buts1 = gtk(in,out,["gtk_button_new_with_label ",string022]);
+	buts1 = gtk(in,out,["gtk_button_new_with_label ",string022]);
 	hseps1fin= gtk(in,out,"gtk_hseparator_new");
-s1_minisups = gtk(in,out,["gtk_check_button_new_with_label ",string023," 0"]);
-s1_includelimits = gtk(in,out,["gtk_check_button_new_with_label ",string024," 1"]);
+	s1_minisups = gtk(in,out,["gtk_check_button_new_with_label ",string023," 0"]);
+	s1_includelimits = gtk(in,out,["gtk_check_button_new_with_label ",string024," 1"]);
 	gtk(in,out,["gtk_toggle_button_set_active ",s1_includelimits,"1"]);
 	s1_pb_creategeo = gtk(in,out,"gtk_progress_bar_new ");
+	if tipo_elevacion==0 %caso de datos AGR o LIDAR
+		gtk(in,out,["gtk_toggle_button_set_active ",s1_includelimits,"0"]);
+		gtk(in,out,["gtk_widget_set_sensitive ",s1_includelimits,"0"]);
+	end
 
 	inicializa_s1(in,out,buts1);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps3s1, " 1 80 14 15"]);
@@ -271,7 +280,7 @@ s1_includelimits = gtk(in,out,["gtk_check_button_new_with_label ",string024," 1"
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s1_minisups, " 20 22 18 19"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s1_includelimits, " 23 24 18 19"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps1fin, " 1 80 19 20"]);
-
+	
 else
 	buts1_refresh=-1;buts1=-1;
 end
@@ -331,9 +340,9 @@ end
 if (pantalla==1) || ((pantalla==0) && (strcmp(tipo,'SON')))
 	buts10_refresh = gtk(in,out,"gtk_button_new_from_stock 'gtk-refresh'");
 	lbls10 = gtk(in,out,"gtk_label_new s10_split");
-buts10_createsplit = gtk(in,out,["gtk_button_new_with_label ",string030]);
-buts10_splittrack = gtk(in,out,["gtk_button_new_with_label ",string031]);
-buts10_createterrain = gtk(in,out,["gtk_button_new_with_label ",string032]);
+	buts10_createsplit = gtk(in,out,["gtk_button_new_with_label ",string030]);
+	buts10_splittrack = gtk(in,out,["gtk_button_new_with_label ",string031]);
+	buts10_createterrain = gtk(in,out,["gtk_button_new_with_label ",string032]);
 	s10_pb_createterrain = gtk(in,out,"gtk_progress_bar_new ");
 	drops10X = gtk(in,out,"gtk_combo_box_new_text '");
 	drops10Y = gtk(in,out,"gtk_combo_box_new_text '");
@@ -343,7 +352,7 @@ buts10_createterrain = gtk(in,out,["gtk_button_new_with_label ",string032]);
 	hseps2bs3 = gtk(in,out,"gtk_hseparator_new");
 	lbls10_grid = gtk(in,out,["gtk_label_new ",string035]);gtk(in,out,["gtk_misc_set_alignment ",lbls10_grid,"1 0.5"]);
 	lbls10_distancia=gtk(in,out,"gtk_label_new '0m'");gtk(in,out,["gtk_misc_set_alignment ",lbls10_distancia,"1 0.5"]);
-	for h=1:16
+	for h=1:20
 		gtk(in,out,["gtk_combo_box_append_text ", drops10X, "\"" ,	sprintf('%d',h) , "\""]);
 		gtk(in,out,["gtk_combo_box_append_text ", drops10Y, "\"" ,	sprintf('%d',h) , "\""]);
 	end
@@ -1155,7 +1164,7 @@ function [ancho,default_panel_length,fichero,distancia]=inicializa_s0()
 		
 end
 
-function inicializa_s2(in,out,buts2_makegrid,buts2_raisekml,buts2_readgrid,buts2_plotlamalla,lbls2limits,folder,ficherokml)
+function tipo_elevacion=inicializa_s2(in,out,buts2_makegrid,buts2_raisekml,buts2_readgrid,buts2_plotlamalla,lbls2limits,folder,ficherokml)
 global string044;%='"AGR Dir\nFound"';
 global string045;%='"lidar Dir\nFound"';
 global string046;
@@ -1164,6 +1173,7 @@ global string047;
 	[numero_padres caminos]=look_for_father_or_sons('father.txt');
 	
     if (exist('..\agr')==7) || (exist('..\lidar')==7) || (numero_padres~=0) %No usamos s2_elevation
+				tipo_elevacion=0;
 				gtk(in,out,["gtk_widget_set_sensitive ",buts2_makegrid,"0"]);
 				gtk(in,out,["gtk_widget_set_sensitive ",buts2_raisekml,"0"]);
 				gtk(in,out,["gtk_widget_set_sensitive ",buts2_readgrid,"0"]);
@@ -1174,6 +1184,7 @@ global string047;
 					gtk(in,out,["gtk_label_set_text ",lbls2limits,string045])
 				end
 	else
+				tipo_elevacion=1;
 				[errores,nadena]=system('dir mapeo.txt /b 2>NUL');
 				existe_mapeo=length(findstr(nadena,'.')); %Hay tantos ficheros como puntos en nadena
 				

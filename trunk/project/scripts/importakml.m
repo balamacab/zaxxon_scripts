@@ -1,4 +1,4 @@
-function importakml2(ficherokml,optimize_choice,decimate_factor)
+function importakml(ficherokml,optimize_choice,decimate_factor)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---

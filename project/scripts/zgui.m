@@ -142,7 +142,7 @@ if (pantalla==0) && (strcmp(tipo,'SON')==0)
 	sizes2 = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",sizes2,"5000"]);;gtk(in,out,["gtk_entry_set_width_chars ",sizes2,'5']);
 	hseps2s2b = gtk(in,out,"gtk_hseparator_new");
 
-	tipo_elevacion=inicializa_s2(in,out,buts2_makegrid,buts2_raisekml,buts2_readgrid,buts2_plotlamalla,lbls2limits,'s2_elevation','limits.kml')
+	tipo_elevacion=inicializa_s2(in,out,buts2_makegrid,buts2_raisekml,buts2_readgrid,buts2_plotlamalla,lbls2limits,'s2_elevation','limits.kml');
 	
 	%s2
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls2, " 1 3 4 5"]);
@@ -183,7 +183,7 @@ if (pantalla==0) && (strcmp(tipo,'SON')==0)
 	sizes2b = gtk(in,out,"gtk_entry_new"); gtk(in,out,["gtk_entry_set_text ",sizes2b,"5000"]);;gtk(in,out,["gtk_entry_set_width_chars ",sizes2b,'5']);
 	hseps2bs3 = gtk(in,out,"gtk_hseparator_new");
 	
-	tipo_elevacion=inicializa_s2(in,out,buts2b_makegrid,buts2b_raisekml,buts2b_readgrid,buts2b_plotlamalla,lbls2blimits,'s2_elevation_b','limits_b.kml')
+	tipo_elevacion=inicializa_s2(in,out,buts2b_makegrid,buts2b_raisekml,buts2b_readgrid,buts2b_plotlamalla,lbls2blimits,'s2_elevation_b','limits_b.kml');
 	
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls2b, " 1 3 8 9"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts2b_plotlamalla, " 78 80 8 10"]);

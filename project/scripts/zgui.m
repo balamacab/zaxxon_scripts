@@ -775,7 +775,9 @@ while (1)
 				ejecuta(in,out,advb,'btb06');
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
 				gtk(in,out,["gtk_widget_set_sensitive ",buts1,"1"]);
-				gtk(in,out,["gtk_widget_set_sensitive ",buts10_createsplit,"1"]);
+				%gtk(in,out,["gtk_widget_set_sensitive ",buts10_createsplit,"1"]);
+				cd .. %Necesario para refrescar s10
+				inicializa_s10(in,out,buts10_createsplit,buts10_splittrack,buts10_createterrain,lbls10_distancia);
 				informa_anyade(in,out,advb,string040);
 			catch
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");

@@ -86,7 +86,7 @@ tbl3 = gtk(in,out,"gtk_table_new 80 60 0.1 0.1");
 gtk(in,out,["gtk_table_attach_defaults ", maintbl, " ", tbl, " 1 4 1 4"]);
 gtk(in,out,["gtk_table_attach_defaults ", maintbl, " ", tbl2, " 1 2 5 6"]);
 gtk(in,out,["gtk_table_attach_defaults ", maintbl, " ", tbl3, " 3 4 5 6"]);
-
+tipo_elevacion=1;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 if (pantalla==0)
 	[ancho,espaciado,fichero]=inicializa_s0;
@@ -364,16 +364,18 @@ if (pantalla==1) || ((pantalla==0) && (strcmp(tipo,'SON')))
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls10split, " 20 21 108 109"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls10_distancia, " 20 21 109 110"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s10_split, " 23 24 108 109"]);
-	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", drops10Y, " 61 64 108 109"]);
-	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", drops10X, " 58 61 108 109"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_refresh, " 1 3 109 110"]);
 	%gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_createsplit, " 28 31 108 109"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_createsplit, " 23 24 109 110"]);
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_splittrack, " 30 32 109 110"]);
-	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_createterrain, " 60 62 109 110"]);
-	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s10_pb_createterrain, " 58 64 110 111"]);
-	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s10_blend, " 45 47 109 110"]);
-	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls10_grid, " 45 47 108 109"]);
+	if strcmp(tipo,'SON')~=1
+		gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", drops10Y, " 61 64 108 109"]);
+		gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", drops10X, " 58 61 108 109"]);
+		gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", buts10_createterrain, " 60 62 109 110"]);
+		gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s10_pb_createterrain, " 58 64 110 111"]);
+		gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", s10_blend, " 45 47 109 110"]);
+		gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", lbls10_grid, " 45 47 108 109"]);
+	end
 	gtk(in,out,["gtk_table_attach_defaults ", tbl, " ", hseps2bs3, " 1 80 111 112"]);
 else
 	buts10_refresh =-1;	buts10_createsplit = -1; buts10_splittrack = -1; buts10_createterrain=-1;
@@ -773,6 +775,7 @@ while (1)
 				ejecuta(in,out,advb,'btb06');
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',1)]);gtk(in,out,"gtk_server_callback update");
 				gtk(in,out,["gtk_widget_set_sensitive ",buts1,"1"]);
+				gtk(in,out,["gtk_widget_set_sensitive ",buts10_createsplit,"1"]);
 				informa_anyade(in,out,advb,string040);
 			catch
 				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");

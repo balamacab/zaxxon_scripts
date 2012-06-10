@@ -765,7 +765,7 @@ while (1)
         if strcmp(event, buts3_consolidate)
 			informa_nuevo(in,out,advb2,string067);
 			informa_nuevo(in,out,advb,'S3');
-			try
+			%try
 				global progress_bar;
 				progress_bar.id=s3_pb_consolidate;
 				progress_bar.in=in;
@@ -781,10 +781,10 @@ while (1)
 					inicializa_s10(in,out,buts10_createsplit,buts10_splittrack,buts10_createterrain,lbls10_distancia);
 				end
 				informa_anyade(in,out,advb,string040);
-			catch
-				gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
-				informa_anyade(in,out,advb,string041);
-			end
+			%catch
+			%	gtk(in,out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0)]);gtk(in,out,"gtk_server_callback update");
+			%	informa_anyade(in,out,advb,string041);
+			%end
 		end
 		
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%		

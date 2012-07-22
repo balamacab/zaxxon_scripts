@@ -65,7 +65,7 @@ string056='On lis les fichiers gridXXX_relleno.kml et on cree un fichier \n (app
 string057='On trace les donnees d altitude (lamalla.mat)';
 string058=['On cree une grille avec des points equidistants qui recouvre l ensemble du \nterrain delimite par le fichier limits.kml. Ces points sont sauvegardes',...
 'dans les fichiers gridXXX.kml et nous allons leurs attribuer l altitude\n en utilisant le bouton Attribuer l altitude aux KMLs. Les fichiers DOIVENT contenir MOINS de 5000 points (conseille 1000)'];
-string059='On attribue l altitude aux fichiers gridXXX.kml\nLes resultats sont sauvegardes dans les fichiers gridXXX_relleno.kml\nN UTILISEZ PAS CE BOUTON AVANT D AVOIR LU LE SECTION V.1 DU FICHIER D AIDE\n present dans le dossier Documentation de votre projet';
+string059='On attribue l altitude aux fichiers gridXXX.kml\nLes resultats sont sauvegardes dans les fichiers gridXXX_relleno.kml\nN UTILISEZ PAS CE BOUTON AVANT D AVOIR LU LE SECTION V.1 DU FICHIER PDF D AIDE\n present dans le dossier Documentation de votre projet';
 string060='';
 string061='';
 string062='';

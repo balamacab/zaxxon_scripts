@@ -1,8 +1,9 @@
 function split_agr(file_name,numtrozos)
 %Creates a lamalla.mat file from a single .agr file
 
-			if length(file_name)>0
-				fid=fopen(strcat(file_name,'.asc'),'r');
+		if length(file_name)>0
+			fid=fopen(strcat(file_name,'.asc'),'r');
+			if fid~=-1
 				contenido=fread(fid,1000);
 				fclose(fid);
 				contenido=char(contenido)';
@@ -102,7 +103,10 @@ function split_agr(file_name,numtrozos)
                         fclose(fichero(h,g));
                     end
                 end
+			else
+				fprintf(2,'\nERROR: Failed to open file %s in the current folder\n\n',strcat(file_name,'.asc'));
             end
+		end	
 end
 function escribe_cabecera(fid,ncols,nrows,xcorner,ycorner,cellsize,nodata,xcenter,ycenter)
                 cabecera1='NCOLS %d\r\nNROWS %d\r\nXLL%s %d\r\nYLL%s %d\r\nCELLSIZE %d\r\nNODATA_VALUE %d\r\n';

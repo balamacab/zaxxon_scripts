@@ -3,7 +3,7 @@ function msh_to_obj(fichero_nodos,fichero_elements)
 [numero x y z]=textread(fichero_nodos,'%d %f %f %f');
 
 fid=fopen(fichero_elements,'r');
-fid_w=fopen(strcat('salida\test','.obj'),'w');
+fid_w=fopen(strcat('salida/test','.obj'),'w');
 contador=1;
 while (feof(fid)~=1)
     todo=fscanf(fid,'%d',3);

@@ -2,15 +2,15 @@ function [lista_pacenotes]=calcular_pacenotes(x,z,pendientes,angulos,distancias,
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
-% Este código NO es software libre. Su uso implica la aceptación de las condiciones del autor,
-% condiciones que explícitamente prohiben tanto la redistribución como su uso con fines comerciales.
-% Asimismo queda prohibida la realización de cualquier modificación que no sea para estricto uso personal 
+% Este cï¿½digo NO es software libre. Su uso implica la aceptaciï¿½n de las condiciones del autor,
+% condiciones que explï¿½citamente prohiben tanto la redistribuciï¿½n como su uso con fines comerciales.
+% Asimismo queda prohibida la realizaciï¿½n de cualquier modificaciï¿½n que no sea para estricto uso personal 
 % y sin finalidad comercial.
 % 
-% El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
+% El autor no acepta ninguna responsabilidad por cualquier daï¿½o resultante del uso de este cï¿½digo.
 
 %-----------------------------------------------------------------------------------------
-%                                          Parámetros de configuración
+%                                          Parï¿½metros de configuraciï¿½n
 
 anchoint=5; %5*5=25m Puntos que definen el centro de la curva
 ancho=21; %17*5=85m  Puntos que definen la curva completa
@@ -35,7 +35,7 @@ salida=filter(filtro,1,curvatura);
 salida=salida((length(filtro)-1)/2:end);
 
 %-----------------------------------------------------------------------------------------
-%                                   Calculando máximos y mínimos
+%                                   Calculando mï¿½ximos y mï¿½nimos
 
 display('Caracterizando curvas');
 
@@ -50,7 +50,7 @@ hold on
 plot(distancias(1:length(salida)),(180/pi)*salida);%,maxtab(:,1),salida(maxtab(:,1)),'+',mintab(:,1),salida(mintab(:,1)),'o');
 	
 %----------------------------------------------------------------------------------------
-%                                    Juntar y ordenar máximos y mínimos
+%                                    Juntar y ordenar mï¿½ximos y mï¿½nimos
 
 indices=[maxtab(:,1)' mintab(:,1)'];
 magnitudes=[salida(maxtab(:,1)) salida(mintab(:,1))];
@@ -64,7 +64,7 @@ plot(distancias(indices),(180/pi)*magnitudes,'xb');
 %legend(leyenda);
 
 %---------------------------------------------------------------------------------------
-%                       Asignar pacenotes según la magnitud
+%                       Asignar pacenotes segï¿½n la magnitud
   
 figure;
 axis('equal');
@@ -113,7 +113,7 @@ for h=1:length(magnitudes)
 		end
 		mensaje=sprintf('C=%.2f T=%.2f %s(%d)',girocentral,girototal,Tipo,flag);
 		text(posx,posz,mensaje);
-		plot(x(indices(h)-1),z(indices(h)-1),'o');%-1 porque las derivadas adelantan la posición de las cosas en el espacio
+		plot(x(indices(h)-1),z(indices(h)-1),'o');%-1 porque las derivadas adelantan la posiciï¿½n de las cosas en el espacio
 	end
     end
 end
@@ -180,3 +180,4 @@ function  [acumulado]=dame_acumulado(curvatura,h,ancho);
 		acumulado=(180/pi)*(acumulado_derecha+acumulado_izquierda);
 end
 %---------------------------------------------------------------------------------------
+end

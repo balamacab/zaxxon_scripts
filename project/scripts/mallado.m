@@ -49,10 +49,10 @@ end
 %plot(x,y);
 %pause
 %Puntos con los que aproximamos la perpendicular
-antesx=interp1(distancia_acumulada,lasx,distancia_acumulada-0.25,'PCHIP');
-despuesx=interp1(distancia_acumulada,lasx,distancia_acumulada+0.25,'PCHIP');
-antesy=interp1(distancia_acumulada,lasy,distancia_acumulada-0.25,'PCHIP');
-despuesy=interp1(distancia_acumulada,lasy,distancia_acumulada+0.25,'PCHIP');
+antesx=interp1(distancia_acumulada,lasx,distancia_acumulada-0.25,'PCHIP','extrap');
+despuesx=interp1(distancia_acumulada,lasx,distancia_acumulada+0.25,'PCHIP','extrap');
+antesy=interp1(distancia_acumulada,lasy,distancia_acumulada-0.25,'PCHIP','extrap');
+despuesy=interp1(distancia_acumulada,lasy,distancia_acumulada+0.25,'PCHIP','extrap');
 
 vector_perpendicular=(antesy-despuesy)+1j*( despuesx-antesx);
 
@@ -218,24 +218,29 @@ fid=fopen('salida/texturas.txt','w');
 fprintf(fid,'vt %f %f\n',[u;v]);
 fclose(fid);
 
-msh_to_obj('salida/fichero_nodos.txt','salida\fichero_elements.txt');
-system('copy salida\fichero_nodos.txt ..\s1_mesh\salida\nodos.txt');
-system('copy salida\fichero_elements.txt ..\s1_mesh\salida\elements.txt');
+msh_to_obj('salida/fichero_nodos.txt','salida/fichero_elements.txt');
+%system('copy salida\fichero_nodos.txt ..\s1_mesh\salida\nodos.txt');
+%system('copy salida\fichero_elements.txt ..\s1_mesh\salida\elements.txt');
+system('cp salida/fichero_nodos.txt ../s1_mesh/salida/nodos.txt');
+system('cp salida/fichero_elements.txt ../s1_mesh/salida/elements.txt');
+
 
 %fid=fopen('track0.mat');
 if (fid~=-1)
-    fid=fopen('alturas_track1.mat');
-    contenido=fread(fid,inf);
-    contenido=char(contenido)';
-    %posini=strfind(contenido,'alturas_suavizadas');
-    posini=strfind(contenido,'alturas_track1');
-    poscol=strfind(contenido,'columns:');
-    validos=find(poscol>posini);
-    frewind(fid);
-    fseek(fid,poscol(validos(1))+length('columns:')-1,'bof');
-    ncols=fscanf(fid,'%d',1);%Numero de anchors
-    alturas_reales=fscanf(fid,'%f',length(lasx));  
-    fclose(fid);
+    S=load('track0.mat');
+	alturas_reales=S.alturas_suavizadas;
+%     fid=fopen('alturas_track1.mat');
+%     contenido=fread(fid,inf);
+%     contenido=char(contenido)';
+%     %posini=strfind(contenido,'alturas_suavizadas');
+%     posini=strfind(contenido,'alturas_track1');
+%     poscol=strfind(contenido,'columns:');
+%     validos=find(poscol>posini);
+%     frewind(fid);
+%     fseek(fid,poscol(validos(1))+length('columns:')-1,'bof');
+%     ncols=fscanf(fid,'%d',1);%Numero de anchors
+%     alturas_reales=fscanf(fid,'%f',length(lasx));  
+%     fclose(fid);
     %figure,plot(alturas_reales);
     fid=fopen('carretera.txt','w');
     for h=1:numpanelesvertical+1
@@ -278,7 +283,7 @@ end
         end
         implicados=[primero segundo];
         
-        endfunction
+        end
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     function [implicados,trias]=insertarD(x,ymin,losquads,indice,tamanyo)
@@ -304,7 +309,7 @@ end
         end
         implicados=[primero segundo];
         
-    endfunction
+    end
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     function [implicados nuevo]=juntaquads(x,ymin,losquads)
@@ -330,7 +335,7 @@ end
         end
         implicados=[primero segundo];
         
-    endfunction
+    end
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
     function salida=localizaquad(x,y,losquads)
@@ -341,7 +346,7 @@ end
                 salida=hp;
             end            
         end
-    endfunction
+    end
 
 
     function [losquads,tria,tieneDD]=optimizaD(rango,losquads,tria,numpanelesvertical,indices,tamlimite,tieneDD,coor,tamanyo)
@@ -376,7 +381,7 @@ end
                 end
             end
         end
-    endfunction
+    end
 
     function [losquads,tria,tieneCC]=optimizaC(rango,losquads,tria,numpanelesvertical,indices,tamlimite,tieneCC,coor,tamanyo)
         %tieneC=zeros(1,numpanelesvertical);
@@ -408,7 +413,7 @@ end
                 end
             end
         end
-    endfunction
+    end
     function salida=longitud(a,tam_elemento)
         if isempty(a)==0
             [m,n]=size(a);
@@ -416,6 +421,6 @@ end
         else
             salida=1;
         end
-    endfunction
+    end
     
-    endfunction
+    end

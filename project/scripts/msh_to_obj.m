@@ -5,7 +5,7 @@ function msh_to_obj(fichero_nodos,fichero_elements)
 fid=fopen(fichero_elements,'r');
 fid_w=fopen(strcat('salida\test','.obj'),'w');
 contador=1;
-while (feof(fid)!=1)
+while (feof(fid)~=1)
     todo=fscanf(fid,'%d',3);
 	if length(todo)>0
 		tipo=todo(2);

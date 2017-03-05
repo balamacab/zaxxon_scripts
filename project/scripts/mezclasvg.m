@@ -1,4 +1,5 @@
 function mezclasvg(fichero)
+%http://www.gpsvisualizer.com/profile_input
 %fichero='grid001';
 fid=fopen(strcat(fichero,'.kml'),'r');
 todo=fread(fid,inf);

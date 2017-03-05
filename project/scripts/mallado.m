@@ -25,24 +25,42 @@ if (generico==1)
     lasx=interp1(distancia_acumulada,lasx,0:4:final,'PCHIP');
     lasy=interp1(distancia_acumulada,lasy,0:4:final,'PCHIP');
 else %Cogemos los anchors del metodo zaxxon (puntos de enganche carretera-terreno)
-    fid=fopen('anchors.mat');
-    contenido=fread(fid,inf);
-    fclose(fid);
-    contenido=char(contenido)';
-    posdatos=strfind(contenido,'columns:');
-    fid=fopen('anchors.mat');
-    fseek(fid,posdatos(1)+length('columns:'),'bof');    
-    ncols=fscanf(fid,'%d',1);%Numero de anchors
-    x=fscanf(fid,'%f',ncols);   
-    fseek(fid,posdatos(3)+length('columns:'),'bof');    
-    ncols=fscanf(fid,'%d',1);%Numero de anchors
-    y=fscanf(fid,'%f');
-    fclose(fid);
+%     fid=fopen('anchorsM.mat');%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+%     contenido=fread(fid,inf);
+%     fclose(fid);
+%     contenido=char(contenido)';
+%     posdatos=strfind(contenido,'columns:');
+%     fid=fopen('anchorsM.mat');
+%     fseek(fid,posdatos(1)+length('columns:'),'bof');    
+%     ncols=fscanf(fid,'%d',1);%Numero de anchors
+%     x=fscanf(fid,'%f',ncols);   
+%     fseek(fid,posdatos(3)+length('columns:'),'bof');    
+%     ncols=fscanf(fid,'%d',1);%Numero de anchors
+%     y=fscanf(fid,'%f');
+%     fclose(fid);
+    S=load('anchors.mat');
+    x=S.S.x;
+    y=S.S.z;
+    [m,n]=size(x);
+     if n>m
+         x=x';y=y';
+     end
+%     S=load('anchors.mat');
+%     x=S.x;
+%     y=S.y;
     lasx=0.5*(x(1:end/2)+x(end/2+1:end));
     lasy=0.5*(y(1:end/2)+y(end/2+1:end));
     distancias=sqrt(sum(diff(lasx).^2+diff(lasy).^2,2));
     distancia_acumulada=cumsum([0; distancias]);
 end
+
+
+dist=[5 3 3 3 3 3 0.75 0.75 1.25 1.25 1.25 1.25 0.75 0.75 3 3 3 3 3 5];
+
+numpal=length(dist);
+borde_izdo=numpal/2-3;
+borde_dcho=numpal/2+5;
+calcula_curvatura(lasx,lasy,distancias,dist,borde_izdo,borde_dcho);
 
 %figure,plot(x(1),y(1),'*');
 %hold on
@@ -64,7 +82,6 @@ quads=zeros(3,numpanelesvertical);%xmin,ymin,ymax
 %18x100 paneles
 %El primer y ultimo panel seria la parte no conducible (lo pongo por coherencia con
 %la forma de trabajar antigua)
-dist=[5 3 3 3 3 3 0.75 0.75 1.25 1.25 1.25 1.25 0.75 0.75 3 3 3 3 3 5];
 
 
 mitad=sum(dist(1:length(dist)/2));
@@ -79,12 +96,10 @@ ufinal=linspace(u2,1,6);
 
 u_texturas=[-uinicial(2) uinicial(1:end-1) linspace(u1,u2,9) ufinal(2:end) ufinal(end)+uinicial(2)];
 
-numpal=length(dist);
 contador=1;
 contadorp=1;
 
-borde_izdo=numpal/2-3;
-borde_dcho=numpal/2+5;
+
 
 %Creamos el mallado de puntos
 contadorp=1;
@@ -223,6 +238,7 @@ msh_to_obj('salida/fichero_nodos.txt','salida/fichero_elements.txt');
 %system('copy salida\fichero_elements.txt ..\s1_mesh\salida\elements.txt');
 system('cp salida/fichero_nodos.txt ../s1_mesh/salida/nodos.txt');
 system('cp salida/fichero_elements.txt ../s1_mesh/salida/elements.txt');
+
 
 
 %fid=fopen('track0.mat');

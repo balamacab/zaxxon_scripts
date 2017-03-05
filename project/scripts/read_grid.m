@@ -18,9 +18,9 @@ num_filas=S.num_filas;
 num_columnas=S.num_columnas;
 guarda_calentamiento=S.guarda_calentamiento;
 if isfield(S,'alternadas')
-    alternadas=S.alternadas;
+    alternada=S.alternada;
 else
-    alternadas=0;
+    alternada=0;
 end
 
 
@@ -42,7 +42,7 @@ for g=1:numero_ficheros
     nombre=sprintf('salida/grid%.3d_relleno.kml',g);
     [nada1 nada2 trozoy]=leer_datos(nombre);
     cuenta_columnas=1;
-    if alternadas==1 %Las columnas pares se han grabado en orden inverso
+    if alternada==1 %Las columnas pares se han grabado en orden inverso
         while(cuenta_columnas<length(nada1))
             if mod(cuenta_columnas,2)==0
                 ELrango=(cuenta_columnas-1)*num_filas+1:cuenta_columnas*num_filas;

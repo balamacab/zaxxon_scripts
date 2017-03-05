@@ -113,7 +113,7 @@ for h=1:tandas
             recorrido=fliplr(flipud(recorrido));
         end
         for g=recorrido
-            fprintf(fid,'%f,%f,%f ',pos1(contador),pos2(contador),-9999);
+            fprintf(fid,'%f,%f,%f ',pos1(contador+g-1),pos2(contador+g-1),-9999);
             contador=contador+1;
         end
     end

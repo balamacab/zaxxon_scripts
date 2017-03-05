@@ -13,11 +13,11 @@ if nargin>0
     display('Uso: sin par�metros. Compruebe que la informaci�n en pantalla coincide con los par�metros usados con make_grid')
 end
 
-S=load('dimensiones.mat','num_filas','num_columnas','guarda_calentamiento');
+S=load('dimensiones.mat');%,'num_filas','num_columnas','guarda_calentamiento');
 num_filas=S.num_filas;
 num_columnas=S.num_columnas;
 guarda_calentamiento=S.guarda_calentamiento;
-if isfield(S,'alternadas')
+if isfield(S,'alternada')
     alternada=S.alternada;
 else
     alternada=0;
@@ -42,10 +42,12 @@ for g=1:numero_ficheros
     nombre=sprintf('salida/grid%.3d_relleno.kml',g);
     [nada1 nada2 trozoy]=leer_datos(nombre);
     cuenta_columnas=1;
+	alternada
     if alternada==1 %Las columnas pares se han grabado en orden inverso
-        while(cuenta_columnas<length(nada1))
+        while(cuenta_columnas*(num_filas+guarda_calentamiento)<length(nada1))
             if mod(cuenta_columnas,2)==0
-                ELrango=(cuenta_columnas-1)*num_filas+1:cuenta_columnas*num_filas;
+                ELrango=((cuenta_columnas-1)*(num_filas+guarda_calentamiento)+1:cuenta_columnas*(num_filas+guarda_calentamiento));
+				ELrango=ELrango(guarda_calentamiento+1:end);
                 nada1(ELrango)=flipud(fliplr(nada1(ELrango)));
                 nada2(ELrango)=flipud(fliplr(nada2(ELrango)));
                 trozoy(ELrango)=flipud(fliplr(trozoy(ELrango)));

@@ -110,7 +110,7 @@ for h=1:tandas
         repite(fid,pos1(contador),pos2(contador),guarda_calentamiento);
         recorrido=1:num_filas;
         if mod(k,2)==0
-            recorrido=fliplr(lipud(recorrido));
+            recorrido=fliplr(flipud(recorrido));
         end
         for g=1:num_filas
             fprintf(fid,'%f,%f,%f ',pos1(contador),pos2(contador),-9999);

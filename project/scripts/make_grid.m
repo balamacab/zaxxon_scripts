@@ -114,8 +114,9 @@ for h=1:tandas
         end
         for g=recorrido
             fprintf(fid,'%f,%f,%f ',pos1(contador+g-1),pos2(contador+g-1),-9999);
-            contador=contador+1;
+            %contador=contador+1;
         end
+        contador=contador+length(recorrido);
     end
     fwrite(fid,final);
     my_fclose(fid);

@@ -1,4 +1,7 @@
-function poncarretera()
+function poncarretera(escalado)
+if nargin==0
+    escalado=1;
+end
 fid=fopen('salida/nodos_conaltura.txt','r');
 tot=fscanf(fid,'%d %f %f %f\n',inf);
 x=tot(2:4:end);
@@ -20,7 +23,7 @@ tot=reshape(tot,10,m/10);
 for g=1:p
     alturacomun=tot(1,g);
     if isempty(offset)==0
-        alturacomun=alturacomun+offset(g,:);
+        alturacomun=alturacomun+escalado*offset(g,:);
     end
     y(tot(2:10,g))=alturacomun;
 end
@@ -31,6 +34,10 @@ fprintf(fid,'%d %f %f %f\n',[(1:length(x))' x y z]');
 fclose(fid);
 
 msh_to_obj('salida/nodos_conaltura.txt','elements.txt');
+system('copy sal
+msh_to_obj('salida/nodos_conaltura.txt','elements.txt');
+system('copy salida\test.obj+..\s11_m3d\salida\texturas.txt salida\test_sincarretera.obj');
+msh_to_obj('salid/nodos_conaltura.txt','elements.txt');
 system('copy salida\test.obj+..\s11_m3d\salida\texturas.txt salida\test_sincarretera.obj');
 msh_to_obj('salida/nodosconcarretera.txt','elements.txt');
 system('copy salida\test.obj+..\s11_m3d\salida\texturas.txt salida\test_concarretera.obj');

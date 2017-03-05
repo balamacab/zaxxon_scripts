@@ -17,6 +17,12 @@ S=load('dimensiones.mat','num_filas','num_columnas','guarda_calentamiento');
 num_filas=S.num_filas;
 num_columnas=S.num_columnas;
 guarda_calentamiento=S.guarda_calentamiento;
+if isfield(S,'alternadas')
+    alternadas=S.alternadas;
+else
+    alternadas=0;
+end
+
 
 %Leer los kml
 pos1=[];
@@ -30,10 +36,23 @@ pos1=zeros(num_filas*num_columnas,1);
 pos2=zeros(num_filas*num_columnas,1);
 altura=zeros(num_filas*num_columnas,1);
 
+
 contador=1;
 for g=1:numero_ficheros
     nombre=sprintf('salida/grid%.3d_relleno.kml',g);
     [nada1 nada2 trozoy]=leer_datos(nombre);
+    cuenta_columnas=1;
+    if alternadas==1 %Las columnas pares se han grabado en orden inverso
+        while(cuenta_columnas<length(nada1))
+            if mod(cuenta_columnas,2)==0
+                ELrango=(cuenta_columnas-1)*num_filas+1:cuenta_columnas*num_filas;
+                nada1(ELrango)=flipud(fliplr(nada1(ELrango)));
+                nada2(ELrango)=flipud(fliplr(nada2(ELrango)));
+                trozoy(ELrango)=flipud(fliplr(trozoy(ELrango)));
+            end
+            cuenta_columnas=cuenta_columnas+1;
+        end
+    end
     % De cada num_filas+guarda_calentamiento datos, los guarda_calentamiento primeros son para tirar
       for h=1:length(nada1)/(num_filas+guarda_calentamiento)
         nuevos1=nada1((h-1)*(num_filas+guarda_calentamiento)+guarda_calentamiento+1:h*(num_filas+guarda_calentamiento));	
@@ -42,15 +61,15 @@ for g=1:numero_ficheros
 
         pos1(contador:contador+length(nuevos1)-1)=nuevos1;
         pos2(contador:contador+length(nuevos2)-1)=nuevos2;
-	nuevas_alturas=nuevos3;
-	if length(find(nuevas_alturas==-9999))
-                display('-------------------------------------------------')
-		display(sprintf('ERROR: value -9999 found in file %s',nombre));
-                display('---press any key to continue---------------------')
-                pause
-	end
-        altura(contador:contador+length(nuevos3)-1)=nuevos3;
-        contador=contador+length(nuevos3);
+        nuevas_alturas=nuevos3;
+        if length(find(nuevas_alturas==-9999))
+            display('-------------------------------------------------')
+            display(sprintf('ERROR: value -9999 found in file %s',nombre));
+            display('---press any key to continue---------------------')
+            pause
+        end
+            altura(contador:contador+length(nuevos3)-1)=nuevos3;
+            contador=contador+length(nuevos3);
      end       
 end
 

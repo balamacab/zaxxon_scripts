@@ -43,9 +43,9 @@ if nargin==0
     %     y=fscanf(fid,'%f');
     %     fclose(fid);
         S=load('anchors.mat');
-        x=S.S.x;
-        y=S.S.z;
-        z=S.S.y;
+        x=S.x;
+        y=S.z;
+        z=S.y;
         [m,n]=size(x);
          if n>m
              x=x';y=y';z=z';
@@ -234,8 +234,10 @@ tri=[tri;tria];%Anyadimos los triangulos
 zone=[zone zonatria];
 %trimesh(tri,x,y,z);
 
+rango=(1:length(x));[s1,s2]=size(rango);if (s2>s1) rango=rango.';end
+
 fid=fopen('salida/fichero_nodos.txt','w');
-fprintf(fid,'%d %f %f %f\n',[(1:length(x))' x' y' z']');
+fprintf(fid,'%d %f %f %f\n',[rango' x' y' z']');
 fclose(fid);
 
 fid=fopen('salida/fichero_elements.txt','w');

@@ -34,10 +34,6 @@ fprintf(fid,'%d %f %f %f\n',[(1:length(x))' x y z]');
 fclose(fid);
 
 msh_to_obj('salida/nodos_conaltura.txt','elements.txt');
-system('copy sal
-msh_to_obj('salida/nodos_conaltura.txt','elements.txt');
-system('copy salida\test.obj+..\s11_m3d\salida\texturas.txt salida\test_sincarretera.obj');
-msh_to_obj('salid/nodos_conaltura.txt','elements.txt');
 system('copy salida\test.obj+..\s11_m3d\salida\texturas.txt salida\test_sincarretera.obj');
 msh_to_obj('salida/nodosconcarretera.txt','elements.txt');
 system('copy salida\test.obj+..\s11_m3d\salida\texturas.txt salida\test_concarretera.obj');

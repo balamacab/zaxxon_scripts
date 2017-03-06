@@ -1,66 +1,72 @@
-function mallado()
+function mallado(lasx,lasy,lasz)
    
 generico=0;
-if (generico==1)
-    %A partir de nodos cualesquiera -> los llevamos a 4 m de distancia
-    fid=fopen('nodes.txt');
-    [salida]=textscan(fid,'%d %f %f %f %f %f');
-    fclose(fid);
+if nargin==0
+    if (generico==1)
+        %A partir de nodos cualesquiera -> los llevamos a 4 m de distancia
+        fid=fopen('nodes.txt');
+        [salida]=textscan(fid,'%d %f %f %f %f %f');
+        fclose(fid);
 
-    x=salida{2};
-    y=salida{3};
+        x=salida{2};
+        y=salida{3};
+        z=salida
 
-    distancias=sqrt(sum(diff(x).^2+diff(y).^2,2));
-    distancia_acumulada=cumsum([0; distancias]);
+        distancias=sqrt(sum(diff(x).^2+diff(y).^2,2));
+        distancia_acumulada=cumsum([0; distancias]);
 
-    final=distancia_acumulada(end);
+        final=distancia_acumulada(end);
 
-    lasx=interp1(distancia_acumulada,x,0:4:final,'PCHIP');
-    lasy=interp1(distancia_acumulada,y,0:4:final,'PCHIP');
+        lasx=interp1(distancia_acumulada,x,0:4:final,'PCHIP');
+        lasy=interp1(distancia_acumulada,y,0:4:final,'PCHIP');
+        lasz=interp1(distancia_acumulada,z,0:4:final,'PCHIP');
 
-    %Recolocamos de nuevo
-    distancias=sqrt(sum(diff(lasx').^2+diff(lasy').^2,2));
-    distancia_acumulada=cumsum([0; distancias]);
+        %Recolocamos de nuevo
+        distancias=sqrt(sum(diff(lasx').^2+diff(lasy').^2,2));
+        distancia_acumulada=cumsum([0; distancias]);
 
-    lasx=interp1(distancia_acumulada,lasx,0:4:final,'PCHIP');
-    lasy=interp1(distancia_acumulada,lasy,0:4:final,'PCHIP');
-else %Cogemos los anchors del metodo zaxxon (puntos de enganche carretera-terreno)
-%     fid=fopen('anchorsM.mat');%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-%     contenido=fread(fid,inf);
-%     fclose(fid);
-%     contenido=char(contenido)';
-%     posdatos=strfind(contenido,'columns:');
-%     fid=fopen('anchorsM.mat');
-%     fseek(fid,posdatos(1)+length('columns:'),'bof');    
-%     ncols=fscanf(fid,'%d',1);%Numero de anchors
-%     x=fscanf(fid,'%f',ncols);   
-%     fseek(fid,posdatos(3)+length('columns:'),'bof');    
-%     ncols=fscanf(fid,'%d',1);%Numero de anchors
-%     y=fscanf(fid,'%f');
-%     fclose(fid);
-    S=load('anchors.mat');
-    x=S.S.x;
-    y=S.S.z;
-    [m,n]=size(x);
-     if n>m
-         x=x';y=y';
-     end
-%     S=load('anchors.mat');
-%     x=S.x;
-%     y=S.y;
-    lasx=0.5*(x(1:end/2)+x(end/2+1:end));
-    lasy=0.5*(y(1:end/2)+y(end/2+1:end));
-    distancias=sqrt(sum(diff(lasx).^2+diff(lasy).^2,2));
-    distancia_acumulada=cumsum([0; distancias]);
+        lasx=interp1(distancia_acumulada,lasx,0:4:final,'PCHIP');
+        lasy=interp1(distancia_acumulada,lasy,0:4:final,'PCHIP');
+        lasz=interp1(distancia_acumulada,z,0:4:final,'PCHIP');
+    else %Cogemos los anchors del metodo zaxxon (puntos de enganche carretera-terreno)
+    %     fid=fopen('anchorsM.mat');%!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    %     contenido=fread(fid,inf);
+    %     fclose(fid);
+    %     contenido=char(contenido)';
+    %     posdatos=strfind(contenido,'columns:');
+    %     fid=fopen('anchorsM.mat');
+    %     fseek(fid,posdatos(1)+length('columns:'),'bof');    
+    %     ncols=fscanf(fid,'%d',1);%Numero de anchors
+    %     x=fscanf(fid,'%f',ncols);   
+    %     fseek(fid,posdatos(3)+length('columns:'),'bof');    
+    %     ncols=fscanf(fid,'%d',1);%Numero de anchors
+    %     y=fscanf(fid,'%f');
+    %     fclose(fid);
+        S=load('anchors.mat');
+        x=S.S.x;
+        y=S.S.z;
+        z=S.S.y;
+        [m,n]=size(x);
+         if n>m
+             x=x';y=y';z=z';
+         end
+    %     S=load('anchors.mat');
+    %     x=S.x;
+    %     y=S.y;
+        lasx=0.5*(x(1:end/2)+x(end/2+1:end));
+        lasy=0.5*(y(1:end/2)+y(end/2+1:end));
+        lasz=0.5*(z(1:end/2)+z(end/2+1:end));
+    end
 end
-
+distancias=sqrt(sum(diff(lasx).^2+diff(lasy).^2,2));
+distancia_acumulada=cumsum([0; distancias]);
 
 dist=[5 3 3 3 3 3 0.75 0.75 1.25 1.25 1.25 1.25 0.75 0.75 3 3 3 3 3 5];
 
 numpal=length(dist);
 borde_izdo=numpal/2-3;
 borde_dcho=numpal/2+5;
-calcula_curvatura(lasx,lasy,distancias,dist,borde_izdo,borde_dcho);
+peralte=calcula_curvatura(lasx,lasy,distancias,dist,borde_izdo,borde_dcho);
 
 %figure,plot(x(1),y(1),'*');
 %hold on
@@ -105,7 +111,9 @@ contadorp=1;
 contadorp=1;
 
 %Borde izdo
+lperal=length(peralte(1,:));
 for h=1:numpanelesvertical+1
+    inclinacion=[zeros(1,numpal/2-(lperal-1)/2) peralte(h,:) zeros(1,numpal/2-(lperal-1)/2)];
     for g=borde_izdo
         indice(g,h)=contadorp; %A la esquina inferior izquierda le asignamos un numero de punto
         %La coordenada está expresada como número complejo
@@ -114,6 +122,7 @@ for h=1:numpanelesvertical+1
         coordenadas(g,h)=num;
         x(contadorp)=real(num);
         y(contadorp)=imag(num);
+        z(contadorp)=lasz(h)+inclinacion(g);
         u(contadorp)=u_texturas(g);
         v(contadorp)=distancia_acumulada(h)/80;%Cada 80 metros se repite
         contadorp=contadorp+1;
@@ -121,6 +130,7 @@ for h=1:numpanelesvertical+1
 end
 
 for h=1:numpanelesvertical+1
+    inclinacion=[zeros(1,numpal/2-(lperal-1)/2) peralte(h,:) zeros(1,numpal/2-(lperal-1)/2)];
     for g=borde_dcho
         indice(g,h)=contadorp; %A la esquina inferior izquierda le asignamos un numero de punto
         %La coordenada está expresada como número complejo
@@ -129,6 +139,7 @@ for h=1:numpanelesvertical+1
         coordenadas(g,h)=num;
         x(contadorp)=real(num);
         y(contadorp)=imag(num);
+        z(contadorp)=lasz(h)+inclinacion(g);
         u(contadorp)=u_texturas(g);
         v(contadorp)=distancia_acumulada(h)/80;%Cada 80 metros se repite
         contadorp=contadorp+1;
@@ -137,6 +148,7 @@ end
 % 
 %Numeramos el resto de nodos
 for h=1:numpanelesvertical+1
+    inclinacion=[zeros(1,numpal/2-(lperal-1)/2) peralte(h,:) zeros(1,numpal/2-(lperal-1)/2)];
     for g=[1:(borde_izdo-1) (borde_izdo+1):(borde_dcho-1) (borde_dcho+1):(numpal+1)]
         indice(g,h)=contadorp; %A la esquina inferior izquierda le asignamos un numero de punto
         %La coordenada está expresada como número complejo
@@ -145,6 +157,7 @@ for h=1:numpanelesvertical+1
         coordenadas(g,h)=num;
         x(contadorp)=real(num);
         y(contadorp)=imag(num);
+        z(contadorp)=lasz(h)+inclinacion(g);
         u(contadorp)=u_texturas(g);
         v(contadorp)=distancia_acumulada(h)/80;%Cada 80 metros se repite
         contadorp=contadorp+1;
@@ -219,10 +232,10 @@ end
 tri=[n1' n2' n3'];
 tri=[tri;tria];%Anyadimos los triangulos
 zone=[zone zonatria];
-%trimesh(tri,x,y,ones(size(x)));
+%trimesh(tri,x,y,z);
 
 fid=fopen('salida/fichero_nodos.txt','w');
-fprintf(fid,'%d %f %f %f\n',[(1:length(x))' x y x*0]');
+fprintf(fid,'%d %f %f %f\n',[(1:length(x))' x' y' z']');
 fclose(fid);
 
 fid=fopen('salida/fichero_elements.txt','w');
@@ -234,14 +247,14 @@ fprintf(fid,'vt %f %f\n',[u;v]);
 fclose(fid);
 
 msh_to_obj('salida/fichero_nodos.txt','salida/fichero_elements.txt');
-%system('copy salida\fichero_nodos.txt ..\s1_mesh\salida\nodos.txt');
-%system('copy salida\fichero_elements.txt ..\s1_mesh\salida\elements.txt');
-system('cp salida/fichero_nodos.txt ../s1_mesh/salida/nodos.txt');
-system('cp salida/fichero_elements.txt ../s1_mesh/salida/elements.txt');
+system('copy salida\fichero_nodos.txt ..\s1_mesh\salida\nodos.txt');
+system('copy salida\fichero_elements.txt ..\s1_mesh\salida\elements.txt');
+%system('cp salida/fichero_nodos.txt ../s1_mesh/salida/nodos.txt');
+%system('cp salida/fichero_elements.txt ../s1_mesh/salida/elements.txt');
 
 
 
-%fid=fopen('track0.mat');
+fid=fopen('track0.mat');
 if (fid~=-1)
     S=load('track0.mat');
 	alturas_reales=S.alturas_suavizadas;

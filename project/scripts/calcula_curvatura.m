@@ -1,4 +1,4 @@
-function calcula_curvatura(lasx,lasy,distancias,dist,borde_izdo,borde_dcho)
+function offset=calcula_curvatura(lasx,lasy,distancias,dist,borde_izdo,borde_dcho)
 
 ancho_total=sum(dist(borde_izdo:borde_dcho-1));
 
@@ -66,7 +66,7 @@ for g=1:length(curvatura)
 end
 %perfiles(1,g)=filter(filtro,1,perfiles(1,g));
 %perfiles(3,g)=filter(filtro,1,perfiles(3,g));
-plot3(lasx,lasy,perfiles(1,:)),hold on
-plot3(lasx,lasy,perfiles(3,:),'r')
+%plot3(lasx,lasy,perfiles(1,:)),hold on
+%plot3(lasx,lasy,perfiles(3,:),'r')
 save('curvaturas.mat','offset');
 end

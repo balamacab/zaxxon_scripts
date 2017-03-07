@@ -213,9 +213,9 @@ end
 contadort=1;
 for contador=1:longitud(quads,3)
      if (quads(1,contador)~=-1)
-        n1(contadort)= indice(quads(1,contador),quads(2,contador));
-        n2(contadort)= indice(quads(1,contador),quads(3,contador));
-        n3(contadort)= indice(quads(1,contador)+1,quads(3,contador));
+        n1(contadort)= indice(quads(1,contador),quads(2,contador));%xmin,ymin
+        n2(contadort)= indice(quads(1,contador),quads(3,contador));%xmin,ymax
+        n3(contadort)= indice(quads(1,contador)+1,quads(3,contador));%xmax,ymax (siempre es +1, pues no se unen rectángulos en dimensión x)
         if (quads(1,contador)==1) || (quads(1,contador)==numpal)
             zone(contadort)=222;
             zone(contadort+1)=222;
@@ -224,9 +224,9 @@ for contador=1:longitud(quads,3)
             zone(contadort+1)=111;
         end
         contadort=contadort+1;
-        n1(contadort)= indice(quads(1,contador),quads(2,contador));
-        n2(contadort)= indice(quads(1,contador)+1,quads(3,contador));
-        n3(contadort)= indice(quads(1,contador)+1,quads(2,contador));
+        n1(contadort)= indice(quads(1,contador),quads(2,contador));%xmin,ymin
+        n2(contadort)= indice(quads(1,contador)+1,quads(3,contador));%xmax,ymax
+        n3(contadort)= indice(quads(1,contador)+1,quads(2,contador));%xmax,ymin
         contadort=contadort+1;
     end
 end
@@ -258,9 +258,6 @@ msh_to_obj('salida/fichero_nodos.txt','salida/fichero_elements.txt');
 system('copy salida\test.obj+salida\texturas.txt salida\test_contexturas.obj');
 system('copy salida\fichero_nodos.txt ..\s1_mesh\salida\nodos.txt');
 system('copy salida\fichero_elements.txt ..\s1_mesh\salida\elements.txt');
-%system('cp salida/fichero_nodos.txt ../s1_mesh/salida/nodos.txt');
-%system('cp salida/fichero_elements.txt ../s1_mesh/salida/elements.txt');
-
 
 
 fid=fopen('track0.mat');
@@ -291,13 +288,57 @@ if (fid~=-1)
     fclose(fid);
 end
 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Muro protector metido una posición dentro del terreno creado
+indmuroizq=indice(2,:);
+indmurodcho=indice(end-1,:);
+murox=x(indmuroizq(1:4:end));
+muroy=y(indmuroizq(1:4:end));
+muroz=z(indmuroizq(1:4:end));
+
+rango=(1:length(murox));
+[s1,s2]=size(rango);if (s2<s1) rango=rango.';end
+[s1,s2]=size(murox);if (s2<s1) murox=murox.';end
+[s1,s2]=size(muroy);if (s2<s1) muroy=muroy.';end
+[s1,s2]=size(muroz);if (s2<s1) muroz=muroz.';end
+
+offs=length(rango);
+fid=fopen('salida/nodosmuroizdo.txt','w');
+fprintf(fid,'%d %f %f %f\n',[rango' x' y' z']');
+fprintf(fid,'%d %f %f %f\n',[(rango+offs)' x' y' (z+4)']'); %4 metros de alto
+fclose(fid);
+
+triangulos=[]
+for h=1:length(murox)-1;
+    triangulos= [triangulos; h h+1 h+offs];
+    triangulos= [triangulos; h+offs h+1 h+offs+1];
+end
+
+fid=fopen('salida/elementsmuroizdo.txt','w');
+fprintf(fid,'%d 2 2 55 0 %d %d %d  \n',[(1:longitud(triangulos,3))' triangulos ]');%zona 55, por poner algo
+fclose(fid);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
 %figure,plot(lasx,lasy);
 %msh_to_obj('fichero_nodos.txt','fichero_elements.txt')
 %msh_to_obj('nodos_conaltura.txt','fichero_elements.txt')
 %system('copy test.obj+texturas.txt test_texturas.obj');
 %system('cat salida/test.obj texturas.txt > test_texturas.obj');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
     function [implicados,trias]=insertarC(x,ymin,losquads,indice,tamanyo)
         primero=-1;
         segundo=-1;

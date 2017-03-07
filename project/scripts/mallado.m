@@ -322,7 +322,7 @@ for h=1:length(murox)-1;
     murov(h+offs)=1;
 end
 murou(offs)=dmuro_acumulada(offs);
-murou(offs+offs)=dmuro_acumulada(offs+offs);
+murou(offs+offs)=dmuro_acumulada(offs);
 murov(offs)=0;
 murov(offs+offs)=1;
 

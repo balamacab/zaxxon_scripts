@@ -236,7 +236,11 @@ tri=[tri;tria];%Anyadimos los triangulos
 zone=[zone zonatria];
 %trimesh(tri,x,y,z);
 
-rango=(1:length(x));[s1,s2]=size(rango);if (s2>s1) rango=rango.';end
+rango=(1:length(x));
+[s1,s2]=size(rango);if (s2<s1) rango=rango.';end
+[s1,s2]=size(x);if (s2<s1) x=x.';end
+[s1,s2]=size(y);if (s2<s1) y=y.';end
+[s1,s2]=size(z);if (s2<s1) z=z.';end
 
 fid=fopen('salida/fichero_nodos.txt','w');
 fprintf(fid,'%d %f %f %f\n',[rango' x' y' z']');
@@ -251,6 +255,7 @@ fprintf(fid,'vt %f %f\n',[u;v]);
 fclose(fid);
 
 msh_to_obj('salida/fichero_nodos.txt','salida/fichero_elements.txt');
+system('copy salida\test.obj+salida\texturas.txt salida\test_contexturas.obj');
 system('copy salida\fichero_nodos.txt ..\s1_mesh\salida\nodos.txt');
 system('copy salida\fichero_elements.txt ..\s1_mesh\salida\elements.txt');
 %system('cp salida/fichero_nodos.txt ../s1_mesh/salida/nodos.txt');

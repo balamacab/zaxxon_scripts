@@ -58,6 +58,8 @@ if nargin==0
         lasz=0.5*(z(1:end/2)+z(end/2+1:end));
     end
 end
+[s1,s2]=size(lasx);if (s2>s1) lasx=lasx.';lasy=lasy.';lasz=lasz.';end
+
 distancias=sqrt(sum(diff(lasx).^2+diff(lasy).^2,2));
 distancia_acumulada=cumsum([0; distancias]);
 

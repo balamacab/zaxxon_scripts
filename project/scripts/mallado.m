@@ -298,7 +298,7 @@ murox=x(indmuroizq(1:4:end));
 muroy=y(indmuroizq(1:4:end));
 muroz=z(indmuroizq(1:4:end));
 
-alturas=procesar_nodos([0 0],[(1:length(murox))' murox muroy muroz]);
+alturas=procesar_nodos([0 0],[(1:length(murox))' murox muroy muroz],'salida/nodosizqelevados.txt');
 ponmuro(murox,muroy,alturas);
 
 

@@ -309,7 +309,6 @@ system('copy salida\test.obj+salida\texturasmuroizdo.txt salida\muroizdo.obj');
 
 %Muro dcho
 indmuro=indice(end-1,:);
-indmuro=indice(2,:);
 murox=x(indmuro(1:4:end));
 muroy=y(indmuro(1:4:end));
 muroz=z(indmuro(1:4:end));

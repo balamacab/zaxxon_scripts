@@ -292,24 +292,37 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Muro protector metido una posición dentro del terreno creado
-indmuroizq=indice(2,:);
-indmurodcho=indice(end-1,:);
-murox=x(indmuroizq(1:4:end));
-muroy=y(indmuroizq(1:4:end));
-muroz=z(indmuroizq(1:4:end));
+indmuro=indice(2,:);
+murox=x(indmuro(1:4:end));
+muroy=y(indmuro(1:4:end));
+muroz=z(indmuro(1:4:end));
 
 try
-    alturas=procesar_nodostxt([0 0],[(1:length(murox))' murox' muroy' muroz'],'salida/nodosizqelevados.txt');
+    alturas=procesar_nodostxt([0 0],[(1:length(murox))' murox' muroy' muroz'],'salida/nodosizdoelevados.txt');
 catch
     alturas=muroz;
     fprintf(2,'Wall not raised\n');
 end_try_catch
-ponmuro(murox,muroy,alturas);
+ponmuro(murox,muroy,alturas,'izdo');
 msh_to_obj('salida/nodosmuroizdo.txt','salida/elementsmuroizdo.txt');
-system('copy salida\test.obj salida\muroizq.obj');
+system('copy salida\test.obj+salida\texturasmuroizdo.txt salida\muroizdo.obj');
 
+%Muro dcho
+indmuro=indice(end-1,:);
+indmuro=indice(2,:);
+murox=x(indmuro(1:4:end));
+muroy=y(indmuro(1:4:end));
+muroz=z(indmuro(1:4:end));
 
-
+try
+    alturas=procesar_nodostxt([0 0],[(1:length(murox))' murox' muroy' muroz'],'salida/nodosdchoelevados.txt');
+catch
+    alturas=muroz;
+    fprintf(2,'Wall not raised\n');
+end_try_catch
+ponmuro(murox,muroy,alturas,'dcho');
+msh_to_obj('salida/nodosmurodcho.txt','salida/elementsmurodcho.txt');
+system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

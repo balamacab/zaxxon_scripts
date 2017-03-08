@@ -298,7 +298,12 @@ murox=x(indmuroizq(1:4:end));
 muroy=y(indmuroizq(1:4:end));
 muroz=z(indmuroizq(1:4:end));
 
-alturas=procesar_nodos([0 0],[(1:length(murox))' murox muroy muroz],'salida/nodosizqelevados.txt');
+try
+    alturas=procesar_nodos([0 0],[(1:length(murox))' murox' muroy' muroz'],'salida/nodosizqelevados.txt');
+catch
+    alturas=muroz;
+    fprintf(2,'Wall not raised\n');
+end_try_catch
 ponmuro(murox,muroy,alturas);
 
 

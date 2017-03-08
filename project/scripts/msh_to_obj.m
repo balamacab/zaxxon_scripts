@@ -41,7 +41,9 @@ n3=n3(orden);
 n4=n4(orden);
 id_particular=id_particular(orden);
 
-		fprintf(fid_w,'v %f %f %f\r\n',[x z y]');%La altura es y en los ficheros de nodos ya elevados
+		fprintf(fid_w,'v %f %f %f\r\n',[x z -y]');%La altura es y en los ficheros de nodos ya elevados
+                                                %Blender interpreta que la
+                                                %su y es -z y que su z es y
 		
 		for g=1:length(x)
 			fprintf(fid_w,'vn 0 1 0\r\n');

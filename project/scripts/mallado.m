@@ -307,9 +307,7 @@ end_try_catch
 ponmuro(murox,muroy,alturas);
 
 
-fid=fopen('salida/texturas.txt','w');
-fprintf(fid,'vt %f %f\n',[murou;murov]);
-fclose(fid);
+
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

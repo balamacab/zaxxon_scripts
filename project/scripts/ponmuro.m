@@ -31,8 +31,11 @@ function ponmuro(murox,muroy,muroz)
     fid=fopen('salida/elementsmuroizdo.txt','w');
     fprintf(fid,'%d 2 2 55 0 %d %d %d  \n',[(1:longitud(triangulos,3))' triangulos ]');%zona 55, por poner algo
     fclose(fid);
+    fid=fopen('salida/texturas.txt','w');
+    fprintf(fid,'vt %f %f\n',[murou;murov]);
+    fclose(fid);
     
-   function salida=longitud(a,tam_elemento)
+    function salida=longitud(a,tam_elemento)
         if isempty(a)==0
             [m,n]=size(a);
             salida=m*n/tam_elemento;

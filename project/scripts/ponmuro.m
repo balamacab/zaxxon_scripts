@@ -1,4 +1,4 @@
-function ponmuro(murox,muroy,muroz)
+function ponmuro(murox,muroy,muroz,etiqueta)
 
     rango=(1:length(murox));
     [s1,s2]=size(rango);if (s2<s1) rango=rango.';end
@@ -7,7 +7,7 @@ function ponmuro(murox,muroy,muroz)
     [s1,s2]=size(muroz);if (s2<s1) muroz=muroz.';end
 
     offs=length(rango);
-    fid=fopen('salida/nodosmuroizdo.txt','w');
+    fid=fopen(['salida/nodosmuro',etiqueta,'.txt'],'w');
     fprintf(fid,'%d %f %f %f\n',[rango' murox' muroy' muroz']');
     fprintf(fid,'%d %f %f %f\n',[(rango+offs)' murox' muroy' (muroz+4)']'); %4 metros de alto
     fclose(fid);
@@ -28,10 +28,10 @@ function ponmuro(murox,muroy,muroz)
     murov(offs)=0;
     murov(offs+offs)=1;
 
-    fid=fopen('salida/elementsmuroizdo.txt','w');
+    fid=fopen(['salida/elementsmuro',etiqueta,'.txt'],'w');
     fprintf(fid,'%d 2 2 55 0 %d %d %d  \n',[(1:longitud(triangulos,3))' triangulos ]');%zona 55, por poner algo
     fclose(fid);
-    fid=fopen('salida/texturas.txt','w');
+    fid=fopen(['salida/texturasmuro',etiqueta,'.txt'],'w');
     fprintf(fid,'vt %f %f\n',[murou;murov]);
     fclose(fid);
     

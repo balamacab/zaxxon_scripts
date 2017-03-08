@@ -30,7 +30,7 @@ end
 fclose(fid)
 
 fid=fopen('salida/nodosconcarretera.txt','w');
-fprintf(fid,'%d %f %f %f\n',[(1:length(x))' x y z]');
+fprintf(fid,'%d %f %f %f\n',[(1:length(x))' x z y]');%En los nodos elevados, la altura es la columna intermedia
 fclose(fid);
 
 msh_to_obj('salida/nodos_conaltura.txt','elements.txt');

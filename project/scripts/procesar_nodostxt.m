@@ -37,8 +37,8 @@ else
     else
         numero=datos_entrada(:,1);
         x=datos_entrada(:,2);
-        y=datos_entrada(:,3);
-        z=datos_entrada(:,4);
+        z=datos_entrada(:,3);
+        y=datos_entrada(:,4);
     end
 end
 

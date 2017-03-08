@@ -299,7 +299,7 @@ muroy=y(indmuroizq(1:4:end));
 muroz=z(indmuroizq(1:4:end));
 
 try
-    alturas=procesar_nodostxt([0 0],[(1:length(murox))' murox' muroz' muroy'],'salida/nodosizqelevados.txt');
+    alturas=procesar_nodostxt([0 0],[(1:length(murox))' murox' muroy' muroz'],'salida/nodosizqelevados.txt');
 catch
     alturas=muroz;
     fprintf(2,'Wall not raised\n');

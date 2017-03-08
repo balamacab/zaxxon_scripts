@@ -243,7 +243,7 @@ rango=(1:length(x));
 [s1,s2]=size(z);if (s2<s1) z=z.';end
 
 fid=fopen('salida/fichero_nodos.txt','w');
-fprintf(fid,'%d %f %f %f\n',[rango' x' y' z']');
+fprintf(fid,'%d %f %f %f\n',[rango' x' y' z']');%En este fichero la última columna es la altura
 fclose(fid);
 
 fid=fopen('salida/fichero_elements.txt','w');
@@ -305,6 +305,8 @@ catch
     fprintf(2,'Wall not raised\n');
 end_try_catch
 ponmuro(murox,muroy,alturas);
+msh_to_obj('salida/nodosmuroizdo.txt','salida/elementsmuroizdo.txt');
+system('copy salida\test.obj salida\muroizq.obj');
 
 
 

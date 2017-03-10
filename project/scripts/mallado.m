@@ -182,32 +182,38 @@ end
 %2m, lo juntamos con el siguiente panel en vertical
 fprintf(2,'D\n');
 tria=[];
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 tieneD=zeros(1,numpanelesvertical);
-[quads,tria,tieneD]=optimizaD((numpal/2):-1:4,quads,tria,numpanelesvertical,indice,[0 0.95],tieneD,coordenadas,2);
-[quads,tria,tieneD]=optimizaD(3:-1:2,quads,tria,numpanelesvertical,indice,[0 1.15],tieneD,coordenadas,2);
-tieneD=ones(1,numpanelesvertical);
+[quads,tria,tieneD]=optimizaD((numpal/2)-4:-1:4,quads,tria,numpanelesvertical,indice,[0 0.95],tieneD,coordenadas,2);
+[quads,tria,tieneD]=optimizaD(3:-1:2,quads,tria,numpanelesvertical,indice,[0 2],tieneD,coordenadas,2);
+
 zonatria=111*ones(1,longitud(tria,3));
 ll=length(zonatria);
-[quads,tria,tieneD]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0 1.15],tieneD,coordenadas,2);
+tieneD=ones(1,numpanelesvertical); %Forzamos quads
+[quads,tria,tieneD]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0 2],tieneD,coordenadas,2);
 if isempty(tria)==0
     zonatria(ll:longitud(tria,3))=222;
 end
 ll=length(zonatria);
-%Forzamos quads
-tieneD=zeros(1,numpanelesvertical);
-%Forzamos Ds
-[quads,tria,tieneD]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0 1.15],tieneD,coordenadas,4);
+tieneD=zeros(1,numpanelesvertical);%Forzamos Ds
+[quads,tria,tieneD]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0.75 1.05],tieneD,coordenadas,4);%Forzamos Ds
+if isempty(tria)==0
+    zonatria(ll:longitud(tria,3))=222;
+end
+%
+%
 fprintf(2,'C\n');
 tieneC=zeros(1,numpanelesvertical);
-[quads,tria,tieneC]=optimizaC((numpal/2)+1:numpal-3,quads,tria,numpanelesvertical,indice,[0 0.95],tieneC,coordenadas,2);
-[quads,tria,tieneC]=optimizaC(numpal-2:numpal-1,quads,tria,numpanelesvertical,indice,[0 1.15],tieneC,coordenadas,2);
-tieneC=ones(1,numpanelesvertical);
-[quads,tria,tieneC]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0 1.15],tieneC,coordenadas,2);
+[quads,tria,tieneC]=optimizaC((numpal/2)+5:numpal-3,quads,tria,numpanelesvertical,indice,[0 0.95],tieneC,coordenadas,2);
+[quads,tria,tieneC]=optimizaC(numpal-2:numpal-1,quads,tria,numpanelesvertical,indice,[0 2],tieneC,coordenadas,2);
+tieneC=ones(1,numpanelesvertical); %Forzamos quads
+[quads,tria,tieneC]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0 2],tieneC,coordenadas,2);
 if isempty(tria)==0
     zonatria(ll:longitud(tria,3))=111;
 end
 tieneC=zeros(1,numpanelesvertical);
-[quads,tria,tieneC]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0 1.15],tieneC,coordenadas,4);
+[quads,tria,tieneC]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0.75 1.05],tieneC,coordenadas,4);
 if isempty(tria)==0
     zonatria(ll:longitud(tria,3))=222;
 end
@@ -440,9 +446,12 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
         for gg=rango%En horizontal
             for pp=1:1:numpanelesvertical-1
                 %En vertical
-                pppar=fix(pp/2)*2+1;
+                if (gg==2)
+                    fprintf(2,'%d',pp);
+                end
+                pppar=fix((pp-1)/2)*2+1;
                 pos=localizaquad(gg,pp,losquads);
-                if (pos~=-1) && (tieneDD(pppar)==0) %Si ya hemos hecho un quad o una D en el quad, nos vamos
+                if (pos~=-1) %&& (tieneDD(pppar)==0) %Si ya hemos hecho un quad o una D en el quad, nos vamos
                     punto1=coor(losquads(1,pos),losquads(2,pos));%xmin,ymin del quad
                     punto2=coor(losquads(1,pos),losquads(3,pos));%xmin,ymax del quad
                     punto3=coor(losquads(1,pos)+1,losquads(2,pos));%xmax,ymin del quad
@@ -452,9 +461,9 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
                     %Si se hace pequeño hacia la izquierda
                     %separacion1<separacion2
                     ratio=separacion1/separacion2;
-                    if ((ratio<=tamlimite(2)) && (ratio>=tamlimite(1)))
-                        fprintf(2,'%d %d %f\n',gg,pppar,ratio);
+                    if ((ratio<=tamlimite(2)) && (ratio>=tamlimite(1)))                        
                         if tieneDD(pppar)==1
+                            fprintf(2,'NQ h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
                             [indi,nuevo]=juntaquads(gg,pppar,losquads);
                             if (indi(1)~=-1) && (indi(2)~=-1)
                                 losquads(1,indi(1))=-1;
@@ -462,6 +471,7 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
                                 losquads=[losquads nuevo'];                        
                             end
                         else                                                
+                            fprintf(2,'ID h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
                             [indi,ntria]=insertarD(gg,pppar,losquads,indices,tamanyo);
                             %indi=[-1 -1];
                             if (indi(1)~=-1) && (indi(2)~=-1)
@@ -480,7 +490,10 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
     function [losquads,tria,tieneCC]=optimizaC(rango,losquads,tria,numpanelesvertical,indices,tamlimite,tieneCC,coor,tamanyo)
         %tieneC=zeros(1,numpanelesvertical);
         for gg=rango%En horizontal
-            for p=1:2:numpanelesvertical %En vertical
+            for p=1:1:numpanelesvertical-1 %En vertical
+                
+                pppar=fix((p-1)/2)*2+1;
+                
                 pos=localizaquad(gg,p,losquads);
                 if pos~=-1
                     punto1=coor(losquads(1,pos),losquads(2,pos));
@@ -492,20 +505,22 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
                     
                     ratio=separacion2/separacion1;
                     if ((ratio<=tamlimite(2)) && (ratio>=tamlimite(1)))
-                        if tieneCC(p)==1
-                            [indi,nuevo]=juntaquads(gg,p,losquads);
+                        if tieneCC(pppar)==1
+                            fprintf(2,'NQ h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
+                            [indi,nuevo]=juntaquads(gg,pppar,losquads);
                             if (indi(1)~=-1) && (indi(2)~=-1)
                                 losquads(1,indi(1))=-1;
                                 losquads(1,indi(2))=-1;
                                 losquads=[losquads nuevo'];                         
                             end
-                        else                                                
-                            [indi,ntria]=insertarC(gg,p,losquads,indices,tamanyo);                            
+                        else
+                            fprintf(2,'ID h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
+                            [indi,ntria]=insertarC(gg,pppar,losquads,indices,tamanyo);                            
                             if (indi(1)~=-1) && (indi(2)~=-1)
                                 losquads(1,indi(1))=-1;
                                 losquads(1,indi(2))=-1;
                                 tria=[tria;ntria];
-                                tieneCC(p)=1;
+                                tieneCC(pppar)=1;
                             end
                         end
                     end

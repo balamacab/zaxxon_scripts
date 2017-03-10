@@ -81,7 +81,9 @@ antesy=interp1(distancia_acumulada,lasy,distancia_acumulada-0.25,'PCHIP','extrap
 despuesy=interp1(distancia_acumulada,lasy,distancia_acumulada+0.25,'PCHIP','extrap');
 
 vector_perpendicular=(antesy-despuesy)+1j*( despuesx-antesx);
-
+dir_suavizada=filter([0.2 0.2 0.2 0.2 0.2],1,vector_perpendicular);
+dir_suavizada=[vector_perpendicular(1); vector_perpendicular(2); dir_suavizada(5:end-4) ;dir_suavizada(end-4); vector_perpendicular(end-3); vector_perpendicular(end-2); vector_perpendicular(end-1) ; vector_perpendicular(end); vector_perpendicular(end);]
+vector_perpendicular=abs(vector_perpendicular).*exp(1j*angle(dir_suavizada));
 numpanelesvertical=length(lasx)-1;
 
 quads=zeros(3,numpanelesvertical);%xmin,ymin,ymax

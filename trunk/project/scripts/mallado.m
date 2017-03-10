@@ -180,14 +180,15 @@ end
 
 %Recorremos todo el mallado, y si alg√∫n segmento vertical tiene menos de
 %2m, lo juntamos con el siguiente panel en vertical
+fprintf(2,'D\n');
 tria=[];
 tieneD=zeros(1,numpanelesvertical);
-[quads,tria,tieneD]=optimizaD((numpal/2):-1:4,quads,tria,numpanelesvertical,indice,2.75,tieneD,coordenadas,2);
-[quads,tria,tieneD]=optimizaD(3:-1:2,quads,tria,numpanelesvertical,indice,15,tieneD,coordenadas,2);
+[quads,tria,tieneD]=optimizaD((numpal/2):-1:4,quads,tria,numpanelesvertical,indice,[0 0.95],tieneD,coordenadas,2);
+[quads,tria,tieneD]=optimizaD(3:-1:2,quads,tria,numpanelesvertical,indice,[0 1.15],tieneD,coordenadas,2);
 tieneD=ones(1,numpanelesvertical);
 zonatria=111*ones(1,longitud(tria,3));
 ll=length(zonatria);
-[quads,tria,tieneD]=optimizaD(1,quads,tria,numpanelesvertical,indice,100,tieneD,coordenadas,2);
+[quads,tria,tieneD]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0 1.15],tieneD,coordenadas,2);
 if isempty(tria)==0
     zonatria(ll:longitud(tria,3))=222;
 end
@@ -195,17 +196,18 @@ ll=length(zonatria);
 %Forzamos quads
 tieneD=zeros(1,numpanelesvertical);
 %Forzamos Ds
-[quads,tria,tieneD]=optimizaD(1,quads,tria,numpanelesvertical,indice,100,tieneD,coordenadas,4);
+[quads,tria,tieneD]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0 1.15],tieneD,coordenadas,4);
+fprintf(2,'C\n');
 tieneC=zeros(1,numpanelesvertical);
-[quads,tria,tieneC]=optimizaC((numpal/2)+1:numpal-3,quads,tria,numpanelesvertical,indice,2.75,tieneC,coordenadas,2);
-[quads,tria,tieneC]=optimizaC(numpal-2:numpal-1,quads,tria,numpanelesvertical,indice,15,tieneC,coordenadas,2);
+[quads,tria,tieneC]=optimizaC((numpal/2)+1:numpal-3,quads,tria,numpanelesvertical,indice,[0 0.95],tieneC,coordenadas,2);
+[quads,tria,tieneC]=optimizaC(numpal-2:numpal-1,quads,tria,numpanelesvertical,indice,[0 1.15],tieneC,coordenadas,2);
 tieneC=ones(1,numpanelesvertical);
-[quads,tria,tieneC]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,100,tieneC,coordenadas,2);
+[quads,tria,tieneC]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0 1.15],tieneC,coordenadas,2);
 if isempty(tria)==0
     zonatria(ll:longitud(tria,3))=111;
 end
 tieneC=zeros(1,numpanelesvertical);
-[quads,tria,tieneC]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,100,tieneC,coordenadas,4);
+[quads,tria,tieneC]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0 1.15],tieneC,coordenadas,4);
 if isempty(tria)==0
     zonatria(ll:longitud(tria,3))=222;
 end
@@ -234,7 +236,8 @@ end
 tri=[n1' n2' n3'];
 tri=[tri;tria];%Anyadimos los triangulos
 zone=[zone zonatria];
-%trimesh(tri,x,y,z);
+trimesh(tri,x,y,z);
+axis('equal')
 
 rango=(1:length(x));
 [s1,s2]=size(rango);if (s2<s1) rango=rango.';end
@@ -302,7 +305,7 @@ try
 catch
     alturas=muroz;
     fprintf(2,'Wall not raised\n');
-end_try_catch
+end %_try_catch
 ponmuro(murox,muroy,alturas,'izdo');
 msh_to_obj('salida/nodosmuroizdo.txt','salida/elementsmuroizdo.txt');
 system('copy salida\test.obj+salida\texturasmuroizdo.txt salida\muroizdo.obj');
@@ -318,7 +321,7 @@ try
 catch
     alturas=muroz;
     fprintf(2,'Wall not raised\n');
-end_try_catch
+end %_try_catch
 ponmuro(murox,muroy,alturas,'dcho');
 msh_to_obj('salida/nodosmurodcho.txt','salida/elementsmurodcho.txt');
 system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
@@ -435,29 +438,37 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
     function [losquads,tria,tieneDD]=optimizaD(rango,losquads,tria,numpanelesvertical,indices,tamlimite,tieneDD,coor,tamanyo)
         %tieneD=zeros(1,numpanelesvertical);
         for gg=rango%En horizontal
-            for pp=1:2:numpanelesvertical
+            for pp=1:1:numpanelesvertical-1
                 %En vertical
+                pppar=fix(pp/2)*2+1;
                 pos=localizaquad(gg,pp,losquads);
-                if pos~=-1
+                if (pos~=-1) && (tieneDD(pppar)==0) %Si ya hemos hecho un quad o una D en el quad, nos vamos
                     punto1=coor(losquads(1,pos),losquads(2,pos));%xmin,ymin del quad
                     punto2=coor(losquads(1,pos),losquads(3,pos));%xmin,ymax del quad
-                    separacion=sqrt((real(punto1)-real(punto2))^2+(imag(punto1)-imag(punto2))^2);
-                    if separacion<tamlimite
-                        if tieneDD(pp)==1
-                            [indi,nuevo]=juntaquads(gg,pp,losquads);
+                    punto3=coor(losquads(1,pos)+1,losquads(2,pos));%xmax,ymin del quad
+                    punto4=coor(losquads(1,pos)+1,losquads(3,pos));%xmax,ymax del quad
+                    separacion1=sqrt((real(punto1)-real(punto2))^2+(imag(punto1)-imag(punto2))^2);
+                    separacion2=sqrt((real(punto3)-real(punto4))^2+(imag(punto3)-imag(punto4))^2);
+                    %Si se hace pequeÒo hacia la izquierda
+                    %separacion1<separacion2
+                    ratio=separacion1/separacion2;
+                    if ((ratio<=tamlimite(2)) && (ratio>=tamlimite(1)))
+                        fprintf(2,'%d %d %f\n',gg,pppar,ratio);
+                        if tieneDD(pppar)==1
+                            [indi,nuevo]=juntaquads(gg,pppar,losquads);
                             if (indi(1)~=-1) && (indi(2)~=-1)
                                 losquads(1,indi(1))=-1;
                                 losquads(1,indi(2))=-1;
                                 losquads=[losquads nuevo'];                        
                             end
                         else                                                
-                            [indi,ntria]=insertarD(gg,pp,losquads,indices,tamanyo);
+                            [indi,ntria]=insertarD(gg,pppar,losquads,indices,tamanyo);
                             %indi=[-1 -1];
                             if (indi(1)~=-1) && (indi(2)~=-1)
                                 losquads(1,indi(1))=-1;
                                 losquads(1,indi(2))=-1;
                                 tria=[tria;ntria];
-                                tieneDD(pp)=1;
+                                tieneDD(pppar)=1;
                             end
                         end
                     end
@@ -474,8 +485,13 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
                 if pos~=-1
                     punto1=coor(losquads(1,pos),losquads(2,pos));
                     punto2=coor(losquads(1,pos),losquads(3,pos));
-                    separacion=sqrt((real(punto1)-real(punto2))^2+(imag(punto1)-imag(punto2))^2);
-                    if separacion<tamlimite
+                    punto3=coor(losquads(1,pos)+1,losquads(2,pos));%xmax,ymin del quad
+                    punto4=coor(losquads(1,pos)+1,losquads(3,pos));%xmax,ymax del quad
+                    separacion1=sqrt((real(punto1)-real(punto2))^2+(imag(punto1)-imag(punto2))^2);
+                    separacion2=sqrt((real(punto3)-real(punto4))^2+(imag(punto3)-imag(punto4))^2);
+                    
+                    ratio=separacion2/separacion1;
+                    if ((ratio<=tamlimite(2)) && (ratio>=tamlimite(1)))
                         if tieneCC(p)==1
                             [indi,nuevo]=juntaquads(gg,p,losquads);
                             if (indi(1)~=-1) && (indi(2)~=-1)

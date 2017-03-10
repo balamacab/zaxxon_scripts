@@ -75,15 +75,18 @@ peralte=calcula_curvatura(lasx,lasy,distancias,dist,borde_izdo,borde_dcho);
 %plot(x,y);
 %pause
 %Puntos con los que aproximamos la perpendicular
+mispuntos=lasx+1j*lasy;
 antesx=interp1(distancia_acumulada,lasx,distancia_acumulada-0.25,'PCHIP','extrap');
 despuesx=interp1(distancia_acumulada,lasx,distancia_acumulada+0.25,'PCHIP','extrap');
 antesy=interp1(distancia_acumulada,lasy,distancia_acumulada-0.25,'PCHIP','extrap');
 despuesy=interp1(distancia_acumulada,lasy,distancia_acumulada+0.25,'PCHIP','extrap');
 
 vector_perpendicular=(antesy-despuesy)+1j*( despuesx-antesx);
+cambio=abs(0.5*angle(diff(mispuntos(1:end-1)))+0.5*angle(diff(mispuntos(2:end))))/(2*pi);
+cambio_angulo=[1; 1-cambio;1];
 dir_suavizada=filter([0.2 0.2 0.2 0.2 0.2],1,vector_perpendicular);
 dir_suavizada=[vector_perpendicular(1); vector_perpendicular(2); dir_suavizada(5:end-4) ;dir_suavizada(end-4); vector_perpendicular(end-3); vector_perpendicular(end-2); vector_perpendicular(end-1) ; vector_perpendicular(end); vector_perpendicular(end);]
-vector_perpendicular=abs(vector_perpendicular).*exp(1j*angle(dir_suavizada));
+vector_perpendicular=abs(vector_perpendicular).*exp(1j*angle(dir_suavizada))./cambio_angulo;
 numpanelesvertical=length(lasx)-1;
 
 quads=zeros(3,numpanelesvertical);%xmin,ymin,ymax

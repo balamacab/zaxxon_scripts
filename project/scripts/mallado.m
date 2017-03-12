@@ -66,8 +66,15 @@ distancia_acumulada=cumsum([0; distancias]);
 dist=[5 3 3 3 3 3 0.75 0.75 1.25 1.25 1.25 1.25 0.75 0.75 3 3 3 3 3 5];
 
 numpal=length(dist);
+%%%%%%%%%%%%%%%%%%%%%%BORDES CARRETERA%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 borde_izdo=numpal/2-3;
 borde_dcho=numpal/2+5;
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%BORDES MURO%%%%%%%%%%%%%%%%
+pos_muro_izq=4;  %--%--%--%
+pos_muro_dcho=numpal-2; %--%--%--% numpal+1
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
 peralte=calcula_curvatura(lasx,lasy,distancias,dist,borde_izdo,borde_dcho);
 
 %figure,plot(x(1),y(1),'*');
@@ -81,7 +88,7 @@ despuesx=interp1(distancia_acumulada,lasx,distancia_acumulada+0.25,'PCHIP','extr
 antesy=interp1(distancia_acumulada,lasy,distancia_acumulada-0.25,'PCHIP','extrap');
 despuesy=interp1(distancia_acumulada,lasy,distancia_acumulada+0.25,'PCHIP','extrap');
 
-vector_perpendicular=(antesy-despuesy)+1j*( despuesx-antesx);
+vector_perpendicular=-((antesy-despuesy)+1j*( despuesx-antesx));
 cambio=abs(0.5*angle(diff(mispuntos(1:end-1)))+0.5*angle(diff(mispuntos(2:end))))/(2*pi);
 cambio_angulo=[1; 1-cambio.^1.5;1];
 dir_suavizada=filter([0.15 0.2 0.4 0.2 0.15],1,vector_perpendicular);
@@ -172,6 +179,8 @@ for h=1:numpanelesvertical+1
 end
 
 
+
+
 %Creamos quads que cubren todos los puntos, caracterizados por sus
 %xmin,ymin e ymax de la rejilla
 for h=1:numpanelesvertical
@@ -179,6 +188,11 @@ for h=1:numpanelesvertical
         quads(1,contador)=g;
         quads(2,contador)=h;
         quads(3,contador)=h+1;
+        if (g<pos_muro_izq) || (g>=pos_muro_dcho)
+            zonaquad(contador)=222;
+        else
+            zonaquad(contador)=111;
+        end
         contador=contador+1;            
     end
 end
@@ -190,38 +204,33 @@ tria=[];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 tieneD=zeros(1,numpanelesvertical);
-[quads,tria,tieneD]=optimizaD((numpal/2)-4:-1:4,quads,tria,numpanelesvertical,indice,[0 0.95],tieneD,coordenadas,2);
-[quads,tria,tieneD]=optimizaD(3:-1:2,quads,tria,numpanelesvertical,indice,[0 2],tieneD,coordenadas,2);
+ll=0;
+[quads,tria,tieneD,nzona]=optimizaD((numpal/2)-4:-1:4,quads,tria,numpanelesvertical,indice,[0 0.95],tieneD,coordenadas,2);
+if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
+[quads,tria,tieneD,nzona]=optimizaD(3:-1:2,quads,tria,numpanelesvertical,indice,[0 2],tieneD,coordenadas,2);
+if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
+%zonatria=111*ones(1,longitud(tria,3));
 
-zonatria=111*ones(1,longitud(tria,3));
-ll=length(zonatria);
 tieneD=ones(1,numpanelesvertical); %Forzamos quads
-[quads,tria,tieneD]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0 2],tieneD,coordenadas,2);
-if isempty(tria)==0
-    zonatria(ll:longitud(tria,3))=222;
-end
-ll=length(zonatria);
+[quads,tria,tieneD,nzona]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0 2],tieneD,coordenadas,2);
+if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
 tieneD=zeros(1,numpanelesvertical);%Forzamos Ds
-[quads,tria,tieneD]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0.75 1.05],tieneD,coordenadas,4);%Forzamos Ds
-if isempty(tria)==0
-    zonatria(ll:longitud(tria,3))=222;
-end
+[quads,tria,tieneD,nzona]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0.75 1.05],tieneD,coordenadas,4);%Forzamos Ds
+if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
 %
 %
 fprintf(2,'C\n');
 tieneC=zeros(1,numpanelesvertical);
-[quads,tria,tieneC]=optimizaC((numpal/2)+5:numpal-3,quads,tria,numpanelesvertical,indice,[0 0.95],tieneC,coordenadas,2);
-[quads,tria,tieneC]=optimizaC(numpal-2:numpal-1,quads,tria,numpanelesvertical,indice,[0 2],tieneC,coordenadas,2);
+[quads,tria,tieneC,nzona]=optimizaC((numpal/2)+5:numpal-3,quads,tria,numpanelesvertical,indice,[0 0.95],tieneC,coordenadas,2);
+if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
+[quads,tria,tieneC,nzona]=optimizaC(numpal-2:numpal-1,quads,tria,numpanelesvertical,indice,[0 2],tieneC,coordenadas,2);
+if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
 tieneC=ones(1,numpanelesvertical); %Forzamos quads
-[quads,tria,tieneC]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0 2],tieneC,coordenadas,2);
-if isempty(tria)==0
-    zonatria(ll:longitud(tria,3))=111;
-end
+[quads,tria,tieneC,nzona]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0 2],tieneC,coordenadas,2);
+if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
 tieneC=zeros(1,numpanelesvertical);
-[quads,tria,tieneC]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0.75 1.05],tieneC,coordenadas,4);
-if isempty(tria)==0
-    zonatria(ll:longitud(tria,3))=222;
-end
+[quads,tria,tieneC,nzona]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0.75 1.05],tieneC,coordenadas,4);
+if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
 
 contadort=1;
 for contador=1:longitud(quads,3)
@@ -229,7 +238,7 @@ for contador=1:longitud(quads,3)
         n1(contadort)= indice(quads(1,contador),quads(2,contador));%xmin,ymin
         n2(contadort)= indice(quads(1,contador),quads(3,contador));%xmin,ymax
         n3(contadort)= indice(quads(1,contador)+1,quads(3,contador));%xmax,ymax (siempre es +1, pues no se unen rectángulos en dimensión x)
-        if (quads(1,contador)==1) || (quads(1,contador)==numpal)
+        if (quads(1,contador)<pos_muro_izq) || (quads(1,contador)>=pos_muro_dcho)
             zone(contadort)=222;
             zone(contadort+1)=222;
         else
@@ -250,26 +259,19 @@ zone=[zone zonatria];
 trimesh(tri,x,y,z);
 axis('equal')
 
-rango=(1:length(x));
-[s1,s2]=size(rango);if (s2<s1) rango=rango.';end
-[s1,s2]=size(x);if (s2<s1) x=x.';end
-[s1,s2]=size(y);if (s2<s1) y=y.';end
-[s1,s2]=size(z);if (s2<s1) z=z.';end
+ii=find(zone==111);
+graba(x,y,z,tri(ii,:),'salida/nodos0.txt','salida/elements0.txt','salida/texturas0.txt',zone(ii));
+ii=find(zone==222);
+graba(x,y,z,tri(ii,:),'salida/nodos1.txt','salida/elements1.txt','salida/texturas1.txt',zone(ii));
 
-fid=fopen('salida/fichero_nodos.txt','w');
-fprintf(fid,'%d %f %f %f\n',[rango' x' y' z']');%En este fichero la última columna es la altura
-fclose(fid);
+msh_to_obj('salida/nodos0.txt','salida/elements0.txt');
+system('copy salida\test.obj+salida\texturas0.txt salida\contexturas0.obj');
+system('cat salida/test.obj salida/texturas0.txt > salida/contexturas0.obj');
 
-fid=fopen('salida/fichero_elements.txt','w');
-fprintf(fid,'%d 2 2 %d 0 %d %d %d  \n',[(1:longitud(tri,3))' zone' tri ]');
-fclose(fid);
+msh_to_obj('salida/nodos1.txt','salida/elements1.txt');
+system('copy salida\test.obj+salida\texturas1.txt salida\contexturas1.obj');
+system('cat salida/test.obj salida/texturas1.txt > salida/contexturas1.obj');
 
-fid=fopen('salida/texturas.txt','w');
-fprintf(fid,'vt %f %f\n',[u;v]);
-fclose(fid);
-
-msh_to_obj('salida/fichero_nodos.txt','salida/fichero_elements.txt');
-system('copy salida\test.obj+salida\texturas.txt salida\test_contexturas.obj');
 system('copy salida\fichero_nodos.txt ..\s1_mesh\salida\nodos.txt');
 system('copy salida\fichero_elements.txt ..\s1_mesh\salida\elements.txt');
 
@@ -306,7 +308,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Muro protector metido una posición dentro del terreno creado
-indmuro=indice(2,:);
+indmuro=indice(pos_muro_izq,:);
 murox=x(indmuro(1:4:end));
 muroy=y(indmuro(1:4:end));
 muroz=z(indmuro(1:4:end));
@@ -320,9 +322,10 @@ end %_try_catch
 ponmuro(murox,muroy,alturas,'izdo');
 msh_to_obj('salida/nodosmuroizdo.txt','salida/elementsmuroizdo.txt');
 system('copy salida\test.obj+salida\texturasmuroizdo.txt salida\muroizdo.obj');
+system('cat salida/test.obj salida/texturasmuroizdo.txt > salida/muroizdo.obj');
 
 %Muro dcho
-indmuro=indice(end-1,:);
+indmuro=indice(pos_muro_dcho,:);
 murox=x(indmuro(1:4:end));
 muroy=y(indmuro(1:4:end));
 muroz=z(indmuro(1:4:end));
@@ -336,7 +339,7 @@ end %_try_catch
 ponmuro(murox,muroy,alturas,'dcho');
 msh_to_obj('salida/nodosmurodcho.txt','salida/elementsmurodcho.txt');
 system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
-
+system('cat salida/test.obj salida/texturasmurodcho.txt > salida/murodcho.obj');
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -446,8 +449,9 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
     end
 
 
-    function [losquads,tria,tieneDD]=optimizaD(rango,losquads,tria,numpanelesvertical,indices,tamlimite,tieneDD,coor,tamanyo)
+    function [losquads,tria,tieneDD,nuevazona]=optimizaD(rango,losquads,tria,numpanelesvertical,indices,tamlimite,tieneDD,coor,tamanyo)
         %tieneD=zeros(1,numpanelesvertical);
+        nuevazona=[];
         for gg=rango%En horizontal
             for pp=1:1:numpanelesvertical-1
                 %En vertical
@@ -463,7 +467,7 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
                     punto4=coor(losquads(1,pos)+1,losquads(3,pos));%xmax,ymax del quad
                     separacion1=sqrt((real(punto1)-real(punto2))^2+(imag(punto1)-imag(punto2))^2);
                     separacion2=sqrt((real(punto3)-real(punto4))^2+(imag(punto3)-imag(punto4))^2);
-                    %Si se hace peque�o hacia la izquierda
+                    %Si se hace peque�o hacia la izquierda
                     %separacion1<separacion2
                     ratio=separacion1/separacion2;
                     if ((ratio<=tamlimite(2)) && (ratio>=tamlimite(1)))                        
@@ -473,7 +477,8 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
                             if (indi(1)~=-1) && (indi(2)~=-1)
                                 losquads(1,indi(1))=-1;
                                 losquads(1,indi(2))=-1;
-                                losquads=[losquads nuevo'];                        
+                                losquads=[losquads nuevo'];
+                                zonaquad(length(losquads))=zonaquad(indi(1));%Copiamos la zona de los quads desaparecidos
                             end
                         else                                                
                             fprintf(2,'ID h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
@@ -484,6 +489,8 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
                                 losquads(1,indi(2))=-1;
                                 tria=[tria;ntria];
                                 tieneDD(pppar)=1;
+                                [sa,sb]=size(ntria);
+                                nuevazona=[nuevazona zonaquad(indi(1))*ones(1,sa*sb/3)];
                             end
                         end
                     end
@@ -492,8 +499,9 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
         end
     end
 
-    function [losquads,tria,tieneCC]=optimizaC(rango,losquads,tria,numpanelesvertical,indices,tamlimite,tieneCC,coor,tamanyo)
+    function [losquads,tria,tieneCC,nuevazona]=optimizaC(rango,losquads,tria,numpanelesvertical,indices,tamlimite,tieneCC,coor,tamanyo)
         %tieneC=zeros(1,numpanelesvertical);
+        nuevazona=[];
         for gg=rango%En horizontal
             for p=1:1:numpanelesvertical-1 %En vertical
                 
@@ -516,7 +524,8 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
                             if (indi(1)~=-1) && (indi(2)~=-1)
                                 losquads(1,indi(1))=-1;
                                 losquads(1,indi(2))=-1;
-                                losquads=[losquads nuevo'];                         
+                                losquads=[losquads nuevo'];
+                                zonaquad(length(losquads))=zonaquad(indi(1));%Copiamos la zona de los quads desaparecidos
                             end
                         else
                             fprintf(2,'ID h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
@@ -526,6 +535,8 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
                                 losquads(1,indi(2))=-1;
                                 tria=[tria;ntria];
                                 tieneCC(pppar)=1;
+                                [sa,sb]=size(ntria);
+                                nuevazona=[nuevazona zonaquad(indi(1))*ones(1,sa*sb/3)];
                             end
                         end
                     end
@@ -540,6 +551,26 @@ system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
         else
             salida=1;
         end
+    end
+
+    function graba(x,y,z,tri,fi_nodos,fi_elem,fi_text,zone)%'salida/fichero_nodos.txt' 'salida/fichero_elements.txt' 'salida/texturas.txt'
+        rango=(1:length(x));
+        [s1,s2]=size(rango);if (s2<s1) rango=rango.';end
+        [s1,s2]=size(x);if (s2<s1) x=x.';end
+        [s1,s2]=size(y);if (s2<s1) y=y.';end
+        [s1,s2]=size(z);if (s2<s1) z=z.';end
+
+        fid=fopen(fi_nodos,'w');
+        fprintf(fid,'%d %f %f %f\n',[rango' x' y' z']');%En este fichero la última columna es la altura
+        fclose(fid);
+
+        fid=fopen(fi_elem,'w');
+        fprintf(fid,'%d 2 2 %d 0 %d %d %d  \n',[(1:longitud(tri,3))' zone' tri ]');
+        fclose(fid);
+
+        fid=fopen(fi_text,'w');
+        fprintf(fid,'vt %f %f\n',[u;v]);
+        fclose(fid);
     end
     
     end

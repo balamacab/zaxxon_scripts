@@ -6,7 +6,7 @@ ancho_total=sum(dist(borde_izdo:borde_dcho-1));
 distancias(end+1)=distancias(end);
 num=lasx+1j*lasy;
 num=num';
-cambios_angulo=([0 0 (diff(unwrap(angle(diff(num)))))])';
+cambios_angulo=([0 (diff(unwrap(angle(diff(num))))) 0])';
 
 %curvatura:
 %En un circulo de radio R, se cambian 2pi grados en total
@@ -16,7 +16,17 @@ cambios_angulo=([0 0 (diff(unwrap(angle(diff(num)))))])';
 
 %Cambio de angulo por metro recorrido
 curvatura=cambios_angulo./distancias;
-filtro=0.5*[-0.0625         0    0.5625    1.0000    0.5625         0   -0.0625];
+curvatura=filter([0.2 0.2 0.2 0.2 0.2],1,curvatura)
+curvatura=[0; 0 ;curvatura(5:end); 0 ;0 ];
+% for h=2:length(curvatura)
+%     if sign(curvatura(h))~=sign(curvatura(h-1))
+%         curvatura(h-1)=curvatura(h-1)*0.1;
+%         curvatura(h)=curvatura(h)*0.1;
+%     end
+% end
+%curvatura=[curvatura(2:end);0];
+figure,plot(curvatura);
+%filtro=0.5*[-0.0625         0    0.5625    1.0000    0.5625         0   -0.0625];
 %curvatura=filter(filtro,1,curvatura);
 %curvatura=filter(filtro,1,curvatura);
 

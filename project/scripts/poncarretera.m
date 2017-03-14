@@ -20,7 +20,8 @@ tot=fscanf(fid,'%f %d %d %d %d %d %d %d %d %d');
 m=length(tot);
 tot=reshape(tot,10,m/10);
 [k p]=size(tot);
-for g=1:p
+
+for g=1:p %Direccion de avance en la carretera
     alturacomun=tot(1,g);
     if isempty(offset)==0
         alturacomun=alturacomun+escalado*offset(g,:);
@@ -37,4 +38,6 @@ msh_to_obj('salida/nodos_conaltura.txt','elements.txt');
 system('copy salida\test.obj+..\s11_m3d\salida\texturas.txt salida\test_sincarretera.obj');
 msh_to_obj('salida/nodosconcarretera.txt','elements.txt');
 system('copy salida\test.obj+..\s11_m3d\salida\texturas.txt salida\test_concarretera.obj');
+
+
 end

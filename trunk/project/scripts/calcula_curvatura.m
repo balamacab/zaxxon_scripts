@@ -2,7 +2,8 @@ function offset=calcula_curvatura(lasx,lasy,distancias,dist,borde_izdo,borde_dch
 
 ancho_total=sum(dist(borde_izdo:borde_dcho-1));
 
-
+pdte_max=0.07;%pdte maxima
+pdte_min=-0.02;%pdte minima
 distancias(end+1)=distancias(end);
 num=lasx+1j*lasy;
 num=num';
@@ -46,6 +47,9 @@ figure,plot(curvatura);
 perfiles=zeros(3,length(lasx));%izda,centro,dcha
 centro=(borde_izdo+borde_dcho)/2;
 maximo=max(abs(curvatura));
+satura=find(abs(curvatura)>maximo/2);
+curvatura(satura)=sign(curvatura(satura))*maximo/2;
+maximo=maximo/2;
 % curvatura=[curvatura(4:end)' 0 0 0];
 % umbral=0.1*maximo;
 % rectas=find(abs(curvatura)<umbral);
@@ -54,23 +58,24 @@ maximo=max(abs(curvatura));
 % maximo=max(abs(curvatura));
 medioancho=sum(dist(borde_izdo:centro-1));
 distancias_al_centro=cumsum([0 dist])-sum([0 dist(1:centro-1)]);
+
 for g=1:length(curvatura)
-    if curvatura(g)>0 %Curva a izquierdas
+    if curvatura(g)<0 %Curva a izquierdas
         perfiles(2,g)=0;%Altura del centro de la calzada
         %interno
-        perfiles(1,g)=medioancho*(-0.01-0.04*abs(curvatura(g))/maximo);
+        perfiles(1,g)=medioancho*(pdte_min-(pdte_min+pdte_max)*abs(curvatura(g))/maximo);
         %Externo
-        perfiles(3,g)=medioancho*(-0.01+0.06*abs(curvatura(g))/maximo);
+        perfiles(3,g)=medioancho*(pdte_min+pdte_max*abs(curvatura(g))/maximo);
     elseif curvatura(g)<0%Curva a derechas
         perfiles(2,g)=0;%Altura del centro de la calzada
         %externo
-        perfiles(1,g)=medioancho*(-0.01+0.06*abs(curvatura(g))/maximo);
+        perfiles(1,g)=medioancho*(pdte_min+pdte_max*abs(curvatura(g))/maximo);
         %interno
-        perfiles(3,g)=medioancho*(-0.01-0.04*abs(curvatura(g))/maximo);
+        perfiles(3,g)=medioancho*(pdte_min-(pdte_min+pdte_max)*abs(curvatura(g))/maximo);
     else
         perfiles(2,g)=0;
-        perfiles(1,g)=-0.01*medioancho;
-        perfiles(3,g)=-0.01*medioancho;
+        perfiles(1,g)=pdte_min*medioancho;
+        perfiles(3,g)=pdte_min*medioancho;
     end
     offset(g,:)=interp1([-medioancho,0,medioancho],perfiles(:,g),distancias_al_centro(borde_izdo:borde_dcho),'linear','extrap');
 end
@@ -78,5 +83,36 @@ end
 %perfiles(3,g)=filter(filtro,1,perfiles(3,g));
 %plot3(lasx,lasy,perfiles(1,:)),hold on
 %plot3(lasx,lasy,perfiles(3,:),'r')
+
+[p,k]=size(offset);
+irregularidad=ruido(p,k);
+offset=offset+irregularidad;
+
 save('curvaturas.mat','offset');
+
+    function salida=ruido(n1,n2)
+        rng(189);
+        r = 5; % radius (maximal 49)
+        n1min = r+1; n1max = n1+r;
+        n2min = r+1; n2max = n2+r;
+        
+        noise=zeros(n1+2*r+1,n2+2*r+1);
+        promediados=5;
+        for t=1:promediados
+            noise = noise+randn(n1+2*r+1,n2+2*r+1);
+        end
+        noise=noise/(promediados/2);%Media 0
+        noise=noise-mean(mean(noise));
+        [a,b]=meshgrid(-r:r,-r:r);
+        mask=((a.^2+b.^2)<=r^2); %(2*r+1)x(2*r+1) bit mask
+        salida = zeros(n1+2*r,n2+2*r);
+
+        for i=n1min:n1max
+            for j=n2min:n2max
+                A = noise((i-r):(i+r), (j-r):(j+r));
+                salida(i,j) = sum(sum(A.*mask));
+            end
+        end
+        Nr = sum(sum(mask)); salida = salida(n1min:n1max, n2min:n2max)/Nr;
+    end
 end

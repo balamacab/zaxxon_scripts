@@ -26,7 +26,7 @@ curvatura=[0; 0 ;curvatura(5:end); 0 ;0 ];
 %     end
 % end
 %curvatura=[curvatura(2:end);0];
-figure,plot(curvatura);
+%figure,plot(curvatura);
 %filtro=0.5*[-0.0625         0    0.5625    1.0000    0.5625         0   -0.0625];
 %curvatura=filter(filtro,1,curvatura);
 %curvatura=filter(filtro,1,curvatura);
@@ -49,6 +49,7 @@ centro=(borde_izdo+borde_dcho)/2;
 maximo=max(abs(curvatura));
 satura=find(abs(curvatura)>maximo/2);
 curvatura(satura)=sign(curvatura(satura))*maximo/2;
+%curvatura=sign(curvatura)*maximo/2;
 maximo=maximo/2;
 % curvatura=[curvatura(4:end)' 0 0 0];
 % umbral=0.1*maximo;

@@ -4,6 +4,7 @@ generico=0;
 numpal=20; %Numero total de paneles
 ancho_carretera=5;%Ancho de la carretera en metros
 
+orientacion=1;
 if (nargin==0)|(nargin==3)
     amp_ruido=0;
 end
@@ -16,7 +17,7 @@ if nargin<3
 
         x=salida{2};
         y=salida{3};
-        z=salida
+        z=salida{4};%¿Estaba incompleto?
 
         distancias=sqrt(sum(diff(x).^2+diff(y).^2,2));
         distancia_acumulada=cumsum([0; distancias]);
@@ -48,6 +49,7 @@ if nargin<3
     %     ncols=fscanf(fid,'%d',1);%Numero de anchors
     %     y=fscanf(fid,'%f');
     %     fclose(fid);
+        orientacion=-1;
         S=load('anchors.mat');
         x=S.x;
         y=S.z;
@@ -82,7 +84,7 @@ pos_muro_izq=2;%4;  %--%--%--%
 pos_muro_dcho=numpal;%numpal-2; %--%--%--% numpal+1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-peralte=calcula_curvatura(lasx,lasy,distancias,dist,borde_izdo,borde_dcho,amp_ruido);
+peralte=calcula_curvatura(lasx,orientacion*lasy,distancias,dist,borde_izdo,borde_dcho,amp_ruido);
 
 %figure,plot(x(1),y(1),'*');
 %hold on

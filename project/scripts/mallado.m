@@ -272,11 +272,11 @@ graba(x,y,z,tri(ii,:),'salida/nodos0.txt','salida/elements0.txt','salida/textura
 ii=find(zone==222);
 graba(x,y,z,tri(ii,:),'salida/nodos1.txt','salida/elements1.txt','salida/texturas1.txt',zone(ii));
 
-msh_to_obj('salida/nodos0.txt','salida/elements0.txt');
+msh_to_obj('salida/nodos0.txt','salida/elements0.txt','test.mtl');
 system('copy salida\test.obj+salida\texturas0.txt salida\contexturas0.obj');
 system('cat salida/test.obj salida/texturas0.txt > salida/contexturas0.obj');
 
-msh_to_obj('salida/nodos1.txt','salida/elements1.txt');
+msh_to_obj('salida/nodos1.txt','salida/elements1.txt','test.mtl');
 system('copy salida\test.obj+salida\texturas1.txt salida\contexturas1.obj');
 system('cat salida/test.obj salida/texturas1.txt > salida/contexturas1.obj');
 
@@ -331,7 +331,7 @@ catch
     fprintf(2,'Wall not raised\n');
 end %_try_catch
 ponmuro(murox,muroy,alturas,'izdo');
-msh_to_obj('salida/nodosmuroizdo.txt','salida/elementsmuroizdo.txt');
+msh_to_obj('salida/nodosmuroizdo.txt','salida/elementsmuroizdo.txt','transparente.mtl');
 system('copy salida\test.obj+salida\texturasmuroizdo.txt salida\muroizdo.obj');
 system('cat salida/test.obj salida/texturasmuroizdo.txt > salida/muroizdo.obj');
 
@@ -340,6 +340,7 @@ indmuro=indice(pos_muro_dcho,:);
 murox=x(indmuro(1:4:end));
 muroy=y(indmuro(1:4:end));
 muroz=z(indmuro(1:4:end));
+murox=fliplr(murox);muroy=fliplr(muroy);muroz=fliplr(muroz);%Forma sencilla de invertir las normales
 
 try
     alturas=procesar_nodostxt([0 0],[(1:length(murox))' murox' muroy' muroz'],'salida/nodosdchoelevados.txt');
@@ -348,9 +349,14 @@ catch
     fprintf(2,'Wall not raised\n');
 end %_try_catch
 ponmuro(murox,muroy,alturas,'dcho');
-msh_to_obj('salida/nodosmurodcho.txt','salida/elementsmurodcho.txt');
+msh_to_obj('salida/nodosmurodcho.txt','salida/elementsmurodcho.txt','transparente.mtl');
 system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
 system('cat salida/test.obj salida/texturasmurodcho.txt > salida/murodcho.obj');
+
+
+fid_mtl=fopen(strcat('salida/transparente','.mtl'),'w');
+fprintf(fid_mtl,'\nnewmtl material_%02d\nKa  0.6 0.6 0.6\nKd  0.6 0.6 0.6\nKs  0.9 0.9 0.9\nd  1.0\nNs  0.0\nillum 2\nmap_Kd %s\n',0,'transpa.dds');
+fclose(fid_mtl);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%

@@ -95,7 +95,11 @@ offset=offset+irregularidad;
 save('curvaturas.mat','offset');
 
     function salida=ruido(n1,n2)
-        rng(189);
+        if (exist ('OCTAVE_VERSION', 'builtin'))
+            rand('seed',189);
+        else
+            rng(189);
+        end
         r = 5; % radius (maximal 49)
         n1min = r+1; n1max = n1+r;
         n2min = r+1; n2max = n2+r;

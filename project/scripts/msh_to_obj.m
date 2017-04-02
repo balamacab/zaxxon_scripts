@@ -1,10 +1,12 @@
-function msh_to_obj(fichero_nodos,fichero_elements)
+function msh_to_obj(fichero_nodos,fichero_elements,ficherodds)
 
 [numero x y z]=textread(fichero_nodos,'%d %f %f %f');
 
 fid=fopen(fichero_elements,'r');
 fid_w=fopen(strcat('salida/test','.obj'),'w');
-fprintf(fid_w,'mtllib test.mtl\n');
+if nargin>2
+    fprintf(fid_w,['mtllib ',ficherodds,'\n']);
+end
 contador=1;
 while (feof(fid)~=1)
     todo=fscanf(fid,'%d',3);
@@ -63,7 +65,9 @@ id_particular=id_particular(orden);
 				%end
 				if id_particular(h)~=id_anterior
 					fprintf(fid_w,'g group%02d\r\n',id_particular(h));
-                    fprintf(fid_w,'usemtl material_00\n');
+                    if nargin>2
+                        fprintf(fid_w,'usemtl material_00\n');
+                    end
 					id_anterior=id_particular(h);
 				end
 				if v4(h)==-1

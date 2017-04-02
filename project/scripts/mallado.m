@@ -1,7 +1,13 @@
-function mallado(lasx,lasy,lasz)
+function mallado(amp_ruido,lasx,lasy,lasz)
    
 generico=0;
-if nargin==0
+numpal=20; %Numero total de paneles
+ancho_carretera=5;%Ancho de la carretera en metros
+
+if (nargin==0)|(nargin==3)
+    amp_ruido=0;
+end
+if nargin<3
     if (generico==1)
         %A partir de nodos cualesquiera -> los llevamos a 4 m de distancia
         fid=fopen('nodes.txt');
@@ -50,9 +56,7 @@ if nargin==0
          if n>m
              x=x';y=y';z=z';
          end
-    %     S=load('anchors.mat');
-    %     x=S.x;
-    %     y=S.y;
+
         lasx=0.5*(x(1:end/2)+x(end/2+1:end));
         lasy=0.5*(y(1:end/2)+y(end/2+1:end));
         lasz=0.5*(z(1:end/2)+z(end/2+1:end));
@@ -63,19 +67,22 @@ end
 distancias=sqrt(sum(diff(lasx).^2+diff(lasy).^2,2));
 distancia_acumulada=cumsum([0; distancias]);
 
-dist=[5 3 3 3 3 3 0.75 0.75 1.25 1.25 1.25 1.25 0.75 0.75 3 3 3 3 3 5];
+%Ancho (m) de los paneles
+panelesTRESMETROS=numpal/2-4-1;%Total menos los que son de carretera y los dos de los extremos
+paneles_carretera=(ancho_carretera/5)*[0.75 0.75 1.25 1.25 1.25 1.25 0.75 0.75];
+dist=[5 3*ones(1,panelesTRESMETROS) paneles_carretera 3*ones(1,panelesTRESMETROS) 5];
 
-numpal=length(dist);
+%numpal=length(dist);
 %%%%%%%%%%%%%%%%%%%%%%BORDES CARRETERA%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 borde_izdo=numpal/2-3;
 borde_dcho=numpal/2+5;
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%BORDES MURO%%%%%%%%%%%%%%%%
-pos_muro_izq=4;  %--%--%--%
-pos_muro_dcho=numpal-2; %--%--%--% numpal+1
+pos_muro_izq=2;%4;  %--%--%--%
+pos_muro_dcho=numpal;%numpal-2; %--%--%--% numpal+1
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-peralte=calcula_curvatura(lasx,lasy,distancias,dist,borde_izdo,borde_dcho);
+peralte=calcula_curvatura(lasx,lasy,distancias,dist,borde_izdo,borde_dcho,amp_ruido);
 
 %figure,plot(x(1),y(1),'*');
 %hold on
@@ -199,7 +206,7 @@ end
 
 %Recorremos todo el mallado, y si algún segmento vertical tiene menos de
 %2m, lo juntamos con el siguiente panel en vertical
-fprintf(2,'D\n');
+%fprintf(2,'D\n');
 tria=[];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
@@ -219,7 +226,7 @@ tieneD=zeros(1,numpanelesvertical);%Forzamos Ds
 if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
 %
 %
-fprintf(2,'C\n');
+%fprintf(2,'C\n');
 tieneC=zeros(1,numpanelesvertical);
 [quads,tria,tieneC,nzona]=optimizaC((numpal/2)+5:numpal-3,quads,tria,numpanelesvertical,indice,[0 0.95],tieneC,coordenadas,2);
 if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
@@ -253,8 +260,9 @@ for contador=1:longitud(quads,3)
     end
 end
 
-tri=[n1' n2' n3'];
+tri=[n1' n2' n3'];%[n1' n2' n3'];
 tri=[tri;tria];%Anyadimos los triangulos
+tri=[tri(:,1) tri(:,3) tri(:,2)]; %Normales hacia arriba
 zone=[zone zonatria];
 trimesh(tri,x,y,z);
 axis('equal')
@@ -275,6 +283,9 @@ system('cat salida/test.obj salida/texturas1.txt > salida/contexturas1.obj');
 system('copy salida\fichero_nodos.txt ..\s1_mesh\salida\nodos.txt');
 system('copy salida\fichero_elements.txt ..\s1_mesh\salida\elements.txt');
 
+fid_mtl=fopen(strcat('salida/test','.mtl'),'w');
+fprintf(fid_mtl,'\nnewmtl material_%02d\nKa  0.6 0.6 0.6\nKd  0.6 0.6 0.6\nKs  0.9 0.9 0.9\nd  1.0\nNs  0.0\nillum 2\nmap_Kd %s\n',0,'Placa3.dds');
+fclose(fid_mtl);
 
 fid=fopen('track0.mat');
 if (fid~=-1)
@@ -455,9 +466,9 @@ system('cat salida/test.obj salida/texturasmurodcho.txt > salida/murodcho.obj');
         for gg=rango%En horizontal
             for pp=1:1:numpanelesvertical-1
                 %En vertical
-                if (gg==2)
-                    fprintf(2,'%d',pp);
-                end
+                %if (gg==2)
+                %    fprintf(2,'%d',pp);
+                %end
                 pppar=fix((pp-1)/2)*2+1;
                 pos=localizaquad(gg,pp,losquads);
                 if (pos~=-1) %&& (tieneDD(pppar)==0) %Si ya hemos hecho un quad o una D en el quad, nos vamos
@@ -472,7 +483,7 @@ system('cat salida/test.obj salida/texturasmurodcho.txt > salida/murodcho.obj');
                     ratio=separacion1/separacion2;
                     if ((ratio<=tamlimite(2)) && (ratio>=tamlimite(1)))                        
                         if tieneDD(pppar)==1
-                            fprintf(2,'NQ h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
+                            %fprintf(2,'NQ h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
                             [indi,nuevo]=juntaquads(gg,pppar,losquads);
                             if (indi(1)~=-1) && (indi(2)~=-1)
                                 losquads(1,indi(1))=-1;
@@ -481,7 +492,7 @@ system('cat salida/test.obj salida/texturasmurodcho.txt > salida/murodcho.obj');
                                 zonaquad(length(losquads))=zonaquad(indi(1));%Copiamos la zona de los quads desaparecidos
                             end
                         else                                                
-                            fprintf(2,'ID h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
+                            %fprintf(2,'ID h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
                             [indi,ntria]=insertarD(gg,pppar,losquads,indices,tamanyo);
                             %indi=[-1 -1];
                             if (indi(1)~=-1) && (indi(2)~=-1)
@@ -519,7 +530,7 @@ system('cat salida/test.obj salida/texturasmurodcho.txt > salida/murodcho.obj');
                     ratio=separacion2/separacion1;
                     if ((ratio<=tamlimite(2)) && (ratio>=tamlimite(1)))
                         if tieneCC(pppar)==1
-                            fprintf(2,'NQ h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
+                            %fprintf(2,'NQ h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
                             [indi,nuevo]=juntaquads(gg,pppar,losquads);
                             if (indi(1)~=-1) && (indi(2)~=-1)
                                 losquads(1,indi(1))=-1;
@@ -528,7 +539,7 @@ system('cat salida/test.obj salida/texturasmurodcho.txt > salida/murodcho.obj');
                                 zonaquad(length(losquads))=zonaquad(indi(1));%Copiamos la zona de los quads desaparecidos
                             end
                         else
-                            fprintf(2,'ID h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
+                            %fprintf(2,'ID h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
                             [indi,ntria]=insertarC(gg,pppar,losquads,indices,tamanyo);                            
                             if (indi(1)~=-1) && (indi(2)~=-1)
                                 losquads(1,indi(1))=-1;
@@ -549,7 +560,7 @@ system('cat salida/test.obj salida/texturasmurodcho.txt > salida/murodcho.obj');
             [m,n]=size(a);
             salida=m*n/tam_elemento;
         else
-            salida=1;
+            salida=1;8
         end
     end
 

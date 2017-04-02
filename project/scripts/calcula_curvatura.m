@@ -1,4 +1,7 @@
-function offset=calcula_curvatura(lasx,lasy,distancias,dist,borde_izdo,borde_dcho)
+function offset=calcula_curvatura(lasx,lasy,distancias,dist,borde_izdo,borde_dcho,amp_ruido)
+if nargin==6
+    amp_ruido=0;
+end
 
 ancho_total=sum(dist(borde_izdo:borde_dcho-1));
 
@@ -67,7 +70,7 @@ for g=1:length(curvatura)
         perfiles(1,g)=medioancho*(pdte_min-(pdte_min+pdte_max)*abs(curvatura(g))/maximo);
         %Externo
         perfiles(3,g)=medioancho*(pdte_min+pdte_max*abs(curvatura(g))/maximo);
-    elseif curvatura(g)<0%Curva a derechas
+    elseif curvatura(g)>0%Curva a derechas
         perfiles(2,g)=0;%Altura del centro de la calzada
         %externo
         perfiles(1,g)=medioancho*(pdte_min+pdte_max*abs(curvatura(g))/maximo);
@@ -86,7 +89,7 @@ end
 %plot3(lasx,lasy,perfiles(3,:),'r')
 
 [p,k]=size(offset);
-irregularidad=ruido(p,k);
+irregularidad=amp_ruido*ruido(p,k);
 offset=offset+irregularidad;
 
 save('curvaturas.mat','offset');

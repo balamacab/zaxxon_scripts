@@ -20,7 +20,7 @@ cambios_angulo=([0 (diff(unwrap(angle(diff(num))))) 0])';
 
 %Cambio de angulo por metro recorrido
 curvatura=cambios_angulo./distancias;
-curvatura=filter([0.2 0.2 0.2 0.2 0.2],1,curvatura)
+curvatura=filter([0.2 0.2 0.2 0.2 0.2],1,curvatura);
 curvatura=[0; 0 ;curvatura(5:end); 0 ;0 ];
 % for h=2:length(curvatura)
 %     if sign(curvatura(h))~=sign(curvatura(h-1))

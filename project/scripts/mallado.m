@@ -325,7 +325,7 @@ muroy=y(indmuro(1:4:end));
 muroz=z(indmuro(1:4:end));
 
 try
-    alturas=procesar_nodostxt([0 0],[(1:length(murox)) murox' muroy' muroz'],'salida/nodosizdoelevados.txt');
+    alturas=procesar_nodostxt([0 0],[(1:length(murox))' murox muroy muroz],'salida/nodosizdoelevados.txt');
 catch
     alturas=muroz;
     fprintf(2,'Wall not raised\n');
@@ -343,7 +343,7 @@ muroz=z(indmuro(1:4:end));
 murox=fliplr(murox);muroy=fliplr(muroy);muroz=fliplr(muroz);%Forma sencilla de invertir las normales
 
 try
-    alturas=procesar_nodostxt([0 0],[(1:length(murox)) murox' muroy' muroz'],'salida/nodosdchoelevados.txt');
+    alturas=procesar_nodostxt([0 0],[(1:length(murox))' murox muroy muroz],'salida/nodosdchoelevados.txt');
 catch
     alturas=muroz;
     fprintf(2,'Wall not raised\n');

@@ -212,31 +212,31 @@ tria=[];
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
 tieneD=zeros(1,numpanelesvertical);
 ll=0;
-[quads,tria,tieneD,nzona]=optimizaD((numpal/2)-4:-1:4,quads,tria,numpanelesvertical,indice,[0 0.95],tieneD,coordenadas,2);
+[quads,tria,tieneD,nzona,zonaquad]=optimizaD((numpal/2)-4:-1:4,quads,tria,numpanelesvertical,indice,[0 0.95],tieneD,coordenadas,2,zonaquad);
 if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
-[quads,tria,tieneD,nzona]=optimizaD(3:-1:2,quads,tria,numpanelesvertical,indice,[0 2],tieneD,coordenadas,2);
+[quads,tria,tieneD,nzona,zonaquad]=optimizaD(3:-1:2,quads,tria,numpanelesvertical,indice,[0 2],tieneD,coordenadas,2,zonaquad);
 if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
 %zonatria=111*ones(1,longitud(tria,3));
 
 tieneD=ones(1,numpanelesvertical); %Forzamos quads
-[quads,tria,tieneD,nzona]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0 2],tieneD,coordenadas,2);
+[quads,tria,tieneD,nzona,zonaquad]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0 2],tieneD,coordenadas,2,zonaquad);
 if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
 tieneD=zeros(1,numpanelesvertical);%Forzamos Ds
-[quads,tria,tieneD,nzona]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0.75 1.05],tieneD,coordenadas,4);%Forzamos Ds
+[quads,tria,tieneD,nzona,zonaquad]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0.75 1.05],tieneD,coordenadas,4,zonaquad);%Forzamos Ds
 if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
 %
 %
 %fprintf(2,'C\n');
 tieneC=zeros(1,numpanelesvertical);
-[quads,tria,tieneC,nzona]=optimizaC((numpal/2)+5:numpal-3,quads,tria,numpanelesvertical,indice,[0 0.95],tieneC,coordenadas,2);
+[quads,tria,tieneC,nzona,zonaquad]=optimizaC((numpal/2)+5:numpal-3,quads,tria,numpanelesvertical,indice,[0 0.95],tieneC,coordenadas,2,zonaquad);
 if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
-[quads,tria,tieneC,nzona]=optimizaC(numpal-2:numpal-1,quads,tria,numpanelesvertical,indice,[0 2],tieneC,coordenadas,2);
+[quads,tria,tieneC,nzona,zonaquad]=optimizaC(numpal-2:numpal-1,quads,tria,numpanelesvertical,indice,[0 2],tieneC,coordenadas,2,zonaquad);
 if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
 tieneC=ones(1,numpanelesvertical); %Forzamos quads
-[quads,tria,tieneC,nzona]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0 2],tieneC,coordenadas,2);
+[quads,tria,tieneC,nzona,zonaquad]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0 2],tieneC,coordenadas,2,zonaquad);
 if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
 tieneC=zeros(1,numpanelesvertical);
-[quads,tria,tieneC,nzona]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0.75 1.05],tieneC,coordenadas,4);
+[quads,tria,tieneC,nzona,zonaquad]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0.75 1.05],tieneC,coordenadas,4,zonaquad);
 if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
 
 contadort=1;
@@ -466,7 +466,7 @@ fclose(fid_mtl);
     end
 
 
-    function [losquads,tria,tieneDD,nuevazona]=optimizaD(rango,losquads,tria,numpanelesvertical,indices,tamlimite,tieneDD,coor,tamanyo)
+    function [losquads,tria,tieneDD,nuevazona,zquad]=optimizaD(rango,losquads,tria,numpanelesvertical,indices,tamlimite,tieneDD,coor,tamanyo,zquad)
         %tieneD=zeros(1,numpanelesvertical);
         nuevazona=[];
         for gg=rango%En horizontal
@@ -495,7 +495,7 @@ fclose(fid_mtl);
                                 losquads(1,indi(1))=-1;
                                 losquads(1,indi(2))=-1;
                                 losquads=[losquads nuevo'];
-                                zonaquad(length(losquads))=zonaquad(indi(1));%Copiamos la zona de los quads desaparecidos
+                                zquad(length(losquads))=zquad(indi(1));%Copiamos la zona de los quads desaparecidos
                             end
                         else                                                
                             %fprintf(2,'ID h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
@@ -507,7 +507,7 @@ fclose(fid_mtl);
                                 tria=[tria;ntria];
                                 tieneDD(pppar)=1;
                                 [sa,sb]=size(ntria);
-                                nuevazona=[nuevazona zonaquad(indi(1))*ones(1,sa*sb/3)];
+                                nuevazona=[nuevazona zquad(indi(1))*ones(1,sa*sb/3)];
                             end
                         end
                     end
@@ -516,7 +516,7 @@ fclose(fid_mtl);
         end
     end
 
-    function [losquads,tria,tieneCC,nuevazona]=optimizaC(rango,losquads,tria,numpanelesvertical,indices,tamlimite,tieneCC,coor,tamanyo)
+    function [losquads,tria,tieneCC,nuevazona,zquad]=optimizaC(rango,losquads,tria,numpanelesvertical,indices,tamlimite,tieneCC,coor,tamanyo,zquad)
         %tieneC=zeros(1,numpanelesvertical);
         nuevazona=[];
         for gg=rango%En horizontal
@@ -542,7 +542,7 @@ fclose(fid_mtl);
                                 losquads(1,indi(1))=-1;
                                 losquads(1,indi(2))=-1;
                                 losquads=[losquads nuevo'];
-                                zonaquad(length(losquads))=zonaquad(indi(1));%Copiamos la zona de los quads desaparecidos
+                                zquad(length(losquads))=zquad(indi(1));%Copiamos la zona de los quads desaparecidos
                             end
                         else
                             %fprintf(2,'ID h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
@@ -553,7 +553,7 @@ fclose(fid_mtl);
                                 tria=[tria;ntria];
                                 tieneCC(pppar)=1;
                                 [sa,sb]=size(ntria);
-                                nuevazona=[nuevazona zonaquad(indi(1))*ones(1,sa*sb/3)];
+                                nuevazona=[nuevazona zquad(indi(1))*ones(1,sa*sb/3)];
                             end
                         end
                     end

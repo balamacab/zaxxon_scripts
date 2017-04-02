@@ -268,9 +268,9 @@ trimesh(tri,x,y,z);
 axis('equal')
 
 ii=find(zone==111);
-graba(x,y,z,tri(ii,:),'salida/nodos0.txt','salida/elements0.txt','salida/texturas0.txt',zone(ii));
+graba(x,y,z,tri(ii,:),'salida/nodos0.txt','salida/elements0.txt','salida/texturas0.txt',zone(ii),u,v);
 ii=find(zone==222);
-graba(x,y,z,tri(ii,:),'salida/nodos1.txt','salida/elements1.txt','salida/texturas1.txt',zone(ii));
+graba(x,y,z,tri(ii,:),'salida/nodos1.txt','salida/elements1.txt','salida/texturas1.txt',zone(ii),u,v);
 
 msh_to_obj('salida/nodos0.txt','salida/elements0.txt','test.mtl');
 system('copy salida\test.obj+salida\texturas0.txt salida\contexturas0.obj');
@@ -563,14 +563,14 @@ fclose(fid_mtl);
     end
     function salida=longitud(a,tam_elemento)
         if isempty(a)==0
-            [m,n]=size(a);
-            salida=m*n/tam_elemento;
+            [mm,nn]=size(a);
+            salida=mm*nn/tam_elemento;
         else
             salida=1;8
         end
     end
 
-    function graba(x,y,z,tri,fi_nodos,fi_elem,fi_text,zone)%'salida/fichero_nodos.txt' 'salida/fichero_elements.txt' 'salida/texturas.txt'
+    function graba(x,y,z,tri,fi_nodos,fi_elem,fi_text,zone,uu,vv)%'salida/fichero_nodos.txt' 'salida/fichero_elements.txt' 'salida/texturas.txt'
         rango=(1:length(x));
         [s1,s2]=size(rango);if (s2<s1) rango=rango.';end
         [s1,s2]=size(x);if (s2<s1) x=x.';end
@@ -586,7 +586,7 @@ fclose(fid_mtl);
         fclose(fid);
 
         fid=fopen(fi_text,'w');
-        fprintf(fid,'vt %f %f\n',[u;v]);
+        fprintf(fid,'vt %f %f\n',[uu;vv]);
         fclose(fid);
     end
     

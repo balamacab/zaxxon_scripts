@@ -126,7 +126,7 @@ datay=y;
 dataz=z;
 save('salida\anchors_originales.mat','datax','datay','dataz');
 
-msh_to_obj('salida\nodos_conaltura.txt','elements.txt');
+%msh_to_obj(fichero_salida,'elements.txt');
 message(22)
 
 

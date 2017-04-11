@@ -36,7 +36,7 @@ function alturas=elevar_agr(fichero_puntos,mapeo)
 				[indices indicesfuera]=comprobar_rangos(malla.rangox,malla.rangoz,x_deseados,z_deseados);
 				alturas1=zeros(size(coo_x));
 				display(sprintf('Looking for [%.1f,%.1f][%.1f,%.1f] in [%.1f,%.1f][%.1f,%.1f]',min(coo_x),max(coo_x),min(coo_z),max(coo_z),malla.rangox(1),malla.rangox(end),malla.rangoz(1),malla.rangoz(end)))
-                if isempty(pos_nodata)==0
+                %if isempty(posdata)==0
                     if length(indices)>0
                         [malla,nodata]=lee_datos(file_name,posdata,ncols,nrows,malla); %Solo leemos los datos de la malla si son de inter�s
                         alturas1(indices)=z_interp2(malla.rangox,malla.rangoz,malla.malla_regular,x_deseados(indices),z_deseados(indices));
@@ -52,9 +52,9 @@ function alturas=elevar_agr(fichero_puntos,mapeo)
                             alturas=alturas+alturas1;
                         end
                     end
-                else
-                    fprintf(1,'Warning: no nodata_value found\n');
-                end
+                %else
+                %    fprintf(1,'Warning: no nodata_value found\n');
+                %end
 			end
 		end
 		alturas=z_scale*alturas';

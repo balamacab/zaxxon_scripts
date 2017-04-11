@@ -282,8 +282,8 @@ msh_to_obj('salida/nodos1.txt','salida/elements1.txt','test.mtl');
 system('copy salida\test.obj+salida\texturas1.txt salida\contexturas1.obj');
 system('cat salida/test.obj salida/texturas1.txt > salida/contexturas1.obj');
 
-system('copy salida\fichero_nodos.txt ..\s1_mesh\salida\nodos.txt');
-system('copy salida\fichero_elements.txt ..\s1_mesh\salida\elements.txt');
+system('copy salida\nodos0.txt ..\s1_mesh\salida\nodos.txt');
+system('copy salida\elements0.txt ..\s1_mesh\salida\elements.txt');
 
 fid_mtl=fopen(strcat('salida/test','.mtl'),'w');
 fprintf(fid_mtl,'\nnewmtl material_%02d\nKa  0.6 0.6 0.6\nKd  0.6 0.6 0.6\nKs  0.9 0.9 0.9\nd  1.0\nNs  0.0\nillum 2\nmap_Kd %s\n',0,'Placa3.dds');

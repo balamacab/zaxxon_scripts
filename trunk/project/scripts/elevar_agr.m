@@ -28,7 +28,7 @@ function alturas=elevar_agr(fichero_puntos,mapeo)
 			if length(file_name)>0
 				file_name=sprintf('..\\..\\agr\\%s',file_name);
 				display(file_name);
-				[malla,pos_nodata,ncols,nrows]=lee_cabecera(file_name);
+				[malla,posdata,ncols,nrows]=lee_cabecera(file_name);
 						
 				x_deseados=coo_x;
 				z_deseados=coo_z;
@@ -36,21 +36,25 @@ function alturas=elevar_agr(fichero_puntos,mapeo)
 				[indices indicesfuera]=comprobar_rangos(malla.rangox,malla.rangoz,x_deseados,z_deseados);
 				alturas1=zeros(size(coo_x));
 				display(sprintf('Looking for [%.1f,%.1f][%.1f,%.1f] in [%.1f,%.1f][%.1f,%.1f]',min(coo_x),max(coo_x),min(coo_z),max(coo_z),malla.rangox(1),malla.rangox(end),malla.rangoz(1),malla.rangoz(end)))
-				if length(indices)>0
-					[malla,nodata]=lee_datos(file_name,pos_nodata,ncols,nrows,malla); %Solo leemos los datos de la malla si son de interés
-					alturas1(indices)=z_interp2(malla.rangox,malla.rangoz,malla.malla_regular,x_deseados(indices),z_deseados(indices));
-					if contador==1
-						alturas=alturas1;
-						contador=contador+1;
-					else
-						%Nos aseguramos de no volver a sumar altura al mismo punto
-						ya_conseguidos=find(alturas!=0);
-						alturas1(ya_conseguidos)=0;
-						sindatos=find(alturas1==nodata);
-						alturas1(sindatos)=0;
-						alturas=alturas+alturas1;
-					end
-				end
+                if isempty(pos_nodata)==0
+                    if length(indices)>0
+                        [malla,nodata]=lee_datos(file_name,posdata,ncols,nrows,malla); %Solo leemos los datos de la malla si son de interï¿½s
+                        alturas1(indices)=z_interp2(malla.rangox,malla.rangoz,malla.malla_regular,x_deseados(indices),z_deseados(indices));
+                        if contador==1
+                            alturas=alturas1;
+                            contador=contador+1;
+                        else
+                            %Nos aseguramos de no volver a sumar altura al mismo punto
+                            ya_conseguidos=find(alturas!=0);
+                            alturas1(ya_conseguidos)=0;
+                            sindatos=find(alturas1==nodata);
+                            alturas1(sindatos)=0;
+                            alturas=alturas+alturas1;
+                        end
+                    end
+                else
+                    fprintf(1,'Warning: no nodata_value found\n');
+                end
 			end
 		end
 		alturas=z_scale*alturas';
@@ -119,7 +123,7 @@ else
 	salida=0
 end
 
-function [malla,pos_nodata,ncols,nrows]=lee_cabecera(file_name)
+function [malla,pos_data,ncols,nrows]=lee_cabecera(file_name)
 
 				fid=fopen(file_name,'r');
 				contenido=fread(fid,1000);
@@ -151,7 +155,8 @@ function [malla,pos_nodata,ncols,nrows]=lee_cabecera(file_name)
 				pos_cellsize=findstr(contenido,'cellsize');
 				
 				cellsize=sscanf(contenido((pos_cellsize+length('cellsize')+1):end),'%f',1);
-				pos_nodata=findstr(contenido,'nodata_value');
+				pos_data=findstr(contenido,char(10));
+                pos_data=pos_data(end)+1;%Tras el ultimo cambio de linea estan los datos numericos
 								
 				if length(pos_xllcorner)>0
 					malla.rangox=xllcorner+cellsize*(0:(ncols-1))+cellsize/2;
@@ -162,14 +167,14 @@ function [malla,pos_nodata,ncols,nrows]=lee_cabecera(file_name)
 				end
 end
 
-function [malla,nodata]=lee_datos(file_name,pos_nodata,ncols,nrows,malla)
+function [malla,nodata]=lee_datos(file_name,pos_data,ncols,nrows,malla)
 				fid=fopen(file_name,'r');
 				contenido=fread(fid,inf);
 				fclose(fid);
 				contenido=char(contenido)';
 				contenido=tolower(contenido);
-				datos=sscanf(contenido((pos_nodata+length('nodata_value')+1):end),'%f',inf);
-				%Doy por supuesto que después de nodata_value vienen todos los datos
+				datos=sscanf(contenido(pos_data:end),'%f',inf);
+				
 				nodata=datos(1);
 				datos=datos(2:end);
 				%

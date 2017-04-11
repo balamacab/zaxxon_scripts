@@ -9,6 +9,11 @@ function alturas=procesar_nodostxt(amp_ruido,datos_entrada,fichero_salida)
 % 
 % El autor no acepta ninguna responsabilidad por cualquier da�o resultante del uso de este c�digo.
 
+if (exist('..\..\agr')==7) || (exist('..\..\lidar')==7)
+	procesar_nodostxt_agr(amp_ruido,datos_entrada,fichero_salida)
+	return
+end
+
 if nargin>3
     display('Puede tener como par�metro de entrada la amplitud m�xima de ruido deseada en las alturas generadas')
     display('Lee nodos.txt y le da altura seg�n lamalla.mat y lamalla2.mat');
@@ -42,10 +47,7 @@ else
     end
 end
 
-if (exist('..\..\agr')==7) || (exist('..\..\lidar')==7)
-	procesar_nodostxt_agr(amp_ruido);
-	return
-end
+
 
 
 

@@ -35,9 +35,9 @@ fprintf(fid,'%d %f %f %f\n',[(1:length(x))' x z y]');%En los nodos elevados, la 
 fclose(fid);
 
 msh_to_obj('salida/nodos_conaltura.txt','elements.txt');
-system('copy salida\test.obj+..\s11_m3d\salida\texturas.txt salida\test_sincarretera.obj');
+system('copy salida\test.obj+..\s11_m3d\salida\texturas0.txt salida\test_sincarretera.obj');
 msh_to_obj('salida/nodosconcarretera.txt','elements.txt');
-system('copy salida\test.obj+..\s11_m3d\salida\texturas.txt salida\test_concarretera.obj');
+system('copy salida\test.obj+..\s11_m3d\salida\texturas0.txt salida\test_concarretera.obj');
 
 
 end

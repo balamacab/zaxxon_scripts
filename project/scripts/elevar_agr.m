@@ -156,7 +156,7 @@ function [malla,pos_data,ncols,nrows]=lee_cabecera(file_name)
 				
 				cellsize=sscanf(contenido((pos_cellsize+length('cellsize')+1):end),'%f',1);
 				pos_data=findstr(contenido,char(10));
-                pos_data=pos_data(end)+1;%Tras el ultimo cambio de linea estan los datos numericos
+                pos_data=pos_data(end);%Tras el ultimo cambio de linea estan los datos numericos
 								
 				if length(pos_xllcorner)>0
 					malla.rangox=xllcorner+cellsize*(0:(ncols-1))+cellsize/2;

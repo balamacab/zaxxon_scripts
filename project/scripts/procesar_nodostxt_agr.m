@@ -1,4 +1,4 @@
-function procesar_nodostxt_agr(amp_ruido,datos_entrada,fichero_salida)
+function alturas=procesar_nodostxt_agr(amp_ruido,datos_entrada,fichero_salida)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -72,6 +72,7 @@ end
 fclose(fid);
 
 y=elevar_agr('deseados.txt',mapeo)';
+alturas=y;
 if length(y)!=tamanyo
     display('ERROR FOUND');
 	display('ERROR FOUND');

@@ -98,8 +98,11 @@ antesy=interp1(distancia_acumulada,lasy,distancia_acumulada-0.25,'PCHIP','extrap
 despuesy=interp1(distancia_acumulada,lasy,distancia_acumulada+0.25,'PCHIP','extrap');
 
 vector_perpendicular=-((antesy-despuesy)+1j*( despuesx-antesx));
-cambio=abs(0.5*angle(diff(mispuntos(1:end-1)))+0.5*angle(diff(mispuntos(2:end))))/(2*pi);
-cambio_angulo=[1; 1-cambio.^1.5;1];
+%cambio=abs(diff(unwrap(0.5*angle(diff(mispuntos(1:end-1)))+0.5*angle(diff(mispuntos(2:end))))))/(2*pi);
+cambio=abs(diff(unwrap(angle(diff(mispuntos(1:end))))))/(2*pi);
+cambio=filter([0.1 0.3 0.5 0.3 0.1],1,cambio);
+cambio=fliplr(flipud(filter([0.1 0.3 0.5 0.3 0.1],1,fliplr(flipud(cambio)))));
+cambio_angulo=[1; 1-cambio.^0.5;1];
 dir_suavizada=filter([0.15 0.2 0.4 0.2 0.15],1,vector_perpendicular);
 dir_suavizada=[vector_perpendicular(1); vector_perpendicular(2); dir_suavizada(5:end-4) ;dir_suavizada(end-4); vector_perpendicular(end-3); vector_perpendicular(end-2); vector_perpendicular(end-1) ; vector_perpendicular(end); vector_perpendicular(end)];
 vector_perpendicular=abs(vector_perpendicular).*exp(1j*angle(dir_suavizada))./cambio_angulo;
@@ -266,8 +269,8 @@ tri=[n1' n2' n3'];%[n1' n2' n3'];
 tri=[tri;tria];%Anyadimos los triangulos
 tri=[tri(:,1) tri(:,3) tri(:,2)]; %Normales hacia arriba
 zone=[zone zonatria];
-%trimesh(tri,x,y,z);
-%axis('equal')
+trimesh(tri,x,y,z);
+axis('equal')
 
 ii=find(zone==111);
 graba(x,y,z,tri(ii,:),'salida/nodos0.txt','salida/elements0.txt','salida/texturas0.txt',zone(ii),u,v);

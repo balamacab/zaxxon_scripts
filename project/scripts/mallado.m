@@ -98,6 +98,7 @@ antesy=interp1(distancia_acumulada,lasy,distancia_acumulada-0.25,'PCHIP','extrap
 despuesy=interp1(distancia_acumulada,lasy,distancia_acumulada+0.25,'PCHIP','extrap');
 
 vector_perpendicular=-((antesy-despuesy)+1j*( despuesx-antesx));
+vector_perpendicular=vector_perpendicular./abs(vector_perpendicular);
 %cambio=abs(diff(unwrap(0.5*angle(diff(mispuntos(1:end-1)))+0.5*angle(diff(mispuntos(2:end))))))/(2*pi);
 cambio=abs(diff(unwrap(angle(diff(mispuntos(1:end))))))/(2*pi);
 cambio=filter([0.1 0.3 0.5 0.3 0.1],1,cambio);

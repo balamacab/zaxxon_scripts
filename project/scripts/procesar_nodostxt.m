@@ -1,4 +1,5 @@
-function alturas=procesar_nodostxt(amp_ruido,datos_entrada,fichero_salida)
+function alturas=procesar_nodostxt(varargin)
+%amp_ruido,datos_entrada,fichero_salida
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -42,6 +43,8 @@ else
             
             [numero x z y]=textread(fichero_entrada,'%d %f %f %f');        
     else
+        datos_entrada=varargin{2};
+        fichero_salida=varargin{3};
         numero=datos_entrada(:,1);
         x=datos_entrada(:,2);
         z=datos_entrada(:,3);

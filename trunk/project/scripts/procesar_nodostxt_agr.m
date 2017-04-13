@@ -1,4 +1,4 @@
-function alturas=procesar_nodostxt_agr(amp_ruido,datos_entrada,fichero_salida)
+function alturas=procesar_nodostxt_agr(entrada)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
@@ -9,6 +9,16 @@ function alturas=procesar_nodostxt_agr(amp_ruido,datos_entrada,fichero_salida)
 % 
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
+nargin=length(entrada);
+if length(entrada)>0
+    amp_ruido=entrada{1};
+end
+if length(entrada)>1
+    datos_entrada=entrada{2};
+end
+if length(entrada)>2
+    fichero_salida=entrada{2};
+end
 
 fichero_entrada='nodos.txt';
 

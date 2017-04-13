@@ -9,10 +9,7 @@ function alturas=procesar_nodostxt(amp_ruido,datos_entrada,fichero_salida)
 % 
 % El autor no acepta ninguna responsabilidad por cualquier da�o resultante del uso de este c�digo.
 
-if (exist('..\..\agr')==7) || (exist('..\..\lidar')==7)
-	alturas=procesar_nodostxt_agr(amp_ruido,datos_entrada,fichero_salida);
-	return
-end
+
 
 if nargin>3
     display('Puede tener como par�metro de entrada la amplitud m�xima de ruido deseada en las alturas generadas')
@@ -27,18 +24,26 @@ if nargin>3
     return
 end
 if nargin==0
-   amp_ruido=[0 0];
-   fichero_entrada='nodos.txt';
-   fichero_salida='salida\nodos_conaltura.txt';
-   [numero x z y]=textread(fichero_entrada,'%d %f %f %f');
+    amp_ruido=[0 0];
+    fichero_entrada='nodos.txt';
+    fichero_salida='salida\nodos_conaltura.txt';
+    if (exist('..\..\agr')==7) || (exist('..\..\lidar')==7)    
+        alturas=procesar_nodostxt_agr(amp_ruido,datos_entrada,fichero_salida);
+        return
+    end
+    [numero x z y]=textread(fichero_entrada,'%d %f %f %f');
 else
     if length(amp_ruido)==1
          amp_ruido=[0 amp_ruido];
     end
-    if nargin==1
-        fichero_entrada='nodos.txt';
-        fichero_salida='salida\nodos_conaltura.txt';
-        [numero x z y]=textread(fichero_entrada,'%d %f %f %f');
+    if nargin==1        
+            fichero_entrada='nodos.txt';
+            fichero_salida='salida\nodos_conaltura.txt';
+            if (exist('..\..\agr')==7) || (exist('..\..\lidar')==7)    
+                alturas=procesar_nodostxt_agr(amp_ruido,datos_entrada,fichero_salida);
+                return
+            end
+            [numero x z y]=textread(fichero_entrada,'%d %f %f %f');        
     else
         numero=datos_entrada(:,1);
         x=datos_entrada(:,2);

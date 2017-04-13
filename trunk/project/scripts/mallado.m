@@ -1,12 +1,16 @@
-function mallado(amp_ruido,lasx,lasy,lasz)
+function mallado(params,lasx,lasy,lasz)
    
 generico=0;
 numpal=20; %Numero total de paneles
-ancho_carretera=5;%Ancho de la carretera en metros
 
 orientacion=1;
 if (nargin==0)|(nargin==3)
     amp_ruido=0;
+    ancho_carretera=5;%Ancho de la carretera en metros
+
+else
+    amp_ruido=params.amp_ruido;
+    ancho_carretera=params.ancho_carretera;%Ancho de la carretera en metros
 end
 if nargin<3
     if (generico==1)

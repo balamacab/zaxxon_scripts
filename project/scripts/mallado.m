@@ -200,6 +200,8 @@ end
 
 %Creamos quads que cubren todos los puntos, caracterizados por sus
 %xmin,ymin e ymax de la rejilla
+quads=zeros(3,numpanelesvertical*numpal);
+zonaquad=zeros(1,numpanelesvertical*numpal);
 for h=1:numpanelesvertical
     for g=1:numpal
         quads(1,contador)=g;
@@ -250,6 +252,10 @@ tieneC=zeros(1,numpanelesvertical);
 [quads,tria,tieneC,nzona,zonaquad]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0.75 1.05],tieneC,coordenadas,4,zonaquad);
 if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
 
+numvacios=length(find(quads(1,:)==-1));%precalculamos tamanyo n1,n2,n3
+n1=zeros(1,(longitud(quads,3)-numvacios)*2);
+n2=n1;
+n3=n1;
 contadort=1;
 for contador=1:longitud(quads,3)
      if (quads(1,contador)~=-1)

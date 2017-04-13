@@ -14,10 +14,12 @@ function ponmuro(murox,muroy,muroz,etiqueta)
 
     dmuro=sqrt(sum(diff(murox').^2+diff(muroy').^2,2));
     dmuro_acumulada=cumsum([0; dmuro])/10;
-    triangulos=[]
+    triangulos=zeros((length(murox)-1)*2,3);
+    murou=zeros(1,(length(murox)-1)*2+1);
+    murov=zeros(1,(length(murox)-1)*2+1);
     for h=1:length(murox)-1;
-        triangulos= [triangulos; h h+1 h+offs];
-        triangulos= [triangulos; h+offs h+1 h+offs+1];
+        triangulos(2*h-1,:)= [h h+1 h+offs];
+        triangulos(2*h,:)= [h+offs h+1 h+offs+1];
         murou(h)=dmuro_acumulada(h);
         murou(h+offs)=dmuro_acumulada(h);
         murov(h)=0;

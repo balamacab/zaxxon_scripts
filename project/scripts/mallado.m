@@ -269,13 +269,20 @@ tri=[n1' n2' n3'];%[n1' n2' n3'];
 tri=[tri;tria];%Anyadimos los triangulos
 tri=[tri(:,1) tri(:,3) tri(:,2)]; %Normales hacia arriba
 zone=[zone zonatria];
-trimesh(tri,x,y,z);
-axis('equal')
+%trimesh(tri,x,y,z);
+%axis('equal')
 
+
+try
+    alturas=procesar_nodostxt([0 0],[(1:length(x))' x y z],'salida/n0elevados.txt');
+catch
+    alturas=z;
+    fprintf(2,'nodos0 not raised\n');
+end %_try_catch
 ii=find(zone==111);
-graba(x,y,z,tri(ii,:),'salida/nodos0.txt','salida/elements0.txt','salida/texturas0.txt',zone(ii),u,v);
+graba(x,y,alturas,tri(ii,:),'salida/nodos0.txt','salida/elements0.txt','salida/texturas0.txt',zone(ii),u,v);
 ii=find(zone==222);
-graba(x,y,z,tri(ii,:),'salida/nodos1.txt','salida/elements1.txt','salida/texturas1.txt',zone(ii),u,v);
+graba(x,y,alturas,tri(ii,:),'salida/nodos1.txt','salida/elements1.txt','salida/texturas1.txt',zone(ii),u,v);
 
 msh_to_obj('salida/nodos0.txt','salida/elements0.txt','test.mtl');
 system('copy salida\test.obj+salida\texturas0.txt salida\contexturas0.obj');

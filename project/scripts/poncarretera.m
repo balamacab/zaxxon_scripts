@@ -28,7 +28,7 @@ for g=1:p %Direccion de avance en la carretera
     end
     y(tot(2:10,g))=alturacomun;
 end
-fclose(fid)
+fclose(fid);
 
 fid=fopen('salida/nodosconcarretera.txt','w');
 fprintf(fid,'%d %f %f %f\n',[(1:length(x))' x z y]');%En los nodos elevados, la altura es la columna intermedia

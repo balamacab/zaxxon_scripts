@@ -155,8 +155,10 @@ function [malla,pos_data,ncols,nrows]=lee_cabecera(file_name)
 				pos_cellsize=findstr(contenido,'cellsize');
 				
 				cellsize=sscanf(contenido((pos_cellsize+length('cellsize')+1):end),'%f',1);
-				pos_data=findstr(contenido,char(10));
-                pos_data=pos_data(end);%Tras el ultimo cambio de linea estan los datos numericos
+                posletras=find(contenido>='a') & (contenido<='z'); %localizamos las lineas con texto
+                pultimaletra=posletras(end);
+				pos_data=findstr(contenido(pultimaletra:end),char(10));
+                pos_data=pultimaletra+pos_data(1);%Tras el cambio de linea estan los datos numericos
 								
 				if length(pos_xllcorner)>0
 					malla.rangox=xllcorner+cellsize*(0:(ncols-1))+cellsize/2;

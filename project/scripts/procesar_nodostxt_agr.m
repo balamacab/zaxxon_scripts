@@ -17,7 +17,7 @@ if length(entrada)>1
     datos_entrada=entrada{2};
 end
 if length(entrada)>2
-    fichero_salida=entrada{2};
+    fichero_salida=entrada{3};
 end
 
 fichero_entrada='nodos.txt';

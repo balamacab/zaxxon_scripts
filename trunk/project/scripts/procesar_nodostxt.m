@@ -10,7 +10,7 @@ function alturas=procesar_nodostxt(amp_ruido,datos_entrada,fichero_salida)
 % El autor no acepta ninguna responsabilidad por cualquier da�o resultante del uso de este c�digo.
 
 if (exist('..\..\agr')==7) || (exist('..\..\lidar')==7)
-	alturas=procesar_nodostxt_agr(amp_ruido,datos_entrada,fichero_salida)
+	alturas=procesar_nodostxt_agr(amp_ruido,datos_entrada,fichero_salida);
 	return
 end
 

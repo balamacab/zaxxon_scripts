@@ -75,7 +75,7 @@ distancia_acumulada=cumsum([0; distancias]);
 
 %Ancho (m) de los paneles
 panelesTRESMETROS=numpal/2-4-1;%Total menos los que son de carretera y los dos de los extremos
-paneles_carretera=(ancho_carretera/5)*[0.75 0.75 1.25 1.25 1.25 1.25 0.75 0.75];
+paneles_carretera=(ancho_carretera/sum([0.75 1.25 1.25 1.25 1.25 0.75]))*[0.75 0.75 1.25 1.25 1.25 1.25 0.75 0.75];
 dist=[5 3*ones(1,panelesTRESMETROS) paneles_carretera 3*ones(1,panelesTRESMETROS) 5];
 
 %numpal=length(dist);

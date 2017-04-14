@@ -16,9 +16,9 @@ if exist('../s11_m3d/curvaturas.mat','file')==2
 end
 
 fid=fopen('../s11_m3d/carretera.txt');
-tot=fscanf(fid,'%f %d %d %d %d %d %d %d %d %d');
+tot=fscanf(fid,'%f %d %d %d %d %d ');
 m=length(tot);
-tot=reshape(tot,10,m/10);
+tot=reshape(tot,6,m/6);
 [k p]=size(tot);
 
 for g=1:p %Direccion de avance en la carretera
@@ -26,7 +26,7 @@ for g=1:p %Direccion de avance en la carretera
     if isempty(offset)==0
         alturacomun=alturacomun+escalado*offset(g,:);
     end
-    y(tot(2:10,g))=alturacomun;
+    y(tot(2:6,g))=alturacomun;
 end
 fclose(fid);
 

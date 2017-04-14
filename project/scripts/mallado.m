@@ -75,13 +75,13 @@ distancia_acumulada=cumsum([0; distancias]);
 
 %Ancho (m) de los paneles
 panelesTRESMETROS=numpal/2-4-1;%Total menos los que son de carretera y los dos de los extremos
-paneles_carretera=(ancho_carretera/sum([0.75 1.25 1.25 1.25 1.25 0.75]))*[0.75 0.75 1.25 1.25 1.25 1.25 0.75 0.75];
+paneles_carretera=(ancho_carretera/sum([1.25 1.25 1.25 1.25]))*[0.75 0.75 1.25 1.25 1.25 1.25 0.75 0.75];
 dist=[5 3*ones(1,panelesTRESMETROS) paneles_carretera 3*ones(1,panelesTRESMETROS) 5];
 
 %numpal=length(dist);
 %%%%%%%%%%%%%%%%%%%%%%BORDES CARRETERA%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-borde_izdo=numpal/2-3;
-borde_dcho=numpal/2+5;
+borde_izdo=numpal/2-3+2;%solo 4 paneles -1,0,1,2,3
+borde_dcho=numpal/2+5-2;%solo 4 paneles
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%BORDES MURO%%%%%%%%%%%%%%%%
 pos_muro_izq=2;%4;  %--%--%--%
@@ -124,14 +124,14 @@ quads=zeros(3,numpanelesvertical);%xmin,ymin,ymax
 mitad=sum(dist(1:length(dist)/2));
 
 
-%Forzamos que los 9 valores centrales vayan entre u1=0.5-0.0525 y u2=0.5+0.0525
+%Forzamos que los 7 valores centrales vayan entre u1=0.5-0.0525 y u2=0.5+0.0525
 u1=0.5-0.063;
 u2=0.5+0.063;
 
-uinicial=linspace(0,u1,6);
-ufinal=linspace(u2,1,6);
+uinicial=linspace(0,u1,7);%6
+ufinal=linspace(u2,1,7);%6
 
-u_texturas=[-uinicial(2) uinicial(1:end-1) linspace(u1,u2,9) ufinal(2:end) ufinal(end)+uinicial(2)];
+u_texturas=[-uinicial(2) uinicial(1:end-1) linspace(u1,u2,7) ufinal(2:end) ufinal(end)+uinicial(2)];%9 en linspace
 
 contador=1;
 contadorp=1;

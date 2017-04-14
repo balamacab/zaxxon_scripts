@@ -49,7 +49,7 @@ curvatura=[0; 0 ;curvatura(5:end); 0 ;0 ];
 %Cambio en angulo positivo, el lado izquierdo es el interno
 perfiles=zeros(3,length(lasx));%izda,centro,dcha
 centro=(borde_izdo+borde_dcho)/2;
-maximo=max(abs(curvatura));
+maximo=0.11;%max(abs(curvatura));
 satura=find(abs(curvatura)>maximo/2);
 curvatura(satura)=sign(curvatura(satura))*maximo/2;
 %curvatura=sign(curvatura)*maximo/2;

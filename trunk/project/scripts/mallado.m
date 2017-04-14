@@ -53,7 +53,7 @@ if nargin<3
     %     ncols=fscanf(fid,'%d',1);%Numero de anchors
     %     y=fscanf(fid,'%f');
     %     fclose(fid);
-        orientacion=-1;
+        orientacion=1;
         S=load('anchors.mat');
         x=S.x;
         y=S.z;

@@ -128,10 +128,12 @@ mitad=sum(dist(1:length(dist)/2));
 u1=0.5-0.063;
 u2=0.5+0.063;
 
-uinicial=linspace(0,u1,7);%6
-ufinal=linspace(u2,1,7);%6
-
-u_texturas=[-uinicial(2) uinicial(1:end-1) linspace(u1,u2,7) ufinal(2:end) ufinal(end)+uinicial(2)];%9 en linspace
+%uinicial=linspace(0,u1,8);%6
+%ufinal=linspace(u2,1,8);%6
+dac=cumsum([0 dist]);
+uinicial=u1*(dac(2:9)-dac(2))/(dac(9)-dac(2));
+ufinal=fliplr(1-uinicial);
+u_texturas=[-uinicial(2) uinicial(1:end-1) linspace(u1,u2,5) ufinal(2:end) ufinal(end)+uinicial(2)];%9 en linspace
 
 contador=1;
 contadorp=1;

@@ -34,9 +34,9 @@ fid=fopen('salida/nodosconcarretera.txt','w');
 fprintf(fid,'%d %f %f %f\n',[(1:length(x))' x z y]');%En los nodos elevados, la altura es la columna intermedia
 fclose(fid);
 
-msh_to_obj('salida/nodos_conaltura.txt','elements.txt');
+msh_to_obj('salida/nodos_conaltura.txt','elements.txt','test.mtl');
 system('copy salida\test.obj+..\s11_m3d\salida\texturas0.txt salida\test_sincarretera.obj');
-msh_to_obj('salida/nodosconcarretera.txt','elements.txt');
+msh_to_obj('salida/nodosconcarretera.txt','elements.txt','test.mtl');
 system('copy salida\test.obj+..\s11_m3d\salida\texturas0.txt salida\test_concarretera.obj');
 
 

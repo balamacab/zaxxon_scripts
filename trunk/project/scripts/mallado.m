@@ -107,7 +107,7 @@ vector_perpendicular=vector_perpendicular./abs(vector_perpendicular);
 cambio=abs(diff(unwrap(angle(diff(mispuntos(1:end))))))/(2*pi);
 cambio=filter([0.1 0.3 0.5 0.3 0.1],1,cambio);
 cambio=fliplr(flipud(filter([0.1 0.3 0.5 0.3 0.1],1,fliplr(flipud(cambio)))));
-cambio_angulo=[1; 1-cambio.^0.5;1];
+cambio_angulo=[1; 1-cambio.^0.7;1];
 dir_suavizada=filter([0.15 0.2 0.4 0.2 0.15],1,vector_perpendicular);
 dir_suavizada=[vector_perpendicular(1); vector_perpendicular(2); dir_suavizada(5:end-4) ;dir_suavizada(end-4); vector_perpendicular(end-3); vector_perpendicular(end-2); vector_perpendicular(end-1) ; vector_perpendicular(end); vector_perpendicular(end)];
 vector_perpendicular=abs(vector_perpendicular).*exp(1j*angle(dir_suavizada))./cambio_angulo;
@@ -125,8 +125,8 @@ mitad=sum(dist(1:length(dist)/2));
 
 
 %Forzamos que los 7 valores centrales vayan entre u1=0.5-0.0525 y u2=0.5+0.0525
-u1=0.5-0.063;
-u2=0.5+0.063;
+u1=0.5-0.063+0.0085;
+u2=0.5+0.063-0.0085;
 
 %uinicial=linspace(0,u1,8);%6
 %ufinal=linspace(u2,1,8);%6

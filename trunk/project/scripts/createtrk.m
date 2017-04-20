@@ -20,12 +20,12 @@ for t=1:inicio(5)
     vector(t,:)=fread(fid,3,'single');
     dist(t,:)=fread(fid,1,'single');
     nose(t,:)=fread(fid,4);
-    fprintf(2,'%d %f %f %f\n',t,coordenadas(t,:));
+    %fprintf(2,'%d %f %f %f\n',t,coordenadas(t,:));
 end
 siguiente=fread(fid,6,'integer*4');
-if (feof(fid))
-    fprintf(2,'Final de fichero\n');
-end
+%if (feof(fid))
+%    fprintf(2,'Final de fichero\n');
+%end
 %siguiente=fread(fid,5,'integer*4')
 
 fclose(fid);

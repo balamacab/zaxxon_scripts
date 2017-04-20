@@ -28,7 +28,7 @@ if (feof(fid))
 end
 %siguiente=fread(fid,5,'integer*4')
 
-fclose(fid)
+fclose(fid);
 
 vector=diff(trazado);
 vector(end+1,:)=vector(end,:);
@@ -52,5 +52,5 @@ inicio(5)=m*n/3;
  end
  fwrite(fidw,siguiente,'uint32');
  fclose(fidw);
- figure,plot(coordenadas(:,1),coordenadas(:,2))
- axis('equal')
+ %figure,plot(coordenadas(:,1),coordenadas(:,2))
+ %axis('equal');

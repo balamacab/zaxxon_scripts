@@ -30,9 +30,9 @@ for g=1:p %Direccion de avance en la carretera
 end
 fclose(fid);
 createtrk([x(tot(4,1:3:end)) z(tot(4,1:3:end)) y(tot(4,1:3:end))]);
-system('copy created.trk direct.trk');
+system('copy creado.trk direct.trk');
 createtrk(flipud([x(tot(4,1:3:end)) z(tot(4,1:3:end)) y(tot(4,1:3:end))]));
-system('copy created.trk inverse.trk');
+system('copy creado.trk inverse.trk');
 
 fid=fopen('salida/nodosconcarretera.txt','w');
 fprintf(fid,'%d %f %f %f\n',[(1:length(x))' x z y]');%En los nodos elevados, la altura es la columna intermedia

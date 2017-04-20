@@ -31,7 +31,7 @@ end
 fclose(fid);
 createtrk([x(tot(4,1:3:end)) z(tot(4,1:3:end)) y(tot(4,1:3:end))]);
 system('copy created.trk direct.trk');
-createtrk([x(tot(4,1:3:end)) z(tot(4,1:3:end)) y(tot(4,1:3:end))]);
+createtrk(flipud([x(tot(4,1:3:end)) z(tot(4,1:3:end)) y(tot(4,1:3:end))]));
 system('copy created.trk inverse.trk');
 
 fid=fopen('salida/nodosconcarretera.txt','w');

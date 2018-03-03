@@ -177,8 +177,8 @@ function [malla,nodata]=lee_datos(file_name,pos_data,ncols,nrows,malla)
 				contenido=tolower(contenido);
 				datos=sscanf(contenido(pos_data:end),'%f',inf);
 				
-				nodata=datos(1);
-				datos=datos(2:end);
+                                nodata=-999;%datos(1);
+				%datos=datos(2:end);
 				%
 				%
 				malla.malla_regular=flipud(reshape(datos,ncols,nrows)');

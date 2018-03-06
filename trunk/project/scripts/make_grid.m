@@ -51,7 +51,7 @@ display('Leyendo fichero ..\mapeo.txt')
 
 %display('Grabando ficheros')
 
-guarda_calentamiento=25;
+guarda_calentamiento=0;
 columnas=xmin:pasoenmetros:xmax;
 num_columnas=length(columnas);
 filas=zmin:pasoenmetros:zmax;

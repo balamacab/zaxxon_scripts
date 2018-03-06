@@ -34,6 +34,7 @@ if nargin==0
     
     [numero x z y]=textread(fichero_entrada,'%d %f %f %f');
 else
+    amp_ruido=varargin{1};
     if length(amp_ruido)==1
          amp_ruido=[0 amp_ruido];
     end

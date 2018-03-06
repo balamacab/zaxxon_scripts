@@ -81,8 +81,8 @@ display('Leyendo ..\mapeo.txt')
 
 contador=1;
 
-longmin=pos1(1);
-longmax=pos1(end);
+longmin=min(pos1);
+longmax=max(pos1);
 
 %Dos coordenadas terrestres son iguales si satisfacen este criterio (valor no depurado)
 %pasoslat=length(find(abs(pos1-pos1(1))<0.00002));
@@ -90,8 +90,8 @@ longmax=pos1(end);
 pasoslat=num_filas;
 pasoslong=num_columnas;
 
-latmin=pos2(1);
-latmax=pos2(end);
+latmin=min(pos2);
+latmax=max(pos2);
 
 rangolong=linspace(longmin,longmax,pasoslong);
 rangolat=linspace(latmin,latmax,pasoslat);

@@ -113,13 +113,11 @@ dir_suavizada=[vector_perpendicular(1); vector_perpendicular(2); dir_suavizada(5
 vector_perpendicular=abs(vector_perpendicular).*exp(1j*angle(dir_suavizada))./cambio_angulo;
 numpanelesvertical=length(lasx)-1;
 
-quads=zeros(3,numpanelesvertical);%xmin,ymin,ymax
 
 
 %18x100 paneles
 %El primer y ultimo panel seria la parte no conducible (lo pongo por coherencia con
 %la forma de trabajar antigua)
-
 
 mitad=sum(dist(1:length(dist)/2));
 
@@ -139,8 +137,31 @@ contador=1;
 contadorp=1;
 
 
-
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Creamos el mallado de puntos
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Matriz de nodos. 1) Izquierda (MSB el más a la izquierda) 2) Derecha (LSB
+%el más de la derecha)
+%
+mascara=uint8([255-1 255-2 255-4 255-8 255-16 255-32 255-64 255-128]);
+barridoizq(8)=mascara(8);
+for ty=7:-1:1 %Para poner a cero desde el bit indicado (empezando en 1) hacia el MSB
+    barridoizq(ty)=bitand(barridoizq(ty+1),mascara(ty));
+end
+barridoder(1)=mascara(1);
+for ty=2:8 %Para poner a cero desde el bit indicado (empezando en 1) hacia el MSB
+    barridoder(ty)=bitand(barridoder(ty-1),mascara(ty));
+end
+izquierdo=1;
+derecho=2;
+mnodos=uint8(255*ones(2,numpanelesvertical+1));
+%En el lado izquierdo nos saltamos seguro 2 de cada 4
+mnodos(izquierdo,2:4:end)=bitand(mnodos(izquierdo,2:4:end),barridoizq(6));
+mnodos(izquierdo,4:4:end)=bitand(mnodos(izquierdo,4:4:end),barridoizq(6));
+%Lo mismo en el lado derecho
+mnodos(derecho,2:4:end)=bitand(mnodos(derecho,2:4:end),barridoder(3));
+mnodos(derecho,4:4:end)=bitand(mnodos(derecho,4:4:end),barridoder(3));
+
 contadorp=1;
 
 %Borde izdo
@@ -178,7 +199,11 @@ for h=1:numpanelesvertical+1
         contadorp=contadorp+1;
     end
 end
-% 
+%Reservamos a lo grande y luego recortaremos
+tri=zeros(numpal*2*numpanelesvertical,3);
+zone=zeros(1,numpal*2*numpanelesvertical)
+contadortris=0;
+%
 %Numeramos el resto de nodos
 for h=1:numpanelesvertical+1
     inclinacion=[zeros(1,numpal/2-(lperal-1)/2) peralte(h,:) zeros(1,numpal/2-(lperal-1)/2)];
@@ -197,92 +222,221 @@ for h=1:numpanelesvertical+1
     end
 end
 
-
-
-
-%Creamos quads que cubren todos los puntos, caracterizados por sus
-%xmin,ymin e ymax de la rejilla
-quads=zeros(3,numpanelesvertical*numpal);
-zonaquad=zeros(1,numpanelesvertical*numpal);
-for h=1:numpanelesvertical
-    for g=1:numpal
-        quads(1,contador)=g;
-        quads(2,contador)=h;
-        quads(3,contador)=h+1;
-        if (g<pos_muro_izq) || (g>=pos_muro_dcho)
-            zonaquad(contador)=222;
-        else
-            zonaquad(contador)=111;
-        end
-        contador=contador+1;            
-    end
+%Recorremos la parte izquierda
+for pp=2:2:numpanelesvertical-1
+            actual=mnodos(izquierdo,pp);
+            siguiente=mnodos(izquierdo,pp+1);
+            %El bit 3 es el primero eliminable (pendiente de parametrizar)
+            elbit=3;
+            while (elbit<8)
+                punto1=coordenadas(9-elbit,pp);%xmin,ymin del quad
+                punto2=coordenadas(9-elbit,pp+1);%xmin,ymax del quad
+                punto3=coordenadas(9-elbit+1,pp);%xmax,ymin del quad
+                punto4=coordenadas(9-elbit+1,pp+1);%xmax,ymax del quad
+                separacion1=sqrt((real(punto1)-real(punto2))^2+(imag(punto1)-imag(punto2))^2);
+                separacion2=sqrt((real(punto3)-real(punto4))^2+(imag(punto3)-imag(punto4))^2);
+                %Si se hace peque�o hacia la izquierda
+                %separacion1<separacion2
+                ratio=separacion1/separacion2;
+                if (separacion1<3)
+                    mnodos(izquierdo,pp)=bitand(mnodos(izquierdo,pp),barridoizq(elbit));
+                end
+                elbit=elbit+1;
+            end
 end
 
-%Recorremos todo el mallado, y si algún segmento vertical tiene menos de
-%2m, lo juntamos con el siguiente panel en vertical
-%fprintf(2,'D\n');
-tria=[];
-zonatria=[];
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%55
-tieneD=zeros(1,numpanelesvertical);
-ll=0;
-[quads,tria,tieneD,nzona,zonaquad]=optimizaD((numpal/2)-4:-1:4,quads,tria,numpanelesvertical,indice,[0 0.95],tieneD,coordenadas,2,zonaquad);
-if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
-[quads,tria,tieneD,nzona,zonaquad]=optimizaD(3:-1:2,quads,tria,numpanelesvertical,indice,[0 2],tieneD,coordenadas,2,zonaquad);
-if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
-%zonatria=111*ones(1,longitud(tria,3));
-
-tieneD=ones(1,numpanelesvertical); %Forzamos quads
-[quads,tria,tieneD,nzona,zonaquad]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0 2],tieneD,coordenadas,2,zonaquad);
-if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
-tieneD=zeros(1,numpanelesvertical);%Forzamos Ds
-[quads,tria,tieneD,nzona,zonaquad]=optimizaD(1,quads,tria,numpanelesvertical,indice,[0.75 1.05],tieneD,coordenadas,4,zonaquad);%Forzamos Ds
-if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
-%
-%
-%fprintf(2,'C\n');
-tieneC=zeros(1,numpanelesvertical);
-[quads,tria,tieneC,nzona,zonaquad]=optimizaC((numpal/2)+5:numpal-3,quads,tria,numpanelesvertical,indice,[0 0.95],tieneC,coordenadas,2,zonaquad);
-if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
-[quads,tria,tieneC,nzona,zonaquad]=optimizaC(numpal-2:numpal-1,quads,tria,numpanelesvertical,indice,[0 2],tieneC,coordenadas,2,zonaquad);
-if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
-tieneC=ones(1,numpanelesvertical); %Forzamos quads
-[quads,tria,tieneC,nzona,zonaquad]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0 2],tieneC,coordenadas,2,zonaquad);
-if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
-tieneC=zeros(1,numpanelesvertical);
-[quads,tria,tieneC,nzona,zonaquad]=optimizaC(numpal,quads,tria,numpanelesvertical,indice,[0.75 1.05],tieneC,coordenadas,4,zonaquad);
-if isempty(nzona)==0,zonatria(ll+1:longitud(tria,3))=nzona;end,ll=length(zonatria);
-
-numvacios=length(find(quads(1,:)==-1));%precalculamos tamanyo n1,n2,n3
-n1=zeros(1,(longitud(quads,3)-numvacios)*2);
-n2=n1;
-n3=n1;
-contadort=1;
-for contador=1:longitud(quads,3)
-     if (quads(1,contador)~=-1)
-        n1(contadort)= indice(quads(1,contador),quads(2,contador));%xmin,ymin
-        n2(contadort)= indice(quads(1,contador),quads(3,contador));%xmin,ymax
-        n3(contadort)= indice(quads(1,contador)+1,quads(3,contador));%xmax,ymax (siempre es +1, pues no se unen rectángulos en dimensión x)
-        if (quads(1,contador)<pos_muro_izq) || (quads(1,contador)>=pos_muro_dcho)
-            zone(contadort)=222;
-            zone(contadort+1)=222;
-        else
-            zone(contadort)=111;
-            zone(contadort+1)=111;
-        end
-        contadort=contadort+1;
-        n1(contadort)= indice(quads(1,contador),quads(2,contador));%xmin,ymin
-        n2(contadort)= indice(quads(1,contador)+1,quads(3,contador));%xmax,ymax
-        n3(contadort)= indice(quads(1,contador)+1,quads(2,contador));%xmax,ymin
-        contadort=contadort+1;
-    end
+%Recorremos la parte derecha
+for pp=2:2:numpanelesvertical-1
+            actual=mnodos(derecho,pp);
+            siguiente=mnodos(derecho,pp+1);
+            %El bit 3 es el primero eliminable (pendiente de parametrizar)
+            elbit=6;
+            while (elbit>1)
+                punto1=coordenadas(numpal+1-elbit,pp);%xmin,ymin del quad
+                punto2=coordenadas(numpal+1-elbit,pp+1);%xmin,ymax del quad
+                punto3=coordenadas(numpal+1-elbit+1,pp);%xmax,ymin del quad
+                punto4=coordenadas(numpal+1-elbit+1,pp+1);%xmax,ymax del quad
+                separacion1=sqrt((real(punto1)-real(punto2))^2+(imag(punto1)-imag(punto2))^2);
+                separacion2=sqrt((real(punto3)-real(punto4))^2+(imag(punto3)-imag(punto4))^2);
+                %Si se hace peque�o hacia la izquierda
+                %separacion1<separacion2
+                ratio=separacion1/separacion2;
+                if (separacion1<3)
+                    mnodos(derecho,pp)=bitand(mnodos(derecho,pp),barridoder(elbit));
+                end
+                elbit=elbit-1;
+            end
 end
 
-tri=[n1' n2' n3'];%[n1' n2' n3'];
-tri=[tri;tria];%Anyadimos los triangulos
+%
+%Lateral izquierdo
+for pp=1:2:numpanelesvertical-4
+            actual=mnodos(izquierdo,pp);
+            siguiente=mnodos(izquierdo,pp+2);
+            if (bitand(actual,uint8(128+64))==uint8(128+64))&&(bitand(siguiente,uint8(128+64))==uint8(128+64))
+                %El bit 3 es el primero eliminable (pendiente de parametrizar)
+                elbit=7;
+                %while (bitand(actual,2^elbit)>0)&&(elbit<8)
+                    punto1=coordenadas(9-elbit,pp);%xmin,ymin del quad
+                    punto2=coordenadas(9-elbit,pp+2);%xmin,ymax del quad
+                    %punto3=coordenadas(9-elbit+1,pp);%xmax,ymin del quad
+                    %punto4=coordenadas(9-elbit+1,pp+2);%xmax,ymax del quad
+                    separacion1=sqrt((real(punto1)-real(punto2))^2+(imag(punto1)-imag(punto2))^2);
+                    %separacion2=sqrt((real(punto3)-real(punto4))^2+(imag(punto3)-imag(punto4))^2);
+                    %Si se hace peque�o hacia la izquierda
+                    %separacion1<separacion2
+                    %ratio=separacion1/separacion2;
+                    if (separacion1<5)
+                        mnodos(izquierdo,pp+2)=bitand(mnodos(izquierdo,pp+2),barridoizq(elbit));
+                    end
+                 %   elbit=elbit+1;
+                %end
+            end
+end
+
+%Lateral derecho
+for pp=1:2:numpanelesvertical-4
+            actual=mnodos(derecho,pp);
+            siguiente=mnodos(derecho,pp+2);
+            if (bitand(actual,uint8(2+1))==uint8(2+1))&&(bitand(siguiente,uint8(2+1))==uint8(2+1))
+                %El bit 3 es el primero eliminable (pendiente de parametrizar)
+                elbit=numpal+1-2;
+                %while (bitand(actual,2^elbit)>0)&&(elbit<8)
+                    punto1=coordenadas(elbit,pp);%xmin,ymin del quad
+                    punto2=coordenadas(elbit,pp+2);%xmin,ymax del quad
+                    %punto3=coordenadas(9-elbit+1,pp);%xmax,ymin del quad
+                    %punto4=coordenadas(9-elbit+1,pp+2);%xmax,ymax del quad
+                    separacion1=sqrt((real(punto1)-real(punto2))^2+(imag(punto1)-imag(punto2))^2);
+                    %separacion2=sqrt((real(punto3)-real(punto4))^2+(imag(punto3)-imag(punto4))^2);
+                    %Si se hace peque�o hacia la izquierda
+                    %separacion1<separacion2
+                    %ratio=separacion1/separacion2;
+                    if (separacion1<5)
+                        mnodos(derecho,pp+2)=bitand(mnodos(derecho,pp+2),barridoder(2));
+                    end
+                 %   elbit=elbit+1;
+                %end
+            end
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%zone=[];
+%tri=[];
+%Generamos los triangulos de la parte izquierda
+for pp=1:numpanelesvertical-1
+            actual=mnodos(izquierdo,pp);            
+            %Si encontramos segmento, generamos el triangulo
+            elbit=uint8(128+64);%11000000 que se desplaza hacia la derecha
+            contadorbit=1;
+            while (elbit>=3)  %00000011 es la ultima mascara
+                if bitand(actual,elbit)==elbit
+                     encontrado=false;
+                     contador=1;
+                     while encontrado==false;
+                        siguiente=mnodos(izquierdo,pp+contador);
+                        encontrado=(bitand(siguiente,elbit)==elbit);                                        
+                        contador=contador+1;
+                     end
+                     contador=contador-1;
+
+                     %Una vez encontrado el segmento opuesto, puede ser que
+                     %haya nodo intermedio, formandose una D
+                     mitad=fix(contador/2);
+                     if contador>1
+                         intermedio=mnodos(izquierdo,pp+mitad);
+                         hayintermedio=(bitand(intermedio,elbit)>0);  
+                     else
+                         hayintermedio=0;
+                     end
+                     if contadorbit==1,lazona=222;else lazona=111;end
+                     if hayintermedio
+                         trias=[indice(contadorbit,pp) indice(contadorbit,pp+contador) indice(contadorbit+1,pp+mitad) ;%izdacentro arribadcha abajodcha
+                         indice(contadorbit,pp+contador) indice(contadorbit+1,pp+contador) indice(contadorbit+1,pp+mitad);
+                         indice(contadorbit,pp) indice(contadorbit+1,pp+mitad) indice(contadorbit+1,pp) ];                     
+                         zone(contadortris+1:contadortris+3)=lazona*ones(1,3);
+                         tri(contadortris+1:contadortris+3,:)=trias; contadortris=contadortris+3;
+                     else
+                         trias=[indice(contadorbit,pp) indice(contadorbit,pp+contador) indice(contadorbit+1,pp) ;%izdacentro arribadcha abajodcha
+                         indice(contadorbit,pp+contador) indice(contadorbit+1,pp+contador) indice(contadorbit+1,pp)                       ];                     
+                         zone(contadortris+1:contadortris+2)=lazona*ones(1,2);
+                         tri(contadortris+1:contadortris+2,:)=trias;contadortris=contadortris+2;
+                     end
+                                                           
+                 
+                end %if
+                contadorbit=contadorbit+1;
+                elbit=bitshift(elbit,-1);
+            end %while
+            
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%zone=[];
+%tri=[];
+%Generamos los triangulos de la parte derecha
+for pp=1:numpanelesvertical-1
+            actual=mnodos(derecho,pp);            
+            %Si encontramos segmento, generamos el triangulo
+            elbit=uint8(64+32);%01100000 que se desplaza hacia la derecha
+            contadorbit=1;
+            while (elbit>=3)  %00000011 es la ultima mascara
+                if bitand(actual,elbit)==elbit
+                     encontrado=false;
+                     contador=1;
+                     while encontrado==false;
+                        siguiente=mnodos(derecho,pp+contador);
+                        encontrado=(bitand(siguiente,elbit)==elbit);                                        
+                        contador=contador+1;
+                     end
+                     contador=contador-1;
+
+                     %Una vez encontrado el segmento opuesto, puede ser que
+                     %haya nodo intermedio, formandose una C
+                     mitad=fix(contador/2);
+                     if contador>1
+                         intermedio=mnodos(derecho,pp+mitad);
+                         hayintermedio=(bitand(intermedio,elbit)>0);  
+                     else
+                         hayintermedio=0;
+                     end
+                     if contadorbit==6,lazona=222;else lazona=111;end
+                     numeropanel=numpal-6+contadorbit;
+                     if hayintermedio
+                         trias=[indice(numeropanel,pp+mitad) indice(numeropanel+1,pp+contador) indice(numeropanel+1,pp) ;%izdacentro arribadcha abajodcha
+                         indice(numeropanel,pp+contador) indice(numeropanel+1,pp+contador) indice(numeropanel,pp+mitad);
+                         indice(numeropanel,pp) indice(numeropanel,pp+mitad) indice(numeropanel+1,pp) ];                     
+                         zone(contadortris+1:contadortris+3)=lazona*ones(1,3);
+                         tri(contadortris+1:contadortris+3,:)=trias; contadortris=contadortris+3;
+                     else
+                         trias=[indice(numeropanel,pp) indice(numeropanel,pp+contador) indice(numeropanel+1,pp) ;%izdacentro arribadcha abajodcha
+                         indice(numeropanel,pp+contador) indice(numeropanel+1,pp+contador) indice(numeropanel+1,pp)                       ];                     
+                         zone(contadortris+1:contadortris+2)=lazona*ones(1,2);
+                         tri(contadortris+1:contadortris+2,:)=trias;contadortris=contadortris+2;
+                     end
+                                                           
+                 
+                end %if
+                contadorbit=contadorbit+1;
+                elbit=bitshift(elbit,-1);
+            end %while
+            
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Ponemos la parte central
+for pp=1:numpanelesvertical-1
+            contador=1;
+            for numeropanel=8:numpal+1-7
+                         trias=[indice(numeropanel,pp) indice(numeropanel,pp+contador) indice(numeropanel+1,pp) ;%izdacentro arribadcha abajodcha
+                         indice(numeropanel,pp+contador) indice(numeropanel+1,pp+contador) indice(numeropanel+1,pp)                       ];                     
+                         zone(contadortris+1:contadortris+2)=111*ones(1,2);
+                         tri(contadortris+1:contadortris+2,:)=trias;contadortris=contadortris+2;
+            end                                                                                            
+            
+end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+tri=tri(1:contadortris,:);
+%tri=[n1' n2' n3'];%[n1' n2' n3'];
+%tri=[tri;tria];%Anyadimos los triangulos
 tri=[tri(:,1) tri(:,3) tri(:,2)]; %Normales hacia arriba
-zone=[zone zonatria];
+%zone=[zone zonatria];
 %trimesh(tri,x,y,z);
 %axis('equal')
 
@@ -403,190 +557,7 @@ fclose(fid_mtl);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-    function [implicados,trias]=insertarC(x,ymin,losquads,indice,tamanyo)
-        primero=-1;
-        segundo=-1;
-        trias=[];
-        for hp=1:length(losquads)            
-            if (losquads(1,hp)~=-1) && (losquads(1,hp)==x) && (losquads(2,hp)==ymin)
-                primero=hp;
-                primera_altura=losquads(3,hp);%Donde acaba el primer quad
-                ymax=ymin+tamanyo;
-            end            
-        end
-        if primero~=-1            
-            for hp=1:length(losquads)
-                if (losquads(1,hp)~=-1) && (losquads(1,hp)==x) && (losquads(2,hp)==primera_altura) && (losquads(3,hp)==ymax)
-                 segundo=hp;                        
-                 trias=[indice(x,primera_altura) indice(x+1,ymax) indice(x+1,ymin) ;%izdacentro arribadcha abajodcha
-                     indice(x,ymax) indice(x+1,ymax) indice(x,primera_altura);
-                     indice(x,ymin) indice(x,primera_altura) indice(x+1,ymin) ];
-                end                
-            end
-        end
-        implicados=[primero segundo];
-        
-        end
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    function [implicados,trias]=insertarD(x,ymin,losquads,indice,tamanyo)
-        primero=-1;
-        segundo=-1;
-        trias=[];
-        for hp=1:length(losquads)            
-            if (losquads(1,hp)~=-1) && (losquads(1,hp)==x) && (losquads(2,hp)==ymin)
-                primero=hp;
-                primera_altura=losquads(3,hp);%Donde acaba el primer quad
-                ymax=ymin+tamanyo;
-            end            
-        end
-        if primero~=-1            
-            for hp=1:length(losquads)
-                if (losquads(1,hp)~=-1) && (losquads(1,hp)==x) && (losquads(2,hp)==primera_altura) && (losquads(3,hp)==ymax)
-                 segundo=hp;                        
-                 trias=[indice(x,ymin) indice(x,losquads(3,hp)) indice(x+1,primera_altura);%abazoizda arribaizda derechacentro
-                     indice(x,losquads(3,hp)) indice(x+1,losquads(3,hp)) indice(x+1,primera_altura);%arribaizda arribadcha derechacentro
-                     indice(x,ymin) indice(x+1,primera_altura) indice(x+1,ymin) ];
-                end                
-            end
-        end
-        implicados=[primero segundo];
-        
-    end
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    function [implicados nuevo]=juntaquads(x,ymin,losquads)
-    %Junta un quad con el siguiente    
-        primero=-1;
-        segundo=-1;
-        nuevo=[];
-        for hp=1:length(losquads)            
-            if (losquads(1,hp)~=-1) &&(losquads(1,hp)==x) && (losquads(2,hp)==ymin)
-                primero=hp;
-                primera_altura=losquads(3,hp);%Donde acaba el primer quad
-                ymax=ymin+2;
-            end            
-        end
-        if primero~=-1            
-            for hp=1:length(losquads)
-                if (losquads(1,hp)~=-1) &&(losquads(1,hp)==x) && (losquads(2,hp)==primera_altura) && (losquads(3,hp)==ymax)
-                 segundo=hp;                        
-                 %nuevo=[indice(x,ymin) indice(x+1,ymin) indice(x,losquads(3,h))];
-                 nuevo=[x ymin losquads(3,hp)];
-                end                
-            end
-        end
-        implicados=[primero segundo];
-        
-    end
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-    function salida=localizaquad(x,y,losquads)
-        salida=-1;
-        for hp=1:length(losquads)
-            
-            if (losquads(1,hp)~=-1) &&(losquads(1,hp)==x) && (losquads(2,hp)==y)
-                salida=hp;
-            end            
-        end
-    end
-
-
-    function [losquads,tria,tieneDD,nuevazona,zquad]=optimizaD(rango,losquads,tria,numpanelesvertical,indices,tamlimite,tieneDD,coor,tamanyo,zquad)
-        %tieneD=zeros(1,numpanelesvertical);
-        nuevazona=[];
-        for gg=rango%En horizontal
-            for pp=1:1:numpanelesvertical-1
-                %En vertical
-                %if (gg==2)
-                %    fprintf(2,'%d',pp);
-                %end
-                pppar=fix((pp-1)/2)*2+1;
-                pos=localizaquad(gg,pp,losquads);
-                if (pos~=-1) %&& (tieneDD(pppar)==0) %Si ya hemos hecho un quad o una D en el quad, nos vamos
-                    punto1=coor(losquads(1,pos),losquads(2,pos));%xmin,ymin del quad
-                    punto2=coor(losquads(1,pos),losquads(3,pos));%xmin,ymax del quad
-                    punto3=coor(losquads(1,pos)+1,losquads(2,pos));%xmax,ymin del quad
-                    punto4=coor(losquads(1,pos)+1,losquads(3,pos));%xmax,ymax del quad
-                    separacion1=sqrt((real(punto1)-real(punto2))^2+(imag(punto1)-imag(punto2))^2);
-                    separacion2=sqrt((real(punto3)-real(punto4))^2+(imag(punto3)-imag(punto4))^2);
-                    %Si se hace peque�o hacia la izquierda
-                    %separacion1<separacion2
-                    ratio=separacion1/separacion2;
-                    if ((ratio<=tamlimite(2)) && (ratio>=tamlimite(1)))                        
-                        if tieneDD(pppar)==1
-                            %fprintf(2,'NQ h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
-                            [indi,nuevo]=juntaquads(gg,pppar,losquads);
-                            if (indi(1)~=-1) && (indi(2)~=-1)
-                                losquads(1,indi(1))=-1;
-                                losquads(1,indi(2))=-1;
-                                losquads=[losquads nuevo'];
-                                zquad(length(losquads))=zquad(indi(1));%Copiamos la zona de los quads desaparecidos
-                            end
-                        else                                                
-                            %fprintf(2,'ID h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
-                            [indi,ntria]=insertarD(gg,pppar,losquads,indices,tamanyo);
-                            %indi=[-1 -1];
-                            if (indi(1)~=-1) && (indi(2)~=-1)
-                                losquads(1,indi(1))=-1;
-                                losquads(1,indi(2))=-1;
-                                tria=[tria;ntria];
-                                tieneDD(pppar)=1;
-                                [sa,sb]=size(ntria);
-                                nuevazona=[nuevazona zquad(indi(1))*ones(1,sa*sb/3)];
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-
-    function [losquads,tria,tieneCC,nuevazona,zquad]=optimizaC(rango,losquads,tria,numpanelesvertical,indices,tamlimite,tieneCC,coor,tamanyo,zquad)
-        %tieneC=zeros(1,numpanelesvertical);
-        nuevazona=[];
-        for gg=rango%En horizontal
-            for p=1:1:numpanelesvertical-1 %En vertical
-                
-                pppar=fix((p-1)/2)*2+1;
-                
-                pos=localizaquad(gg,p,losquads);
-                if pos~=-1
-                    punto1=coor(losquads(1,pos),losquads(2,pos));
-                    punto2=coor(losquads(1,pos),losquads(3,pos));
-                    punto3=coor(losquads(1,pos)+1,losquads(2,pos));%xmax,ymin del quad
-                    punto4=coor(losquads(1,pos)+1,losquads(3,pos));%xmax,ymax del quad
-                    separacion1=sqrt((real(punto1)-real(punto2))^2+(imag(punto1)-imag(punto2))^2);
-                    separacion2=sqrt((real(punto3)-real(punto4))^2+(imag(punto3)-imag(punto4))^2);
-                    
-                    ratio=separacion2/separacion1;
-                    if ((ratio<=tamlimite(2)) && (ratio>=tamlimite(1)))
-                        if tieneCC(pppar)==1
-                            %fprintf(2,'NQ h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
-                            [indi,nuevo]=juntaquads(gg,pppar,losquads);
-                            if (indi(1)~=-1) && (indi(2)~=-1)
-                                losquads(1,indi(1))=-1;
-                                losquads(1,indi(2))=-1;
-                                losquads=[losquads nuevo'];
-                                zquad(length(losquads))=zquad(indi(1));%Copiamos la zona de los quads desaparecidos
-                            end
-                        else
-                            %fprintf(2,'ID h= %d  _ v= %d _ ratio=%f\n',gg,pppar,ratio);
-                            [indi,ntria]=insertarC(gg,pppar,losquads,indices,tamanyo);                            
-                            if (indi(1)~=-1) && (indi(2)~=-1)
-                                losquads(1,indi(1))=-1;
-                                losquads(1,indi(2))=-1;
-                                tria=[tria;ntria];
-                                tieneCC(pppar)=1;
-                                [sa,sb]=size(ntria);
-                                nuevazona=[nuevazona zquad(indi(1))*ones(1,sa*sb/3)];
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
+ 
     function salida=longitud(a,tam_elemento)
         if isempty(a)==0
             [mm,nn]=size(a);

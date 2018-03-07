@@ -201,7 +201,7 @@ for h=1:numpanelesvertical+1
 end
 %Reservamos a lo grande y luego recortaremos
 tri=zeros(numpal*2*numpanelesvertical,3);
-zone=zeros(1,numpal*2*numpanelesvertical)
+zone=zeros(1,numpal*2*numpanelesvertical);
 contadortris=0;
 %
 %Numeramos el resto de nodos

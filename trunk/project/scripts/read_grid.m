@@ -44,7 +44,7 @@ for g=1:numero_ficheros
     cuenta_columnas=1;
 	alternada
     if alternada==1 %Las columnas pares se han grabado en orden inverso
-        while(cuenta_columnas*(num_filas+guarda_calentamiento)<length(nada1))
+        while(cuenta_columnas*(num_filas+guarda_calentamiento)<=length(nada1))
             if mod(cuenta_columnas,2)==0
                 ELrango=((cuenta_columnas-1)*(num_filas+guarda_calentamiento)+1:cuenta_columnas*(num_filas+guarda_calentamiento));
 				ELrango=ELrango(guarda_calentamiento+1:end);
@@ -81,8 +81,8 @@ display('Leyendo ..\mapeo.txt')
 
 contador=1;
 
-longmin=min(pos1);
-longmax=max(pos1);
+longmin=pos1(1);
+longmax=pos1(end);
 
 %Dos coordenadas terrestres son iguales si satisfacen este criterio (valor no depurado)
 %pasoslat=length(find(abs(pos1-pos1(1))<0.00002));
@@ -90,8 +90,8 @@ longmax=max(pos1);
 pasoslat=num_filas;
 pasoslong=num_columnas;
 
-latmin=min(pos2);
-latmax=max(pos2);
+latmin=pos2(1);
+latmax=pos2(end);
 
 rangolong=linspace(longmin,longmax,pasoslong);
 rangolat=linspace(latmin,latmax,pasoslat);

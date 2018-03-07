@@ -3,12 +3,9 @@ function mezclasvg(fichero)
 %fichero='grid001';
 fid=fopen(strcat(fichero,'.kml'),'r');
 todo=fread(fid,inf);
-fclose(fid)
+fclose(fid);
 
 cadena=char(todo)';
-
-
-
 
 posicion1=strfind(cadena,'<coordinates>');
 posicion2=strfind(cadena,'</coordinates>');
@@ -26,7 +23,7 @@ coordenadas=reshape(coordenadas,3,m*n/3)';
 
 fid=fopen(strcat(fichero,'.svg'),'r');
 todo=fread(fid,inf);
-fclose(fid)
+fclose(fid);
 
 cadena=char(todo)';
 
@@ -50,6 +47,17 @@ end
 posmax=posmax+1;
 ymax=sscanf(extracto(posmax:poslabels2),'%f m');
 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+posy1=strfind(extracto(1:poslabels2),'y1="');
+minimo=sscanf(extracto(posy1(1):posy1(1)+10),'y1="%f');
+maximo=sscanf(extracto(posy1(end):posy1(end)+10),'y1="%f');
+if (posmax-posmin)/(posy1(end)-posy1(1))<0
+    [minimo maximo]=[maximo minimo];
+end
+
+
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
@@ -63,12 +71,13 @@ posicionesy1=[posicionesy1 posicionesy2(end)];
 
 altitud=zeros(length(posicionesy1),1);
 for h=1:length(posicionesy1)
-    datos=sscanf(cadena(posicionesy1(h)+4:end),'%f"');
+    fragmento=cadena(posicionesy1(h)+4:posicionesy1(h)+24);
+    datos=sscanf(fragmento,'%f"');
     altitud(h)=datos(1);
 end
 
-minimo=min(altitud);
-maximo=max(altitud);
+%minimo=max(altitud);
+%maximo=min(altitud);
 
 altitud=(altitud-minimo)/(maximo-minimo);
 altitud=ymin+altitud*(ymax-ymin);

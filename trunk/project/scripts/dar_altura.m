@@ -51,11 +51,7 @@ alturas1=load('alturas_track1.mat');
 alturas_track1=alturas1.alturas_track1;
 alturas_track1=reshape(alturas_track1,length(alturas_track1),1);
 
-try 
-    alturas_suavizadas=sgolayfilt(alturas_track1,5,9);
-catch
-    alturas_suavizadas=alturas_track1;
-end
+
 
 %%%%%%%%%%%%%%%%%%%% Detectar posición de nodos respecto de anchors
 %%%%%%%%%%%%%%%%%%%% ----------------------------------------------
@@ -81,6 +77,25 @@ x_puntos_medios=0.5*(x(1:nac/2)+x(nac/2+1:end));
 z_puntos_medios=0.5*(z(1:nac/2)+z(nac/2+1:end));
 
 anguloy=zeros(length(x)/2,1);
+
+%%%%%%%%%%%%%%%%%%%% ----------------------------------------------
+  xy = [x_puntos_medios;z_puntos_medios]; 
+  ddf = diff(xy,1,2); 
+
+  %Cálculo basto de la longitud
+  ladistan = cumsum([0, sqrt([1 1]*(ddf.*ddf))]);  %La variable es la distancia
+  
+try 
+    %alturas_suavizadas=sgolayfilt(alturas_track1,5,9);
+	[nadaa]=milowess([ladistan',alturas_track1],0.04,0);
+	alturas_suavizadas=nadaa(:,3);
+	if length(alturas_suavizadas)<length(alturas_track1)
+	    alturas_suavizadas=[alturas_suavizadas(1); alturas_suavizadas];
+	end
+catch
+    alturas_suavizadas=alturas_track1;
+end
+%%%%%%%%%%%%%%%%%%%% ----------------------------------------------
 
 [alturas_suavizadas distancia_recorrida]=suavizar(x,y,z,alturas_suavizadas,pendiente_limite,pend_minima,nac);
 

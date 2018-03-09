@@ -25,7 +25,7 @@ final2=contenido(1611:end);
 
 fid=fopen(ficherosalida,'w');
 fprintf(fid,'%s\n      %d;\n',inicio,length(x));
-cadena=sprintf('      %f; %f; %f;,\n',[x' y' z']');cadena(end-1)=';';
+cadena=sprintf('      %f; %f; %f;,\n',[x' z' -y']');cadena(end-1)=';';
 fprintf(fid,'%s       %d;\n',cadena,length(tri));
 cadena=sprintf('       3;%d,%d,%d;,\n',tri');cadena(end-1)=';';
 fprintf(fid,'%s%s\n      %d;\n',cadena,centro1,length(tri));

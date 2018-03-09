@@ -36,6 +36,8 @@ function ponmuro(murox,muroy,muroz,etiqueta)
     fid=fopen(['salida/texturasmuro',etiqueta,'.txt'],'w');
     fprintf(fid,'vt %f %f\n',[murou;murov]);
     fclose(fid);
+	
+	creax([murox murox],[muroy muroy],[muroz muroz+4],murou,murov,triangulos-1,'salida/muro.x','Transpa.dds');
     
     function salida=longitud(a,tam_elemento)
         if isempty(a)==0

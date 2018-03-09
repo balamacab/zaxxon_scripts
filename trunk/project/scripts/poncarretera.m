@@ -164,6 +164,7 @@ ponmuro(murox,muroy,alturas,'izdo');
 msh_to_obj('salida/nodosmuroizdo.txt','salida/elementsmuroizdo.txt','transparente.mtl');
 system('copy salida\test.obj+salida\texturasmuroizdo.txt salida\muroizdo.obj');
 system('cat salida/test.obj salida/texturasmuroizdo.txt > salida/muroizdo.obj');
+system('move ..\s11_m3d\salida\muro.x salida\muroizdo.x');
 
 %Muro dcho
 indmuro=indice(pos_muro_dcho,:);
@@ -181,8 +182,9 @@ end %_try_catch
 ponmuro(murox,muroy,alturas,'dcho');
 msh_to_obj('salida/nodosmurodcho.txt','salida/elementsmurodcho.txt','transparente.mtl');
 system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
-system('cat salida/test.obj salida/texturasmurodcho.txt > salida/murodcho.obj');
-
+%system('cat salida/test.obj salida/texturasmurodcho.txt > salida/murodcho.obj');
+system('move ..\s11_m3d\salida\muro.x salida\murodcho.x');
+%system('mv ../s11_m3d/salida/muro.x salida/murodcho.x');
 
 fid_mtl=fopen(strcat('salida/transparente','.mtl'),'w');
 fprintf(fid_mtl,'\nnewmtl material_%02d\nKa  0.6 0.6 0.6\nKd  0.6 0.6 0.6\nKs  0.9 0.9 0.9\nd  1.0\nNs  0.0\nillum 2\nmap_Kd %s\n',0,'transpa.dds');

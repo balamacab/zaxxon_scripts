@@ -34,7 +34,7 @@ fprintf(fid,'%s        %d;\n',cadena,length(tri));
 cadena=sprintf('      3;%d,%d,%d;,\n',[(0:length(tri)-1)' (0:length(tri)-1)' (0:length(tri)-1)']');cadena(end-1)=';';
 fprintf(fid,'%s      }\n%s\n      %d;\n',cadena,centro2,length(x));
 cadena=sprintf('        %f; %f;,\n',[u' v']');cadena(end-1)=';';
-fprintf(fid,'%s      }\n%s\n        1;\n        %d;\n',cadena,centro3,length(x));
+fprintf(fid,'%s      }\n%s\n        1;\n        %d;\n',cadena,centro3,length(tri));
 for h=1:length(tri)-1
     fprintf(fid,'       0,\n');      
 end

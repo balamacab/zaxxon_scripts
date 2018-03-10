@@ -136,7 +136,7 @@
 
 %% Primary Function: lowess
 % The main engine for this function. 
-function [dataout lowerLimit upperLimit xy] = lowess(datain,f,wantplot,imagefile,xdata)
+function [dataout lowerLimit upperLimit xy] = milowess(datain,f,wantplot,imagefile,xdata)
     
     % start timer
     %start = tic;
@@ -352,7 +352,7 @@ function [yy] = rwlreg(x,y,n,d,r,xx)
                 break % out of while loop
             else
                 dd=1.28*dd;
-                fprintf('\nrobust size of window = %5.0f.\nLowess window size increased to %3.2f\n', c, dd);
+                %fprintf('\nrobust size of window = %5.0f.\nLowess window size increased to %3.2f\n', c, dd);
             end
         end
     end

@@ -1,4 +1,4 @@
-function createtrak(trazado)
+function createtrk(trazado)
 %fuente='invertido.trk';
 if exist('fuente','var')==0
 	fuente='track-71_M.trk';

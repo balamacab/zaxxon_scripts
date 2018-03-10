@@ -3,9 +3,9 @@ if nargin==0
     escalado=1;
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-cd ../s11_m3d
-genera_objetos('salida/paraobjetos.mat');
-cd ../s4_terrain
+
+totoriginal=genera_objetos('../s11_m3d/salida/paraobjetos.mat');
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 fid=fopen('salida/nodos_conaltura.txt','r');
 tot=fscanf(fid,'%d %f %f %f\n',inf);
@@ -22,11 +22,11 @@ if exist('../s11_m3d/curvaturas.mat','file')==2
     offset=S.offset;
 end
 
-fid=fopen('../s11_m3d/carretera.txt');
-tot=fscanf(fid,'%f %d %d %d %d %d %d %d %d %d');
-
-m=length(tot);
-totoriginal=reshape(tot,10,m/10);
+%fid=fopen('../s11_m3d/carretera.txt');
+%tot=fscanf(fid,'%f %d %d %d %d %d %d %d %d %d');
+%
+%m=length(tot);
+%totoriginal=reshape(tot,10,m/10);
 
 tot=totoriginal([1 4:end-2],:);
 [k p]=size(tot);
@@ -42,7 +42,7 @@ for g=1:p %Direccion de avance en la carretera
 	y(totoriginal(2,g))=0.5*(y(tot(2,g))+y(totoriginal(2,g)));
 	y(totoriginal(end,g))=0.5*(y(tot(end,g))+y(totoriginal(end,g)));
 end
-fclose(fid);
+%fclose(fid);
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 createtrk([x(tot(4,1:3:end)) z(tot(4,1:3:end)) y(tot(4,1:3:end))]);
@@ -56,9 +56,9 @@ fprintf(fid,'%d %f %f %f\n',[(1:length(x))' x z y]');%En los nodos elevados, la 
 fclose(fid);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 msh_to_obj('salida/nodos_conaltura.txt','elements.txt','test.mtl');
-system('copy salida\test.obj+..\s11_m3d\salida\texturas0.txt salida\test_sincarretera.obj');
+system('copy salida\test.obj+salida\texturas0.txt salida\test_sincarretera.obj');
 msh_to_obj('salida/nodosconcarretera.txt','elements.txt','test.mtl');
-system('copy salida\test.obj+..\s11_m3d\salida\texturas0.txt salida\test_concarretera.obj');
+system('copy salida\test.obj+salida\texturas0.txt salida\test_concarretera.obj');
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 alt=y;
@@ -93,7 +93,7 @@ creax(misx',misy',misalt',misu,misv,implicados-1,'salida/outside.x','Placa3.dds'
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-function genera_objetos(sincarretera)
+function carret=genera_objetos(sincarretera)
 load(sincarretera);
 
 
@@ -117,9 +117,9 @@ fid_mtl=fopen(strcat('salida/test','.mtl'),'w');
 fprintf(fid_mtl,'\nnewmtl material_%02d\nKa  0.6 0.6 0.6\nKd  0.6 0.6 0.6\nKs  0.9 0.9 0.9\nd  1.0\nNs  0.0\nillum 2\nmap_Kd %s\n',0,'Placa3.dds');
 fclose(fid_mtl);
 
-fid=fopen('track0.mat');
+fid=fopen('..\s3_road\track0.mat');
 if (fid~=-1)
-    S=load('track0.mat');
+    S=load('..\s3_road\track0.mat');
 	alturas_reales=S.alturas_suavizadas;
 %     fid=fopen('alturas_track1.mat');
 %     contenido=fread(fid,inf);
@@ -134,15 +134,16 @@ if (fid~=-1)
 %     alturas_reales=fscanf(fid,'%f',length(lasx));  
 %     fclose(fid);
     %figure,plot(alturas_reales);
-    fid=fopen('carretera.txt','w');
-    for h=1:numpanelesvertical+1
-        fprintf(fid,'%f ',alturas_reales(h));
-        for g=borde_izdo-2:borde_dcho+2      %Carretera y dos puntos mas por cada lado
-            fprintf(fid,'%d ',indice(g,h));
-        end
-        fprintf(fid,'\n');
-    end
+    %fid=fopen('../s11_m3d/carretera.txt','w');
+    %for h=1:numpanelesvertical+1
+    %    fprintf(fid,'%f ',alturas_reales(h));
+    %   for g=borde_izdo-2:borde_dcho+2      %Carretera y dos puntos mas por cada lado
+    %        fprintf(fid,'%d ',indice(g,h));
+    %    end
+    %    fprintf(fid,'\n');
+    %end
     fclose(fid);
+	carret=[alturas_reales indice(borde_izdo-2:borde_dcho+2,:)']';
 end
 
 
@@ -164,7 +165,7 @@ ponmuro(murox,muroy,alturas,'izdo');
 msh_to_obj('salida/nodosmuroizdo.txt','salida/elementsmuroizdo.txt','transparente.mtl');
 system('copy salida\test.obj+salida\texturasmuroizdo.txt salida\muroizdo.obj');
 system('cat salida/test.obj salida/texturasmuroizdo.txt > salida/muroizdo.obj');
-system('move ..\s11_m3d\salida\muro.x salida\muroizdo.x');
+system('move salida\muro.x salida\muroizdo.x');
 
 %Muro dcho
 indmuro=indice(pos_muro_dcho,:);
@@ -183,7 +184,7 @@ ponmuro(murox,muroy,alturas,'dcho');
 msh_to_obj('salida/nodosmurodcho.txt','salida/elementsmurodcho.txt','transparente.mtl');
 system('copy salida\test.obj+salida\texturasmurodcho.txt salida\murodcho.obj');
 %system('cat salida/test.obj salida/texturasmurodcho.txt > salida/murodcho.obj');
-system('move ..\s11_m3d\salida\muro.x salida\murodcho.x');
+system('move salida\muro.x salida\murodcho.x');
 %system('mv ../s11_m3d/salida/muro.x salida/murodcho.x');
 
 fid_mtl=fopen(strcat('salida/transparente','.mtl'),'w');

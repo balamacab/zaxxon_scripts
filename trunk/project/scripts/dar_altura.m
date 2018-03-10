@@ -85,16 +85,30 @@ anguloy=zeros(length(x)/2,1);
   %Cálculo basto de la longitud
   ladistan = cumsum([0, sqrt([1 1]*(ddf.*ddf))]);  %La variable es la distancia
   
-try 
-    %alturas_suavizadas=sgolayfilt(alturas_track1,5,9);
-	[nadaa]=milowess([ladistan',alturas_track1],0.04,0);
+%try 
+    alturas_suavizadas_inicio=sgolayfilt(alturas_track1,5,9);
+	%[nadaa]=milowess([ladistan',alturas_track1],0.01,0);
+	%alturas_suavizadas_inicio=nadaa(:,3);
+	factor=0.04;
+	salir=0;
+	while(salir==0)
+		try
+			[nadaa]=milowess([ladistan',alturas_track1],factor,0);
+			salir=1;
+		catch
+			factor=factor+0.005
+		end_try_catch
+	end
 	alturas_suavizadas=nadaa(:,3);
+	%Los extremos ajustados a montanya
+	%alturas_suavizadas(1:10)=alturas_track1(1:10);
+	%alturas_suavizadas(end-9:end)=alturas_track1(end-9:end);
 	if length(alturas_suavizadas)<length(alturas_track1)
 	    alturas_suavizadas=[alturas_suavizadas(1); alturas_suavizadas];
 	end
-catch
-    alturas_suavizadas=alturas_track1;
-end
+%catch
+%    alturas_suavizadas=alturas_track1;
+%end
 %%%%%%%%%%%%%%%%%%%% ----------------------------------------------
 
 [alturas_suavizadas distancia_recorrida]=suavizar(x,y,z,alturas_suavizadas,pendiente_limite,pend_minima,nac);

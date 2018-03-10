@@ -1,7 +1,7 @@
 function creatodo(h)
 
-road_width=[   4   3   3   3   3  4  ];
-
+road_width=[   4   3   3   3   3 ...
+	       3   4   3   4   3  3   4 ];
 
   numtracks=12;%46;
 	panel_length=5*ones(1,numtracks);
@@ -36,18 +36,19 @@ road_width=[   4   3   3   3   3  4  ];
 				paso=paso-2;
 			end_try_catch
 		end
-		if (h==0)
-			cd ..\s4_terrain
-			crearbase
-			system(sprintf('copy salida\\fondo.obj ..\\Output\\r%02dfondo.obj',h));
-		end	
 		cd ..\s11_m3d
 		s11_coge_datos
 		
 		fprintf(2,'Mallando\n');
 		mallado(p);
 		cd ..\s4_terrain
-		s4_coge_datos;
+		s4_coge_datos
+		if (h==0)
+			
+			crearbase
+			system(sprintf('copy salida\\fondo.obj ..\\Output\\r%02dfondo.obj',h));
+		end	
+		
 		p_n;
 		poncarretera;
 		cd ..

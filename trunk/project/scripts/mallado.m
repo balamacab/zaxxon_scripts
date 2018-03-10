@@ -450,6 +450,26 @@ end %_try_catch
 
 save('salida/paraobjetos.mat');
 
+ii=find(zone==111);
+graba(x,y,alturas,tri(ii,:),'../s4_terrain/salida/nodos0.txt','../s4_terrain/salida/elements0.txt','../s4_terrain/salida/texturas0.txt',zone(ii),u,v);
+ii=find(zone==222);
+graba(x,y,alturas,tri(ii,:),'../s4_terrain/salida/nodos1.txt','../s4_terrain/salida/elements1.txt','../s4_terrain/salida/texturas1.txt',zone(ii),u,v);
+
+msh_to_obj('../s4_terrain/salida/nodos0.txt','../s4_terrain/salida/elements0.txt','test.mtl');
+system('copy salida\test.obj+..\s4_terrain\salida\texturas0.txt ..\s4_terrain\salida\contexturas0.obj');
+%system('cat salida/test.obj salida/texturas0.txt > salida/contexturas0.obj');
+
+msh_to_obj('../s4_terrain/salida/nodos1.txt','../s4_terrain/salida/elements1.txt','test.mtl');
+system('copy salida\test.obj+..\s4_terrain\salida\texturas1.txt ..\s4_terrain\salida\contexturas1.obj');
+%system('cat salida/test.obj salida/texturas1.txt > salida/contexturas1.obj');
+
+system('copy ..\s4_terrain\salida\nodos0.txt ..\s1_mesh\salida\nodos.txt');
+system('copy ..\s4_terrain\salida\elements0.txt ..\s1_mesh\salida\elements.txt');
+
+fid_mtl=fopen(strcat('salida/test','.mtl'),'w');
+fprintf(fid_mtl,'\nnewmtl material_%02d\nKa  0.6 0.6 0.6\nKd  0.6 0.6 0.6\nKs  0.9 0.9 0.9\nd  1.0\nNs  0.0\nillum 2\nmap_Kd %s\n',0,'Placa3.dds');
+fclose(fid_mtl);
+
 
 function salida=longitud(a,tam_elemento)
         if isempty(a)==0
@@ -458,6 +478,26 @@ function salida=longitud(a,tam_elemento)
         else
             salida=1;8
         end
+    end
+	
+	function graba(x,y,z,tri,fi_nodos,fi_elem,fi_text,zone,uu,vv)%'salida/fichero_nodos.txt' 'salida/fichero_elements.txt' 'salida/texturas.txt'
+        rango=(1:length(x));
+        [s1,s2]=size(rango);if (s2<s1) rango=rango.';end
+        [s1,s2]=size(x);if (s2<s1) x=x.';end
+        [s1,s2]=size(y);if (s2<s1) y=y.';end
+        [s1,s2]=size(z);if (s2<s1) z=z.';end
+
+        fid=fopen(fi_nodos,'w');
+        fprintf(fid,'%d %f %f %f\n',[rango' x' y' z']');%En este fichero la última columna es la altura
+        fclose(fid);
+
+        fid=fopen(fi_elem,'w');
+        fprintf(fid,'%d 2 2 %d 0 %d %d %d  \n',[(1:longitud(tri,3))' zone' tri ]');
+        fclose(fid);
+
+        fid=fopen(fi_text,'w');
+        fprintf(fid,'vt %f %f\n',[uu;vv]);
+        fclose(fid);
     end
 	
 	end

@@ -6,11 +6,11 @@ numpal=20; %Numero total de paneles
 orientacion=1;
 if (nargin==0)|(nargin==3)
     amp_ruido=0;
-    ancho_carretera=5;%Ancho de la carretera en metros
+    ancho_carretera=5*ones(1,length(x));%Ancho de la carretera en metros
 
 else
     amp_ruido=params.amp_ruido;
-    ancho_carretera=params.ancho_carretera;%Ancho de la carretera en metros
+    ancho_carretera=crearanchos(params.ancho_carretera,length(lasx));%Ancho de la carretera en metros
 end
 if nargin<3
     if (generico==1)
@@ -70,14 +70,20 @@ if nargin<3
 end
 [s1,s2]=size(lasx);if (s2>s1) lasx=lasx.';lasy=lasy.';lasz=lasz.';end
 
+numpanelesvertical=length(lasx)-1;
+
 distancias=sqrt(sum(diff(lasx).^2+diff(lasy).^2,2));
 distancia_acumulada=cumsum([0; distancias]);
 
 %Ancho (m) de los paneles
 panelesTRESMETROS=numpal/2-4-1;%Total menos los que son de carretera y los dos de los extremos
-paneles_carretera=(ancho_carretera/sum([1.25 1.25 1.25 1.25]))*[0.75 0.75 1.25 1.25 1.25 1.25 0.75 0.75];
-dist=[5 3*ones(1,panelesTRESMETROS) paneles_carretera 3*ones(1,panelesTRESMETROS) 5];
+%paneles_carretera=(ancho_carretera/sum([1.25 1.25 1.25 1.25]))*[0.75 0.75 1.25 1.25 1.25 1.25 0.75 0.75];
+%dist=[5 3*ones(1,panelesTRESMETROS) paneles_carretera 3*ones(1,panelesTRESMETROS) 5];
 
+for hh=1:numpanelesvertical+1
+    paneles_carretera=(ancho_carretera(hh)/sum([1.25 1.25 1.25 1.25]))*[0.75 0.75 1.25 1.25 1.25 1.25 0.75 0.75];
+    dist(:,hh)=[5 3*ones(1,panelesTRESMETROS) paneles_carretera 3*ones(1,panelesTRESMETROS) 5];
+end
 %numpal=length(dist);
 %%%%%%%%%%%%%%%%%%%%%%BORDES CARRETERA%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 borde_izdo=numpal/2-3+2;%solo 4 paneles -1,0,1,2,3
@@ -111,15 +117,15 @@ cambio_angulo=[1; 1-cambio.^0.7;1];
 dir_suavizada=filter([0.15 0.2 0.4 0.2 0.15],1,vector_perpendicular);
 dir_suavizada=[vector_perpendicular(1); vector_perpendicular(2); dir_suavizada(5:end-4) ;dir_suavizada(end-4); vector_perpendicular(end-3); vector_perpendicular(end-2); vector_perpendicular(end-1) ; vector_perpendicular(end); vector_perpendicular(end)];
 vector_perpendicular=abs(vector_perpendicular).*exp(1j*angle(dir_suavizada))./cambio_angulo;
-numpanelesvertical=length(lasx)-1;
+
 
 
 
 %18x100 paneles
 %El primer y ultimo panel seria la parte no conducible (lo pongo por coherencia con
 %la forma de trabajar antigua)
-
-mitad=sum(dist(1:length(dist)/2));
+[ttt,yyy]=size(dist);
+mitad=sum(dist(1:ttt/2,:));
 
 
 %Forzamos que los 7 valores centrales vayan entre u1=0.5-0.0525 y u2=0.5+0.0525
@@ -128,7 +134,7 @@ u2=0.5+0.063-0.0085;
 
 %uinicial=linspace(0,u1,8);%6
 %ufinal=linspace(u2,1,8);%6
-dac=cumsum([0 dist]);
+dac=cumsum([0; dist(:,1)])';
 uinicial=u1*(dac(2:9)-dac(2))/(dac(9)-dac(2));
 ufinal=fliplr(1-uinicial);
 u_texturas=[-uinicial(2) uinicial(1:end-1) linspace(u1,u2,5) ufinal(2:end) ufinal(end)+uinicial(2)];%9 en linspace
@@ -172,7 +178,7 @@ for h=1:numpanelesvertical+1
         indice(g,h)=contadorp; %A la esquina inferior izquierda le asignamos un numero de punto
         %La coordenada está expresada como número complejo
         base=lasx(h)+1j*lasy(h);
-        num=base+(mitad-sum(dist(g:end)))*vector_perpendicular(h);% +1j* (h-1)*4;
+        num=base+(mitad(h)-sum(dist(g:end,h)))*vector_perpendicular(h);% +1j* (h-1)*4;
         coordenadas(g,h)=num;
         x(contadorp)=real(num);
         y(contadorp)=imag(num);
@@ -189,7 +195,7 @@ for h=1:numpanelesvertical+1
         indice(g,h)=contadorp; %A la esquina inferior izquierda le asignamos un numero de punto
         %La coordenada está expresada como número complejo
         base=lasx(h)+1j*lasy(h);
-        num=base+(mitad-sum(dist(g:end)))*vector_perpendicular(h);% +1j* (h-1)*4;
+        num=base+(mitad(h)-sum(dist(g:end,h)))*vector_perpendicular(h);% +1j* (h-1)*4;
         coordenadas(g,h)=num;
         x(contadorp)=real(num);
         y(contadorp)=imag(num);
@@ -211,7 +217,7 @@ for h=1:numpanelesvertical+1
         indice(g,h)=contadorp; %A la esquina inferior izquierda le asignamos un numero de punto
         %La coordenada está expresada como número complejo
         base=lasx(h)+1j*lasy(h);
-        num=base+(mitad-sum(dist(g:end)))*vector_perpendicular(h);% +1j* (h-1)*4;
+        num=base+(mitad(h)-sum(dist(g:end,h)))*vector_perpendicular(h);% +1j* (h-1)*4;
         coordenadas(g,h)=num;
         x(contadorp)=real(num);
         y(contadorp)=imag(num);
@@ -340,18 +346,18 @@ for pp=1:numpanelesvertical-1
 
                      %Una vez encontrado el segmento opuesto, puede ser que
                      %haya nodo intermedio, formandose una D
-                     mitad=fix(contador/2);
+                     esmitad=fix(contador/2);
                      if contador>1
-                         intermedio=mnodos(izquierdo,pp+mitad);
+                         intermedio=mnodos(izquierdo,pp+esmitad);
                          hayintermedio=(bitand(intermedio,elbit)>0);  
                      else
                          hayintermedio=0;
                      end
                      if contadorbit==1,lazona=222;else lazona=111;end
                      if hayintermedio
-                         trias=[indice(contadorbit,pp) indice(contadorbit,pp+contador) indice(contadorbit+1,pp+mitad) ;%izdacentro arribadcha abajodcha
-                         indice(contadorbit,pp+contador) indice(contadorbit+1,pp+contador) indice(contadorbit+1,pp+mitad);
-                         indice(contadorbit,pp) indice(contadorbit+1,pp+mitad) indice(contadorbit+1,pp) ];                     
+                         trias=[indice(contadorbit,pp) indice(contadorbit,pp+contador) indice(contadorbit+1,pp+esmitad) ;%izdacentro arribadcha abajodcha
+                         indice(contadorbit,pp+contador) indice(contadorbit+1,pp+contador) indice(contadorbit+1,pp+esmitad);
+                         indice(contadorbit,pp) indice(contadorbit+1,pp+esmitad) indice(contadorbit+1,pp) ];                     
                          zone(contadortris+1:contadortris+3)=lazona*ones(1,3);
                          tri(contadortris+1:contadortris+3,:)=trias; contadortris=contadortris+3;
                      else
@@ -390,9 +396,9 @@ for pp=1:numpanelesvertical-1
 
                      %Una vez encontrado el segmento opuesto, puede ser que
                      %haya nodo intermedio, formandose una C
-                     mitad=fix(contador/2);
+                     esmitad=fix(contador/2);
                      if contador>1
-                         intermedio=mnodos(derecho,pp+mitad);
+                         intermedio=mnodos(derecho,pp+esmitad);
                          hayintermedio=(bitand(intermedio,elbit)>0);  
                      else
                          hayintermedio=0;
@@ -400,9 +406,9 @@ for pp=1:numpanelesvertical-1
                      if contadorbit==6,lazona=222;else lazona=111;end
                      numeropanel=numpal-6+contadorbit;
                      if hayintermedio
-                         trias=[indice(numeropanel,pp+mitad) indice(numeropanel+1,pp+contador) indice(numeropanel+1,pp) ;%izdacentro arribadcha abajodcha
-                         indice(numeropanel,pp+contador) indice(numeropanel+1,pp+contador) indice(numeropanel,pp+mitad);
-                         indice(numeropanel,pp) indice(numeropanel,pp+mitad) indice(numeropanel+1,pp) ];                     
+                         trias=[indice(numeropanel,pp+esmitad) indice(numeropanel+1,pp+contador) indice(numeropanel+1,pp) ;%izdacentro arribadcha abajodcha
+                         indice(numeropanel,pp+contador) indice(numeropanel+1,pp+contador) indice(numeropanel,pp+esmitad);
+                         indice(numeropanel,pp) indice(numeropanel,pp+esmitad) indice(numeropanel+1,pp) ];                     
                          zone(contadortris+1:contadortris+3)=lazona*ones(1,3);
                          tri(contadortris+1:contadortris+3,:)=trias; contadortris=contadortris+3;
                      else
@@ -499,5 +505,19 @@ function salida=longitud(a,tam_elemento)
         fprintf(fid,'vt %f %f\n',[uu;vv]);
         fclose(fid);
     end
-	
-	end
+
+    function salida=crearanchos(anchos,longitud)
+        hhh=1;
+        anchos=[0 anchos];
+        salida=anchos(2)*ones(1,longitud);
+        hhh=hhh+2;
+        while (hhh+1)<=length(anchos); 
+            salida(round(anchos(hhh)*longitud):end)=anchos(hhh+1);
+            hhh=hhh+2;
+        end
+        xx=filter([0.05 0.25 0.4 0.25 0.05],1,salida);
+        xx=flipud(fliplr(filter([0.05 0.25 0.4 0.25 0.05],1,flipud(fliplr(xx)))));
+        salida(10:end-9)=xx(10:end-9);
+    end
+    
+    end

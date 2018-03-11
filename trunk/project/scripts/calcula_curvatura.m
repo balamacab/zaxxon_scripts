@@ -3,8 +3,6 @@ if nargin==6
     amp_ruido=0;
 end
 
-ancho_total=sum(dist(borde_izdo:borde_dcho-1));
-
 pdte_max=0.07;%pdte maxima
 pdte_min=-0.02;%pdte minima
 distancias(end+1)=distancias(end);
@@ -60,28 +58,32 @@ maximo=maximo/2;
 % curvatura(rectas)=sign(curvatura(rectas))*umbral;
 % curvatura=curvatura-sign(curvatura)*umbral;
 % maximo=max(abs(curvatura));
-medioancho=sum(dist(borde_izdo:centro-1));
-distancias_al_centro=cumsum([0 dist])-sum([0 dist(1:centro-1)]);
-
+medioancho=sum(dist(borde_izdo:centro-1,:));
+[ttt yyy]=size(dist);
+poscentro=sum([zeros(1,yyy); dist(1:centro-1,:)]);
+distancias_al_centro=zeros(ttt+1,yyy);
+for ff=1:yyy
+    distancias_al_centro(:,ff)=cumsum([0; dist(:,ff)])-poscentro(ff);
+end
 for g=1:length(curvatura)
     if curvatura(g)<0 %Curva a izquierdas
         perfiles(2,g)=0;%Altura del centro de la calzada
         %interno
-        perfiles(1,g)=medioancho*(pdte_min-(pdte_min+pdte_max)*abs(curvatura(g))/maximo);
+        perfiles(1,g)=medioancho(g)*(pdte_min-(pdte_min+pdte_max)*abs(curvatura(g))/maximo);
         %Externo
-        perfiles(3,g)=medioancho*(pdte_min+pdte_max*abs(curvatura(g))/maximo);
+        perfiles(3,g)=medioancho(g)*(pdte_min+pdte_max*abs(curvatura(g))/maximo);
     elseif curvatura(g)>0%Curva a derechas
         perfiles(2,g)=0;%Altura del centro de la calzada
         %externo
-        perfiles(1,g)=medioancho*(pdte_min+pdte_max*abs(curvatura(g))/maximo);
+        perfiles(1,g)=medioancho(g)*(pdte_min+pdte_max*abs(curvatura(g))/maximo);
         %interno
-        perfiles(3,g)=medioancho*(pdte_min-(pdte_min+pdte_max)*abs(curvatura(g))/maximo);
+        perfiles(3,g)=medioancho(g)*(pdte_min-(pdte_min+pdte_max)*abs(curvatura(g))/maximo);
     else
         perfiles(2,g)=0;
-        perfiles(1,g)=pdte_min*medioancho;
-        perfiles(3,g)=pdte_min*medioancho;
+        perfiles(1,g)=pdte_min*medioancho(g);
+        perfiles(3,g)=pdte_min*medioancho(g);
     end
-    offset(g,:)=interp1([-medioancho,0,medioancho],perfiles(:,g),distancias_al_centro(borde_izdo:borde_dcho),'linear','extrap');
+    offset(g,:)=interp1([-medioancho(g),0,medioancho(g)],perfiles(:,g),distancias_al_centro(borde_izdo:borde_dcho,g),'linear','extrap');
 end
 %perfiles(1,g)=filter(filtro,1,perfiles(1,g));
 %perfiles(3,g)=filter(filtro,1,perfiles(3,g));

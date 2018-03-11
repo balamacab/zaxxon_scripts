@@ -1,7 +1,7 @@
 function creatodo(h)
-
-road_width=[   4   3   3   3   3 ...
-	       3   4   3   4   3  3   4 ];
+  ancho1=4;
+  ancho2=6;
+  road_width={   ancho1   ancho1   ancho1   ancho2   ancho1  [ancho1 0.97 ancho2]  };
 
   numtracks=12;%46;
 	panel_length=5*ones(1,numtracks);
@@ -12,15 +12,18 @@ road_width=[   4   3   3   3   3 ...
 %for h=1:numtracks-1
 	%try
 		
-		p.amp_ruido=0.3;%0.1 en primera version
-		p.ancho_carretera=road_width(h+1);
-		
+		p.amp_ruido=0.15;%0.3 en version bumpy
+		if iscell(road_width{h+1})
+			p.ancho_carretera=cell2mat(road_width{h+1});
+		else
+			p.ancho_carretera=(road_width{h+1});
+		end
 		fichero=sprintf('r%02d.kml',h);
 		fprintf(2,'\n\n%s\n\n',fichero);
 		cd s0_import;
 		importakml(fichero);
 		cd ..\venue
-		btb06(p.ancho_carretera,1,panel_length(h+1));
+		btb06(p.ancho_carretera(1),1,panel_length(h+1));
 		cd ..\s3_road
 		s3_coge_datos;
 		creartrack1(0);
@@ -29,7 +32,7 @@ road_width=[   4   3   3   3   3 ...
 		while (conseguido==0)
 			 try
 				system(sprintf('move r%02d.txt retoques.txt',h)); 
-				dar_altura(13,0.25,-0.25,paso,1);
+				dar_altura(13,0.25,-0.25,paso,0);
 				system(sprintf('move retoques.txt r%02d.txt',h));
 				conseguido=1;
 			catch

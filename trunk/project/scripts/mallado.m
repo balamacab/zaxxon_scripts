@@ -4,14 +4,7 @@ generico=0;
 numpal=20; %Numero total de paneles
 
 orientacion=1;
-if (nargin==0)|(nargin==3)
-    amp_ruido=0;
-    ancho_carretera=5*ones(1,length(x));%Ancho de la carretera en metros
 
-else
-    amp_ruido=params.amp_ruido;
-    ancho_carretera=crearanchos(params.ancho_carretera,length(lasx));%Ancho de la carretera en metros
-end
 if nargin<3
     if (generico==1)
         %A partir de nodos cualesquiera -> los llevamos a 4 m de distancia
@@ -69,6 +62,14 @@ if nargin<3
     end
 end
 [s1,s2]=size(lasx);if (s2>s1) lasx=lasx.';lasy=lasy.';lasz=lasz.';end
+if (nargin==0)|(nargin==3)
+    amp_ruido=0;
+    ancho_carretera=5*ones(1,length(x));%Ancho de la carretera en metros
+
+else
+    amp_ruido=params.amp_ruido;
+    ancho_carretera=crearanchos(params.ancho_carretera,length(lasx));%Ancho de la carretera en metros
+end
 
 numpanelesvertical=length(lasx)-1;
 

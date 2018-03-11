@@ -230,22 +230,18 @@ for h=1:numpanelesvertical+1
 end
 
 %Recorremos la parte izquierda
-for pp=2:2:numpanelesvertical-1
-            actual=mnodos(izquierdo,pp);
-            siguiente=mnodos(izquierdo,pp+1);
+for pp=2:2:numpanelesvertical-1            
             %El bit 3 es el primero eliminable (pendiente de parametrizar)
             elbit=3;
             while (elbit<8)
                 punto1=coordenadas(9-elbit,pp);%xmin,ymin del quad
                 punto2=coordenadas(9-elbit,pp+1);%xmin,ymax del quad
-                punto3=coordenadas(9-elbit+1,pp);%xmax,ymin del quad
-                punto4=coordenadas(9-elbit+1,pp+1);%xmax,ymax del quad
+                punto3=coordenadas(9-elbit,pp-1);%xmax,ymin del quad                
                 separacion1=sqrt((real(punto1)-real(punto2))^2+(imag(punto1)-imag(punto2))^2);
-                separacion2=sqrt((real(punto3)-real(punto4))^2+(imag(punto3)-imag(punto4))^2);
+                separacion2=sqrt((real(punto1)-real(punto3))^2+(imag(punto1)-imag(punto3))^2);
                 %Si se hace peque�o hacia la izquierda
-                %separacion1<separacion2
-                ratio=separacion1/separacion2;
-                if (separacion1<3)
+                
+                if (separacion1<3)||(separacion2<3)
                     mnodos(izquierdo,pp)=bitand(mnodos(izquierdo,pp),barridoizq(elbit));
                 end
                 elbit=elbit+1;
@@ -253,22 +249,17 @@ for pp=2:2:numpanelesvertical-1
 end
 
 %Recorremos la parte derecha
-for pp=2:2:numpanelesvertical-1
-            actual=mnodos(derecho,pp);
-            siguiente=mnodos(derecho,pp+1);
-            %El bit 3 es el primero eliminable (pendiente de parametrizar)
+for pp=2:2:numpanelesvertical-1            
+            %El bit 6 es el primero eliminable (pendiente de parametrizar)
             elbit=6;
             while (elbit>1)
-                punto1=coordenadas(numpal+1-elbit,pp);%xmin,ymin del quad
-                punto2=coordenadas(numpal+1-elbit,pp+1);%xmin,ymax del quad
-                punto3=coordenadas(numpal+1-elbit+1,pp);%xmax,ymin del quad
-                punto4=coordenadas(numpal+1-elbit+1,pp+1);%xmax,ymax del quad
+                punto1=coordenadas(numpal+2-elbit,pp);%xmin,ymin del quad
+                punto2=coordenadas(numpal+2-elbit,pp+1);%xmin,ymax del quad
+                punto3=coordenadas(numpal+2-elbit,pp-1);%xmax,ymin del quad                
                 separacion1=sqrt((real(punto1)-real(punto2))^2+(imag(punto1)-imag(punto2))^2);
-                separacion2=sqrt((real(punto3)-real(punto4))^2+(imag(punto3)-imag(punto4))^2);
-                %Si se hace peque�o hacia la izquierda
-                %separacion1<separacion2
-                ratio=separacion1/separacion2;
-                if (separacion1<3)
+                separacion2=sqrt((real(punto1)-real(punto3))^2+(imag(punto1)-imag(punto3))^2);
+                                
+                if (separacion1<3)||(separacion2<3)
                     mnodos(derecho,pp)=bitand(mnodos(derecho,pp),barridoder(elbit));
                 end
                 elbit=elbit-1;
@@ -325,11 +316,19 @@ for pp=1:2:numpanelesvertical-4
                 %end
             end
 end
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%
+%fidw=fopen('patrones.txt','w');
+%for pp=numpanelesvertical+1:-1:1
+%    fprintf(fidw,'%03d %s %s\n',pp,dec2bin(mnodos(izquierdo,pp),8),dec2bin(mnodos(derecho,pp),8));
+%end
+%fclose(fidw);
+%
 %zone=[];
 %tri=[];
 %Generamos los triangulos de la parte izquierda
 for pp=1:numpanelesvertical-1
+
             actual=mnodos(izquierdo,pp);            
             %Si encontramos segmento, generamos el triangulo
             elbit=uint8(128+64);%11000000 que se desplaza hacia la derecha
@@ -380,16 +379,19 @@ end
 %tri=[];
 %Generamos los triangulos de la parte derecha
 for pp=1:numpanelesvertical-1
-            actual=mnodos(derecho,pp);            
+            if pp==21
+                fprintf(2,'*');
+            end
+            actual=uint16(mnodos(derecho,pp));            
             %Si encontramos segmento, generamos el triangulo
-            elbit=uint8(64+32);%01100000 que se desplaza hacia la derecha
+            elbit=uint16(2+1);%00000011 que se desplaza hacia la derecha
             contadorbit=1;
-            while (elbit>=3)  %00000011 es la ultima mascara
+            while (elbit<=uint16(128+64))  %11000000 es la ultima mascara
                 if bitand(actual,elbit)==elbit
                      encontrado=false;
                      contador=1;
                      while encontrado==false;
-                        siguiente=mnodos(derecho,pp+contador);
+                        siguiente=uint16(mnodos(derecho,pp+contador));
                         encontrado=(bitand(siguiente,elbit)==elbit);                                        
                         contador=contador+1;
                      end
@@ -399,13 +401,13 @@ for pp=1:numpanelesvertical-1
                      %haya nodo intermedio, formandose una C
                      esmitad=fix(contador/2);
                      if contador>1
-                         intermedio=mnodos(derecho,pp+esmitad);
+                         intermedio=uint16(mnodos(derecho,pp+esmitad));
                          hayintermedio=(bitand(intermedio,elbit)>0);  
                      else
                          hayintermedio=0;
                      end
-                     if contadorbit==6,lazona=222;else lazona=111;end
-                     numeropanel=numpal-6+contadorbit;
+                     if contadorbit==1,lazona=222;else lazona=111;end
+                     numeropanel=numpal+1-contadorbit;
                      if hayintermedio
                          trias=[indice(numeropanel,pp+esmitad) indice(numeropanel+1,pp+contador) indice(numeropanel+1,pp) ;%izdacentro arribadcha abajodcha
                          indice(numeropanel,pp+contador) indice(numeropanel+1,pp+contador) indice(numeropanel,pp+esmitad);
@@ -422,7 +424,7 @@ for pp=1:numpanelesvertical-1
                  
                 end %if
                 contadorbit=contadorbit+1;
-                elbit=bitshift(elbit,-1);
+                elbit=bitshift(elbit,1);
             end %while
             
 end
@@ -430,7 +432,7 @@ end
 %Ponemos la parte central
 for pp=1:numpanelesvertical-1
             contador=1;
-            for numeropanel=8:numpal+1-7
+            for numeropanel=8:numpal+1-7-1
                          trias=[indice(numeropanel,pp) indice(numeropanel,pp+contador) indice(numeropanel+1,pp) ;%izdacentro arribadcha abajodcha
                          indice(numeropanel,pp+contador) indice(numeropanel+1,pp+contador) indice(numeropanel+1,pp)                       ];                     
                          zone(contadortris+1:contadortris+2)=111*ones(1,2);

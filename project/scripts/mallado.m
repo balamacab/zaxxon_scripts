@@ -446,7 +446,7 @@ for numeropanel=1:numpal
     if (ultimo(numeropanel)<(numpanelesvertical+1))
      contador=numpanelesvertical+1-ultimo(numeropanel);
      pp=ultimo(numeropanel);
-     if ((contadorbit==1)||(contadorbit==numpal)),lazona=222;else lazona=111;end
+     if ((numeropanel==1)||(numeropanel==numpal)),lazona=222;else lazona=111;end
      trias=[indice(numeropanel,pp) indice(numeropanel,pp+contador) indice(numeropanel+1,pp) ;%izdacentro arribadcha abajodcha
                          indice(numeropanel,pp+contador) indice(numeropanel+1,pp+contador) indice(numeropanel+1,pp)                       ];                     
                          zone(contadortris+1:contadortris+2)=lazona*ones(1,2);

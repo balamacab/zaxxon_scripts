@@ -213,7 +213,7 @@ for h=1:length(alturas_suavizadas)
         end
     end
 end
-
+end
 
 function [altura angulo]=interpola(x,y,alturas_in,intervalo,distancia)
   %if length(alturas_in)<length(x);

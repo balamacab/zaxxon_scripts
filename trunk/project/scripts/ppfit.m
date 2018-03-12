@@ -231,7 +231,7 @@ xlim(1) = -Inf;
 xlim(end) = Inf;
 
 % Bin data
-ihist = histc(x,xlim);
+ihist = mihistc(x,xlim);
 ihist = [0; cumsum(ihist(:))];
 
 % Generate polynomial base

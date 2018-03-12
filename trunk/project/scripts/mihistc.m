@@ -36,7 +36,7 @@
 %%
 %% @seealso{hist}
 
-function [freq bin]= histc (data, edges)
+function [freq bin]= mihistc (data, edges)
 
   if (nargin ~= 2)
     usage ('histc (data, edges)');

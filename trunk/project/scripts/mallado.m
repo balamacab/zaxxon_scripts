@@ -327,6 +327,7 @@ end
 %zone=[];
 %tri=[];
 %Generamos los triangulos de la parte izquierda
+ultimo=ones(1,numpal)*(numpanelesvertical+1);
 for pp=1:numpanelesvertical-1
 
             actual=mnodos(izquierdo,pp);            
@@ -366,7 +367,7 @@ for pp=1:numpanelesvertical-1
                          zone(contadortris+1:contadortris+2)=lazona*ones(1,2);
                          tri(contadortris+1:contadortris+2,:)=trias;contadortris=contadortris+2;
                      end
-                                                           
+                     ultimo(contadorbit)=pp+contador;                                      
                  
                 end %if
                 contadorbit=contadorbit+1;
@@ -420,7 +421,7 @@ for pp=1:numpanelesvertical-1
                          zone(contadortris+1:contadortris+2)=lazona*ones(1,2);
                          tri(contadortris+1:contadortris+2,:)=trias;contadortris=contadortris+2;
                      end
-                                                           
+                      ultimo(numeropanel)=pp+contador;                                      
                  
                 end %if
                 contadorbit=contadorbit+1;
@@ -440,6 +441,19 @@ for pp=1:numpanelesvertical-1
             end                                                                                            
             
 end
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+for numeropanel=1:numpal
+    if (ultimo(numeropanel)<(numpanelesvertical+1))
+     contador=numpanelesvertical+1-ultimo(numeropanel);
+     pp=ultimo(numeropanel);
+     if ((contadorbit==1)||(contadorbit==numpal)),lazona=222;else lazona=111;end
+     trias=[indice(numeropanel,pp) indice(numeropanel,pp+contador) indice(numeropanel+1,pp) ;%izdacentro arribadcha abajodcha
+                         indice(numeropanel,pp+contador) indice(numeropanel+1,pp+contador) indice(numeropanel+1,pp)                       ];                     
+                         zone(contadortris+1:contadortris+2)=lazona*ones(1,2);
+                         tri(contadortris+1:contadortris+2,:)=trias;contadortris=contadortris+2;
+    end
+end
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 tri=tri(1:contadortris,:);
 %tri=[n1' n2' n3'];%[n1' n2' n3'];

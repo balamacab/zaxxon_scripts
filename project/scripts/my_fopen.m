@@ -14,10 +14,10 @@ function fid=my_fopen(fichero,modo)
   else
     mensaje='Escribiendo';
   end
-  display(sprintf('%s el fichero %s',mensaje,fichero));
+  midisplay(sprintf('%s el fichero %s',mensaje,fichero));
   fid=fopen(fichero,modo);
   if fid==-1
-    display(sprintf('Error accesing file %s in folder %s',fichero,pwd));
-	display('Check the file exists');
+    midisplay(sprintf('Error accesing file %s in folder %s',fichero,pwd));
+	midisplay('Check the file exists');
   end
 end

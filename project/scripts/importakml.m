@@ -329,11 +329,12 @@ end
 
 function npp=convert_pp(pp)
 %Convert pp (matlab format) to npp (octave format)
-npp.x=pp.breaks(:);
-npp.n=pp.pieces;
-npp.k=pp.order;
-npp.d=pp.dim;
-npp.P=pp.coefs(:,:);
+%npp.x=pp.breaks(:);
+%npp.n=pp.pieces;
+%npp.k=pp.order;
+%npp.d=pp.dim;
+%npp.P=pp.coefs(:,:);
+npp=pp;
 end
 
 function graba_kml(x,y,mapeo)
@@ -394,7 +395,7 @@ function [alturas_nodos anguloy  controlA controlB controlC controlD]=realizar_a
 	plot(puntosbtb(1,:),puntosbtb(2,:),'-r',x,y,'b+');
 	axis square
 
-	[controlA controlB controlC controlD]=saca_controlpoints(ajuste.P,ajuste.x);
+	[controlA controlB controlC controlD]=saca_controlpoints(ajuste.coefs,ajuste.breaks(:));
 	
 
 	%plot(controlA(1,:),controlA(2,:),'o',controlB(1,:),controlB(2,:),'*',controlC(1,:),controlC(2,:),'b+',controlD(1,:),controlD(2,:),'r+');

@@ -46,7 +46,7 @@ if existia_fichero==1
               numpoints=fscanf(fid,'%d ',1);
               puntos=[];
               for h=1:numpoints
-			  n_puntos=fscanf(fid,'%f',2);
+			          n_puntos=fscanf(fid,'%f',2);
                 puntos(h,1)=n_puntos(1);
                 puntos(h,2)=n_puntos(2);
               end
@@ -68,10 +68,10 @@ salir=0;
 
 while (salir==0)
     clf;
-    plot(distancia_recorrida,alturas_track1,'-g',distancia_recorrida,alturas_suavizadas_iniciales,'-r',distancia_recorrida,alturas_suavizadas,'-b'); 
+    plot(distancia_recorrida,alturas_track1,'-r',distancia_recorrida,alturas_suavizadas_iniciales,'-b',distancia_recorrida,alturas_suavizadas,'-k'); 
 	hold on
 	
-	legend('Mountain','method 1','Edited');
+	legend('Mountain (red)','Autofit (blue)','Edited (black)');
     fflush(stdout);
     display('        e-> end             n-> new segment');
     do

@@ -14,8 +14,8 @@ num=reshape(num,m,n);
 tri=[];
 for h=1:m-1
    for g=1:n-1
-	   tri=[tri;[num(h,g) num(h+1,g) num(h+1,g+1)]];
-	   tri=[tri;[num(h+1,g+1) num(h,g+1) num(h,g)]];
+	   tri=[tri;[num(h,g)  num(h+1,g+1) num(h+1,g)]];
+	   tri=[tri;[num(h+1,g+1)  num(h,g) num(h,g+1)]];
    end
 end
 [m,n]=size(y);

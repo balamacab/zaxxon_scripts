@@ -11,7 +11,7 @@ fid=fopen('salida/nodos_conaltura.txt','r');
 tot=fscanf(fid,'%d %f %f %f\n',inf);
 x=tot(2:4:end);
 y=tot(3:4:end);
-z=tot(4:4:end);%Esta es la altura
+z=tot(4:4:end);
 fclose(fid);
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Aplicamos a los nodos indicados en carretera.txt la curvatura establecida en curvaturas.mat
@@ -28,7 +28,7 @@ end
 %m=length(tot);
 %totoriginal=reshape(tot,10,m/10);
 
-tot=totoriginal([1 4:end-2],:);
+tot=totoriginal([1 4:end-2],:);%Altura comun e indices de carretera. (2 y 3) y (end-1 y end) son adyacentes a carretera
 [k p]=size(tot);
 
 for g=1:p %Direccion de avance en la carretera
@@ -36,10 +36,11 @@ for g=1:p %Direccion de avance en la carretera
     if isempty(offset)==0
         alturacomun=alturacomun+escalado*offset(g,:);
     end
-    y(tot(2:6,g))=alturacomun;
-	y(totoriginal(3,g))=y(tot(2,g))-0.2;
-	y(totoriginal(end-1,g))=y(tot(end,g))-0.2;
-	y(totoriginal(2,g))=0.5*(y(tot(2,g))+y(totoriginal(2,g)));
+        y(tot(2:6,g))=alturacomun;
+        ancho_carretera=sqrt((x(tot(2,g))-x(tot(end,g)))^2+(z(tot(2,g))-z(tot(end,g)))^2);
+	y(totoriginal(3,g))=y(tot(2,g))-0.05*ancho_carretera; %Junto a carretera, 20cm por debajo del borde en ancho 4m
+	y(totoriginal(end-1,g))=y(tot(end,g))-0.05*ancho_carretera;
+	y(totoriginal(2,g))=0.5*(y(tot(2,g))+y(totoriginal(2,g))); %El otro punto, a mitad de altura entre montanya y carretera
 	y(totoriginal(end,g))=0.5*(y(tot(end,g))+y(totoriginal(end,g)));
 end
 %fclose(fid);

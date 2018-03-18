@@ -431,7 +431,7 @@ for pp=1:numpanelesvertical-1
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %Ponemos la parte central
-for pp=1:numpanelesvertical-1
+for pp=1:numpanelesvertical
             contador=1;
             for numeropanel=8:numpal+1-7-1
                          trias=[indice(numeropanel,pp) indice(numeropanel,pp+contador) indice(numeropanel+1,pp) ;%izdacentro arribadcha abajodcha
@@ -453,9 +453,47 @@ for numeropanel=1:numpal
                          tri(contadortris+1:contadortris+2,:)=trias;contadortris=contadortris+2;
     end
 end
+tri=tri(1:contadortris,:);
+zone=zone(1:contadortris);
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Calculamos la distancia real de los puntos al centro de la carretera
+%distreal=zeros(size(indice));
+anulables=zeros(1,max(max(indice)));
+for pp=1:numpanelesvertical+1   
+            dd=cumsum([0 ;dist(:,pp)]);
+            dd=abs(dd-dd((end+1)/2));%Distancia esperada al centro
+            for numeropanel=1:borde_izdo
+                 iind=indice(numeropanel,pp);
+                 distx=x(iind)-lasx;
+                 disty=y(iind)-lasy;
+                 distreal=sqrt(min(distx.^2+disty.^2)); %Distancia real al centro
+                 if distreal<0.65*dd(numeropanel)
+                     anulables(iind)=1;
+                 else
+                     break
+                 end
+            end
+            for numeropanel=numpal+1:-1:borde_dcho
+                 iind=indice(numeropanel,pp);
+                 distx=x(iind)-lasx;
+                 disty=y(iind)-lasy;
+                 distreal=sqrt(min(distx.^2+disty.^2)); %Distancia real al centro
+                 if distreal<0.65*dd(numeropanel)
+                     anulables(iind)=1;
+                 else
+                     break
+                 end
+            end
+end
+%Anulamos los triangulos que son problematicos
+noanulables=find(sum(anulables(tri),2)==0);
+tri=tri(noanulables,:);
+zone=zone(noanulables);
+%
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-tri=tri(1:contadortris,:);
+
 %tri=[n1' n2' n3'];%[n1' n2' n3'];
 %tri=[tri;tria];%Anyadimos los triangulos
 tri=[tri(:,1) tri(:,3) tri(:,2)]; %Normales hacia arriba

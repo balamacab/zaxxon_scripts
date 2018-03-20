@@ -119,7 +119,7 @@ dir_suavizada=filter([0.15 0.2 0.4 0.2 0.15],1,vector_perpendicular);
 dir_suavizada=[vector_perpendicular(1); vector_perpendicular(2); dir_suavizada(5:end-4) ;dir_suavizada(end-4); vector_perpendicular(end-3); vector_perpendicular(end-2); vector_perpendicular(end-1) ; vector_perpendicular(end); vector_perpendicular(end)];
 vector_perpendicular=abs(vector_perpendicular).*exp(1j*angle(dir_suavizada))./cambio_angulo;
 
-
+ruido_horizontal=ruidolat*(ruido(numpal+1,numpanelesvertical+1,19)+1j*ruido(numpal+1,numpanelesvertical+1,456));
 
 
 %18x100 paneles
@@ -195,7 +195,7 @@ for h=1:numpanelesvertical+1
     for g=borde_dcho
         indice(g,h)=contadorp; %A la esquina inferior izquierda le asignamos un numero de punto
         %La coordenada está expresada como número complejo
-        base=lasx(h)+1j*lasy(h);
+        base=lasx(h)+1j*lasy(h)     +  ruido_horizontal(g,h);
         num=base+(mitad(h)-sum(dist(g:end,h)))*vector_perpendicular(h);% +1j* (h-1)*4;
         coordenadas(g,h)=num;
         x(contadorp)=real(num);
@@ -217,7 +217,7 @@ for h=1:numpanelesvertical+1
     for g=[1:(borde_izdo-1) (borde_izdo+1):(borde_dcho-1) (borde_dcho+1):(numpal+1)]
         indice(g,h)=contadorp; %A la esquina inferior izquierda le asignamos un numero de punto
         %La coordenada está expresada como número complejo
-        base=lasx(h)+1j*lasy(h);
+        base=lasx(h)+1j*lasy(h) +  ruido_horizontal(g,h);
         num=base+(mitad(h)-sum(dist(g:end,h)))*vector_perpendicular(h);% +1j* (h-1)*4;
         coordenadas(g,h)=num;
         x(contadorp)=real(num);
@@ -575,4 +575,36 @@ function salida=longitud(a,tam_elemento)
         salida(10:end-9)=xx(10:end-9);
     end
     
+
+
+function salida=ruido(n1,n2,semilla)
+        if (exist ('OCTAVE_VERSION', 'builtin'))
+            rand('seed',semilla);
+        else
+            rng(semilla);
+        end
+        r = 5; % radius (maximal 49)
+        n1min = r+1; n1max = n1+r;
+        n2min = r+1; n2max = n2+r;
+        
+        noise=zeros(n1+2*r+1,n2+2*r+1);
+        promediados=5;
+        for t=1:promediados
+            noise = noise+randn(n1+2*r+1,n2+2*r+1);
+        end
+        noise=noise/(promediados/2);%Media 0
+        noise=noise-mean(mean(noise));
+        [a,b]=meshgrid(-r:r,-r:r);
+        mask=((a.^2+b.^2)<=r^2); %(2*r+1)x(2*r+1) bit mask
+        salida = zeros(n1+2*r,n2+2*r);
+
+        for i=n1min:n1max
+            for j=n2min:n2max
+                A = noise((i-r):(i+r), (j-r):(j+r));
+                salida(i,j) = sum(sum(A.*mask));
+            end
+        end
+        Nr = sum(sum(mask)); salida = salida(n1min:n1max, n2min:n2max)/Nr;
+    end
+
     end

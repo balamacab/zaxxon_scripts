@@ -62,13 +62,14 @@ if nargin<3
     end
 end
 [s1,s2]=size(lasx);if (s2>s1) lasx=lasx.';lasy=lasy.';lasz=lasz.';end
-if (nargin==0)|(nargin==3)
+if (nargin==0)||(nargin==3)
     amp_ruido=0;
     ancho_carretera=5*ones(1,length(x));%Ancho de la carretera en metros
 
 else
     amp_ruido=params.amp_ruido;
-    ancho_carretera=crearanchos(params.ancho_carretera,length(lasx));%Ancho de la carretera en metros
+    ruidolat=params.ruido_lateral;
+    ancho_carretera=crearanchos(params.ancho_carretera,length(lasx),ruidolat);%Ancho de la carretera en metros
 end
 
 numpanelesvertical=length(lasx)-1;
@@ -178,7 +179,7 @@ for h=1:numpanelesvertical+1
     for g=borde_izdo
         indice(g,h)=contadorp; %A la esquina inferior izquierda le asignamos un numero de punto
         %La coordenada está expresada como número complejo
-        base=lasx(h)+1j*lasy(h);
+        base=lasx(h)+1j*lasy(h)    +  ruido_horizontal(g,h);
         num=base+(mitad(h)-sum(dist(g:end,h)))*vector_perpendicular(h);% +1j* (h-1)*4;
         coordenadas(g,h)=num;
         x(contadorp)=real(num);

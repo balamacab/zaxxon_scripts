@@ -61,7 +61,7 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
-inicio=strfind(cadena,'t1 track');
+inicio=strfind(cadena,'clip-path');
 cadena=cadena(inicio:end);
 
 posicionesy1=strfind(cadena,'y1="');

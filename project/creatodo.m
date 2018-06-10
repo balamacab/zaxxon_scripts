@@ -1,23 +1,19 @@
-function creatodo(h)
-  ancho1=4;
-  ancho2=6;
-  road_width={   ancho1   ancho1   ancho1   ancho2   ancho1  [ancho1 0.97 ancho2]  };
-
-  numtracks=12;%46;
+function p1_creatodo(h,rruido)
+  more off
+  elestrecho=3;
+  elancho=5;
+  
+  road_width={   elancho   elancho   elestrecho   elestrecho   elestrecho  [elancho 0.97 elestrecho]  };
+  numtracks=length(road_width);
 	panel_length=5*ones(1,numtracks);
-	%road_width=5*ones(1,numtracks);
-	panel_length(23+1)=3.7;
-	
-
-%for h=1:numtracks-1
-	%try
-		
-		p.amp_ruido=0.15;%0.3 en version bumpy
+		p.ruido_lateral=2.5;	
+		p.amp_ruido=rruido;%0.3 en version bumpy
 		if iscell(road_width{h+1})
 			p.ancho_carretera=cell2mat(road_width{h+1});
 		else
 			p.ancho_carretera=(road_width{h+1});
 		end
+		
 		fichero=sprintf('r%02d.kml',h);
 		fprintf(2,'\n\n%s\n\n',fichero);
 		cd s0_import;
@@ -29,16 +25,16 @@ function creatodo(h)
 		creartrack1(0);
 		conseguido=0;
 		paso=10;
-		while (conseguido==0)
-			 try
-				system(sprintf('move r%02d.txt retoques.txt',h)); 
-				dar_altura(13,0.25,-0.25,paso,0);
-				system(sprintf('move retoques.txt r%02d.txt',h));
-				conseguido=1;
-			catch
-				paso=paso-2;
-			end_try_catch
-		end
+    system(sprintf('move r%02d.txt retoques.txt',h)); 
+		%while (conseguido==0)
+		%	 try				
+				dar_altura(13,0.25,-0.25,paso,0);				
+		%		conseguido=1;
+		%	catch
+		%		paso=paso-2;
+		%	end_try_catch
+		%end
+    system(sprintf('move retoques.txt r%02d.txt',h));
 		cd ..\s11_m3d
 		s11_coge_datos
 		
@@ -76,6 +72,7 @@ function creatodo(h)
 	%catch
 	%	fprintf(2,'%d falla---------\n',h);
 	%end_try_catch
-end
 
 endfunction
+
+

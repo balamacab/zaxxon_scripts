@@ -91,7 +91,7 @@ end
 %plot3(lasx,lasy,perfiles(3,:),'r')
 
 [p,k]=size(offset);
-irregularidad=amp_ruido*ruido(p,k);
+irregularidad=diag(crearbumpiness(amp_ruido,p))*ruido(p,k);
 offset=offset+irregularidad;
 
 save('curvaturas.mat','offset');
@@ -124,5 +124,19 @@ save('curvaturas.mat','offset');
             end
         end
         Nr = sum(sum(mask)); salida = salida(n1min:n1max, n2min:n2max)/Nr;
+    end
+
+       function salida=crearbumpiness(bumpiness,longitud)
+        hhh=1;
+        bumpiness=[0 bumpiness];
+        salida=bumpiness(2)*ones(1,longitud);
+        hhh=hhh+2;
+        while (hhh+1)<=length(bumpiness); 
+            salida(round(bumpiness(hhh)*longitud):end)=bumpiness(hhh+1);
+            hhh=hhh+2;
+        end
+        xx=filter([0.05 0.25 0.4 0.25 0.05],1,salida);
+        xx=flipud(fliplr(filter([0.05 0.25 0.4 0.25 0.05],1,flipud(fliplr(xx)))));
+        salida(5:end-4)=xx(5:end-4);        
     end
 end

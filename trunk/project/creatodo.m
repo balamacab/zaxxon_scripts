@@ -1,4 +1,4 @@
-function p1_creatodo(h,rruido)
+function creatodo(h,rruido)
   more off
   elestrecho=3;
   elancho=5;

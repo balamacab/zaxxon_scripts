@@ -55,7 +55,7 @@ function creax(x,y,z,u,v,tri,ficherosalida,textura)
       cadena=sprintf('      %f; %f; %f;,\n',[losx' losz' -losy']');cadena(end-1)=';';
       fprintf(fid,'%s       %d;\n',cadena,longlostri);
       cadena=sprintf('       3;%d,%d,%d;,\n',lostri');cadena(end-1)=';';
-      fprintf(fid,'%s%s\n      %d;\n',cadena,centro1,length(lostri));
+      fprintf(fid,'%s%s\n      %d;\n',cadena,centro1,longlostri);
       cadena=sprintf('      %f; %f; %f;,\n',[zeros(1,longlostri)' ones(1,longlostri)' zeros(1,longlostri)']');cadena(end-1)=';';
       fprintf(fid,'%s        %d;\n',cadena,longlostri);
       cadena=sprintf('      3;%d,%d,%d;,\n',[(0:longlostri-1)' (0:longlostri-1)' (0:longlostri-1)']');cadena(end-1)=';';

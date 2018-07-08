@@ -5,7 +5,21 @@ coordenadaxinicial=mapeo(1)%-105.037205228836; %mapeo(3)
 coordenadaxfinal=mapeo(5)%-105.042881979876; %mapeo(7)
 coordenadazinicial=mapeo(2)%38.9209304085051; %mapeo(4)
 coordenadazfinal=mapeo(6)%38.8405926230566;   %mapeo(8)
-[x,y] = meshgrid(coordenadaxinicial-20*paso:paso:coordenadaxfinal+20*paso,coordenadazinicial-20*paso:paso:coordenadazfinal+20*paso);
+
+try 
+  S=load('lamalla2.mat');
+catch
+  S=load('lamalla.mat');
+end_try_catch
+
+margenx1=floor(abs(S.rangox(1)-coordenadaxinicial)/paso)-1;
+margenx2=floor(abs(S.rangox(end)-coordenadaxfinal)/paso)-1;
+margenz1=floor(abs(S.rangoz(1)-coordenadazinicial)/paso)-1;
+margenz2=floor(abs(S.rangoz(end)-coordenadazfinal)/paso)-1;
+clear S;
+
+[x,y] = meshgrid(coordenadaxinicial-margenx1*paso:paso:coordenadaxfinal+margenx2*paso,coordenadazinicial-margenz1*paso:paso:coordenadazfinal+margenz2*paso);
+
 
 [m,n]=size(x);
 num=1:m*n;

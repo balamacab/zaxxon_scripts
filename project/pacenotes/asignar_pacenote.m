@@ -39,13 +39,29 @@ function [Tipo indice_pn flag]=asignar_pacenote(girocentral,girototal);
 						else
 							Tipo='Fast'; indice_pn=5;
 						end
-	       				else
-						Tipo='-'; indice_pn=0;			  
+	        else
+						if abs(girocentral)<7
+              Tipo='-';indice_pn=0
+            else
+              if abs(girocentral)>11
+                Tipo='Easy';indice_pn=6;
+              else
+                Tipo='Very Easy';indice_pn=7;
+              end
+            end	  
 					end
 				end
 			end
 		end
-	else
-		Tipo='-';indice_pn=0;
+	else %Giro central menor que 15
+      if abs(girocentral)<7
+        Tipo='-';indice_pn=0
+      else
+        if abs(girocentral)>11
+		      Tipo='Easy';indice_pn=6;
+        else
+          Tipo='Very Easy';indice_pn=7;
+        end
+      end
 	end
 end

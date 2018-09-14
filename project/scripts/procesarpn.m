@@ -22,6 +22,8 @@ curvatura=cambio_angulo;
 filtro=ones(filterorder,1)/filterorder; 
 salida=filter(filtro,1,curvatura);
 salida=salida((length(filtro)-1)/2:end);
+%[nadaa]=milowess([distancias',curvatura'],0.0015,0);
+%salida=interp1(nadaa(:,1),nadaa(:,3),distancias,'spline','extrap');
 
 %-----------------------------------------------------------------------------------------
 %                                   Calculando m�ximos y m�nimos
@@ -68,45 +70,55 @@ display('Procesando las curvas');
 
 for h=1:length(magnitudes)
    if (indices(h)>1) & (indices(h)<length(angulos))
-	magnitud=anchoint*magnitudes(h);
-	girocentral=(180/pi)*magnitud;
-	signo=sign(girocentral);
-	girototal=dame_acumulado(salida,indices(h),(ancho-1)/2);
-	
-	nodo=indices(h);
-	%Para poner el texto en pantalla
-	posx=x(nodo)+10;
-	posz=z(nodo);
-        if (nodo-adelanto)>0, nodo=nodo-adelanto; else nodo=1; end
+        magnitud=anchoint*magnitudes(h);
+        girocentral=(180/pi)*magnitud;
+        signo=sign(girocentral);
+        girototal=dame_acumulado(salida,indices(h),(ancho-1)/2);
+        
+        nodo=indices(h);
+        %Para poner el texto en pantalla
+        posx=x(nodo)+10;
+        posz=z(nodo);
+              if (nodo-adelanto)>0, nodo=nodo-adelanto; else nodo=1; end
 
-	[Tipo indice_pn flag]=asignar_pacenote(girocentral,girototal);
-	
-	tabla_codigos=[11 10 9 8 7 0 1 2 3 4]; %Derecha 5 primeros, izquierda 5 luego. De mayor a menor peligrosidad
-	if strcmp(Tipo,'-')==0
-		if signo>0
-			Tipo=strcat(Tipo,' Right');
-			codigo=tabla_codigos(indice_pn);
-		else
-			Tipo=strcat(Tipo,' Left');
-			codigo=tabla_codigos(indice_pn+length(tabla_codigos)/2);
-		end		
-		contador=contador+1;		
-                lista_pacenotes(contador).Nombre=Tipo;
-		lista_pacenotes(contador).Tipo=codigo;
-                lista_pacenotes(contador).flag=flag;
-                lista_pacenotes(contador).nodo=nodo;                
-		if distancias(nodo)-adelanto>0
-			lista_pacenotes(contador).distancia=distancias(nodo)-adelanto;
-		else
-			lista_pacenotes(contador).distancia=0;
-		end
-		mensaje=sprintf('C=%.2f T=%.2f %s(%d) D=%f',girocentral,girototal,Tipo,flag,distancias(indices(h)-1));
-		text(posx,posz,mensaje);
-		plot(x(indices(h)-1),z(indices(h)-1),'o');%-1 porque las derivadas adelantan la posici�n de las cosas en el espacio
-        hold on,plot([posx x(indices(h)-1)],[posz z(indices(h)-1)]);
-	end
-    end
-end
+        [Tipo indice_pn flag]=asignar_pacenote(girocentral,girototal);
+        
+        %tabla_codigos=[11 10 9 8 7 0 1 2 3 4]; %Derecha 5 primeros, izquierda 5 luego. De mayor a menor peligrosidad
+        tabla_codigos=[11 10 9 8 7 6 25 0 1 2 3 4 5 26]; %Derecha 7 primeros, izquierda 7 luego. De mayor a menor peligrosidad
+        if strcmp(Tipo,'-')==0
+          if signo>0
+            Tipo=strcat(Tipo,' Right');
+            codigo=tabla_codigos(indice_pn);
+          else
+            Tipo=strcat(Tipo,' Left');
+            codigo=tabla_codigos(indice_pn+length(tabla_codigos)/2);
+          end		
+          contador=contador+1;		
+                      lista_pacenotes(contador).Nombre=Tipo;
+          lista_pacenotes(contador).Tipo=codigo;
+                      lista_pacenotes(contador).flag=flag;
+                      lista_pacenotes(contador).nodo=nodo;                
+          if distancias(nodo)-adelanto>0
+            lista_pacenotes(contador).distancia=distancias(nodo)-adelanto;
+          else
+            lista_pacenotes(contador).distancia=0;
+          end
+          %(Giro centro, giro total)
+          mensaje=sprintf('(%.1f,%.1f) %s(%d) %.0fm',girocentral,girototal,Tipo,flag,distancias(indices(h)-1));
+          text(posx,posz,mensaje);
+          plot(x(indices(h)-1),z(indices(h)-1),'o');%-1 porque las derivadas adelantan la posici�n de las cosas en el espacio
+              hold on,plot([posx x(indices(h)-1)],[posz z(indices(h)-1)]);
+      else
+          mensaje=sprintf('(%.1f,%.1f) %s(%d) %.0fm',girocentral,girototal,Tipo,flag,distancias(indices(h)-1));
+          text(posx,posz,mensaje);
+          plot(x(indices(h)-1),z(indices(h)-1),'o');%-1 porque las derivadas adelantan la posici�n de las cosas en el espacio
+              hold on,plot([posx x(indices(h)-1)],[posz z(indices(h)-1)]);    
+              %fprintf(1,'%.0fm\n',distancias(indices(h)-1));
+          fprintf(1,'(%.1f,%.1f) %s(%d)\n',girocentral,girototal,Tipo,flag);    
+      end %Tipo
+      
+   end %indices
+end %For
  
 %--------------------------------------------------------------------------------------- 
 mensaje=sprintf('Hay %d pacenotes',contador);

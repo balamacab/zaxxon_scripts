@@ -6,8 +6,24 @@ if nargin==2
 end
 tx=vector(:,1);
 tz=vector(:,2);
+x=coordenadas(:,1);
+z=coordenadas(:,2);
+distancia=dist;
 
-complejo=tx+j*tz;
+%-----------------------------------------------------------------------------------------
+%                              Remuestreamos para obtener muestras cada 5m 
+
+equidistantes=min(distancia):5:max(distancia)-5;
+
+%figure;%hold on;
+metodo='spline';
+
+x=interp1(distancia,x,equidistantes,metodo);
+z=interp1(distancia,z,equidistantes,metodo);
+
+vx=[0 diff(x)];
+vz=[0 diff(z)];
+complejo=vx+j*vz;
 angulos=angle(complejo);
 angulos=unwrap(angulos);
 for h=1:length(angulos)%
@@ -16,25 +32,10 @@ for h=1:length(angulos)%
 		display(mensaje);
 	end	
 end
+%complejo=[0 complejo];
+%angulos=[0 angulos];
 
-%-----------------------------------------------------------------------------------------
-%                              Remuestreamos para obtener muestras cada 5m 
-
-x=coordenadas(:,1);
-z=coordenadas(:,2);
-
-distancia=dist;
-
-equidistantes=min(distancia):5:max(distancia)-5;
-
-%figure;
-%hold on;
-metodo='spline';
-
-x=interp1(distancia,x,equidistantes,metodo);
-z=interp1(distancia,z,equidistantes,metodo);
-
-angulos=interp1(distancia,angulos,equidistantes,metodo);
+%angulos=interp1(distancia,angulos,equidistantes,metodo);
 
 %-----------------------------------------------------------------------------------------
 %                              Calcular pendiente
@@ -61,7 +62,7 @@ matriz=matriz(filasvalidas,:);
 % 22 0 5630.000000;           %FINISH 
 % 24 0 5700.000000]           %EXIT
  
-resultado=procesarpn(S.x,S.z,S.pendiente,-S.angulos,S.equidistantes,0.06,0);
+resultado=procesarpn(S.x,S.z,S.pendiente,-S.angulos,S.equidistantes,0.04,0);
 
 fid=fopen(ficherodls,'r');
 texto=fread(fid,8);

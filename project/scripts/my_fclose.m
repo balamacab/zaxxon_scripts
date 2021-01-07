@@ -9,6 +9,6 @@ function my_fclose(fid)
 % 
 % El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
-  midisplay('Cerrando el fichero');
+  display('Cerrando el fichero');
   fclose(fid);
 end

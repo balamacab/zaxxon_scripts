@@ -1,14 +1,11 @@
-function msh_to_obj(fichero_nodos,fichero_elements,ficherodds)
+function msh_to_obj(fichero_nodos,fichero_elements)
 
 [numero x y z]=textread(fichero_nodos,'%d %f %f %f');
 
 fid=fopen(fichero_elements,'r');
-fid_w=fopen(strcat('salida/test','.obj'),'w');
-if nargin>2
-    fprintf(fid_w,['mtllib ',ficherodds,'\n']);
-end
+fid_w=fopen(strcat('salida\test','.obj'),'w');
 contador=1;
-while (feof(fid)~=1)
+while (feof(fid)!=1)
     todo=fscanf(fid,'%d',3);
 	if length(todo)>0
 		tipo=todo(2);
@@ -44,9 +41,7 @@ n3=n3(orden);
 n4=n4(orden);
 id_particular=id_particular(orden);
 
-		fprintf(fid_w,'v %f %f %f\r\n',[x z -y]');%La altura es y en los ficheros de nodos ya elevados
-                                                %Blender interpreta que la
-                                                %su y es -z y que su z es y
+		fprintf(fid_w,'v %f %f %f\r\n',[x y -z]');
 		
 		for g=1:length(x)
 			fprintf(fid_w,'vn 0 1 0\r\n');
@@ -57,7 +52,6 @@ id_particular=id_particular(orden);
 		v3=n3;
 		v4=n4;
 		id_anterior=-1;
-        
 		for h=1:length(n1)
 				%if id_superficie(h)~=id_anterior
 				%	fprintf(fid_w,'g group%02d\r\n',id_superficie(h));
@@ -65,9 +59,6 @@ id_particular=id_particular(orden);
 				%end
 				if id_particular(h)~=id_anterior
 					fprintf(fid_w,'g group%02d\r\n',id_particular(h));
-                    if nargin>2
-                        fprintf(fid_w,'usemtl material_00\n');
-                    end
 					id_anterior=id_particular(h);
 				end
 				if v4(h)==-1

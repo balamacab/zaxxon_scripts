@@ -2,12 +2,12 @@ function altura=make_grid(xmin,xmax,zmin,zmax,pasoenmetros,tamfichero)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
-% Este cï¿½digo NO es software libre. Su uso implica la aceptaciï¿½n de las condiciones del autor,
-% condiciones que explï¿½citamente prohiben tanto la redistribuciï¿½n como su uso con fines comerciales.
-% Asimismo queda prohibida la realizaciï¿½n de cualquier modificaciï¿½n que no sea para estricto uso personal 
+% Este código NO es software libre. Su uso implica la aceptación de las condiciones del autor,
+% condiciones que explícitamente prohiben tanto la redistribución como su uso con fines comerciales.
+% Asimismo queda prohibida la realización de cualquier modificación que no sea para estricto uso personal 
 % y sin finalidad comercial.
 % 
-% El autor no acepta ninguna responsabilidad por cualquier daï¿½o resultante del uso de este cï¿½digo.
+% El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
 if (nargin==5)||(nargin==2)
   tamfichero=200000; %Por defecto se agrupan los datos en tamfichero puntos por kml
@@ -16,7 +16,7 @@ if nargin==3
   tamfichero=zmin;
 end
 if ((nargin~=5)&&(nargin~=6)&&(nargin~=2)&&(nargin~=3))||(xmin=='h')
-    display('Parï¿½metros:')
+    display('Parámetros:')
     display('1) X min')
     display('2) X max')
     display('3) Z min (coordenada Z en BTB, pero Y en gmsh)')
@@ -51,7 +51,7 @@ display('Leyendo fichero ..\mapeo.txt')
 
 %display('Grabando ficheros')
 
-guarda_calentamiento=0;
+guarda_calentamiento=25;
 columnas=xmin:pasoenmetros:xmax;
 num_columnas=length(columnas);
 filas=zmin:pasoenmetros:zmax;
@@ -90,9 +90,9 @@ fid=my_fopen('final.kml','r');
 final=fread(fid,inf);
 my_fclose(fid);
 
-%Nï¿½mero de datos por columna real
+%Número de datos por columna real
 columna_real=guarda_calentamiento+num_filas;
-%Tamaï¿½o de fichero real en nï¿½mero de puntos para que contenga un nï¿½mero entero de columnas
+%Tamaño de fichero real en número de puntos para que contenga un número entero de columnas
 ncol_fichero=floor(tamfichero/columna_real);
 tamfichero=ncol_fichero*columna_real;
 
@@ -106,17 +106,13 @@ for h=1:tandas
     fprintf(fid,'%s',parte_inicial);
 
     tamanyo=min([num_columnas-(h-1)*ncol_fichero ncol_fichero]);
-    for k=1:tamanyo %numero de columnas en este fichero
+    for k=1:tamanyo
         repite(fid,pos1(contador),pos2(contador),guarda_calentamiento);
-        recorrido=1:num_filas;
-        if mod(k,2)==0
-            recorrido=fliplr(flipud(recorrido));
+        
+        for g=1:num_filas
+            fprintf(fid,'%f,%f,%f ',pos1(contador),pos2(contador),-9999);
+            contador=contador+1;
         end
-        for g=recorrido
-            fprintf(fid,'%f,%f,%f ',pos1(contador+g-1),pos2(contador+g-1),-9999);
-            %contador=contador+1;
-        end
-        contador=contador+length(recorrido);
     end
     fwrite(fid,final);
     my_fclose(fid);
@@ -129,8 +125,8 @@ while (exist(nombre)==2)
 	nombre=sprintf('salida\\grid%.3d.kml',tandas+1);
 endwhile
 
-    alternada=1;
-    save('dimensiones.mat','num_filas','num_columnas','guarda_calentamiento','alternada');
+
+    save('dimensiones.mat','num_filas','num_columnas','guarda_calentamiento');
 
 message(20);	
 

@@ -1,10 +1,6 @@
-function poncarretera(escalado,ddepth)
+function poncarretera(escalado)
 if nargin==0
     escalado=1;
-    ddepth=0.3;%30 cm below the road level
-end
-if nargin==1   
-    ddepth=0.3;%30 cm below the road level
 end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -34,17 +30,16 @@ end
 
 tot=totoriginal([1 4:end-2],:);%Altura comun e indices de carretera. (2 y 3) y (end-1 y end) son adyacentes a carretera
 [k p]=size(tot);
-ditch_depth=crearditch(ddepth,p);
 
 for g=1:p %Direccion de avance en la carretera
-  alturacomun=tot(1,g);
-  if isempty(offset)==0
-      alturacomun=alturacomun+escalado*offset(g,:);
-  end
-  y(tot(2:6,g))=alturacomun;
-  ancho_carretera=sqrt((x(tot(2,g))-x(tot(end,g)))^2+(z(tot(2,g))-z(tot(end,g)))^2);
-	y(totoriginal(3,g))=y(tot(2,g))-ditch_depth(g); 
-	y(totoriginal(end-1,g))=y(tot(end,g))-ditch_depth(g);
+    alturacomun=tot(1,g);
+    if isempty(offset)==0
+        alturacomun=alturacomun+escalado*offset(g,:);
+    end
+        y(tot(2:6,g))=alturacomun;
+        ancho_carretera=sqrt((x(tot(2,g))-x(tot(end,g)))^2+(z(tot(2,g))-z(tot(end,g)))^2);
+	y(totoriginal(3,g))=y(tot(2,g))-0.05*ancho_carretera; %Junto a carretera, 20cm por debajo del borde en ancho 4m
+	y(totoriginal(end-1,g))=y(tot(end,g))-0.05*ancho_carretera;
 	y(totoriginal(2,g))=0.5*(y(tot(2,g))+y(totoriginal(2,g))); %El otro punto, a mitad de altura entre montanya y carretera
 	y(totoriginal(end,g))=0.5*(y(tot(end,g))+y(totoriginal(end,g)));
 end
@@ -175,7 +170,7 @@ system('move salida\muro.x salida\murodcho.x');
 fid_mtl=fopen(strcat('salida/transparente','.mtl'),'w');
 fprintf(fid_mtl,'\nnewmtl material_%02d\nKa  0.6 0.6 0.6\nKd  0.6 0.6 0.6\nKs  0.9 0.9 0.9\nd  1.0\nNs  0.0\nillum 2\nmap_Kd %s\n',0,'transpa.dds');
 fclose(fid_mtl);
-end
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
@@ -195,23 +190,18 @@ end
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
-
-   
+ 
+    function salida=longitud(a,tam_elemento)
+        if isempty(a)==0
+            [mm,nn]=size(a);
+            salida=mm*nn/tam_elemento;
+        else
+            salida=1;8
+        end
+    end
 
     
     
-    function salida=crearditch(profundidad,longitud)
-        hhh=1;
-        profundidad=[0 profundidad];
-        salida=profundidad(2)*ones(1,longitud);
-        hhh=hhh+2;
-        while (hhh+1)<=length(profundidad); 
-            salida(round(profundidad(hhh)*longitud):end)=profundidad(hhh+1);
-            hhh=hhh+2;
-        end
-        xx=filter([0.05 0.25 0.4 0.25 0.05],1,salida);
-        xx=flipud(fliplr(filter([0.05 0.25 0.4 0.25 0.05],1,flipud(fliplr(xx)))));
-        salida(5:end-4)=xx(5:end-4);        
-        end
+    end
 
 end

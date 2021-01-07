@@ -1,64 +1,45 @@
-function alturas=procesar_nodostxt(varargin)
-%amp_ruido,datos_entrada,fichero_salida
+function procesar_nodostxt(amp_ruido)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
-% Este cï¿½digo NO es software libre. Su uso implica la aceptaciï¿½n de las condiciones del autor,
-% condiciones que explï¿½citamente prohiben tanto la redistribuciï¿½n como su uso con fines comerciales.
-% Asimismo queda prohibida la realizaciï¿½n de cualquier modificaciï¿½n que no sea para estricto uso personal 
+% Este código NO es software libre. Su uso implica la aceptación de las condiciones del autor,
+% condiciones que explícitamente prohiben tanto la redistribución como su uso con fines comerciales.
+% Asimismo queda prohibida la realización de cualquier modificación que no sea para estricto uso personal 
 % y sin finalidad comercial.
 % 
-% El autor no acepta ninguna responsabilidad por cualquier daï¿½o resultante del uso de este cï¿½digo.
+% El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
-if (exist('..\..\agr')==7) || (exist('..\..\lidar')==7)    
-        alturas=procesar_nodostxt_agr(varargin);
-        return
-    end
 
-if nargin>3
-    display('Puede tener como parï¿½metro de entrada la amplitud mï¿½xima de ruido deseada en las alturas generadas')
-    display('Lee nodos.txt y le da altura segï¿½n lamalla.mat y lamalla2.mat');
+fichero_entrada='nodos.txt';
+
+if nargin>1
+    display('Puede tener como parámetro de entrada la amplitud máxima de ruido deseada en las alturas generadas')
+    display('Lee nodos.txt y le da altura según lamalla.mat y lamalla2.mat');
     display(' ');
     display('Ejemplo: procesar_nodostxt([0 0.5])');    
     display(' ');
     display('Salida:');
-    display('-> listado_anchors.txt (es el listado de anchors que se incorporarï¿½ tal cual al Venue.xml)');
-    display('-> nodos_conaltura.txt (es un listado de nodos y alturas ï¿½til para procesar_elementstxt.m)');
+    display('-> listado_anchors.txt (es el listado de anchors que se incorporará tal cual al Venue.xml)');
+    display('-> nodos_conaltura.txt (es un listado de nodos y alturas útil para procesar_elementstxt.m)');
     display('-> prueba.geo (archivo que permite comprobar en gmsh que los nodos generados son correctos)');
     return
 end
 if nargin==0
-    amp_ruido=[0 0];
-    fichero_entrada='nodos.txt';
-    fichero_salida='salida\nodos_conaltura.txt';
-    
-    [numero x z y]=textread(fichero_entrada,'%d %f %f %f');
-else
-    amp_ruido=varargin{1};
-    if length(amp_ruido)==1
+   amp_ruido=[0 0];
+else if length(amp_ruido)==1
          amp_ruido=[0 amp_ruido];
-    end
-    if nargin==1        
-            fichero_entrada='nodos.txt';
-            fichero_salida='salida\nodos_conaltura.txt';
-            
-            [numero x z y]=textread(fichero_entrada,'%d %f %f %f');        
-    else
-        datos_entrada=varargin{2};
-        fichero_salida=varargin{3};
-        numero=datos_entrada(:,1);
-        x=datos_entrada(:,2);
-        z=datos_entrada(:,3);
-        y=datos_entrada(:,4);
-    end
+     end
+end
+
+if (exist('..\..\agr')==7) || (exist('..\..\lidar')==7)
+	procesar_nodostxt_agr(amp_ruido);
+	return
 end
 
 
+[numero x z y]=textread(fichero_entrada,'%d %f %f %f');
 
-
-
-
-%Los nodos no tienen altura, asï¿½ que hay que cargar los datos de los xml
+%Los nodos no tienen altura, así que hay que cargar los datos de los xml
 %para interpolar la altura en ese punto de la malla
 
 
@@ -74,19 +55,18 @@ catch
 end
 
 
-display('Recalculando altura de anchors prï¿½ximos a carretera...');
+display('Recalculando altura de anchors próximos a carretera...');
 x_deseados=x;
 z_deseados=z;
 [indices indicesfuera]=comprobar_rangos(malla.rangox,malla.rangoz,x_deseados,z_deseados);
 y(indices)=z_interp2(malla.rangox,malla.rangoz,malla.malla_regular,x_deseados(indices),z_deseados(indices));
-if length(indices)<length(x_deseados) %Si algï¿½n dato no ha sido obtenido de la malla principal, tratamos de sacarlo de la secundaria
-	display('Buscando alturas para datos que caen fuera del mallado rectangular principal. Se usarï¿½ ''lamalla2.mat''');
+if length(indices)<length(x_deseados) %Si algún dato no ha sido obtenido de la malla principal, tratamos de sacarlo de la secundaria
+	display('Buscando alturas para datos que caen fuera del mallado rectangular principal. Se usará ''lamalla2.mat''');
 	indices=indicesfuera;
 	y(indices)=z_interp2(mallaB.rangox,mallaB.rangoz,mallaB.malla_regular,x_deseados(indices),z_deseados(indices));
 end
 
 y=double(y);
-alturas=y;
 
 if find(isnan(y)==1)
     display('SOME POINTS OF THE MESH WILL HAVE A WRONG ALTITUDE. CHECK THAT YOUR MESH DOESN''T EXCEED AVAILABLE DATA');
@@ -94,7 +74,7 @@ end
 
 try
 	if sum(datay==NaN)>1
-		display('Valores errï¿½neos');
+		display('Valores erróneos');
 		return;
 	end
 catch
@@ -115,7 +95,7 @@ data=reshape(data',1,m(1)*m(2),1);
 
 
 fid=my_fopen('salida\listado_anchors.txt','w');
-fid2=my_fopen(fichero_salida,'w');
+fid2=my_fopen('salida\nodos_conaltura.txt','w');
 
 fprintf(fid,'     <TerrainAnchors count="%d">\n',tamanyo);
 fprintf(fid,'       <TerrainAnchor>\n         <Position x="%f" y="%f" z="%f" />\n       </TerrainAnchor>\n',data);

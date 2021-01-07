@@ -1,61 +1,39 @@
-function alturas=procesar_nodostxt_agr(entrada)
+function procesar_nodostxt_agr(amp_ruido)
 %---
 % Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
 %---
-% Este cÃ³digo NO es software libre. Su uso implica la aceptaciÃ³n de las condiciones del autor,
-% condiciones que explÃ­citamente prohiben tanto la redistribuciÃ³n como su uso con fines comerciales.
-% Asimismo queda prohibida la realizaciÃ³n de cualquier modificaciÃ³n que no sea para estricto uso personal 
+% Este código NO es software libre. Su uso implica la aceptación de las condiciones del autor,
+% condiciones que explícitamente prohiben tanto la redistribución como su uso con fines comerciales.
+% Asimismo queda prohibida la realización de cualquier modificación que no sea para estricto uso personal 
 % y sin finalidad comercial.
 % 
-% El autor no acepta ninguna responsabilidad por cualquier daÃ±o resultante del uso de este cÃ³digo.
+% El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
 
-nargin=length(entrada);
-if length(entrada)>0
-    amp_ruido=entrada{1};
-end
-if length(entrada)>1
-    datos_entrada=entrada{2};
-end
-if length(entrada)>2
-    fichero_salida=entrada{3};
-end
 
 fichero_entrada='nodos.txt';
 
-if nargin>3
-    display('Puede tener como parï¿½metro de entrada la amplitud mï¿½xima de ruido deseada en las alturas generadas')
-    display('Lee nodos.txt y le da altura segï¿½n lamalla.mat y lamalla2.mat');
+if nargin>1
+    display('Puede tener como parámetro de entrada la amplitud máxima de ruido deseada en las alturas generadas')
+    display('Lee nodos.txt y le da altura según lamalla.mat y lamalla2.mat');
     display(' ');
     display('Ejemplo: procesar_nodostxt([0 0.5])');    
     display(' ');
     display('Salida:');
-    display('-> listado_anchors.txt (es el listado de anchors que se incorporarï¿½ tal cual al Venue.xml)');
-    display('-> nodos_conaltura.txt (es un listado de nodos y alturas ï¿½til para procesar_elementstxt.m)');
+    display('-> listado_anchors.txt (es el listado de anchors que se incorporará tal cual al Venue.xml)');
+    display('-> nodos_conaltura.txt (es un listado de nodos y alturas útil para procesar_elementstxt.m)');
     display('-> prueba.geo (archivo que permite comprobar en gmsh que los nodos generados son correctos)');
     return
 end
 if nargin==0
    amp_ruido=[0 0];
-   fichero_entrada='nodos.txt';
-   fichero_salida='salida\nodos_conaltura.txt';
-   [numero x z y]=textread(fichero_entrada,'%d %f %f %f');
-else
-    if length(amp_ruido)==1
+else if length(amp_ruido)==1
          amp_ruido=[0 amp_ruido];
-    end
-    if nargin==1
-        fichero_entrada='nodos.txt';
-        fichero_salida='salida\nodos_conaltura.txt';
-        [numero x z y]=textread(fichero_entrada,'%d %f %f %f');
-    else
-        numero=datos_entrada(:,1);
-        x=datos_entrada(:,2);
-        z=datos_entrada(:,3);
-        y=datos_entrada(:,4);
-    end
+     end
 end
 
-%Los nodos no tienen altura, asÃ­ que hay que cargar los datos de los xml
+[numero x z y]=textread(fichero_entrada,'%d %f %f %f');
+
+%Los nodos no tienen altura, así que hay que cargar los datos de los xml
 %para interpolar la altura en ese punto de la malla
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -72,7 +50,7 @@ z_deseados=z;
 
 [pos1 pos3 pos2]=BTB_a_coor(x_deseados,0,z_deseados,mapeo);%Altura es el segundo
 
-%Los datos LiDAR mantienen las coordenadas originales, asÃ­ que hay que pasar los datos a ese sistema de coordenadas
+%Los datos LiDAR mantienen las coordenadas originales, así que hay que pasar los datos a ese sistema de coordenadas
 fid=fopen('deseados.txt','w');
 
 tamanyo=length(numero);
@@ -82,7 +60,6 @@ end
 fclose(fid);
 
 y=elevar_agr('deseados.txt',mapeo)';
-alturas=y;
 if length(y)!=tamanyo
     display('ERROR FOUND');
 	display('ERROR FOUND');
@@ -95,7 +72,7 @@ end
 
 try
 	if sum(datay==NaN)>1
-		display('Valores errÃ³neos');
+		display('Valores erróneos');
 		return;
 	end
 catch
@@ -112,7 +89,7 @@ data=reshape(data',1,m(1)*m(2),1);
 
 
 fid=my_fopen('salida\listado_anchors.txt','w');
-fid2=my_fopen(fichero_salida,'w');
+fid2=my_fopen('salida\nodos_conaltura.txt','w');
 
 fprintf(fid,'     <TerrainAnchors count="%d">\n',tamanyo);
 fprintf(fid,'       <TerrainAnchor>\n         <Position x="%f" y="%f" z="%f" />\n       </TerrainAnchor>\n',data);
@@ -137,7 +114,7 @@ datay=y;
 dataz=z;
 save('salida\anchors_originales.mat','datax','datay','dataz');
 
-%msh_to_obj(fichero_salida,'elements.txt');
+msh_to_obj('salida\nodos_conaltura.txt','elements.txt');
 message(22)
 
 

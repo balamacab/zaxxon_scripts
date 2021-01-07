@@ -51,7 +51,11 @@ alturas1=load('alturas_track1.mat');
 alturas_track1=alturas1.alturas_track1;
 alturas_track1=reshape(alturas_track1,length(alturas_track1),1);
 
-
+try 
+    alturas_suavizadas=sgolayfilt(alturas_track1,5,9);
+catch
+    alturas_suavizadas=alturas_track1;
+end
 
 %%%%%%%%%%%%%%%%%%%% Detectar posición de nodos respecto de anchors
 %%%%%%%%%%%%%%%%%%%% ----------------------------------------------
@@ -77,50 +81,6 @@ x_puntos_medios=0.5*(x(1:nac/2)+x(nac/2+1:end));
 z_puntos_medios=0.5*(z(1:nac/2)+z(nac/2+1:end));
 
 anguloy=zeros(length(x)/2,1);
-
-%%%%%%%%%%%%%%%%%%%% ----------------------------------------------
-%Distancia recorrida por un lado
-  xy = [x(1:nac/2);z(1:nac/2)]; 
-  ddf = diff(xy,1,2); 
-
-  %Cálculo basto de la longitud por un lado de la carretera y por el otro
-  piece_dist1=sqrt([1 1]*(ddf.*ddf));
-  %Y por el otro
-  xy = [x(nac/2+1:end);z(nac/2+1:end)]; 
-  ddf = diff(xy,1,2); 
-
-  %Cálculo basto de la longitud por un lado de la carretera y por el otro
-  piece_dist2=sqrt([1 1]*(ddf.*ddf));
-  
-  piece_dist=min([piece_dist1;piece_dist2]);
-  ladistan = cumsum([0, piece_dist]);  %La variable es la distancia
-  
-%try 
-  %alturas_suavizadas_inicio=sgolayfilt(alturas_track1,5,9);
-	%[nadaa]=milowess([ladistan',alturas_track1],0.01,0);
-	%alturas_suavizadas_inicio=nadaa(:,3);
-	factor=0.005;
-	salir=0;
-	while(salir==0)
-		try
-			[nadaa]=milowess([ladistan',alturas_track1],factor,0);
-      alturas_suavizadas=interp1(nadaa(:,1),nadaa(:,3),ladistan,'spline','extrap')';
-      [nadaa]=milowess([fliplr(flipud(ladistan))',fliplr(flipud(alturas_suavizadas))],factor,0);
-      alturas_suavizadas=interp1(nadaa(:,1),nadaa(:,3),ladistan,'spline','extrap')';
-			salir=1;
-		catch
-			factor=factor+0.005
-		end_try_catch
-	end
-	
-	%Los extremos ajustados a montanya
-	%alturas_suavizadas(1:10)=alturas_track1(1:10);
-	%alturas_suavizadas(end-9:end)=alturas_track1(end-9:end);
-
-%catch
-%    alturas_suavizadas=alturas_track1;
-%end
-%%%%%%%%%%%%%%%%%%%% ----------------------------------------------
 
 [alturas_suavizadas distancia_recorrida]=suavizar(x,y,z,alturas_suavizadas,pendiente_limite,pend_minima,nac);
 
@@ -152,7 +112,7 @@ if metodo==1
 	end
 else
     disp('Method 2');
-    plot(distancia_recorrida,alturas_suavizadas,'b');
+    plot(distancia_recorrida,alturas_suavizadas,'r');
     [alturas_suavizadas anguloy]=interpola(x_puntos_medios,z_puntos_medios,alturas_suavizadas,intervalo,distancia_recorrida);
     plot(distancia_recorrida,alturas_suavizadas,'-b','linewidth',2);
     legend('Mountain','Method 1','Edited','Method 2');
@@ -224,7 +184,7 @@ for h=1:length(alturas_suavizadas)
         end
     end
 end
-end
+
 
 function [altura angulo]=interpola(x,y,alturas_in,intervalo,distancia)
   %if length(alturas_in)<length(x);

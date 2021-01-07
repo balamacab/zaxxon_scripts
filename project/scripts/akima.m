@@ -37,7 +37,7 @@ d=(b(1:n-1)+b(2:n)-2*m)./dx.^2;
 % Loop replaced by vector ops following tip from johannes.korsawe@volkswagen.de
 % 1/19/2006
 %
-[ncnt,bin]=mihistc(xi,x);
+[ncnt,bin]=histc(xi,x);
 bin=min(bin,n-1);
 bb=bin(1:length(xi));
 wj=xi-x(bb);

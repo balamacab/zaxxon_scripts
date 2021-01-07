@@ -34,7 +34,7 @@ while ~feof(fid),
     else
         while isempty(findstr(linea,'</Anchor')) && (length(linea)>0) && (~feof(fid)),
 		    if mod(contador,4000)==0
-			     midisplay(strcat(' -',linea));
+			     display(strcat(' -',linea));
 		    end
             remain=linea;
             [str, remain] = strtok(remain, '>');
@@ -44,7 +44,7 @@ while ~feof(fid),
             [previo Parametro]= strtok(str,'<');
             [valor resto]= strtok(remain,'<');
             %mensaje=sprintf('%d- %s = %s\n',contador,Parametro(2:end),valor(2:end));
-            %midisplay(mensaje);
+            %display(mensaje);
             estructura=setfield(estructura,Parametro(2:end),str2num(valor(2:end)));
             linea=fgets(fid);
 	    %disp(sprintf('(->%s)',linea))
@@ -60,5 +60,5 @@ while ~feof(fid),
 end
 my_fclose(fid)
 
-midisplay(sprintf('Grabando %s',fichero_salida));
+display(sprintf('Grabando %s',fichero_salida));
 save(fichero_salida,'tree'); 

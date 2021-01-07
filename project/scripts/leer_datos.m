@@ -1,15 +1,11 @@
 function [longitud latitud altura]=leer_datos(fichero)
         %display(fichero);
-        isOctave = exist('OCTAVE_VERSION', 'builtin') ~= 0;
-        if isOctave==0
-            SEEK_SET='bof';
-        end
         fid=my_fopen(char(fichero),'r');
         contenido=fread(fid,Inf); 
         cadena=char(contenido)';
         pos=findstr('coordinates',cadena);
         fseek(fid,0,SEEK_SET);
-        if length(pos)<2 %No hay <coordinates> asï¿½ que suponemos que solo hay triadas de datos
+        if length(pos)<2 %No hay <coordinates> así que suponemos que solo hay triadas de datos
               salir=0;
               while ~feof(fid) & (salir==0) %Intento saltarme el "BOM code"
 	          c=fread(fid,1,'uchar');

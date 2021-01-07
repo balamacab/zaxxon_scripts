@@ -12,7 +12,7 @@ function [numero caminos]=look_for_father_or_sons(fichero,silencioso)
 if nargin==1
 	silencioso=1;
 end
-    [BASEPATH]=make_absolute_filename(fichero);
+    [BASEPATH status msg]=canonicalize_file_name(fichero);
     barras=findstr(BASEPATH,filesep);
     BASEPATH=BASEPATH(1:(barras(end-1)-1));
 

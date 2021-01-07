@@ -24,8 +24,8 @@ leer_nodos('nodes.xml','nodos.mat');
 %Con el comando anterior regeneramos la carretera. Para evitar problemas de compatibilidad, solo regeneramos anchors
 %si a) no existen o b) existen y se solicita que se regeneren poniendo force_new_anchors a 1
 if (exist('porcentajes.mat')==2) & (force_new_anchors==0)
-	midisplay('Anchors exist for this track and they have not been changed to avoid problems with existing .geo files')
-	midisplay('If you are sure you want to replace them set to 1 the second input parameter (i.e btb06(4,1))')
+	display('Anchors exist for this track and they have not been changed to avoid problems with existing .geo files')
+	display('If you are sure you want to replace them set to 1 the second input parameter (i.e btb06(4,1))')
 	message(3);
 	return;
 end
@@ -40,7 +40,7 @@ if ancho_track==0
 	  ancho_track=round(ancho_track);
 	  ancho_track=ancho_track/10;
   catch
-	  midisplay('Previous width could not be read')
+	  display('Previous width could not be read')
 	  return
   end
 end
@@ -56,9 +56,9 @@ total_anchors=0;
 contador=1;
 
 if distribucion==1
-	midisplay('Using LINEAR (non uniform) spacing');
+	display('Using LINEAR (non uniform) spacing');
 else
-	midisplay('Using NONLINEAR (uniform) spacing');
+	display('Using NONLINEAR (uniform) spacing');
 end
 %hold on
 %figure
@@ -80,7 +80,7 @@ for h=1:numnodos-1
 			gtk(progress_bar.in,progress_bar.out,["gtk_progress_bar_set_fraction ",progress_bar.id,sprintf('%.1f',0.5+(0.5*h)/numnodos)]);
 			gtk(progress_bar.in,progress_bar.out,"gtk_server_callback update");
 		 else
-            midisplay(sprintf('%d %d',h,total_anchors));
+            display(sprintf('%d %d',h,total_anchors));
 		 end
     end
 	
@@ -150,7 +150,7 @@ save('anguloxzp.mat','anguloxzp','curvaturaxz');
 %plot(anchors_dcha(:,1),anchors_dcha(:,3),'or');
 
 total_anchors=total_anchors+2;
-midisplay(sprintf('%d %d',h,total_anchors));
+display(sprintf('%d %d',h,total_anchors));
 
 for h=1:length(porcentajes) %Los que están a distancia "1" de un nodo los reconvierto en distancia "0" a partir del siguiente
   if porcentajes(h,2)==1
@@ -194,12 +194,12 @@ my_fclose(fid);
 leer_porcentajes('porcentajes.xml','porcentajes.mat');
 
 %------------anchors.mat
-midisplay('Grabando ..\anchors.mat')
+display('Grabando ..\anchors.mat')
 tree=[];
 offset=length(anchors_izda);
 for h=1:length(anchors_izda)
     if mod(h,1000)==0
-         midisplay(sprintf('%d',h));
+         display(sprintf('%d',h));
     end
         tree.TerrainAnchor(h).Position.ATTRIBUTE.x=anchors_izda(h,1);
         tree.TerrainAnchor(h).Position.ATTRIBUTE.y=anchors_izda(h,2);
@@ -286,14 +286,12 @@ end
 
 function los_t=calcula_t(pos_segmentos,distancia_int)
 	los_t(1)=0;
-	for hn=2:length(pos_segmentos)-1
-		inicio=sum(pos_segmentos(hn)>=distancia_int);
+	for h=2:length(pos_segmentos)-1
+		inicio=sum(pos_segmentos(h)>=distancia_int);
 		fin=inicio+1;
 		
-		fraccion=(pos_segmentos(hn)-distancia_int(inicio))/(distancia_int(fin)-distancia_int(inicio));
-		los_t(hn)=(inicio-1+fraccion)/(length(distancia_int)-1);
+		fraccion=(pos_segmentos(h)-distancia_int(inicio))/(distancia_int(fin)-distancia_int(inicio));
+		los_t(h)=(inicio-1+fraccion)/(length(distancia_int)-1);
 	end
 	los_t(length(pos_segmentos))=1;
-end
-
 end

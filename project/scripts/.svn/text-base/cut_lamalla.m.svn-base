@@ -1,0 +1,18 @@
+function cut_lamalla(rangox,rangoz)
+if (rangox(2)<=rangox(1)) || (rangoz(2)<=rangoz(1))
+    disp('Error: make sure (x_min < x_max) and (z_min < z_max)');
+end
+
+S=load('salida\lamalla.mat');
+
+indicesx=find(((S.rangox>=rangox(1)) + (S.rangox<=rangox(2)))>1);;
+S.rangox=S.rangox(indicesx);
+indicesz=find(((S.rangoz>=rangoz(1)) + (S.rangoz<=rangoz(2)))>1);
+S.rangoz=S.rangoz(indicesz);
+S.malla_regular=S.malla_regular(indicesz,indicesx);
+
+system('copy salida\lamalla.mat salida\lamalla_original.mat');
+rangox=S.rangox;
+rangoz=S.rangoz;
+malla_regular=S.malla_regular;
+save -mat-binary 'salida\lamalla.mat' rangox rangoz malla_regular

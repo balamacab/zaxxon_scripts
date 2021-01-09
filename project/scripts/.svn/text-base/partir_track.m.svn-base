@@ -1,0 +1,235 @@
+function partir_track(trozos)
+%---
+% Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
+%---
+% Este código NO es software libre. Su uso implica la aceptación de las condiciones del autor,
+% condiciones que explícitamente prohiben tanto la redistribución como su uso con fines comerciales.
+% Asimismo queda prohibida la realización de cualquier modificación que no sea para estricto uso personal 
+% y sin finalidad comercial.
+% 
+% El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
+
+
+fichero_nodos='nodos.mat';
+fichero_anchors='porcentajes.mat';
+fichero_pos_anchors='..\anchors.mat';
+
+if nargin==0, trozos=1; end
+
+if (trozos=='h') 
+    display('Ejemplo: partir_track(8)');
+    return;
+end
+
+
+
+%Limpiamos el directorio salida antes de empezar
+system('del ..\s10_split\salida\* /Q');
+
+nodos=load(fichero_nodos);     %posición absoluta de los nodos que definen el spline
+anchors_porcentaje=load(fichero_anchors); %nac anchors como distancia entre nodos
+
+
+%Calculamos el número de nodos que vamos a poner en cada uno de los nuevos tracks
+
+
+tree.Anchor=anchors_porcentaje.tree;
+for h=1:length(tree.Anchor)/2
+        elnodo(h)=tree.Anchor(h).StartNode;
+end
+pos_anchors=load(fichero_pos_anchors);
+x=pos_anchors.x;
+z=pos_anchors.z;
+
+nac=length(x);
+x=0.5*(x(1:nac/2)+x(nac/2+1:end));
+z=0.5*(z(1:nac/2)+z(nac/2+1:end));
+xz = [x;z]; 
+df = diff(xz,1,2); 
+distancia = cumsum([0, sqrt([1 1]*(df.*df))]);
+
+
+%%%%%%%%%%%%%%%%%%%% Repartir la carretera en trozos de igual longitud
+%%%%%%%%%%%%%%%%%%%% ----------------------------------------------
+
+%Calculamos el número de nodos que vamos a poner en cada uno de los nuevos tracks
+tree.node=nodos.tree;
+
+longitud_media=distancia(end)/trozos;
+distancia_recorrida=0;
+pos_anterior=1;
+for h=1:trozos
+	distancia_recorrida+=longitud_media;
+	[minimo pos]=min(abs(distancia_recorrida-distancia));
+	longitud_tramo(h)=elnodo(pos)-pos_anterior;
+    pos_anterior=elnodo(pos);	
+end
+longitud_tramo(trozos)=2*longitud_tramo(trozos); %Nos aseguramos de que cubre todo el tramo final
+longitud_tramo(trozos+1)=longitud_tramo(trozos);%No se usa pero hace falta para un lazo
+
+try  
+    fid=fopen('pos_nodes.txt')
+    pos_nodes=fscanf(fid,'%d ',inf);
+    fclose(fid);
+    trozos=length(pos_nodes)-1;
+    longitud_tramo=diff(pos_nodes);
+    longitud_tramo(end)=longitud_tramo(end)*2;
+    longitud_tramo(end+1)=longitud_tramo(end);%Not used, but needed
+    display('WARNING! Reading track segments from pos_nodes.txt');
+	display(sprintf('    %d segments found',trozos));
+    %pause(5)
+catch
+end
+
+
+%%%%%%%%%%%%%%%%%%%% Detectar posición de nodos respecto de anchors
+%%%%%%%%%%%%%%%%%%%% ----------------------------------------------
+
+
+%Retocamos de alguna forma los nodos
+tree.node=nodos.tree;
+contador=1;
+inicio=1;
+final=min([longitud_tramo(contador) length(tree.node)]);;
+while inicio<final,
+        tramos(contador,1)=inicio-1;
+	tramos(contador,2)=final-1;
+	arbol.node=tree.node(inicio:final);
+	fichero=sprintf('salida\\nodos%02d.txt',contador);
+	display(fichero);
+	xml_write(fichero,arbol);
+	contador=contador+1;
+	inicio=final;
+	final=min([final+longitud_tramo(contador) length(tree.node)]);
+end
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Cambiamos el ancho de los tracks
+cambiar_anchos()
+%Cambiar panel spacing
+cambiar_spacing()
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%Cambiamos la numeración de los nodos
+
+tree.Anchor=anchors_porcentaje.tree;
+nodo_inicial_anterior=0;
+inicio=1;
+contador=1;
+for h=1:length(tree.Anchor)/2
+        elnodo(h)=tree.Anchor(h).StartNode;
+		[track,nodo_inicial,frontera]=dame_nodo_inicial(elnodo(h),tramos);
+		tree.Anchor(h).StartNode=elnodo(h)-nodo_inicial;
+		%display(sprintf('%d-%d-%d-%d',elnodo(h),tree.Anchor(h).StartNode,nodo_inicial,nodo_inicial_anterior));
+		if nodo_inicial~=nodo_inicial_anterior
+				fichero=sprintf('salida\\porcentajes%02d.txt',contador);
+				troceado_anchors(contador,1)=inicio-1;
+				troceado_anchors(contador,2)=h-1;
+				grabar_porcentajes(fichero,tree,inicio,h,contador-1);
+				system(sprintf('copy track_start.txt+salida\\nodos%02d.txt+track_middle_b.txt+%s+track_end.txt salida\\track%02d.txt/b',contador,fichero,contador));
+				inicio=h;
+				contador=contador+1;
+		end
+		nodo_inicial_anterior=nodo_inicial;
+end
+fichero=sprintf('salida\\porcentajes%02d.txt',contador);
+troceado_anchors(contador,1)=inicio-1;
+troceado_anchors(contador,2)=length(tree.Anchor)/2-1;
+grabar_porcentajes(fichero,tree,inicio,length(tree.Anchor)/2,contador-1);
+system(sprintf('copy track_start.txt+salida\\nodos%02d.txt+track_middle_b.txt+%s+track_end.txt salida\\track%02d.txt/b',contador,fichero,contador));
+
+for h=1:contador
+        fid=my_fopen(sprintf('salida\\track%02d.txt',h),'r');
+        contenido=fread(fid,Inf); 
+        cadena=char(contenido)';
+        cadena=strrep(cadena,'Track X',sprintf('Track %.2d',h-1));
+		fclose(fid);
+		fid=my_fopen(sprintf('salida\\track%02d.txt',h),'w');
+		fprintf(fid,'%s',cadena);
+		fclose(fid);
+end
+
+save('tramos_nodos.mat','tramos')
+tramos=troceado_anchors;
+save('tramos.mat','tramos')
+
+
+system('copy salida\track??.txt salida\temp.txt/b');
+fid=fopen('salida\temp.txt','r');
+listatracks=fread(fid,inf);
+fclose(fid)
+
+fid=fopen('salida\listado_tracks.txt','w');
+
+fprintf(fid,'  <tracks count=\"%d\" ActiveTrack=\"0\">',trozos);
+fprintf(fid,'%s',listatracks);
+fprintf(fid,'  </tracks>');
+fclose(fid);
+
+message(15);
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+function xml_write(fichero,tree)
+    fid=fopen(fichero,'w');
+    fprintf(fid,'    <nodes count=\"%d\">\n      <OnlyOneNodeSelected>1</OnlyOneNodeSelected>\n        <LineType>BezierSpline</LineType>\n',length(tree.node));
+    for h=1:length(tree.node)
+        fprintf(fid,'        <node NodeId="%d">\n',h-1);
+        fprintf(fid,'          <Position x="%f" y="%f" z="%f" />\n',tree.node(h).Position.x,tree.node(h).Position.y,tree.node(h).Position.z);
+        fprintf(fid,'          <ControlPoints AngleXZ="%f" AngleY="%f" EntryDistance="%f" ExitDistance="%f" />\n        </node>\n',tree.node(h).ControlPoints.AngleXZ,tree.node(h).ControlPoints.AngleY,tree.node(h).ControlPoints.EntryDistance,tree.node(h).ControlPoints.ExitDistance);
+    end
+    fprintf(fid,'    </nodes>\n'); 
+    fclose(fid);
+end
+
+function grabar_porcentajes(fichero,tree,inicio,final,track);
+	fid=fopen(fichero,'w');
+	fprintf(fid,'      <Anchors count="%d">\n',2*(final-inicio+1));
+	for g=1:2
+		for h=inicio:final-1
+			nodo=tree.Anchor(h).StartNode;
+			porcentaje=tree.Anchor(h).StartPercentage;
+			fprintf(fid,'        <Anchor>\n          <TrackId>%d</TrackId>\n          <StartNode>%d</StartNode>\n          <StartPercentage>%f</StartPercentage>\n        </Anchor>\n',track,nodo,porcentaje);
+		end
+		fprintf(fid,'        <Anchor>\n          <TrackId>%d</TrackId>\n          <StartNode>%d</StartNode>\n          <StartPercentage>%f</StartPercentage>\n        </Anchor>\n',track,nodo+1,0);
+	end
+	fprintf(fid,'      </Anchors>\n');
+	fclose(fid);
+end
+
+function cambiar_anchos()
+		  try 
+	          S=load('..\anchors.mat');
+			  nac=length(S.x);
+			  ancho=sqrt((S.x(1)-S.x(nac/2+1))^2+(S.z(1)-S.z(nac/2+1))^2);
+			  ancho=ancho*10;
+			  ancho=round(ancho);
+			  ancho=ancho/10;
+		  catch
+		      ancho=5;
+		  end	  
+fid=fopen('track_middle.txt','r');
+contents=fread(fid,inf);
+fclose(fid);
+cadena=char(contents)';
+cadena=strrep(cadena,'<WidthMultiplier>1</WidthMultiplier>',sprintf('<WidthMultiplier>%.2f</WidthMultiplier>',ancho/10));
+fid=fopen('track_middle_b.txt','w');
+fprintf(fid,'%s',cadena);
+fclose(fid);
+end
+
+function cambiar_spacing()
+distribucion=get_option('LINEAR','%d');
+fid=fopen('track_start.txt','r');
+contents=fread(fid,inf);
+fclose(fid);
+cadena=char(contents)';
+if distribucion==0 %0 quiere decir NonLinear
+	cadena=strrep(cadena,'<PanelSpacingType>Linear</PanelSpacingType>','<PanelSpacingType>NonLinear</PanelSpacingType>');
+else
+	cadena=strrep(cadena,'<PanelSpacingType>NonLinear</PanelSpacingType>','<PanelSpacingType>Linear</PanelSpacingType>');
+end
+fid=fopen('track_start.txt','w');
+fprintf(fid,'%s',cadena);
+fclose(fid);
+end

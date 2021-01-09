@@ -1,0 +1,16 @@
+function [track,nodo_inicial,frontera]=dame_nodo_inicial(nodo,tramos)
+%---
+% Descargado de http://foro.simracing.es/bobs-track-builder/3815-tutorial-ma-zaxxon.html
+%---
+% Este código NO es software libre. Su uso implica la aceptación de las condiciones del autor,
+% condiciones que explícitamente prohiben tanto la redistribución como su uso con fines comerciales.
+% Asimismo queda prohibida la realización de cualquier modificación que no sea para estricto uso personal 
+% y sin finalidad comercial.
+% 
+% El autor no acepta ninguna responsabilidad por cualquier daño resultante del uso de este código.
+
+	posibilidades=find((nodo-tramos(:,1))>=0);
+	nodo_inicial=tramos(posibilidades(end),1);
+	track=posibilidades(end)-1; %track, numerado de 0 en adelante
+	frontera=(sum(nodo==tramos(2:end,1))>0) & (sum(nodo==tramos(1:end-1,2))>0); %Aparece en ambas columnas y no es ni el primero ni el último
+end

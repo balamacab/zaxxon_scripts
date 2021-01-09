@@ -1,0 +1,124 @@
+import pygoogleearth
+import re
+import time
+import glob
+import os
+import string
+import math
+from optparse import OptionParser
+
+def getEle (lat, lon, ge):
+    """
+Given the gearth object and a lat lon
+return altitude
+"""
+    distance=1000
+    while distance>5e-5:
+        ge.set_camera_params(lat, lon, alt=0, alt_mode=1, range=800, tilt=0, azimuth=0, speed=5)
+        pt = ge.get_point_on_terrain_from_screen_coords(0,0)
+        distance=math.fabs(pt.Latitude-float(lat))+math.fabs(pt.Longitude-float(lon))
+    return pt.Altitude
+
+def getCoordStr(kml):
+    """
+return coords string from kml
+"""
+    match = re.match(r"[\s\S]+\<coordinates\>([\s\S]+)\</coordinates\>[\s\S]+", data)
+    limpio=match.group(1)
+    limpio=limpio.strip()
+    return limpio
+
+def getCoords(coord_str):
+    """
+return coords as list
+"""
+    regex2 = re.compile('\s+')
+    s = regex2.split(coord_str)
+    coord_list = []
+    for i in s:
+        coord_list.append(i.split(','))
+    return coord_list
+
+def insertEle(coord_list, ge):
+    """
+take coord_list
+return coord_list with elevations
+"""
+    print len(coord_list)
+    print '[                                                        ]\r[',
+    for idx,i in enumerate(coord_list):
+        if (len(i) == 3):
+            ele = getEle(i[1], i[0], ge)
+            i[2] = ele
+	    #print i,'\n'
+            time.sleep(0.05)
+        if idx % 100 ==0:
+            print '\b-',
+    return coord_list
+
+def convertListToStr(coord_list):
+    """
+Take a coord_list and convert to a kml coord string
+"""
+    coord_str = ""
+    for i in coord_list:
+        if (len(i) == 3):
+            coord_str += str(i[0])
+            coord_str += ','
+            coord_str += str(i[1])
+            coord_str += ','
+            coord_str += str(i[2])
+            coord_str += ' '
+    return coord_str
+
+def replaceCoordStr(coord_str_ele, kml):
+    """
+Replace the coordinates in the kml with coord_str
+"""
+    # split at <coordinates>
+    kml_1 = kml.split("<coordinates>")
+    kml_2 = kml.split("</coordinates>")
+    # insert coord_str_ele
+    new_kml = kml_1[0] + '<coordinates>' +coord_str_ele + '</coordinates>' + kml_2[1]
+    return new_kml
+    
+
+if __name__ == '__main__':
+
+    #options
+    parser = OptionParser()
+    parser.add_option("-i", "--input-file", dest="input_file",
+                  help="kml file to read from", metavar="FILE")
+    parser.add_option("-o", "--output", dest="output_file",
+                  help="kml output file", metavar="OUTPUT")
+    (options, args) = parser.parse_args()
+    
+    options.input_file=os.path.normpath(options.input_file)
+
+    listado=glob.glob(options.input_file+'/grid???.kml')
+    for i in listado:     
+        (anterior,extension)=os.path.splitext(i)
+        destino=anterior+'_relleno'+extension
+        if os.path.exists(destino)==False:
+            ge = pygoogleearth.GoogleEarth()
+
+            print i
+            f = open(i, 'r')
+            data = f.read()
+            coord_str = getCoordStr(data)
+            coord_list = getCoords(coord_str)
+            f.close()
+    
+            coord_list_ele = insertEle(coord_list,ge)
+            coord_str_ele = convertListToStr(coord_list_ele)
+
+	
+    
+            f = open(destino, 'w')
+            new_data = replaceCoordStr(coord_str_ele, data)
+            f.write(new_data)
+            f.close()    
+
+            os.system('taskkill /im googleearth.exe')
+            time.sleep(5)
+    exit(5)

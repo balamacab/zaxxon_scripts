@@ -1,0 +1,4 @@
+system('copy ..\s10_split\tramos_nodos.mat .')
+
+system('copy ..\venue\porcentajes.mat .')
+

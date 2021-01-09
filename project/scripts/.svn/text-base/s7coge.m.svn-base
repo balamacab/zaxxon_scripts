@@ -1,0 +1,2 @@
+function coge()
+s7_coge_datos
